@@ -1,8 +1,25 @@
 METASOURCES = AUTO
 INCLUDES=  -I$(top_srcdir)/libkipi $(all_includes)
 
-EXTRA_DIST = hi32-app-kipi.png
+EXTRA_DIST = hi16-app-kipi.png hi24-app-kipi.png hi32-app-kipi.png hi48-app-kipi.png
 
+install-data-local:
+	$(mkinstalldirs) $(kde_icondir)/hicolor/16x16/apps/
+	$(INSTALL_DATA) $(srcdir)/hi16-app-kipi.png $(kde_icondir)/hicolor/16x16/apps/kipi.png
+	$(mkinstalldirs) $(kde_icondir)/hicolor/22x22/apps/
+	$(INSTALL_DATA) $(srcdir)/hi22-app-kipi.png $(kde_icondir)/hicolor/22x22/apps/kipi.png
+	$(mkinstalldirs) $(kde_icondir)/hicolor/32x32/apps/
+	$(INSTALL_DATA) $(srcdir)/hi32-app-kipi.png $(kde_icondir)/hicolor/32x32/apps/kipi.png
+	$(mkinstalldirs) $(kde_icondir)/hicolor/48x48/apps/
+	$(INSTALL_DATA) $(srcdir)/hi48-app-kipi.png $(kde_icondir)/hicolor/48x48/apps/kipi.png
+	$(mkinstalldirs) $(kde_icondir)/locolor/16x16/apps/
+
+uninstall-local:
+	-rm -f $(kde_icondir)/hicolor/16x16/apps/kipi.png
+	-rm -f $(kde_icondir)/hicolor/22x22/apps/kipi.png
+	-rm -f $(kde_icondir)/hicolor/32x32/apps/kipi.png
+	-rm -f $(kde_icondir)/hicolor/48x48/apps/kipi.png
+        
 lib_LTLIBRARIES = libkipi.la
 
 libkipi_la_SOURCES = interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp imagecollection.cpp \
@@ -36,4 +53,3 @@ messages: rc.cpp
 	fi
 	rm -f tips.cpp
 
-KDE_ICON = AUTO
