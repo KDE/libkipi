@@ -115,3 +115,21 @@ KURL KIPI::ImageCollection::uploadPath() const
     return _data->uploadPath();
 }
 
+/*!
+  When a plugin wants to upload images, it may choose to display an upload widget,
+  which gives the user the possible to show a directory from a tree view.
+
+  This tree view widget needs to starts at some URL. This function specifies that location.
+  Here are a couble of possible return value different host applications may choose.
+  <ul>
+  <li> If all images are stored rooted at some tree (which is the case for
+  KimDaBa), then this function may return this directory unconditionally.
+  <li> The root directory returned by uploadPath() (which is the default implementation for this method)
+  <li> The directory returned by uploadPath().
+  </ul>
+*/
+KURL KIPI::ImageCollection::uploadRoot() const
+{
+    return _data->uploadRoot();
+}
+

@@ -56,7 +56,6 @@ namespace KIPI
         /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
         virtual QValueList<ImageCollection> allAlbums() = 0;
 
-        /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
         virtual ImageInfo info( const KURL& ) = 0;
         virtual bool addImage( const KURL& );
 

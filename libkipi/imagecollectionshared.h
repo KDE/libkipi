@@ -16,6 +16,7 @@ namespace KIPI
         virtual KURL::List images() = 0;
         virtual KURL path();
         virtual KURL uploadPath();
+        virtual KURL uploadRoot();
 
     private:
         friend class ImageCollection;

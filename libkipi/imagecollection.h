@@ -16,6 +16,7 @@ namespace KIPI
         KURL::List images() const;
         KURL path() const;
         KURL uploadPath() const;
+        KURL uploadRoot() const;
 
         // Interface for host application + general stuff
         ImageCollection( ImageCollectionShared* );

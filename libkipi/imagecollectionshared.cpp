@@ -20,7 +20,7 @@ void KIPI::ImageCollectionShared::removeRef()
 
 KURL KIPI::ImageCollectionShared::path()
 {
-    return QString::null;
+    return KURL();
 }
 
 KURL KIPI::ImageCollectionShared::uploadPath()
@@ -28,6 +28,17 @@ KURL KIPI::ImageCollectionShared::uploadPath()
     qFatal( "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
             "have been overriden in the host application.");
-    return QString::null;
+    return KURL();
+}
+
+KURL KIPI::ImageCollectionShared::uploadRoot()
+{
+    KURL path = uploadPath();
+    if ( path.isValid() ) {
+        path.setPath("/");
+        return path;
+    }
+    else
+        return KURL( "file:/" );
 }
 
