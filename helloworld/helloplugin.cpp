@@ -48,9 +48,9 @@ void HelloPlugin::go()
     (void) m_interface->currentAlbum();
 }
 
-KIPI::Plugin::Category HelloPlugin::category() const
+KIPI::Category HelloPlugin::category() const
 {
-    return KIPI::Plugin::IMAGESPLUGIN;
+    return KIPI::IMAGESPLUGIN;
 }
 
 #include "helloplugin.moc"

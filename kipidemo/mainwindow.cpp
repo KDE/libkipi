@@ -58,7 +58,7 @@ MainWindow::MainWindow()
     KIPI::PluginLoader::List list = loader->pluginList();
     for( QPtrListIterator<KIPI::Plugin> it( list ); *it; ++it ) {
         KIPI::Plugin* plugin = *it;
-        if ( plugin->category() == KIPI::Plugin::IMAGESPLUGIN ) {
+        if ( plugin->category() == KIPI::IMAGESPLUGIN ) {
             QPopupMenu *popup = static_cast<QPopupMenu*>(factory()->container("images",this));
             Q_ASSERT( popup );
             KActionCollection *actions = plugin->actionCollection();

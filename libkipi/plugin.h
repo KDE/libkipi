@@ -29,18 +29,17 @@ class KActionCollection;
 
 namespace KIPI
 {
+    enum Category {
+        IMAGESPLUGIN = 0,
+        EFFECTSPLUGIN,
+        TOOLSPLUGIN,
+        IMPORTPLUGIN,
+        EXPORTPLUGIN
+    };
 
     class Plugin : public QObject
     {
     public:
-
-        enum Category {
-            IMAGESPLUGIN = 0,
-            EFFECTSPLUGIN,
-            TOOLSPLUGIN,
-            IMPORTPLUGIN,
-            EXPORTPLUGIN
-        };
 
         Plugin( QObject *parent, const char* name);
         virtual ~Plugin();

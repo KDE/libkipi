@@ -9,7 +9,7 @@ class HelloPlugin :public KIPI::Plugin {
 
 public:
     HelloPlugin( QObject* parent, const char* name = 0, const QStringList& = QStringList());
-    virtual Category category() const;
+    virtual KIPI::Category category() const;
 
 protected slots:
     void go();
