@@ -12,27 +12,27 @@ public:
         :ImageCollectionShared(), _name(name), _urls(urls)
         {
         }
-    virtual QString name() const
+    virtual QString name()
         {
             return _name;
         }
 
-    virtual KURL::List images() const
+    virtual KURL::List images()
         {
             return _urls;
         }
 
-    virtual bool valid() const
+    virtual bool valid()
         {
             return true;
         }
 
-    virtual KURL root() const
+    virtual KURL root()
         {
             return KURL( "file:/tmp/kimdaba-demo-blackie" );
         }
 
-    virtual QString comment() const
+    virtual QString comment()
         {
             return "a demo comment";
         }

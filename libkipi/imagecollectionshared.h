@@ -11,10 +11,10 @@ namespace KIPI
     public:
         ImageCollectionShared();
         virtual ~ImageCollectionShared() {}
-        virtual QString name() const = 0;
-        virtual QString comment() const = 0;
-        virtual KURL::List images() const = 0;
-        virtual KURL root() const = 0;
+        virtual QString name() = 0;
+        virtual QString comment() = 0;
+        virtual KURL::List images() = 0;
+        virtual KURL root() = 0;
 
     private:
         friend class ImageCollection;
