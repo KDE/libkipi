@@ -20,4 +20,4 @@ kde_services_DATA = libkipi_hello.desktop
 
 # i18n translation messages
 messages: rc.cpp
-        $(XGETTEXT) *.cpp *.h -o $(podir)/libkipi_hello.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/libkipi_hello.pot

@@ -1,5 +1,5 @@
 METASOURCES = AUTO
-INCLUDES= $(all_includes) -I$(top_srcdir)
+INCLUDES= $(all_includes) -I$(top_srcdir)/libkipi
 
 lib_LTLIBRARIES = libkipi.la
 

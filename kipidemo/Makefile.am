@@ -12,7 +12,7 @@ kipidemo_LDADD = $(LIB_KDEUI) $(LIB_KPARTS) $(top_builddir)/libkipi/libkipi/libk
 
 # translation
 messages: rc.cpp
-        $(XGETTEXT) *.cpp -o $(podir)/kipidemo.pot
+	$(XGETTEXT) *.cpp -o $(podir)/kipidemo.pot
 
 xdg_apps_DATA = kipidemo.desktop
 
