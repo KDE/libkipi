@@ -229,11 +229,11 @@ KDStream& KDStream::operator<<( const void* p)
 */
 KDStream& KDStream::operator<<( const QString& str )
 {
-  int index = str.find( '\n' );
+  int index = str.findRev( '\n' );
   if ( index == -1 )
     _output += str;
   else {
-    _output += str.left( index );
+    _output += str.left( index )  + '\n';
     flush();
     _output += str.mid( index+1 );
   }
