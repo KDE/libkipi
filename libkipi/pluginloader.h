@@ -25,41 +25,69 @@
 #include <qstringlist.h>
 #include <qptrlist.h>
 #include <libkipi/interface.h>
+#include <qwidget.h>
+#include <qscrollview.h>
 
 
+class PluginCheckBox;
 namespace KIPI
 {
     class Plugin;
     class Interface;
+    class ConfigWidget;
 
-    class PluginLoader
+    class PluginLoader :public QObject
     {
+        Q_OBJECT
+    public:
         struct Info
         {
-            Info( const QString& name, const QString& comment, const QString& library, Plugin* plugin )
-                : name(name), comment(comment), library(library), plugin( plugin ) {}
+            Info( const QString& name, const QString& comment, const QString& library, bool shouldLoad )
+                : name(name), comment(comment), library(library), plugin( 0 ),  shouldLoad( shouldLoad ) {}
             Info() {}
             QString name;
             QString comment;
             QString library;
             Plugin* plugin;
+            bool shouldLoad;
         };
 
-    public:
         PluginLoader( const QStringList& ignores, Interface* interface );
+        void loadPlugins();
+        virtual ~PluginLoader() {}
         static PluginLoader* instance();
+        ConfigWidget* configWidget( QWidget* parent );
 
-        typedef QValueList<Info> List;
+        typedef QValueList<Info*> PluginList;
 
-        const List& pluginList();
+        const PluginList& pluginList();
+
+    signals:
+        void plug( KIPI::PluginLoader::Info* );
+        void unplug( KIPI::PluginLoader::Info* );
+        void replug();
 
     private:
-        static PluginLoader* m_instance;
-        void init();
+        friend class ConfigWidget;
+        friend class PluginCheckBox;
 
-        List         m_pluginList;
+        static PluginLoader* m_instance;
+        void loadPlugin( Info* );
+
+        PluginList m_pluginList;
         Interface* m_interface;
         QStringList m_ignores;
+    };
+
+    class ConfigWidget :public QScrollView
+    {
+        Q_OBJECT
+    public:
+        ConfigWidget( QWidget* parent );
+    public slots:
+        void apply();
+    private:
+        QValueList< PluginCheckBox* > _boxes;
     };
 }
 

@@ -62,7 +62,7 @@
 
 
 
-   <h2>Utilities for PlugIn</h2>
+   <h2>Utilities for Plugins</h2>
    KIPI has a number of utilities useful when developing plugins:
    <ul>
    <li> use KIPI::ImageCollectionDialog to ask the user for an image.
@@ -71,12 +71,13 @@
    <li> KIPI::ThumbnailJob helps you load thumb nails of images.
    </ul>
 
+
+
+
    <h1>Adding KIPI support to a new host application.</h1>
    To add KIPI support to your application you must inherit
-   KIPI::Interface, and given an instance of this class to
-   KIPI::PluginLoader. Creating an instance of KIPI::PluginLoader, plugins
-   will be loaded, this does, however, not mean that they are inserted into
-   you GUI, more about that later.
+   KIPI::Interface, and give an instance of this class to
+   KIPI::PluginLoader. See \ref KIPI::PluginLoader for details on loading plugins.
 
    To be able to create an instance of your subclass of KIPI::Interface,
    you must of course implement all the pure virtual method of the super
