@@ -177,7 +177,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
                                        KAboutData::License_GPL,
                                        "(c) 2004, Kipi development team",
                                        0,
-                                       "http://extragear.kde.org/apps/kipi.php");
+                                       "http://extragear.kde.org/apps/kipi");
 
     QPushButton *helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
