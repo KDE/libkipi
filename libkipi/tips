@@ -1,6 +1,6 @@
 <tip category="KipiPlugins|BatchProcessImages">
 <html>
-<p>Did you know that you could brighten up your images using Batch Color Images plugin for increase contrast?
+<p>Did you know that you could brighten up your images using Batch Color Images plugin for increased contrast?
 </p>
 <br>
 <center>
@@ -23,7 +23,7 @@
 
 <tip category="KipiPlugins|Scanner">
 <html>
-<p>Did you know that Kipi library provide a scanner plugin that gives you direct access to your flat scanner?
+<p>Did you know that Kipi library provide a scanner plugin that gives you direct access to your scanner?
 </p>
 <br>
 <center>
@@ -119,8 +119,8 @@
 
 <tip category="KipiPlugins|BatchProcessImages">
 <html>
-<p>Did you know that you could use the images files from differents Albums in 'batch-process images' 
-plugins? The processed results will then be merged in the selected target Album.
+<p>Did you know that you could use image files from different Albums in the 'batch-process images' 
+plugin? The processed results will then be merged in the selected target Album.
 </p>
 <br>
 <center>
