@@ -184,7 +184,7 @@ void ImageCollectionSelector::slotSelectAll() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(true);
     }
-    emit signalSelectionChanged();
+    emit selectionChanged();
 }
 
 
@@ -195,7 +195,7 @@ void ImageCollectionSelector::slotInvertSelection() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(!item->isOn());
     }
-    emit signalSelectionChanged();
+    emit selectionChanged();
 }
 
 
@@ -206,7 +206,7 @@ void ImageCollectionSelector::slotSelectNone() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(false);
     }
-    emit signalSelectionChanged();
+    emit selectionChanged();
 }
 
 void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
@@ -285,7 +285,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
 
     d->_textLabel->setText(text);
     
-    emit signalSelectionChanged();
+    emit selectionChanged();
 }
 
 void ImageCollectionSelector::slotGotPreview(const KFileItem*, const QPixmap& pix)
@@ -301,7 +301,7 @@ void ImageCollectionSelector::slotInitialShow()
         d->_list->ensureItemVisible(d->_itemToSelect);
         d->_itemToSelect = 0;
     }
-    emit signalSelectionChanged();
+    emit selectionChanged();
 }
 
 } // KIPI

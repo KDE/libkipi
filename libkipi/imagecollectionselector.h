@@ -55,7 +55,7 @@ public:
     
 signals:    
 
-    void signalSelectionChanged(void);
+    void selectionChanged(void);
     
 private:
     
