@@ -44,17 +44,19 @@ namespace KIPI
         Plugin( KInstance* instance, QObject *parent, const char* name);
         virtual ~Plugin();
 
-        KActionPtrList actions();
+        virtual void setup( QWidget* widget ) = 0;
+        KActionPtrList actions( QWidget* parent = 0 );
+        KActionCollection* actionCollection( QWidget* parent = 0 );
         virtual Category category() const = 0;
 
     protected:
-        KActionCollection* actionCollection();
         void addAction( KAction* action );
 
     private:
-        KActionCollection *m_actionCollection;
+        QMap<QWidget*, KActionCollection*> m_actionCollection;
         KInstance* m_instance;
-        KActionPtrList m_actions;
+        QMap<QWidget*, KActionPtrList> m_actions;
+        QWidget* m_defaultWidget;
     };
 
 }

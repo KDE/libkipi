@@ -23,9 +23,11 @@
 
 #include "plugin.h"
 #include <kinstance.h>
+#include <kdebug.h>
+#include <qwidget.h>
 
 KIPI::Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
-    : QObject( parent, name), m_actionCollection( 0 ), m_instance( instance )
+    : QObject( parent, name), m_instance( instance )
 {
 }
 
@@ -33,21 +35,35 @@ KIPI::Plugin::~Plugin()
 {
 }
 
-KActionCollection* KIPI::Plugin::actionCollection()
+KActionCollection* KIPI::Plugin::actionCollection( QWidget* widget )
 {
-    if (!m_actionCollection)
-        m_actionCollection = new KActionCollection(this, "m_actions", m_instance );
+    if ( widget == 0 )
+        widget = m_defaultWidget;
 
-    return m_actionCollection;
+    if (!m_actionCollection.contains( widget ))
+        kdWarning( 51000 ) << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
+                           << "as the very first line when overriding the setup method." << endl;
+    return m_actionCollection[widget];
 }
 
 void KIPI::Plugin::addAction( KAction* action )
 {
-    m_actions.append( action );
+    m_actions[m_defaultWidget].append( action );
 }
 
-KActionPtrList KIPI::Plugin::actions()
+KActionPtrList KIPI::Plugin::actions( QWidget* widget )
 {
-    return m_actions;
+    if ( widget == 0 )
+        widget = m_defaultWidget;
+
+    return m_actions[widget];
+}
+
+void KIPI::Plugin::setup( QWidget* widget )
+{
+    m_defaultWidget = widget;
+    m_actions.insert( widget, KActionPtrList() );
+    QString name = QString( "action collection for %1" ).arg( widget->name() );
+    m_actionCollection.insert( widget, new KActionCollection( widget, widget, name.latin1(), m_instance ) );
 }
 
