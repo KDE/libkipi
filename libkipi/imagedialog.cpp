@@ -3,7 +3,7 @@
  * Authors: KIPI team developers (see AUTHORS files for details)
  *      
  * Date   : 2004-05
- * Description :
+ * Description : an image files selector dialog.
  *
  * Copyright 2004 by the KIPI team
  *
@@ -19,25 +19,41 @@
  * GNU Library General Public License for more details.
  *
  * ============================================================ */
+ 
+// Qt includes.
+ 
 #include <qguardedptr.h>
 #include <qlabel.h>
 #include <qsplitter.h>
+#include <qlayout.h>
+#include <qframe.h>
+#include <qpushbutton.h>
 
-#include "imagedialog.h"
+// KDE includes.
 
 #include <kdebug.h>
 #include <klistview.h>
 #include <klocale.h>
+#include <kstandarddirs.h>
 #include <kio/previewjob.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
 
-#include "imagedialog.moc"
+// Include files for libKipi.
 
+#include <libkipi/version.h>
 
-const int PREVIEW_SIZE=128;
+// Local includes.
+
+#include "imagedialog.h"
+
+const int PREVIEW_SIZE = 128;
 
 namespace KIPI
 {
-
 
 struct AlbumLVI : public KListViewItem {
     AlbumLVI(KListView* parent, const KIPI::ImageCollection& album)
@@ -70,15 +86,62 @@ struct ImageDialog::Private {
 
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
                          bool singleSelection)
-    : KDialogBase(parent, "album-dialog", true, i18n("Select Image From Album"),
-                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
+           : KDialogBase(KDialogBase::Plain, i18n("Select Image From Album"), Help|Ok|Cancel,
+                         Ok, parent, "album-dialog", true, true)                         
 {
-    d=new Private;
+    d = new Private;
     d->_interface=interface;
     d->_singleSelection = singleSelection;
+        
+    QWidget* box = plainPage();
+    QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
+
+    //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( i18n("Select Image From Album"), headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    dvlay->addWidget( headerFrame );
     
-    QSplitter* splitter=new QSplitter(this);
-    setMainWidget(splitter);
+    QString directory;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+
+    //---------------------------------------------
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Kipi image selector dialog"), 
+                                       kipi_version,
+                                       I18N_NOOP("A Kipi dialog for images selection"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2004, Kipi development team", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    QPushButton *helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Kipi plugins handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpButton->setPopup( helpMenu->menu() );
+
+    //---------------------------------------------
+
+    QSplitter* splitter = new QSplitter(box);
+        
     d->_albumList=new KListView(splitter);
     d->_albumList->addColumn(i18n("Album Name"));
     d->_albumList->setMinimumWidth(200);
@@ -96,14 +159,17 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     d->_preview->setFixedWidth(PREVIEW_SIZE);
     d->_preview->setText(i18n("No image selected"));
 
+    dvlay->addWidget( splitter );
+
     d->_albums=d->_interface->allAlbums();
     QValueList<ImageCollection>::ConstIterator it=d->_albums.begin();
+    
     for(; it!=d->_albums.end(); ++it) {
         new AlbumLVI(d->_albumList, *it);
     }
 
     connect(d->_albumList, SIGNAL(selectionChanged(QListViewItem*)),
-        this, SLOT(fillImageList(QListViewItem*)) );
+            this, SLOT(fillImageList(QListViewItem*)) );
 
     if (singleSelection)
         connect(d->_imageList, SIGNAL(selectionChanged(QListViewItem*)),
@@ -179,7 +245,7 @@ void ImageDialog::slotImageSelected(QListViewItem* item) {
 
     KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
     connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-        SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+             SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
 }
 
 void ImageDialog::slotImagesSelected()
@@ -223,16 +289,21 @@ void ImageDialog::slotImagesSelected()
     {
         d->_url = d->_urls.first();
         d->_preview->setText(i18n("1 image selected", "%n images selected", d->_urls.count()));
-                             
     }
-    
 }
-
 
 void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
 
     d->_preview->setPixmap(pix);
 }
 
+void ImageDialog::slotHelp( void )
+{
+    KApplication::kApplication()->invokeHelp("",
+                                             "kipi-plugins");
+}
 
-} // namespace
+
+} // namespace KIPI
+
+#include "imagedialog.moc"

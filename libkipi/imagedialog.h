@@ -3,7 +3,7 @@
  * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-05
- * Description :
+ * Description : an image files selector dialog.
  *
  * Copyright 2004 by the KIPI team
  *
@@ -19,32 +19,43 @@
  * GNU Library General Public License for more details.
  *
  * ============================================================ */
+ 
 #ifndef IMAGEDIALOG_H
 #define IMAGEDIALOG_H
+
+// Qt includes.
 
 #include <qvaluelist.h>
 #include <qwidget.h>
 
+// KDE includes.
+
 #include <kurl.h>
 #include <kdialogbase.h>
+
+// LibKipi includes.
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
 
 
+class QListViewItem;
+
 class KFileItem;
 class KListView;
-class QListViewItem;
 
 namespace KIPI
 {
 
 
-class ImageDialog : public KDialogBase {
-
-    Q_OBJECT
+class ImageDialog : public KDialogBase 
+{
+Q_OBJECT
+    
     class Private;
+    
 public:
+
     ImageDialog(QWidget*, Interface*, bool singleSelection=false);
     ~ImageDialog();
 
@@ -55,15 +66,17 @@ public:
     static KURL::List getImageURLs(QWidget*, Interface*);
 
 private slots:
+
     void fillImageList(QListViewItem*);
     void slotImageSelected(QListViewItem*);
     void slotImagesSelected();
     void slotGotPreview(const KFileItem* , const QPixmap&);
+    void slotHelp( void );
 
 private:
     Private* d;
 };
 
-} // namespace
+} // namespace KIPI
 
 #endif /* IMAGECOLLECTIONDIALOG_H */

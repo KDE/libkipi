@@ -48,6 +48,7 @@ enum ActionMessageType
 class BatchProgressDialog : public KDialogBase
 {
 Q_OBJECT
+
  public:
 
    BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
@@ -58,13 +59,19 @@ Q_OBJECT
    void setProgress(int current, int total);
    
  protected:
+ 
    KIPI::BatchProgressItem *m_item;
    KListView               *m_actionsList;
    KProgress               *m_progress;
 
  private:
+ 
    struct Private;
    Private* d;
+   
+ private slots:
+
+    void slotHelp( void );
 };
 
 }  // NameSpace KIPI

@@ -37,8 +37,8 @@
 #include <qframe.h>
 #include <qlabel.h>
 #include <qcolor.h>
-#include <qlayout.h>
 #include <qpixmap.h>
+#include <qpushbutton.h>
 
 // Include files for KDE
 
@@ -52,6 +52,15 @@
 #include <kiconloader.h>
 #include <klistview.h>
 #include <kstandarddirs.h>
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <khelpmenu.h>
+#include <kiconloader.h>
+#include <kpopupmenu.h>
+
+// Include files for libKipi.
+
+#include <libkipi/version.h>
 
 // Local includes
 
@@ -127,7 +136,7 @@ struct BatchProgressDialog::Private {
 /////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
-                   : KDialogBase( KDialogBase::Plain, caption, Cancel,
+                   : KDialogBase( KDialogBase::Plain, caption, Help|Cancel,
                                   Cancel, parent, "KIPIBatchProgressDialog", true )
 {
     d = new Private;
@@ -158,6 +167,26 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
+    
+    // About data and help button.
+    
+    KAboutData* about = new KAboutData("kipiplugins",
+                                       I18N_NOOP("Kipi batch process dialog"), 
+                                       kipi_version,
+                                       I18N_NOOP("A Kipi dialog for batch process operations"),
+                                       KAboutData::License_GPL,
+                                       "(c) 2004, Kipi development team", 
+                                       0,
+                                       "http://extragear.kde.org/apps/kipi.php");
+    
+    QPushButton *helpButton = actionButton( Help );
+    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
+    helpMenu->menu()->removeItemAt(0);
+    helpMenu->menu()->insertItem(i18n("Kipi plugins handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
+    helpButton->setPopup( helpMenu->menu() );
+
+    //---------------------------------------------
+    
     
     QGroupBox* groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
     
@@ -213,6 +242,15 @@ void BatchProgressDialog::setProgress(int current, int total)
 {
     m_progress->setTotalSteps(total);
     m_progress->setValue(current);
+}
+
+/////////////////////////////////////// SLOTS ///////////////////////////////////////////////
+
+
+void BatchProgressDialog::slotHelp( void )
+{
+    KApplication::kApplication()->invokeHelp("",
+                                             "kipi-plugins");
 }
 
 }  // NameSpace KIPI
