@@ -241,7 +241,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     QString text("<table cellspacing=0 cellpadding=0>");
 
     // number of images 
-    text += cellBeg + i18n("Images :") +
+    text += cellBeg + i18n("Images:") +
             cellMid + QString::number(imcollItem->imageCollection().images().count()) +
             cellEnd;
 
@@ -258,7 +258,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
 	comments.append("...");
 	}
 	
-        text += cellBeg + i18n("Comments :") +
+        text += cellBeg + i18n("Comments:") +
                 cellMid + comments +
                 cellEnd;
     }
@@ -266,7 +266,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     // Album Category
     if (d->_interface->hasFeature(AlbumsHaveCategory))
     {
-        text += cellBeg + i18n("Category :") +
+        text += cellBeg + i18n("Category:") +
                 cellMid + imcollItem->imageCollection().category() +
                 cellEnd;
     }
@@ -275,7 +275,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     if (d->_interface->hasFeature(AlbumsHaveCreationDate))
     {
         QDate date(imcollItem->imageCollection().date());
-        text += cellBeg + i18n("Date :") +
+        text += cellBeg + i18n("Date:") +
                 cellMid + KGlobal::locale()->formatDate(date) +
                 cellEnd;
     }
