@@ -30,9 +30,9 @@ KURL KIPI::ImageInfo::path()
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::descrion()
+QString KIPI::ImageInfo::description()
 {
-    return _data->descrion();
+    return _data->description();
 }
 
 /**

@@ -14,7 +14,7 @@ namespace KIPI
         ImageInfoShared( const KURL& url );
         virtual ~ImageInfoShared() {}
         virtual QString name() = 0;
-        virtual QString descrion() = 0;
+        virtual QString description() = 0;
         virtual QMap<QString,QVariant> attributes() = 0;
 
         virtual KURL path();

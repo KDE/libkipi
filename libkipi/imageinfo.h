@@ -17,7 +17,7 @@ namespace KIPI
         // Interface for plugins.
         QString name();
         KURL path();
-        QString descrion();
+        QString description();
         QDateTime time();
         QMap<QString,QVariant> attributes();
         QString toString( const QVariant& );
