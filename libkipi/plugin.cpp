@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : plugin.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-02-18
+ * File   : plugin.cpp
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
  * Description :
  *
- * Copyright 2004 by Renchi Raju
-
+ * Copyright 2004 by the KIPI team
+ * 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -19,15 +20,22 @@
  *
  * ============================================================ */
 
-#include <kaction.h>
-
-#include "plugin.h"
-#include <kinstance.h>
-#include <kdebug.h>
+// Qt includes.
+ 
 #include <qwidget.h>
 
+// KDE includes.
+
+#include <kaction.h>
+#include <kinstance.h>
+#include <kdebug.h>
+
+// Local includes.
+
+#include "plugin.h"
+
 KIPI::Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
-    : QObject( parent, name), m_instance( instance )
+            : QObject( parent, name), m_instance( instance )
 {
 }
 

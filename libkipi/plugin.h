@@ -1,11 +1,12 @@
 /* ============================================================
- * File  : plugin.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
- * Date  : 2004-02-18
+ * File   : plugin.h
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
  * Description :
  *
- * Copyright 2004 by Renchi Raju
-
+ * Copyright 2004 by the KIPI team
+ * 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -22,22 +23,32 @@
 #ifndef KIPI_PLUGIN_H
 #define KIPI_PLUGIN_H
 
+// Qt includes.
+
 #include <qobject.h>
-#include "libkipi/interface.h"
+
+// KDE includes.
+
 #include <kaction.h>
+
+// Lib KIPI includes.
+
+#include "libkipi/interface.h"
 
 class KInstance;
 
 namespace KIPI
 {
-    enum Category {
-        IMAGESPLUGIN = 0,
-        EFFECTSPLUGIN,
-        TOOLSPLUGIN,
-        IMPORTPLUGIN,
-        EXPORTPLUGIN,
-	BATCHPLUGIN	
-    };
+    enum Category 
+       {
+       IMAGESPLUGIN = 0,
+       EFFECTSPLUGIN,
+       TOOLSPLUGIN,
+       IMPORTPLUGIN,
+       EXPORTPLUGIN,
+       BATCHPLUGIN,
+       COLLECTIONSPLUGIN
+       };
 
     class Plugin : public QObject
     {
@@ -59,7 +70,6 @@ namespace KIPI
         QMap<QWidget*, KActionPtrList> m_actions;
         QWidget* m_defaultWidget;
     };
-
 }
 
-#endif /* KIPI_PLUGIN_H */
+#endif  // KIPI_PLUGIN_H 
