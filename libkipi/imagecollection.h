@@ -8,6 +8,7 @@ namespace KIPI
     class ImageCollection
     {
     public:
+        virtual ~ImageCollection() {}
         virtual QString name() const = 0;
         virtual QValueList<KURL> images() const = 0;
         virtual bool valid() const = 0;
