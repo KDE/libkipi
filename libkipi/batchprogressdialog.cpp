@@ -171,7 +171,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     // About data and help button.
     
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Kipi batch process dialog"), 
+                                       I18N_NOOP("Batch process dialog"), 
                                        kipi_version,
                                        I18N_NOOP("A Kipi dialog for batch process operations"),
                                        KAboutData::License_GPL,

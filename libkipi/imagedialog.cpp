@@ -124,7 +124,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     // About data and help button.
     
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Kipi image selector dialog"), 
+                                       I18N_NOOP("Images selector dialog"), 
                                        kipi_version,
                                        I18N_NOOP("A Kipi dialog for images selection"),
                                        KAboutData::License_GPL,
