@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=KIPI demo
-Exec=kipidemo
-Icon=kipidemo
-Type=Application
-Comment=A demo of KIPI.
-Categories=Qt;KDE;Graphics
