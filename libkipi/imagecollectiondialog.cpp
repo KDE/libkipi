@@ -5,8 +5,7 @@
 #include <kdebug.h>
 #include <klistview.h>
 #include <klocale.h>
-
-#include <libkipi/thumbnailjob.h>
+#include <kio/previewjob.h>
 
 #include "imagecollectiondialog.moc"
 
@@ -41,7 +40,6 @@ struct ImageCollectionDialog::Private {
     KListView* _imageList;
     QLabel* _preview;
     QValueList<ImageCollection> _albums;
-    QGuardedPtr<KIPI::ThumbnailJob> _thumbJob;
 };
 
 
@@ -51,12 +49,11 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
 {
     d=new Private;
     d->_interface=interface;
-    d->_thumbJob=0;
     QHBox* box=makeHBoxMainWidget();
     d->_albumList=new KListView(box);
     d->_albumList->addColumn(i18n("Album Name"));
     d->_albumList->addColumn(i18n("Images"));
-    
+
     d->_imageList=new KListView(box);
     d->_imageList->addColumn(i18n("Image Name"));
 
@@ -126,17 +123,14 @@ void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
     enableButtonOK(true);
     d->_url=static_cast<ImageLVI*>(item)->_url;
 
-    if (!d->_thumbJob.isNull()) {
-        delete d->_thumbJob;
-    }
-    d->_thumbJob=new KIPI::ThumbnailJob(d->_url, PREVIEW_SIZE); 
-    connect(d->_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
-        SLOT(slotGotPreview(const KURL&, const QPixmap&)));
+    KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
+    connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+        SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
 }
 
 
-void ImageCollectionDialog::slotGotPreview(const KURL&, const QPixmap& pix) {
-    
+void ImageCollectionDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
+
     d->_preview->setPixmap(pix);
 }
 

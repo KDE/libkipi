@@ -1,5 +1,5 @@
 #ifndef IMAGECOLLECTIONDIALOG_H
-#define IMAGECOLLECTIONDIALOG_H   
+#define IMAGECOLLECTIONDIALOG_H
 
 #include <qvaluelist.h>
 #include <qwidget.h>
@@ -11,6 +11,7 @@
 #include <libkipi/imagecollection.h>
 
 
+class KFileItem;
 class KListView;
 class QListViewItem;
 
@@ -30,8 +31,8 @@ public:
 private slots:
     void fillImageList(QListViewItem*);
     void slotImageSelected(QListViewItem*);
-	void slotGotPreview(const KURL&, const QPixmap&);
-    
+	void slotGotPreview(const KFileItem* , const QPixmap&);
+
 private:
 	Private* d;
 };
