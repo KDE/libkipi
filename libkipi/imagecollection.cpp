@@ -143,11 +143,12 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
 }
 
 /*!
-  Returns the directory for the image collections.
-  The host application may, however, return anything in case it does not
-  support the KIPI::Features AlbumEQDir, e.g. the directory of the first
-  image in the collection, the root of the image collection (in case all
-  images has a common root), or even an empty URL.
+  Returns the directory for the image collection.
+  The host application may, however, return anything in case this
+  imagecollection is not a directory (check isDirectory()),  or may
+  return the directory of the first image in the collection, the root
+   of the image collection (in case all images has a common root), or
+   even an empty URL.
 */
 KURL KIPI::ImageCollection::path() const
 {

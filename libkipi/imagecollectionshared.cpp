@@ -51,9 +51,9 @@ void KIPI::ImageCollectionShared::removeRef()
 
 KURL KIPI::ImageCollectionShared::path()
 {
-    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
-            "AlbumEQDir - if the host application do support that, then this function should\n"
-            "have been overriden in the host application.\n";
+    kdWarning(51000) << "This method should only be invoked if this imagecollection is a directory.\n"
+                     <<  "See KIPI::ImageCollectionShared::isDirectory()"
+                     << endl;
     return KURL();
 }
 
