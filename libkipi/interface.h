@@ -63,7 +63,6 @@ namespace KIPI
 
         virtual ImageCollection currentAlbum() = 0;
         virtual ImageCollection currentSelection() = 0;
-        virtual ImageCollection currentScope();
         virtual QValueList<ImageCollection> allAlbums() = 0;
 
         virtual ImageInfo info( const KURL& ) = 0;
@@ -79,10 +78,6 @@ namespace KIPI
     protected:
         virtual int features() const = 0;
 
-    protected slots:
-        void stateChange();
-
-
     private:
         friend class PluginLoader;
         bool hasFeature( const QString& feature );
@@ -90,7 +85,6 @@ namespace KIPI
     signals:
         void selectionChanged( bool hasSelection );
         void currentAlbumChanged( bool anyAlbum );
-        void currentScopeChanged( bool asScope );
     };
 }
 

@@ -94,11 +94,6 @@
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
-    connect( this, SIGNAL( selectionChanged( bool ) ), 
-             this, SLOT( stateChange() ) );
-             
-    connect( this, SIGNAL( currentAlbumChanged( bool ) ), 
-             this, SLOT( stateChange() ) );
 }
 
 KIPI::Interface::~Interface()
@@ -195,34 +190,6 @@ QValueList<KIPI::ImageCollection> KIPI::Interface::allAlbums()
     return QValueList<KIPI::ImageCollection>();
 }
 
-
-/**
-   Returns the current selection if one exists, otherwise the current
-   album.
-   Plugins should with everything else equal act the same way, which is to
-   use the selection if one exists, otherwise use the whole album.
-   This instead of writing code like below, you should instead use this
-   function:
-   \code
-    ImageCollection images = interface->currentSelection();
-    if ( !images.isValid() )
-        images = interface->currentAlbum();
-   \endcode
-*/
-KIPI::ImageCollection KIPI::Interface::currentScope()
-{
-    ImageCollection images = currentSelection();
-    if ( images.isValid() )
-        return images;
-    else
-        return currentAlbum();
-}
-
-void KIPI::Interface::stateChange()
-{
-    ImageCollection images = currentScope();
-    emit currentScopeChanged( images.isValid() );
-}
 
 /**
    Return a bitwise or of the KIPI::Features that thus application support.
