@@ -22,7 +22,7 @@ class DemoImageInfo :public ImageInfoShared
 public:
     DemoImageInfo( const KURL& url );
     virtual QString name();
-    virtual QString descrion();
+    virtual QString description();
     virtual QMap<QString,QVariant> attributes();
 };
 

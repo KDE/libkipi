@@ -93,7 +93,7 @@ QString DemoImageInfo::name()
     return _url.fileName();
 }
 
-QString DemoImageInfo::descrion()
+QString DemoImageInfo::description()
 {
     return QString( "description for %1" ).arg( name() );
 }
