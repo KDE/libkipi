@@ -260,14 +260,24 @@ void PluginLoader::loadPlugin( Info* info )
 {
     if ( info->plugin() == 0 && info->shouldLoad() ) {
         Plugin *plugin = 0;
+        int error;
         plugin =  KParts::ComponentFactory
-                  ::createInstanceFromLibrary<Plugin>(info->library().local8Bit().data(), d->m_interface );
+                  ::createInstanceFromLibrary<Plugin>(info->library().local8Bit().data(),
+                                                      d->m_interface, 0, QStringList(), &error);
 
         if (plugin)
             kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name()<< endl;
         else
-            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for " << info->name()
-                               << "(" << info->library() << ")" << endl;
+        {
+            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
+                               << info->name()
+                               << " (" << info->library() << ")"
+                               << " with error number "
+                               << error << endl;
+            if (error == KParts::ComponentFactory::ErrNoLibrary)
+                kdWarning( 51001 ) << "KLibLoader says: "
+                                   << KLibLoader::self()->lastErrorMessage() << endl;
+        }
         info->setPlugin(plugin);
     }
     if ( info->plugin() ) // Do not emit if we had trouble loading the plugin.
