@@ -1,0 +1,37 @@
+To be discussed:
+1. Define the way plugins should access host app images. Current choices are:
+- Use ImageCollections
+- Use Interface::Browser class suggested by Jesper in the
+  "libkipi/libkipi/design" document.
+
+2. In the same way, define how plugins should give images to the host app. 
+Current choices are:
+- Interface::addImage
+- Define a class similar to Interface::Browser, which we could call 
+  Interface::Importer
+
+3. Make a decision on some terms: should we use "album" or "image collection" 
+or both (if so, explain the difference in a README file)
+
+4. Agree on the category list.
+
+5. Define KIPI and plugin versioning so that we don't get mixed version bugs 
+(Aurélien: I think this could be done by correctly defining lib version
+numbers, but I might be missing something here).
+
+6. Define what helper widgets/dialog we should provide to plugins. Right now 
+we have:
+  - ImageCollectionDialog (Poor name, should be ImageSelectDialog)
+  - UploadWidget
+
+
+To be done:
+- Review all classes to polish the API before freezing it.
+
+- Improve BC strength with d pointers.
+
+- Add functions for copying/moving/renaming files, or do we all agree that the 
+ImageInfo::cloneData() method is enough?
+
+- Write some documentation. I'm thinking about Doxygen class documentation 
+plus a skeleton app and a skeleton plugin to serve as examples.
