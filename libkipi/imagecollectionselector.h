@@ -61,6 +61,8 @@ private:
     
     Private* d;
     void fillList();
+    void emitSelectionChanged();
+    friend class ImageCollectionItem;
 
 private slots:
     

@@ -52,17 +52,27 @@ namespace KIPI
 class ImageCollectionItem : public QCheckListItem
 {
 public:
-    ImageCollectionItem(QListView * parent, ImageCollection collection)
+    ImageCollectionItem(ImageCollectionSelector* selector,
+                        QListView * parent, ImageCollection collection)
     : QCheckListItem( parent, collection.name(), QCheckListItem::CheckBox),
-      _imageCollection(collection)
+      _imageCollection(collection), _selector(selector)
     {}
 
     ImageCollection imageCollection() const { return _imageCollection; }
 
-private:
-    ImageCollection _imageCollection;
-};
+protected:
 
+    virtual void stateChange(bool val)
+    {
+        QCheckListItem::stateChange(val);
+        _selector->emitSelectionChanged();
+    }
+    
+private:
+    
+    ImageCollection          _imageCollection;
+    ImageCollectionSelector* _selector;
+};
 
 struct ImageCollectionSelector::Private {
     Interface* _interface;
@@ -142,11 +152,16 @@ void ImageCollectionSelector::fillList() {
     d->_list->clear();
     ImageCollection current = d->_interface->currentAlbum();
     bool currentWasInList = false;
+
+    /* note: the extensive use of blocksignals is to prevent bombarding
+       the plugin with too many selection changed signals. do not remove
+       them */
     
+    blockSignals(true);
     for( QValueList<ImageCollection>::Iterator it = collections.begin() ;
          it != collections.end() ; ++it )
     {
-        ImageCollectionItem* item = new ImageCollectionItem( d->_list, *it);
+        ImageCollectionItem* item = new ImageCollectionItem( this, d->_list, *it);
         if (!currentWasInList && *it == current) {
             item->setOn(true);
             currentWasInList = true;
@@ -159,6 +174,12 @@ void ImageCollectionSelector::fillList() {
         slotSelectAll();
         d->_itemToSelect = d->_list->firstChild();
     }
+    blockSignals(false);
+}
+
+void ImageCollectionSelector::emitSelectionChanged()
+{
+    emit selectionChanged();
 }
 
 QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const {
@@ -180,10 +201,16 @@ QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() 
 void ImageCollectionSelector::slotSelectAll() {
     QListViewItemIterator it( d->_list );
 
+    /* note: the extensive use of blocksignals is to prevent bombarding
+       the plugin with too many selection changed signals. do not remove
+       them */
+    blockSignals(true);
     for (; it.current(); ++it) {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(true);
     }
+    blockSignals(false);
+    
     emit selectionChanged();
 }
 
@@ -191,10 +218,16 @@ void ImageCollectionSelector::slotSelectAll() {
 void ImageCollectionSelector::slotInvertSelection() {
     QListViewItemIterator it( d->_list );
 
+    /* note: the extensive use of blocksignals is to prevent bombarding
+       the plugin with too many selection changed signals. do not remove
+       them */
+    blockSignals(true);
     for (; it.current(); ++it) {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(!item->isOn());
     }
+    blockSignals(false);
+
     emit selectionChanged();
 }
 
@@ -202,10 +235,16 @@ void ImageCollectionSelector::slotInvertSelection() {
 void ImageCollectionSelector::slotSelectNone() {
     QListViewItemIterator it( d->_list );
 
+    /* note: the extensive use of blocksignals is to prevent bombarding
+       the plugin with too many selection changed signals. do not remove
+       them */
+    blockSignals(true);
     for (; it.current(); ++it) {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(false);
     }
+    blockSignals(false);
+    
     emit selectionChanged();
 }
 
