@@ -24,7 +24,7 @@
 
 #include <qobject.h>
 #include "libkipi/interface.h"
-#include <kactioncollection.h>
+#include <kaction.h>
 
 class KInstance;
 

@@ -4,9 +4,16 @@
 #include <klocale.h>
 #include <qheader.h>
 #include <kdebug.h>
-#include <kinputdialog.h>
 #include <kio/jobclasses.h>
 #include <kmessagebox.h>
+
+#include <kdeversion.h>
+#if KDE_VERSION >= 0x30200
+#include <kinputdialog.h>
+#else
+#include <klineeditdlg.h>
+#define KInputDialog KLineEditDlg
+#endif
 
 /*!
   \class KIPI::UploadWidget
@@ -33,8 +40,8 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     QString uploadPath = album.uploadPath().path();
     if ( !uploadPath.startsWith( root ) ) {
         kdWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
-                         << "uploadPath() = " << album.uploadPath() << endl
-                         << "uploadRoot() = " << album.uploadRoot() << endl;
+                         << "uploadPath() = " << album.uploadPath().prettyURL() << endl
+                         << "uploadRoot() = " << album.uploadRoot().prettyURL() << endl;
     }
     else {
         uploadPath = uploadPath.mid( root.length() );
