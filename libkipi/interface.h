@@ -38,16 +38,16 @@ namespace KIPI
         virtual ~Interface();
 
         /** List in current album say 500 images of Jesper */
-        virtual ImageCollection* currentAlbum() = 0;
+        virtual ImageCollection currentAlbum() = 0;
 
         /** Current set of images in the thumbnail viewer - the first 150 images of Jesper */
-        virtual ImageCollection* currentView() { return currentAlbum(); }
+        virtual ImageCollection currentView() { return currentAlbum(); }
 
         /** current selection in the thumbnail viewer - 5 images selected e.g. */
-        virtual ImageCollection* currentSelection() = 0;
+        virtual ImageCollection currentSelection() = 0;
 
         /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
-        virtual QValueList<ImageCollection*> allAlbums() = 0;
+        virtual QValueList<ImageCollection> allAlbums() = 0;
 
         /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
         virtual ImageInfo info( const KURL& ) = 0;

@@ -15,25 +15,23 @@ namespace KIPI
     {
     public:
         // Interface for plugins.
-        QString name();
-        KURL path();
-        QString description();
-        QDateTime time();
-        QMap<QString,QVariant> attributes();
-        QString toString( const QVariant& );
-        int size();
+        QString name() const;
+        KURL path() const;
+        QString description() const;
+        QDateTime time() const;
+        QMap<QString,QVariant> attributes() const;
+        QString toString( const QVariant& ) const;
+        int size() const;
 
-        // Interface for host application
+        // Interface for host application + general stuff
         ImageInfo( ImageInfoShared* );
-
-        // general stuff
         ImageInfo( const ImageInfo& );
         ~ImageInfo();
 
     private:
         ImageInfo() {} // Disabled
         ImageInfo& operator=( const ImageInfo& ) { return *this; } // Disabled
-        KIPI::ImageInfoShared* _data;
+        mutable KIPI::ImageInfoShared* _data;
     };
 }
 

@@ -5,14 +5,26 @@
 
 namespace KIPI
 {
+    class ImageCollectionShared;
+
     class ImageCollection
     {
     public:
-        virtual ~ImageCollection() {}
-        virtual QString name() const = 0;
-        virtual QString comment() const;
-        virtual KURL::List images() const = 0;
-        virtual KURL root() const ;
+        // Interface for plugins.
+        QString name() const;
+        QString comment() const;
+        KURL::List images() const;
+        KURL root() const ;
+
+        // Interface for host application + general stuff
+        ImageCollection( ImageCollectionShared* );
+        ImageCollection( const ImageCollection& other );
+        ~ImageCollection();
+        ImageCollection();
+        ImageCollection& operator=( const ImageCollection& );
+
+    private:
+        mutable KIPI::ImageCollectionShared* _data;
     };
 }
 

@@ -2,7 +2,7 @@
 #include "KDStream.h"
 #include "imageinfoshared.h"
 
-QString KIPI::ImageInfo::toString( const QVariant& data )
+QString KIPI::ImageInfo::toString( const QVariant& data ) const
 {
     QString string;
     KDStream stream( &string );
@@ -14,7 +14,7 @@ QString KIPI::ImageInfo::toString( const QVariant& data )
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::name()
+QString KIPI::ImageInfo::name() const
 {
     return _data->name();
 }
@@ -22,7 +22,7 @@ QString KIPI::ImageInfo::name()
 /**
    PENDING(blackie) document
 */
-KURL KIPI::ImageInfo::path()
+KURL KIPI::ImageInfo::path() const
 {
     return _data->path();
 }
@@ -30,7 +30,7 @@ KURL KIPI::ImageInfo::path()
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::description()
+QString KIPI::ImageInfo::description() const
 {
     return _data->description();
 }
@@ -38,7 +38,7 @@ QString KIPI::ImageInfo::description()
 /**
    PENDING(blackie) document
 */
-QDateTime KIPI::ImageInfo::time()
+QDateTime KIPI::ImageInfo::time() const
 {
     return _data->time();
 }
@@ -46,7 +46,7 @@ QDateTime KIPI::ImageInfo::time()
 /**
    PENDING(blackie) document
 */
-QMap<QString,QVariant> KIPI::ImageInfo::attributes()
+QMap<QString,QVariant> KIPI::ImageInfo::attributes() const
 {
     return _data->attributes();
 }
@@ -54,7 +54,7 @@ QMap<QString,QVariant> KIPI::ImageInfo::attributes()
 /**
    PENDING(blackie) document
 */
-int KIPI::ImageInfo::size()
+int KIPI::ImageInfo::size() const
 {
     return _data->size();
 }

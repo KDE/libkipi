@@ -11,10 +11,10 @@ class DemoInterface :public KIPI::Interface {
 public:
     DemoInterface( QWidget* parent, const char* name = 0 );
 
-    virtual ImageCollection* currentAlbum();
-    virtual ImageCollection* currentSelection();
+    virtual ImageCollection currentAlbum();
+    virtual ImageCollection currentSelection();
     virtual ImageInfo info( const KURL& );
-    virtual  QValueList<ImageCollection*> allAlbums();
+    virtual  QValueList<ImageCollection> allAlbums();
 };
 
 class DemoImageInfo :public ImageInfoShared
