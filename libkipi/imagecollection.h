@@ -17,6 +17,7 @@ namespace KIPI
         KURL path() const;
         KURL uploadPath() const;
         KURL uploadRoot() const;
+        bool isValid() const;
 
         // Interface for host application + general stuff
         ImageCollection( ImageCollectionShared* );
@@ -27,6 +28,7 @@ namespace KIPI
 
     private:
         mutable KIPI::ImageCollectionShared* _data;
+        void printNullError() const;
     };
 }
 

@@ -38,6 +38,8 @@ namespace KIPI
         SupportsDateRanges  = 0x0010,
         AcceptNewImages     = 0x0020,
         ImageTitlesWritable = 0x0040
+        // When adding new items, remember to update "hasFeature( const QString& feature )"
+        // and the hello world plugin.
     };
 
     class Interface : public QObject

@@ -11,8 +11,7 @@ QString KIPI::ImageCollection::comment() const
     if ( _data )
         return _data->comment();
     else {
-        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
-            "the constructor taking a ImageCollectionShared* as argument!\n";
+        printNullError();
         return QString::null;
     }
 }
@@ -25,8 +24,7 @@ QString KIPI::ImageCollection::name() const
     if ( _data )
         return _data->name();
     else {
-        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
-            "the constructor taking a ImageCollectionShared* as argument!\n";
+        printNullError();
         return QString::null;
     }
 }
@@ -39,8 +37,7 @@ KURL::List KIPI::ImageCollection::images() const
     if ( _data )
         return _data->images();
     else {
-        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
-            "the constructor taking a ImageCollectionShared* as argument!\n";
+        printNullError();
         return KURL::List();
     }
 }
@@ -62,10 +59,8 @@ KIPI::ImageCollection::ImageCollection( const ImageCollection& rhs )
         _data = rhs._data;
         _data->addRef();
     }
-    else {
-        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
-            "the constructor taking a ImageCollectionShared* as argument!\n";
-    }
+    else
+        _data = 0;
 }
 
 KIPI::ImageCollection::ImageCollection()
@@ -81,11 +76,13 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
     if ( _data )
         _data->removeRef();
     if ( !rhs._data ) {
-        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
-            "the constructor taking a ImageCollectionShared* as argument!\n";
+        printNullError();
+        _data = 0;
     }
-    _data = rhs._data;
-    _data->addRef();
+    else {
+        _data = rhs._data;
+        _data->addRef();
+    }
     return *this;
 }
 
@@ -98,7 +95,12 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
 */
 KURL KIPI::ImageCollection::path() const
 {
-    return _data->path();
+    if ( _data )
+        return _data->path();
+    else {
+        printNullError();
+        return KURL();
+    }
 }
 
 /*!
@@ -115,7 +117,12 @@ KURL KIPI::ImageCollection::path() const
 */
 KURL KIPI::ImageCollection::uploadPath() const
 {
-    return _data->uploadPath();
+    if ( _data )
+        return _data->uploadPath();
+    else {
+        printNullError();
+        return KURL();
+    }
 }
 
 /*!
@@ -135,6 +142,24 @@ KURL KIPI::ImageCollection::uploadPath() const
 */
 KURL KIPI::ImageCollection::uploadRoot() const
 {
-    return _data->uploadRoot();
+    if ( _data )
+        return _data->uploadRoot();
+    else {
+        printNullError();
+        return KURL();
+    }
+}
+
+bool KIPI::ImageCollection::isValid() const
+{
+    return (_data != 0);
+}
+
+void KIPI::ImageCollection::printNullError() const
+{
+    kdWarning( 51000 ) << "Imagecolleciton is invalid - this might be the case if you asked for an album, " << endl
+                       << "and not album existed. You should check using .isValid() first." << endl
+                       << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
+                       << "should do that." << endl;
 }
 
