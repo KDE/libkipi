@@ -25,6 +25,7 @@
 
 #include "plugin.h"
 #include "pluginloader.h"
+#include "interface.h"
 
 using namespace KIPI;
 
@@ -51,11 +52,20 @@ void KIPI::PluginLoader::init()
         KService::Ptr service = *iter;
         QString name    = service->name();
         QString library = service->library();
+        QStringList reqFeatures = service->property( QString::fromLatin1( "X-KIPI-ReqFeatures" ) ).toStringList();
 
-        if (!library.isEmpty() && !name.isEmpty() && !m_ignores.contains( name ) ) {
-            m_pluginNames.append(name);
-            m_libraryNames.append(library);
+        if (library.isEmpty() || name.isEmpty() || m_ignores.contains( name ) )
+            continue;
+
+        for( QStringList::Iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) {
+            if ( !m_interface->hasFeature( *featureIt ) ) {
+                kdDebug( 51001 ) << "Plugin " << name << " was not loaded due to the host application was missing\n"
+                                 << "the feature " << *featureIt << endl;
+            }
         }
+
+        m_pluginNames.append(name);
+        m_libraryNames.append(library);
     }
 }
 
@@ -96,8 +106,7 @@ void KIPI::PluginLoader::loadPlugins()
 
         if (plugin) {
             m_pluginList.append(plugin);
-            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin "
-                      << plugin->name() << endl;
+            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
         }
     }
 }
@@ -128,8 +137,7 @@ void KIPI::PluginLoader::loadPlugins(const QStringList& names)
 
             if (plugin) {
                 m_pluginList.append(plugin);
-                kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin "
-                          << plugin->name() << endl;
+                kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
             }
         }
 

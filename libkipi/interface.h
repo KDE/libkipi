@@ -30,6 +30,12 @@
 
 namespace KIPI
 {
+    enum Features {
+        AlbumsHaveDescriptions = 0x0001,
+        AlbumEQDir             = 0x0002,
+        ImagesHasComments      = 0x0004
+    };
+
     class Interface : public QObject
     {
         Q_OBJECT
@@ -52,6 +58,11 @@ namespace KIPI
 
         /** Tells the host app that the following images has changed on disk */
         virtual void refreshImages( const KURL::List& );
+
+        /** Return a bitwise or if the KIPI::Features that thus application support. */
+        virtual int features() const = 0;
+        bool hasFeature( KIPI::Features feature );
+        bool hasFeature( const QString& feature );
 
     signals:
         // PENDING(blackie) signals is something we haven't discussed yet.

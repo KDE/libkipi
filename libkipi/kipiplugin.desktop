@@ -7,6 +7,9 @@ Comment=A KIPI Plugin
 [PropertyDef::X-KIPI-Id]
 Type=QString
 
+[PropertyDef::X-KIPI-ReqFeatures]
+Type=QStringList
+
 Name[de]=Externe Module für KIPI
 Name[es]=Complemento para KIPI
 Name[fr]=Module externe pour KIPI
