@@ -1,3 +1,24 @@
+/* ============================================================
+ * File   : imagedialog.cpp
+ * Authors: KIPI team developers (see AUTHORS files for details)
+ *	    
+ * Date   : 2004-05
+ * Description :
+ *
+ * Copyright 2004 by the KIPI team
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
 #include <qguardedptr.h>
 #include <qhbox.h>
 #include <qlabel.h>
@@ -7,7 +28,7 @@
 #include <klocale.h>
 #include <kio/previewjob.h>
 
-#include "imagechooser.moc"
+#include "imagedialog.moc"
 
 
 const int PREVIEW_SIZE=128;
@@ -33,7 +54,7 @@ struct ImageLVI : public KListViewItem {
 };
 
 
-struct ImageChooser::Private {
+struct ImageDialog::Private {
     KURL _url;
     KIPI::Interface* _interface;
     KListView* _albumList;
@@ -43,7 +64,7 @@ struct ImageChooser::Private {
 };
 
 
-ImageChooser::ImageChooser(QWidget* parent, KIPI::Interface* interface)
+ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface)
     : KDialogBase(parent, "album-dialog", true, i18n("Select an image from an album"),
         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
@@ -78,18 +99,18 @@ ImageChooser::ImageChooser(QWidget* parent, KIPI::Interface* interface)
 }
 
 
-ImageChooser::~ImageChooser() {
+ImageDialog::~ImageDialog() {
     delete d;
 }
 
 
-KURL ImageChooser::url() const {
+KURL ImageDialog::url() const {
     return d->_url;
 }
 
 
-KURL ImageChooser::getImageURL(QWidget* parent, KIPI::Interface* interface) {
-    ImageChooser dlg(parent, interface);
+KURL ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) {
+    ImageDialog dlg(parent, interface);
     if (dlg.exec()) {
         return dlg.url();
     } else {
@@ -99,7 +120,7 @@ KURL ImageChooser::getImageURL(QWidget* parent, KIPI::Interface* interface) {
 
 
 
-void ImageChooser::fillImageList(QListViewItem* item) {
+void ImageDialog::fillImageList(QListViewItem* item) {
     d->_imageList->clear();
     if (!item) return;
 
@@ -113,7 +134,7 @@ void ImageChooser::fillImageList(QListViewItem* item) {
 }
 
 
-void ImageChooser::slotImageSelected(QListViewItem* item) {
+void ImageDialog::slotImageSelected(QListViewItem* item) {
     if (!item) {
         enableButtonOK(false);
         d->_preview->setText(i18n("No image selected"));
@@ -130,7 +151,7 @@ void ImageChooser::slotImageSelected(QListViewItem* item) {
 }
 
 
-void ImageChooser::slotGotPreview(const KFileItem*, const QPixmap& pix) {
+void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
 
     d->_preview->setPixmap(pix);
 }
