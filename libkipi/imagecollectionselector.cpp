@@ -36,6 +36,7 @@
 #include <kdialog.h>
 #include <klistview.h>
 #include <klocale.h>
+#include <kglobal.h>
 #include <kio/previewjob.h>
 
 // KIPI
@@ -254,8 +255,9 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     // Album Creation Date
     if (d->_interface->hasFeature(AlbumsHaveCreationDate))
     {
+        QDate date(imcollItem->imageCollection().date());
         text += cellBeg + i18n("Date :") +
-                cellMid + imcollItem->imageCollection().date().toString() +
+                cellMid + KGlobal::locale()->formatDate(date) +
                 cellEnd;
     }
 
