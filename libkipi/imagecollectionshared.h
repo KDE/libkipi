@@ -1,5 +1,5 @@
-#ifndef IMAGECOLLECTIONSHARED_H
-#define IMAGECOLLECTIONSHARED_H
+#ifndef KIPI_IMAGECOLLECTIONSHARED_H
+#define KIPI_IMAGECOLLECTIONSHARED_H
 #include <qstring.h>
 #include <kurl.h>
 #include "imagecollection.h"

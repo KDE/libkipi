@@ -1,5 +1,5 @@
-#ifndef IMAGECOLLECTION_H
-#define IMAGECOLLECTION_H
+#ifndef KIPI_IMAGECOLLECTION_H
+#define KIPI_IMAGECOLLECTION_H
 #include <kurl.h>
 #include <qstring.h>
 

@@ -19,8 +19,8 @@
  *
  * ============================================================ */
 
-#ifndef THUMBNAILJOB_H
-#define THUMBNAILJOB_H
+#ifndef KIPI_THUMBNAILJOB_H
+#define KIPI_THUMBNAILJOB_H
 
 #include <kio/job.h>
 #include <kurl.h>

@@ -1,5 +1,5 @@
-#ifndef IMAGEINFO_H
-#define IMAGEINFO_H
+#ifndef KIPI_IMAGEINFO_H
+#define KIPI_IMAGEINFO_H
 #include <kurl.h>
 #include <qstring.h>
 #include <qdatetime.h>
@@ -35,5 +35,5 @@ namespace KIPI
     };
 }
 
-#endif /* IMAGEINFO_H */
+#endif /* KIPI_IMAGEINFO_H */
 

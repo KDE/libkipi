@@ -28,8 +28,8 @@
 **
 **********************************************************************/
 
-#ifndef __KDSTREAM
-#define __KDSTREAM
+#ifndef KIPI_KDSTREAM
+#define KIPI_KDSTREAM
 
 // Forward declarations.
 class QColor;
@@ -136,7 +136,7 @@ public:
 
 protected:
   QString QColor2Str( const QColor& col );
-    
+
 private:
   QString _output;
   QString* _out;
@@ -144,7 +144,7 @@ private:
 
 
 // Helper functions for KDStream.
-// Defined as global functions to support 
+// Defined as global functions to support
 // compilers without support for member templates
 // You should not need to call those yourself
 template <class Iterator> void KDStream_valueListStream( KDStream& st, Iterator begin, Iterator end )
@@ -152,7 +152,7 @@ template <class Iterator> void KDStream_valueListStream( KDStream& st, Iterator 
   st << "[";
   bool first = true;
   for ( Iterator it = begin; it != end; ++it ){
-    if ( first ) 
+    if ( first )
       first = false;
     else
       st << ", ";
@@ -160,7 +160,7 @@ template <class Iterator> void KDStream_valueListStream( KDStream& st, Iterator 
   }
   st << "]";
 }
-  
+
 template<class Iterator> void KDStream_ptrListStream( KDStream& st, Iterator it, bool doubleDeref )
 {
   st << "[";
@@ -170,14 +170,14 @@ template<class Iterator> void KDStream_ptrListStream( KDStream& st, Iterator it,
       first = false;
     else
       st << ", ";
-    
+
     if ( doubleDeref )
       st << *(*it);
     else {
-      // QStrList ought to be a value list rather than a ptr list, one less dereference is 
+      // QStrList ought to be a value list rather than a ptr list, one less dereference is
       // necesary here, otherwise we will only stream out a char, rather than a char *
       st << *it;
-    }      
+    }
   }
   st << "]";
 }
@@ -191,7 +191,7 @@ template<class Iterator> void KDStream_ptrDictStream( KDStream& st, Iterator it 
       first = false;
     else
       st << ", ";
-    
+
     st << (it.currentKey()) << ": " << *(it.current()) ;
   }
   st << "}";
@@ -214,7 +214,7 @@ template<class T> KDStream& operator<<( KDStream& st, const QList<T>& list )
   return st;
 }
 
-template<class T> KDStream& operator<<( KDStream& st, const QArray<T>& array ) 
+template<class T> KDStream& operator<<( KDStream& st, const QArray<T>& array )
 {
   KDStream_valueListStream( st, array.begin(), array.end() );
   return st;
@@ -224,13 +224,13 @@ template<class T> KDStream& operator<<( KDStream& st, const QVector<T>& vector )
 {
   QList<T> list;
   vector.toList( &list );
-  
+
   KDStream_ptrListStream ( st, QListIterator<T>( list ), true );
   return st;
 }
 #endif
 #if ( QT_VERSION >= 300 )
-template<class T> KDStream& operator<<( KDStream& st, const QMemArray<T>& array ) 
+template<class T> KDStream& operator<<( KDStream& st, const QMemArray<T>& array )
 {
   KDStream_valueListStream( st, array.begin(), array.end() );
   return st;
@@ -252,7 +252,7 @@ template<class T> KDStream& operator<<( KDStream& st, const QPtrVector<T>& vecto
 {
   QPtrList<T> list;
   vector.toList( &list );
-  
+
   KDStream_ptrListStream( st, QPtrListIterator<T>( list ), true );
   return st;
 }
@@ -272,25 +272,25 @@ template<class T> KDStream& operator<<( KDStream& st, const QStack<T>& stack )
 #else
 template<class T> KDStream& operator<<( KDStream& st, const QPtrStack<T>& stack )
 {
-      
+
   // I need a copy to look at the individual elements.
   QPtrStack<T> copy(stack);
   /*}*/
-#endif  
+#endif
   st << "[";
   if ( stack.count() > 1 )
     st << "top| ";
   st << " ";
-  
+
   bool first = true;
   while ( !copy.isEmpty() ) {
     if (first)
       first = false;
-    else 
+    else
       st << ", ";
     st << *(copy.pop());
   }
-  
+
   st << " ";
   if (  stack.count() > 1 )
     st << " |bottom";
@@ -311,23 +311,23 @@ template<class T> KDStream& operator<<( KDStream& st, const QValueStack<T>& stac
   if ( stack.count() > 1 )
     st << "top| ";
   st << " ";
-  
+
   bool first = true;
   while ( !copy.isEmpty() ) {
     if (first)
       first = false;
-    else 
+    else
       st << ", ";
     st << copy.pop();
   }
-  
+
   st << " ";
   if (  stack.count() > 1 )
     st << " |bottom";
   st << "]";
   return st;
 }
-  
+
 
 template<class T> KDStream& operator<<( KDStream& st, const QAsciiDict<T>& dict )
 {

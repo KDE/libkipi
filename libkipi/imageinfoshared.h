@@ -1,5 +1,5 @@
-#ifndef IMAGEINFOSHARED_H
-#define IMAGEINFOSHARED_H
+#ifndef KIPI_IMAGEINFOSHARED_H
+#define KIPI_IMAGEINFOSHARED_H
 #include <kurl.h>
 #include <qstring.h>
 #include <qmap.h>

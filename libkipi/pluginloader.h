@@ -19,8 +19,8 @@
  *
  * ============================================================ */
 
-#ifndef PLUGINLOADER_H
-#define PLUGINLOADER_H
+#ifndef KIPI_PLUGINLOADER_H
+#define KIPI_PLUGINLOADER_H
 
 #include <qstringlist.h>
 #include <qptrlist.h>
