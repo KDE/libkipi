@@ -27,7 +27,7 @@ public:
             return true;
         }
 
-    virtual QString comment() const
+    virtual QString comment()
         {
             return "a demo comment";
         }

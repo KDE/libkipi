@@ -40,9 +40,6 @@ namespace KIPI
         /** List in current album say 500 images of Jesper */
         virtual ImageCollection currentAlbum() = 0;
 
-        /** Current set of images in the thumbnail viewer - the first 150 images of Jesper */
-        virtual ImageCollection currentView() { return currentAlbum(); }
-
         /** current selection in the thumbnail viewer - 5 images selected e.g. */
         virtual ImageCollection currentSelection() = 0;
 
