@@ -13,6 +13,7 @@ public:
     virtual ImageCollection* currentAlbum();
     virtual ImageCollection* currentSelection();
     virtual ImageInfo info( const KURL& );
+    virtual  QValueList<ImageCollection*> allAlbums();
 };
 
 

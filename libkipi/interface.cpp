@@ -1,10 +1,10 @@
 /* ============================================================
  * File  : interface.cpp
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
+ * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>, Jesper K. Pedersen <blackie@kde.org>
  * Date  : 2004-02-19
  * Description :
  *
- * Copyright 2004 by Renchi Raju
+ * Copyright 2004 by Renchi Raju, Jesper K. Pedersen
 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

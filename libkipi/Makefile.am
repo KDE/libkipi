@@ -3,11 +3,11 @@ INCLUDES= $(all_includes) -I$(top_srcdir)/libkipi
 
 lib_LTLIBRARIES = libkipi.la
 
-libkipi_la_SOURCES = interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp 
+libkipi_la_SOURCES = interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp thumbnailjob.cpp imagecollection.cpp
 
 noinst_HEADERS = KDStream.h
 
-libkipiinclude_HEADERS = interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h
+libkipiinclude_HEADERS = interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h thumbnailjob.h
 
 libkipi_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) \
 		-version-info 0:0:0 -no-undefined
