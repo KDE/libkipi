@@ -122,6 +122,7 @@ void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
     }
     enableButtonOK(true);
     d->_url=static_cast<ImageLVI*>(item)->_url;
+    d->_preview->clear();
 
     KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
     connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
