@@ -1,1 +1,1167 @@
-See the Changelog file in kipi-plugins
+v0.1.0-beta2                                                      2005-02-08
+----------------------------------------------------------------------------
+
+2005-01-17 23:31  pahlibar
+
+	* libkipi/uploadwidget.cpp:
+	  clean up. fix problem with trailing slashes
+
+2005-01-17 21:55  pahlibar
+
+	* libkipi/uploadwidget.cpp:
+	  show root of upload dirtree as decorated
+
+2005-01-05 18:52  deller
+
+	* libkipi/version.h: minifix
+
+2004-12-22 07:12  pahlibar
+
+	* libkipi/uploadwidget.cpp:
+	  * fix retrieving upload path from a virtual album
+	  (libkipi/uploadwidget) * fix crash in batchprocess plugin when no
+	  destination path is selected. the function   thinks its being
+	  called in preview mode, but the preview process is null there.
+	  its dangerous to make an assumption of a passed arg being null,
+	  when its being called    from multiple places in different modes.
+	  better use a separate explicit variable to	indicate that the
+	  function is being called in a different mode. good for the sanity
+	  of those reading the code as well	BUG: 94370
+
+2004-12-21 19:25  lukas
+
+	* libkipi/batchprogressdialog.cpp: i18n fixes, enough for today :)
+
+2004-12-04 04:52  pahlibar
+
+	* libkipi/: imagedialog.cpp, imagedialog.h:
+	  select application selected collection in the image selector
+	  window at start up. preserves BC.  CCMAIL: kde-imaging@kde.org
+
+2004-11-06 05:07  bmeyer
+
+	* libkipi/Makefile.am: header fixes "" comparisions changed to use
+	  .isEmpty() Added missing Encoding line to desktop file Fixed
+	  Build Build breakage
+
+2004-10-29 20:02  aseigo
+
+	* libkipi/pluginloader.cpp: make this layout a wee bit easier on
+	  the eyes. when BC can be broken this should probably be turned
+	  into a listview with checkboxitems?
+
+2004-10-27 23:10  gateau
+
+	* libkipi.lsm: Initial import of .lsm files, needed to upload to
+	  upload.kde.org.
+
+2004-10-17 10:37  ach
+
+	* ChangeLog: Add missing final newline.  CVS_SILENT
+
+2004-10-14 01:26  ach
+
+	* libkipi/: plugin.cpp, plugin.h: add (see AUTHORS files for
+	  details) for consistency
+
+2004-10-14 01:09  ach
+
+	* libkipi/mainpage.cpp: o s/informations/information/ o fix bad URL
+	  o FIXME: missing (c) and license
+
+2004-10-13 21:37  pahlibar
+
+	* README:
+	  added newline
+
+2004-10-13 19:24  pahlibar
+
+	* Makefile.am:
+	  added message extraction back
+
+2004-10-13 02:33  pahlibar
+
+	* libkipi/version.h:
+	  bump up version to 0.1.0
+
+2004-10-09 19:12  binner
+
+	* libkipi/: batchprogressdialog.cpp, imagedialog.cpp: CVS_SILENT
+	  i18n style guide fixes
+
+2004-10-08 15:53  cgilles
+
+	* libkipi/: Makefile.am, tips: Moved kipiplugins tips to the
+	  plugins folder.  CCMAIL: kde-imaging@kde.org
+
+2004-10-08 08:35  cgilles
+
+	* libkipi/tips: Kipi plugins 'tip of day' : fixed i18n support !
+	  It's an indeep problem when we use HTML tags in a tips file.	We
+	  must implemented in flat the HTML code : one line for each tags
+	  and text.  No more than one tag per line !!! CCMAIL:
+	  kde-imaging@kde.org, oliver@doerr-privat.de
+
+2004-10-07 21:03  cgilles
+
+	* libkipi/tips: CVS_SILENT UPdate
+
+2004-10-07 21:00  cgilles
+
+	* libkipi/Makefile.am: CVS_SILENT Updated for tips
+
+2004-10-05 13:14  coles
+
+	* libkipi/imagedialog.cpp:
+
+	  CVS_SILENT
+
+	  Corrected typos.
+
+2004-10-05 04:48  pahlibar
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h:
+
+
+	  when items are toggled in the imagecollectionselector, make sure
+	  that the selectionChanged signal is emitted. a couple of dirty
+	  hacks was needed to make this work
+
+	  CCMAIL: 88884-done@bugs.kde.org
+
+2004-10-04 18:50  cgilles
+
+	* libkipi/: batchprogressdialog.cpp, imagedialog.cpp: CVS_SILnENT
+	  Fixed i
+
+2004-09-30 22:18  pahlibar
+
+	* libkipi/: Makefile.am, testimagecollectionselector.cpp,
+	  testimagecollectionselector.h:
+	  removed test program
+
+2004-09-22 17:11  pahlibar
+
+	* libkipi/imagecollection.cpp:
+	  check pointers before referencing them
+
+2004-09-22 08:51  cgilles
+
+	* libkipi/banner_left.png: CVS_SILENT Fixed height
+
+2004-09-22 04:06  pahlibar
+
+	* libkipi/: interface.cpp, interface.h:
+	  * remove currentScope() and currentScopeChanged() (signal) *
+	  plugins updated to reflect change * gentlemen, please update your
+	  apps CCMAIL: kde-imaging@kde.org
+
+2004-09-21 19:59  pahlibar
+
+	* .cvsignore, Makefile.am, configure.in.in, libkipi.pc.in:
+	  * pkg-configified libkipi * kipi-plugins configure.in.in updated
+	  to include tests for externally   installed libkipi CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-21 17:37  pahlibar
+
+	* libkipi/pluginloader.cpp:
+	  more verbose output if plugin cannot be loaded to diagnose why a
+	  plugin is not being loaded.  CCMAIL: kde-imaging@kde.org
+
+2004-09-21 14:24  cgilles
+
+	* libkipi/: batchprogressdialog.cpp, batchprogressdialog.h,
+	  imagedialog.cpp, imagedialog.h: Added About data and Graphical
+	  banner in KIPI dialog.
+
+2004-09-21 08:26  cgilles
+
+	* libkipi/: imagecollection.cpp, mainpage.cpp: Fixed doxygen
+	  comments
+
+2004-09-20 21:44  cgilles
+
+	* libkipi/tips: CVS_SILENT Added blank space at EOF
+
+2004-09-20 09:59  cgilles
+
+	* libkipi/banner_left.png: CVS_SILENT Fixed size
+
+2004-09-17 22:31  gateau
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h:
+	  There is no need to prefix a signal with "signal".
+
+2004-09-17 16:58  cgilles
+
+	* libkipi/: Makefile.am, banner_left.png, batchprogressdialog.cpp:
+	  CVS_SILENT Added KIPI graphic banner in batchprogressdialog
+
+2004-09-16 12:59  coles
+
+	* libkipi/imagecollectionselector.cpp:
+
+	  CVS_SILENT
+
+	  Replaced
+
+	  Date :
+
+	  with
+
+	  Date:
+
+	  etc.
+
+2004-09-16 10:14  cgilles
+
+	* libkipi/Makefile.am: CVS_SILENT Fixed tips i18n
+
+2004-09-16 01:09  gateau
+
+	* libkipi/: uploadwidget.cpp, uploadwidget.h: Added d pointer.
+
+2004-09-16 00:40  gateau
+
+	* libkipi/: pluginloader.cpp, pluginloader.h: Made d pointer
+	  modifications to PluginLoader::Info class.  WARNING: This change
+	  breaks binary and *source* compatibility, since you now need to
+	  use getters to access the PluginLoader::Info fields.
+
+	  CCMAIL:kde-imaging@kde.org
+
+2004-09-16 00:10  gateau
+
+	* libkipi/: pluginloader.cpp, pluginloader.h: Introduced d pointers
+	  in PluginLoader and ConfigWidget.
+
+2004-09-15 15:54  cgilles
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h:
+	  ImageCollectionSelector : Added signal when a collection is
+	  selected (requested by CDArchiving Kipi plugin) CCMAIL:
+	  kde-imaging@kde.org
+
+2004-09-15 12:36  cgilles
+
+	* libkipi/imagecollectionselector.cpp: ImageCollection Selector
+	  widget: limit collection comments char size to display else the
+	  widget is truncated.	CCMAIL: kde-imaging@kde.org
+
+2004-09-15 12:35  cgilles
+
+	* libkipi/Doxyfile: CVS_SILENT Update
+
+2004-09-15 10:07  cgilles
+
+	* libkipi/Makefile.am: CVS_SILENT Fixed
+
+2004-09-15 02:46  pahlibar
+
+	* libkipi/imagecollectionselector.cpp:
+	  use locale aware date string
+
+2004-09-15 02:41  pahlibar
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h:
+
+	  * missing features in imagecollectionselector implemented:
+	  comments,date,preview,category (if supported by app) and   count
+	  of images * make sure that the first collection which has been
+	  checked   on is selected and is visible * testing requested
+	  CCMAIL: kde-imaging@kde.org
+
+2004-09-14 00:01  gateau
+
+	* libkipi/interface.h: - Fixed potential bug:
+	  AlbumsHaveCreationDate is probably not equal to
+	  ImageTitlesWritable | AlbumsHaveCreationDate.
+
+	  - Uses shifts to avoid further mistakes.
+
+	  Warning, this will breaks BC! CCMail: kde-imaging@kde.org
+
+2004-09-13 13:28  cgilles
+
+	* libkipi/version.h: CVS_SILENT Fixed
+
+2004-09-13 08:35  cgilles
+
+	* libkipi/Makefile.am: Fixed missing version.h header
+
+2004-09-10 16:00  pahlibar
+
+	* libkipi/: imagecollection.cpp, imagecollectionshared.cpp:
+	  removed references of AlbumEQDir from the warning/debug messages
+
+2004-09-10 15:53  pahlibar
+
+	* libkipi/: imagecollection.cpp, imagecollection.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h,
+	  interface.cpp, interface.h:
+	  * removed AlbumEQDir feature from interface * added new virtual
+	  function to imagecollection(shared) isDirectory().	base
+	  implementation returns false.  CCMAIL: kde-imaging@kde.org
+
+2004-09-10 13:52  coles
+
+	* libkipi/imagedialog.cpp:
+
+	  CVS_SILENT
+
+	  Corrected i18n plural-form usage.
+
+2004-09-10 10:11  cgilles
+
+	* libkipi/tips: CVS_SILENT Updated and Fixed
+
+2004-09-09 20:57  pahlibar
+
+	* libkipi/: imagedialog.cpp, imagedialog.h:
+	  * Image Selection Dialog now works in two modes: single url
+	  selection or	 multiple url selection (listview extended mode,
+	  shift/ctrl to make   multiple selections) * mpegencoder image
+	  selection changed to use the new multiple selection	mode, as an
+	  example CCMAIL: kde-imaging@kde.org
+
+2004-09-09 15:01  cgilles
+
+	* libkipi/version.h: CVS_SILENT Added release ID header
+
+2004-09-08 23:34  gateau
+
+	* libkipi/: batchprogressdialog.cpp, batchprogressdialog.h,
+	  plugin.cpp, plugin.h: Started to add d pointers.
+
+2004-09-08 08:08  cgilles
+
+	* libkipi/kipiplugin.desktop: Fixed
+
+
+v0.1.0-beta1                                                      2004-09-06
+----------------------------------------------------------------------------        
+
+2004-09-06 22:56  mueller
+
+	* libkipi/plugin.h: fix compilation
+
+2004-09-06 17:41  pahlibar
+
+	* libkipi/: batchprogressdialog.cpp, batchprogressdialog.h,
+	  imagecollection.cpp, imagecollection.h,
+	  imagecollectionselector.cpp, imagecollectionselector.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h,
+	  imagedialog.cpp, imagedialog.h, imageinfo.cpp, imageinfo.h,
+	  imageinfoshared.cpp, imageinfoshared.h, interface.cpp,
+	  interface.h, plugin.cpp, plugin.h, pluginloader.cpp,
+	  pluginloader.h, testimagecollectionselector.cpp,
+	  testimagecollectionselector.h, uploadwidget.cpp, uploadwidget.h:
+	  changed license in header files from GPL to LGPL
+
+2004-09-06 15:49  gateau
+
+	* libkipi/: batchprogressdialog.cpp, batchprogressdialog.h: Fixed
+	  typo in enum.
+
+2004-08-24 18:01  blackie
+
+	* libkipi/: KDStream.cpp, KDStream.h: support pixmap and image
+
+2004-08-24 00:43  blackie
+
+	* libkipi/KDStream.cpp: Also output the newline char, plus flush at
+	  last newline char
+
+2004-08-15 20:50  binner
+
+	* libkipi/: imagedialog.cpp, uploadwidget.cpp: CVS_SILENT i18n
+	  style guide fixing, at least the beginning of it. Please read
+	  http://developer.kde.org/documentation/standards/kde/style/basics/labels.html
+
+2004-08-05 13:19  blackie
+
+	* libkipi/imagecollectionshared.cpp: named method in error message
+
+2004-08-02 14:32  cgilles
+
+	* libkipi/uploadwidget.cpp: Bug fix by Richard Grould from ShowImg
+	  project : bad current path for the current folder.  Tested with
+	  Digikam, Kimdaba, and Gwenview.  CCMAIL: kde-imaging@kde.org
+
+2004-07-22 15:06  pahlibar
+
+	* libkipi/: imageinfo.cpp, imageinfo.h:
+	  added copyright message to imageinfo
+
+2004-07-22 00:28  gateau
+
+	* libkipi/imagedialog.cpp: - Do not display album sizes.  - Use
+	  splitters between widgets.  - Increased the default width of the
+	  lists.
+
+2004-07-22 00:08  gateau
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h,
+	  testimagecollectionselector.cpp, testimagecollectionselector.h:
+	  Added copyrights.
+
+2004-07-22 00:06  gateau
+
+	* libkipi/: Makefile.am, imagechooser.cpp, imagechooser.h,
+	  imagedialog.cpp, imagedialog.h: Actually ImageDialog is more
+	  "KDE-like". Sorry for the double rename.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-21 23:56  gateau
+
+	* libkipi/: Makefile.am, imagechooser.cpp, imagechooser.h,
+	  imagecollectiondialog.cpp, imagecollectiondialog.h: As discussed
+	  on the mailing-list, renamed ImageCollectionDialog to
+	  ImageChooser.  CCMAIL:kde-imaging@kde.org
+
+2004-07-17 13:16  gateau
+
+	* libkipi/: imagecollectionselector.cpp, imagecollectionselector.h,
+	  testimagecollectionselector.cpp: If the image collection returned
+	  by currentAlbum() is in allAlbums(), check it.  Otherwise check
+	  all albums.
+
+2004-07-17 13:15  gateau
+
+	* libkipi/: imagecollection.cpp, imagecollection.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h: Implemented
+	  the == operator.
+
+2004-07-17 09:21  coolo
+
+	* libkipi/Makefile.am: no such file (and no subdirs anyway)
+
+2004-07-09 16:02  pahlibar
+
+	* libkipi/pluginloader.cpp:
+	  if a plugin is in the ignore list for a host, absolutely do not
+	  load the plugin.
+
+	  CCMAIL: kde-imaging@kde.org, blackie@blackie.dk
+
+2004-07-07 18:47  coles
+
+	* libkipi/: tips, uploadwidget.cpp:
+
+	  CVS_SILENT
+
+	  Corrected typos.
+
+2004-07-07 16:18  gateau
+
+	* libkipi/: Makefile.am, imagecollectionselector.cpp,
+	  imagecollectionselector.h, testimagecollectionselector.cpp,
+	  testimagecollectionselector.h: First implementation of
+	  KIPI::ImageCollectionSelector. It misses lots of features, but it
+	  should work.	CCMAIL:kde-imaging@kde.org
+
+2004-07-07 15:03  cgilles
+
+	* libkipi/: batchprogressdialog.cpp, batchprogressdialog.h:
+	  CVS_SILENT using KListViewItem instead QListViewItem
+
+2004-07-07 09:04  cgilles
+
+	* libkipi/: Makefile.am, batchprogressdialog.cpp,
+	  batchprogressdialog.h: Added new Batch Progress Dialog in KIPI
+	  nameSpace used by ImagesGallery, CDArchiving,
+	  FindDupplicateImages, and SendImages plugins.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-07-03 23:54  cgilles
+
+	* libkipi/imagecollectiondialog.cpp: CVS_SILENT Added missing clear
+	  image preview...
+
+2004-06-29 12:22  cgilles
+
+	* libkipi/: interface.cpp, interface.h: In according with Jesper,
+	  added new host feature 'AlbumsUseFirstImagePreview' for to
+	  enable/disable the album selection preview in the
+	  CDArchiving/ImagesGallery/FinDuplicateImages plugin dialogs.
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-29 10:25  cgilles
+
+	* libkipi/: uploadwidget.cpp, uploadwidget.h: Added a new signal
+	  when a current folder have changed in the TreeView.  Fixed a
+	  problem if no current Album have selected in the Host (in this
+	  case, using the first album of the collection list from the
+	  host).  CCMAIL: kde-imaging@kde.org
+
+2004-06-29 10:01  gateau
+
+	* TODO: Updated to what we agreed on the mailing list.
+
+2004-06-28 08:52  cgilles
+
+	* libkipi/: Makefile.am, hi16-app-kipi.png, hi22-app-kipi.png,
+	  hi48-app-kipi.png: CVS_SILENT Added new icons. Fixed target
+	  folder for icons.
+
+2004-06-27 23:02  cgilles
+
+	* libkipi/tips: CVS_SILENT Added icon
+
+2004-06-24 11:45  faure
+
+	* libkipi/Makefile.am: Do NOT write your own install-data-local
+	  crap (without DESTDIR), use KDE_ICON.
+
+2004-06-24 11:23  cgilles
+
+	* libkipi/: imagecollection.cpp, imagecollection.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h,
+	  interface.cpp, interface.h: In according with Jesper : - Added
+	  new KIPI features AlbumsHaveCategory and AlbumsHaveCreationDate
+	  requested for ImagesGallery an CDArchiving plugins.  - Added new
+	  virtuals methods in KIPI::ImageCollection and
+	  KIPI::ImageCollectionShared class in according with this new
+	  features.  CCMAIL: kde-imaging@kde.org
+
+2004-06-23 19:29  cgilles
+
+	* libkipi/: Makefile.am, tips: Provide a separate TipOfDay for the
+	  kipi plugins from the old Digikam Tips.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-23 12:24  cgilles
+
+	* libkipi/uploadwidget.cpp: Make visible the current Album in the
+	  treeview CCMAIL: kde-imaging@kde.org
+
+2004-06-23 11:45  cgilles
+
+	* libkipi/uploadwidget.cpp: BugFix in uploadwidget implementation :
+	  removing "/" before the current Album name else it's can be
+	  openned. It's work fine with Digikam and Kimdaba. Thi is must be
+	  tested on Gwenview ! CCMAIL: kde-imaging@kde.org
+
+2004-06-20 22:59  gateau
+
+	* TODO: Added TODO as discussed on mailing list.
+
+2004-06-20 21:41  blackie
+
+	* configure.in.in: hmm an empty file did not help
+
+2004-06-20 21:30  blackie
+
+	* configure.in.in: release script insist on this file being present
+
+2004-06-18 07:49  cgilles
+
+	* COPYING: fixed LGPL instead GPL for libKipi
+
+2004-06-17 12:45  cgilles
+
+	* libkipi/: interface.cpp, interface.h: Added new method
+	  'fileExtensions()' for images files sorting in plugins instead
+	  digikamrc config file parsing.  CCMAIL: kde-imaging@kde.org
+
+2004-06-16 15:37  cgilles
+
+	* libkipi/imagecollection.cpp: Fix typo
+
+2004-06-16 15:29  cgilles
+
+	* libkipi/: Makefile.am, hi32-app-kipi.png: Added basic kipi icon.
+	  Change about plugins part in according.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-16 13:01  cgilles
+
+	* libkipi/: plugin.cpp, plugin.h: Removed 'category()' method for
+	  plugins category identification.  CCMAIL: kde-imaging@kde.org
+
+2004-06-15 18:55  cgilles
+
+	* libkipi/: plugin.cpp, plugin.h: New plugin category
+	  identification method based on KAction identification required
+	  for RawConverter plugin.
+
+	  CCMAIL: kde-imaging@kde.org
+
+2004-06-15 14:00  cgilles
+
+	* libkipi/: plugin.cpp, plugin.h: Added new plugin category :
+	  COLLECTIONSPLUGIN.  Changed category plugin for 'DirOperations'
+	  and 'FindImages' to COLLECTIONSPLUGIN.
+
+	  CCMAIL: kde-imaging@kde.org, digikam-devel@lists.sourceforge.net
+
+2004-06-14 16:17  cgilles
+
+	* AUTHORS, libkipi/imagecollection.cpp, libkipi/imagecollection.h,
+	  libkipi/imagecollectionshared.cpp,
+	  libkipi/imagecollectionshared.h, libkipi/imageinfoshared.cpp,
+	  libkipi/imageinfoshared.h, libkipi/interface.cpp,
+	  libkipi/uploadwidget.cpp, libkipi/uploadwidget.h: -Added new
+	  method in ImageCollection/ImageCollectionShared for to show a
+	  specific Root images path name with UploadWidget in according
+	  with the Host application.  -Added some comments.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-06-13 22:26  blackie
+
+	* libkipi/: Makefile.am, imagecollectiondialog.cpp,
+	  imagecollectiondialog.h, thumbnailjob.cpp, thumbnailjob.h:
+	  CCMAIL: kde-imaging@kde.org CCMAIL:
+	  kimdaba@klaralvdalens-datakonsult.se
+
+	  Removed digikam dependencies through the KIPI::ThumbnailJob
+	  class.  The instances of this class has now been replaced with
+	  KIPI::filePreview.
+
+	  Renchi: Could you please go through each call in the source, and
+	  look at the comment I placed above the call. There were some
+	  arguments to ThumbnailJob I did not understand what did, but on
+	  the other hand they don't seem to be missed.
+
+	  Cheers Jesper.
+
+2004-06-13 15:22  blackie
+
+	* libkipi/pluginloader.cpp: better error message
+
+2004-06-11 22:03  gateau
+
+	* libkipi/: plugin.h, uploadwidget.cpp: Fixed KDE 3.1 compile.
+
+2004-06-11 22:02  gateau
+
+	* libkipi/interface.cpp: qFatal -> kdWarning
+
+2004-06-11 22:02  gateau
+
+	* configure.in.in: This file should not be there
+
+2004-06-11 15:48  mlaurent
+
+	* libkipi/pluginloader.cpp: Includemoc
+
+2004-06-10 13:21  cgilles
+
+	* libkipi/Makefile.am: Added i18n rules CCMAIL: kde-imaging@kde.org
+
+2004-06-10 13:14  cgilles
+
+	* COPYING: CVS_SILENT Update
+
+2004-06-08 07:51  cgilles
+
+	* libkipi/plugin.h: Added Batch plugins category
+
+2004-06-06 23:28  gateau
+
+	* libkipi/design: Fixed the description of my solution.
+
+2004-06-06 22:10  blackie
+
+	* libkipi/design: started on design for changes to
+	  Interface::current*
+
+2004-06-06 21:16  blackie
+
+	* libkipi/: mainpage.cpp, pluginloader.cpp, pluginloader.h: CCMAIL:
+	  kde-imaging@kde.org
+
+	  The plugin loader does now offer a configuration widget, for
+	  configuring which plugins should be loaded.
+
+	  To configure simply call PluginLoader::configWidget(), this will
+	  return a widget you can add to your normal configuration dialog.
+
+	  When done configuring you must call the apply() slot of the
+	  config widget.
+
+	  To get the above working, you must now connect to
+	  PluginLoader::plug()/unplug() signals both bringing a
+	  PluginLoader::Info struct telling which plugin to (un)plug.
+
+	  Alternatively, if you want to do all in one batch, you can
+	  connect to PluginLoader::replug().
+
+	  See the reference page for the plugin loader for a hint on how to
+	  plug/unplug plugins the easiest way.
+
+2004-06-04 00:09  blackie
+
+	* libkipi/: imagecollection.cpp, interface.cpp, interface.h:
+	  CCMAIL: kde-imaging@kde.org
+
+	  - I realized that most of the plugins had code looking like this:
+	      ImageCollection images = interface->currentSelection();
+	  if ( !images.isValid() )	 images =
+	  interface->currentAlbum();   I therefore added a function called
+	  currentScope(), which does exactly   this. Its implementation is
+	  as simple as	   KIPI::ImageCollection
+	  KIPI::Interface::currentScope()     {       ImageCollection
+	  images = currentSelection();	     if ( images.isValid() )
+	     return images;	  else		 return currentAlbum();
+	   }
+
+	  - Added signals to KIPI::Interface. The host application may now
+	  emit one   of     void selectionChanged( bool hasSelection );
+	  void currentAlbumChanged( bool anyAlbum );   in addition the
+	  interface will itself emit	 void currentScopeChanged( bool
+	  asScope );   when one of the others are emitted.
+
+	  - Added all the, till now, commented out lines for
+	  enabling/disabling   actions based on selection/album
+
+2004-05-31 23:39  blackie
+
+	* libkipi/: pluginloader.cpp, pluginloader.h: CCMAIL:
+	  kde-imaging@kde.org clean up of the PluginLoader class as
+	  announce weeks ago :-) It will now load plugins on construction,
+	  so the loadPlugins() methods have been removed.
+
+	  PluginLoader is now typedefed to typedef QValueList<Info> List;
+
+	  Where info is defined as this: struct Info {	   Info( const
+	  QString& name, const QString& comment, const QString& library,
+	  Plugin* plugin )	   : name(name), comment(comment),
+	  library(library), plugin( plugin ) {}     Info() {}	  QString
+	  name;     QString comment;	 QString library;     Plugin*
+	  plugin; };
+
+	  This allows the host application to get to know the comment of a
+	  plugin (which was the reason for making this change).
+
+	  Cheers Jesper.
+
+2004-05-31 22:30  blackie
+
+	* libkipi/: plugin.cpp, plugin.h: CC-MAIL:kde-imaging@kde.org
+
+	  As an action may be located in several windows (e.g. in several
+	  image viewers), the actions are now setup in a setup() method
+	  which as argument take a widget which is the widget the
+	  accelerators of the actionCollection should work on.
+
+	  actionCollection() is now again public, so it is possible to
+	  configure keybindings.
+
+	  Host application must now call Plugin::setup( QWidget* ) after
+	  having loaded the plugins.
+
+2004-05-31 21:11  blackie
+
+	* libkipi/: KDStream.cpp, interface.cpp, interface.h, mainpage.cpp,
+	  plugin.cpp, plugin.h: *really* minor API changes, plus
+	  documentation
+
+2004-05-31 16:13  blackie
+
+	* libkipi/: imagecollection.cpp, imagecollection.h, interface.h:
+	  CCMAIL: kde-imaging@kde.org
+
+	  Readded the hello world plugin. Host apps, which do not want to
+	  see it, should simply ignore by adding it to the list given as
+	  first argument to PluginLoader.
+
+	  Added ImageCollection::isValid().  I realized that there was no
+	  way for applications like digikam to indicate that there were no
+	  album selected. So to indicate that an image collection is
+	  invalid, the host application should give 0 for
+	  ImageCollectionShared pointer on construction of ImageCollection.
+	   This will make ImageCollection::isValid() return false.  Plugins
+	  should now test for isValid() before using data from image
+	  collection.
+
+2004-05-28 20:10  blackie
+
+	* libkipi/: interface.cpp, plugin.cpp, plugin.h: CCMAIL:
+	  kde-imaging@kde.org, dfaure@kde.org
+
+	  Together with David Faure I did yesterday make the necessary
+	  changes to allow icons local to each plugin.
+
+	  The basic point of all this was that the
+	  KIPI::Plugin::actionCollection() needed to know about the plugins
+	  KInstance - as it was till this change, it got the KInstance for
+	  the host application, and would thus look for icons in the host
+	  applications directory.
+
+	  Making this change did, however, reveal a conflict, namely that
+	  each and every action in the plugin must have the
+	  actionCollection as parent - which was not the case for items in
+	  KMenuActions.
+
+	  The way the host application finds actions right now is by
+	  querying the actionCollection(), which with the above change
+	  would also reveal those actions from menus.
+
+	  I therefore needed to add another way for the host application to
+	  get information about actions. I added a method called
+	  KIPI::Plugin::actions() which the host application must call to
+	  get information about actions. At the same time I made the
+	  actionCollection() method protected, so the host application
+	  can't get to that anymore.
+
+	  To tell KIPI about actions, then plugins must now call
+	  KIPI::Plugin::addAction() on each action they want to be in the
+	  topmost menu (thus not actions located in KActionMenu's).
+
+	  Let me summerize the changes - Host application now need to call
+	  actions() rather than   actionCollection() to get information
+	  about action in the plugin.  - plugins now need to give a pointer
+	  to KGenericFactory<..>::instance() in   the constructor of the
+	  Plugin superclass.  - the plugin must call addAction() for each
+	  toplevel action.
+
+	  And now to answer the question on how to get local icons.  In
+	  Makefile.am, you need a line similar to this:
+	  kipibatchprocessimagesicondir =
+	  $(kde_datadir)/kipiplugin_batchprocessimages/icons
+
+	  The name specified above (the "kipiplugin_batchprocessimages"),
+	  must be the same as what you specify to KGenericFactory in the
+	  plugin:
+
+	  typedef KGenericFactory<Plugin_BatchProcessImages> Factory;
+	  K_EXPORT_COMPONENT_FACTORY( kipiplugin_batchprocessimages,
+			       Factory("kipiplugin_batchprocessimages"));
+
+	  Cheers Jesper
+
+2004-05-27 11:38  blackie
+
+	* libkipi/: imageinfo.cpp, imageinfo.h, imageinfoshared.cpp,
+	  imageinfoshared.h, interface.cpp, interface.h, uploadwidget.cpp:
+	  CCMAIL:kde-imaging@kde.org Just in case you wonder why I post
+	  these to kde-imaging: I post check in messages each time the
+	  interface changes. Thus if you implement KIPI support for a host
+	  app, you should pay extra attention.
+
+	  - added KIPI::Interface::delImage(), so plugins can tell the app
+	  when an   image has been removed.  - Added
+	  KIPI::Features::ImageTitlesWritable so that plugin can disable
+	  editing the title of an image if that doesn't make any sense for
+	  the host   app.  - Added ImageInfo::cloneData( const ImageInfo&
+	  other ), as an easy way for	plugins to copy data from one image
+	  to another, and also to allow the host   application to copy any
+	  info not available through the API.  - renamed ImageInfo::name()
+	  and ImageInfo::setName() to title() and   setTitle(), and at the
+	  same time added a default implementation to	ImageInfoShared for
+	  these two methods.
+
+2004-05-26 00:06  gateau
+
+	* libkipi/pluginloader.cpp: Do not load plugins if all their
+	  required features are not provided by the host app.
+
+2004-05-25 23:42  blackie
+
+	* libkipi/: imagecollection.cpp, imageinfoshared.cpp,
+	  interface.cpp, uploadwidget.cpp, uploadwidget.h: made the upload
+	  widget open folders to current folder. Added mkdir() to upload
+	  widget, And removed some warning
+
+2004-05-25 14:15  mlaurent
+
+	* libkipi/uploadwidget.cpp: includemoc
+
+2004-05-24 00:28  blackie
+
+	* libkipi/: interface.cpp, interface.h, uploadwidget.cpp,
+	  uploadwidget.h: more work on the acquire plugin.
+
+2004-05-23 23:22  gateau
+
+	* libkipi/: imagecollectionshared.cpp, imagecollectionshared.h:
+	  Default implementation for comments, and more warning messages,
+	  using kdWarning.
+
+2004-05-23 23:22  gateau
+
+	* libkipi/: interface.cpp, interface.h: AlbumsHaveDescriptions ->
+	  AlbumsHaveComments
+
+2004-05-23 23:14  blackie
+
+	* libkipi/: Makefile.am, imagecollection.cpp, imagecollection.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h, interface.h,
+	  uploadwidget.cpp, uploadwidget.h: CCMAIL: kde-imaging@kde.org
+
+	  Next try at solving the issue with uploading images.	I've now
+	  created a new widget (UploadWidget), which can be used to ask for
+	  a directory to upload to (upload say a scan image from
+	  acquireimage plugin, or a new image converted in batchprocessing
+	  plugin).
+
+	  The upload widget is a directory browser knowing about KURL's.
+	  To let the browser start somewhere, I've added a new method
+	  ImageCollection::uploadRoot.
+
+	  This isn't 100% complete yet, but I want to show it to Aurelien
+	  ;-)
+
+	  The acquireimage plugin has been changed to used this new class.
+
+	  I'd esp. like to get some input from the digikam team, as this
+	  "breaks" their work with albums, but on the other hand when they
+	  change to recursive albums, the current scheme will not work
+	  anyway.
+
+	  Cheers Jesper.
+
+2004-05-22 00:47  gateau
+
+	* libkipi/imagecollectiondialog.cpp: CVS_SILENT Fixed indentation
+
+2004-05-22 00:46  gateau
+
+	* libkipi/: imagecollectiondialog.cpp, imagecollectiondialog.h:
+	  Added an image preview on the right side of the dialog.  CCMAIL:
+	  kde-imaging@kde.org
+
+2004-05-20 17:19  blackie
+
+	* Makefile.am: the helloworld and kipidemo subdirectories are
+	  outdated now, so no need to keep them arround anymore
+
+2004-05-20 16:13  blackie
+
+	* libkipi/: imagecollection.cpp, imagecollection.h,
+	  imagecollectionshared.cpp, imagecollectionshared.h,
+	  interface.cpp, interface.h: CCMAIL: kde-imaging@kde.org As a
+	  conclusion to the path issues I've now implemented the following
+	  changes in libkipi:
+
+	  In ImageCollection added path() and uploadPath() These two
+	  function must of course be implemented in the inherited version
+	  of ImageCollectionShared, but a default implementation is given
+	  if you do not care.
+
+	  path() should return a path for the images. If that does not make
+	  sense the host application may return a common root or even an
+	  empty URL. The plugins are in the documentation of the method
+	  suggested to look at the feature KIPI::AlbumEQDir before
+	  expecting that the path is the path of the album.
+
+	  uploadPath() specifies a directory to place new images. By
+	  placing this method in this class, it makes it possible for host
+	  application with Dir==Album to place new images in these albums,
+	  and other application may choose to place new images on common
+	  roots or even in one static directory.
+
+	  A new KIPI::Features has been added, namely AcceptNewImages,
+	  which tells the plugin if the image accept new images at all.
+	  Plugins should never call uploadPath() of this feature is not
+	  present. Likewise if this feature is present, the host
+	  application must implement the uploadPath() method.
+
+	  In KIPI::Interface a new method has been created, namely
+	  addImage( KURL ), with which the plugin must tell the host
+	  application about new images.
+
+2004-05-20 12:53  blackie
+
+	* libkipi/: imageinfo.cpp, imageinfo.h, imageinfoshared.cpp,
+	  imageinfoshared.h, interface.cpp, interface.h:
+	  CCMAIL:kde-imaging.kde.org Added features: KIPI::ImagesHasTime
+	  and KIPI::SupportsDateRanges (See documentation of the enums for
+	  their meaning)
+
+	  Changed ImageInfo::time() to ImageInfo::time( TimeSpec spec =
+	  FromInfo ) this change did of course propogate to
+	  ImageInfoShared, so host apps needs to update.
+
+	  If your app do not support time ranges (like an image is from
+	  1998-2000), then just return the time as always ignoring the spec
+	  argument.  Still you do need to update your app to override the
+	  correct virtual method.
+
+	  Added ImageInfo::setTime() and ImageInfoShared::setTime()
+
+	  Added ImageInfo::isExactTime() and ImageInfoShared::isExactTime()
+	  to tell whether an image has an exact time or a time range. The
+	  default implementation is to return true, so unless your app
+	  supports time ranges, you can ignore this method.
+
+2004-05-12 10:14  blackie
+
+	* libkipi/: Doxyfile, interface.cpp, interface.h,
+	  kipiplugin.desktop, pluginloader.cpp: CCMAIL: kde-imaging@kde.org
+	  Implemented the KIPI::Features so plugins can query the features
+	  of the host application.  Also added a desktop entry called
+	  X-KIPI-ReqFeatures, so plugins will not be loaded at all if a
+	  hostapplication does not honor all those features.
+
+	  Also started porting the batchprocessimages, and ones again the
+	  problem is the destination directory.
+
+2004-05-10 10:12  mlaurent
+
+	* libkipi/thumbnailjob.cpp: Includemoc includemoc...  I hope that
+	  people will understand that it's important to include moc...
+
+2004-05-09 17:39  gateau
+
+	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README,
+	  configure.in.in: Added files necessary to create a release.
+
+2004-05-07 19:22  blackie
+
+	* libkipi/: imageinfo.cpp, imageinfo.h, imageinfoshared.cpp,
+	  imageinfoshared.h, interface.cpp, interface.h, pluginloader.cpp,
+	  thumbnailjob.cpp: CCMAIL: kde-imaging@kde.org Implemented
+	  jpeglossless.
+
+	  The following changes where made to the KIPI interface: - We now
+	  have two debug areas 51000 (general) and 51001 (loading
+	  information). Thus debug output should now be done as:   kdDebug(
+	  51000 ) << ...
+
+	  - new virtual function:   KIPI::Interface::refreshImages( const
+	  KURL::List& );   This function should be called from plugins when
+	  images has changed on   disk
+
+	  - New virtual functions in interface:   KIPI::ImageInfo::angle()
+	  and KIPI::ImageInfo::setAngle()   When the host application
+	  displays an image rotated, after having being   loaded from disk,
+	  the angle() method should return the angle.
+
+2004-05-02 23:03  gateau
+
+	* libkipi/: Makefile.am, imagecollectiondialog.cpp,
+	  imagecollectiondialog.h: CCMAIL: kde-imaging@kde.org First
+	  implementation of the image collection dialog.
+
+2004-05-02 16:42  blackie
+
+	* Makefile.am: dont compile the kipi demo anymore, as it needs to
+	  be upgraded or deleted
+
+2004-05-02 16:39  blackie
+
+	* libkipi/: imagecollectionshared.cpp, imageinfo.cpp, imageinfo.h,
+	  imageinfoshared.h, kipiplugin.desktop, plugin.h,
+	  pluginloader.cpp, pluginloader.h: ups forgot these files with the
+	  previous checking
+
+2004-04-25 22:23  blackie
+
+	* Makefile.am, libkipi/interface.h: more porting plus removed
+	  KIPI::Interface::currentView(), it was suggested by me, but I
+	  dont use it myself, so lets throw it out
+
+2004-04-25 21:42  gateau
+
+	* libkipi/imagecollection.cpp: - Fixed bug in copy constructor
+	  which caused crash - Added one more message in operator=
+
+2004-04-25 20:19  gateau
+
+	* libkipi/: imagecollection.cpp, imagecollectionshared.h: No more
+	  'root()' method
+
+2004-04-25 19:26  blackie
+
+	* libkipi/imagecollectionshared.h: removed constness
+
+2004-04-25 19:01  blackie
+
+	* libkipi/: KDStream.h, imagecollection.h, imagecollectionshared.h,
+	  imageinfo.h, imageinfoshared.h, pluginloader.h, thumbnailjob.h:
+	  prefixed all header protections with KIPI_
+
+2004-04-25 17:58  blackie
+
+	* libkipi/: KDStream.cpp, plugin.h: added an id() to the plugin
+	  class, so it is possible to write code in the host apps for
+	  handling certain plugins special. I'd for example like to put the
+	  print plugin in teh file menu
+
+2004-04-25 17:41  blackie
+
+	* libkipi/: KDStream.cpp, Makefile.am, imagecollection.cpp,
+	  imagecollection.h, imagecollectionshared.cpp,
+	  imagecollectionshared.h, imageinfo.cpp, imageinfo.h, interface.h:
+	  added reference counting to ImageCollection
+
+2004-04-25 16:47  gateau
+
+	* libkipi/: imageinfo.cpp, imageinfo.h, imageinfoshared.h: Fixed
+	  typo: descrion -> description
+
+2004-04-25 16:42  blackie
+
+	* libkipi/: Makefile.am, imageinfo.cpp, imageinfo.h,
+	  imageinfoshared.cpp, imageinfoshared.h, pluginloader.h: added
+	  reference counting to ImageInfo
+
+2004-04-25 15:26  blackie
+
+	* libkipi/plugin.h: made it all compile without a make install
+	  inbetween
+
+2004-04-24 20:20  blackie
+
+	* libkipi/: design, imagecollection.cpp, imagecollection.h,
+	  imageinfo.h, interface.h: more porting, now added all plugins
+	  except two that Renchi wants to work more on before they are
+	  being ported. Note that not all added plugins has yet been
+	  ported, if a directory is not in Makefile.am, then it has not yet
+	  been ported. I have, however, done some general porting on all
+	  directories.
+
+2004-04-23 22:41  blackie
+
+	* libkipi/: Makefile.am, imagecollection.cpp, imagecollection.h,
+	  interface.cpp, interface.h, thumbnailjob.cpp, thumbnailjob.h:
+	  started porting digikam plugins
+
+2004-04-14 21:51  mueller
+
+	* libkipi/imageinfo.h: unbreak compilation
+
+2004-04-09 01:15  gateau
+
+	* libkipi/imagecollection.h: Added an empty virtual destructor.
+
+2004-04-04 21:50  mlaurent
+
+	* libkipi/interface.cpp: includemoc
+
+2004-04-04 19:34  gateau
+
+	* .cvsignore, libkipi/Makefile.am: - Fixed compilation (include
+	  dirs, tabs vs spaces in Makefile.am) - Added a few entries in
+	  .cvsignore
+
+2004-03-30 09:21  blackie
+
+	* Makefile.am, libkipi/Makefile.am, libkipi/interface.cpp,
+	  libkipi/interface.h, libkipi/plugin.cpp, libkipi/plugin.h,
+	  libkipi/pluginloader.cpp, libkipi/pluginloader.h: added an
+	  example plugin (helloworld), plus an example application using
+	  the lib (kipidemo)
+
+2004-03-29 19:32  blackie
+
+	* .cvsignore: Added .cvsignore.
+
+	  And for those of you reading cvs logs: libkipi is an attempt at
+	  getting a common plugin structure for a bunch of image
+	  applications. Currently the following applications participate in
+	  the work: digikam, gwenview, showimg, and KimDaBa.
+
+2004-03-29 19:25  blackie
+
+	* Makefile.am, libkipi/.cvsignore, libkipi/KDStream.cpp,
+	  libkipi/KDStream.h, libkipi/Makefile.am,
+	  libkipi/imagecollection.h, libkipi/imageinfo.cpp,
+	  libkipi/imageinfo.h, libkipi/interface.cpp, libkipi/interface.h,
+	  libkipi/kipiplugin.desktop, libkipi/plugin.cpp, libkipi/plugin.h,
+	  libkipi/pluginloader.cpp, libkipi/pluginloader.h: imported
+	  libkipi
+
