@@ -68,6 +68,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
 
     QVBoxLayout* layout = new QVBoxLayout( this, 0 );
     d->m_treeView = new KFileTreeView( this );
+    d->m_treeView->setRootIsDecorated( true );
     layout->addWidget( d->m_treeView );
 
     // Fetch the current album, so we can start out there.
