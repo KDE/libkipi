@@ -1,11 +1,12 @@
 /* ============================================================
  * File  : interface.h
- * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>, Jesper Pedersen <blackie@kde.org>
- * Date  : 2004-02-19
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
  * Description :
  *
- * Copyright 2004 by Renchi Raju, Jesper Pedersen
-
+ * Copyright 2004 by the KIPI team
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -22,11 +23,19 @@
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 
+// Qt includes.
+
+#include <qstring.h>
 #include <qobject.h>
-#include "libkipi/imagecollection.h"
-#include "libkipi/imageinfo.h"
+
+// KDE includes.
+
 #include <kurl.h>
 
+// Local includes.
+
+#include "libkipi/imagecollection.h"
+#include "libkipi/imageinfo.h"
 
 namespace KIPI
 {
@@ -60,6 +69,8 @@ namespace KIPI
         virtual void delImage( const KURL& );
 
         virtual void refreshImages( const KURL::List& );
+
+        virtual QString fileExtensions();
 
         bool hasFeature( KIPI::Features feature );
 

@@ -1,13 +1,12 @@
 /* ============================================================
  * File   : interface.cpp
- * Authors: Renchi Raju <renchi@pooh.tam.uiuc.edu>
-            Jesper K. Pedersen <blackie@kde.org>
+ * Authors: KIPI team developers
  *	    
- * Date   : 2004-02-19
+ * Date   : 2004-02
  * Description :
  *
- * Copyright 2004 by Renchi Raju, Jesper K. Pedersen
-
+ * Copyright 2004 by the KIPI team
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published bythe Free Software Foundation;
@@ -21,9 +20,15 @@
  *
  * ============================================================ */
 
+// KDE includes.
+
+#include <kdebug.h>
+#include <kimageio.h>
+
+// Local includes.
+ 
 #include "pluginloader.h"
 #include "interface.h"
-#include <kdebug.h>
 
 /*!
   \enum KIPI::Features
@@ -206,6 +211,18 @@ int KIPI::Interface::features() const
 {
     // This implementation is just to be able to write documentation above.
     return 0;
+}
+
+/**
+   Return a list of images file extention will be used in the plugins for 
+   to sort the files list before a treatment. The default implementation return,
+   the supported images formats by KDE.
+*/
+QString KIPI::Interface::fileExtensions()
+{
+    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
+    QString imagesFileFilter = KDEImagetypes.join(" ");
+    return ( imagesFileFilter.lower() + " " + imagesFileFilter.upper() );
 }
 
 
