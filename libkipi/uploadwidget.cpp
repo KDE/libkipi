@@ -25,6 +25,7 @@
 #include <qlayout.h>
 #include <qheader.h>
 #include <qlistview.h>
+#include <qdir.h>
 
 // KDE includes
 
@@ -78,7 +79,8 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     if ( !album.isValid() || !album.isDirectory() ) 
        album = interface->allAlbums().first();
     
-    d->m_item = d->m_treeView->addBranch( album.uploadRoot(), album.uploadRootName() );
+    d->m_item = d->m_treeView->addBranch( QDir::cleanDirPath(album.uploadRoot().path()),
+                                          album.uploadRootName() );
     d->m_treeView->setDirOnlyMode( d->m_item, true );
 
     d->m_treeView->addColumn( i18n("Folder" ) );
@@ -87,27 +89,27 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
 
     QString root = album.uploadRoot().path();
     QString uploadPath = album.isDirectory() ? album.uploadPath().path() : root;
+
+    root       = QDir::cleanDirPath(root);
+    uploadPath = QDir::cleanDirPath(uploadPath);
     
     if ( !uploadPath.startsWith( root ) ) 
-        {
+    {
         kdWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
                          << "uploadPath() = " << album.uploadPath().prettyURL() << endl
                          << "uploadRoot() = " << album.uploadRoot().prettyURL() << endl;
-        }
+    }
     else
-        {
+    {
         uploadPath = uploadPath.mid( root.length() );
         
-        d->m_pendingPath = QStringList::split( "/", uploadPath, true );
-        
-        if ( !d->m_pendingPath[0].isEmpty() )
-            d->m_pendingPath.prepend( "" ); // ensure we open the root first.
-        
-        load();
+        d->m_pendingPath = QStringList::split( "/", uploadPath, false );
         
         connect( d->m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ),
                  this, SLOT( load() ) );
-        }
+
+        d->m_item->setOpen(true);
+    }
     
     connect( d->m_treeView, SIGNAL( executed(QListViewItem *) ),
              this, SLOT( slotFolderSelected(QListViewItem *) ) );
@@ -126,33 +128,33 @@ KURL KIPI::UploadWidget::path() const
 void KIPI::UploadWidget::load()
 {
     if ( d->m_pendingPath.isEmpty() ) 
-        {
+    {
         disconnect( d->m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
                     this, SLOT( load() ) );
         return;
-        }
+    }
 
     QString item = d->m_pendingPath.front();
 
     d->m_pendingPath.pop_front();
 
     d->m_handled += "/" + item;
-    
+
     KFileTreeViewItem* branch = d->m_treeView->findItem( d->m_item, d->m_handled );
     
     if ( !branch ) 
-        {
+    {
         kdDebug( 51000 ) << "Unable to open " << d->m_handled << endl;
-        }
+    }
     else
-        {
+    {
         branch->setOpen( true );
         d->m_treeView->setSelected( branch, true );
         d->m_treeView->ensureItemVisible ( branch );
         
         if ( branch->alreadyListed() )
             load();
-        }
+    }
 
 }
 
