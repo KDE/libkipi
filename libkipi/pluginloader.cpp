@@ -57,15 +57,20 @@ void KIPI::PluginLoader::init()
         if (library.isEmpty() || name.isEmpty() || m_ignores.contains( name ) )
             continue;
 
+		bool appHasAllReqFeatures=true;
         for( QStringList::Iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) {
             if ( !m_interface->hasFeature( *featureIt ) ) {
                 kdDebug( 51001 ) << "Plugin " << name << " was not loaded due to the host application was missing\n"
                                  << "the feature " << *featureIt << endl;
+				appHasAllReqFeatures=false;
+				break;
             }
         }
 
-        m_pluginNames.append(name);
-        m_libraryNames.append(library);
+		if (appHasAllReqFeatures) {
+	        m_pluginNames.append(name);
+    	    m_libraryNames.append(library);
+		}
     }
 }
 
