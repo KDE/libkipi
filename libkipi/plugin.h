@@ -65,10 +65,8 @@ namespace KIPI
         void addAction( KAction* action );
 
     private:
-        QMap<QWidget*, KActionCollection*> m_actionCollection;
-        KInstance* m_instance;
-        QMap<QWidget*, KActionPtrList> m_actions;
-        QWidget* m_defaultWidget;
+        struct Private;
+        Private* d;
     };
 }
 

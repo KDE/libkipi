@@ -114,18 +114,23 @@ private:
 };
 
 
+struct BatchProgressDialog::Private {
+};
+
+
 /////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
                    : KDialogBase( KDialogBase::Plain, caption, Cancel,
                                   Cancel, parent, "KIPIBatchProgressDialog", true )
 {
+    d=new Private;
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
     //---------------------------------------------
 
-    groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
+    QGroupBox* groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
     
     m_actionsList = new KListView( groupBox1 );
     m_actionsList->addColumn("Status");
@@ -152,6 +157,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
 
 BatchProgressDialog::~BatchProgressDialog()
 {
+    delete d;
 }
 
 

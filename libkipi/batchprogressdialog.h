@@ -28,8 +28,6 @@
 
 #include <kdialogbase.h>
 
-class QGroupBox;
-
 class KListView;
 class KProgress;
 
@@ -50,7 +48,6 @@ enum ActionMessageType
 class BatchProgressDialog : public KDialogBase
 {
 Q_OBJECT
-
  public:
 
    BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
@@ -64,7 +61,10 @@ Q_OBJECT
    KIPI::BatchProgressItem *m_item;
    KListView               *m_actionsList;
    KProgress               *m_progress;
-   QGroupBox               *groupBox1;
+
+ private:
+   struct Private;
+   Private* d;
 };
 
 }  // NameSpace KIPI
