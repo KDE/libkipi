@@ -34,6 +34,11 @@
 #include <qvgroupbox.h>
 #include <qheader.h>
 #include <qlistview.h>
+#include <qframe.h>
+#include <qlabel.h>
+#include <qcolor.h>
+#include <qlayout.h>
+#include <qpixmap.h>
 
 // Include files for KDE
 
@@ -46,6 +51,7 @@
 #include <kdialogbase.h>
 #include <kiconloader.h>
 #include <klistview.h>
+#include <kstandarddirs.h>
 
 // Local includes
 
@@ -124,12 +130,35 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
                    : KDialogBase( KDialogBase::Plain, caption, Cancel,
                                   Cancel, parent, "KIPIBatchProgressDialog", true )
 {
-    d=new Private;
+    d = new Private;
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
     //---------------------------------------------
+   
+    QFrame *headerFrame = new QFrame( box );
+    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
+    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
+    layout->setMargin( 2 ); // to make sure the frame gets displayed
+    layout->setSpacing( 0 );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    pixmapLabelLeft->setScaledContents( false );
+    layout->addWidget( pixmapLabelLeft );
+    QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
+    layout->addWidget( labelTitle );
+    layout->setStretchFactor( labelTitle, 1 );
+    dvlay->addWidget( headerFrame );
+    
+    QString dir;
+    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
+    dir = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
+    
+    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    pixmapLabelLeft->setPixmap( QPixmap( dir + "banner_left.png" ) );
+    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
+    //---------------------------------------------
+    
     QGroupBox* groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
     
     m_actionsList = new KListView( groupBox1 );

@@ -24,6 +24,12 @@ libkipiincludedir = $(includedir)/libkipi
 
 kde_servicetypes_DATA = kipiplugin.desktop
 
+
+picsdir = $(kde_datadir)/kipi/data
+pics_DATA = banner_left.png
+
+EXTRA_DIST = $(pics_DATA)
+
 rcdir = $(kde_datadir)/kipi
 rc_DATA = tips
 
