@@ -27,12 +27,7 @@ public:
             return true;
         }
 
-    virtual KURL root()
-        {
-            return KURL( "file:/tmp/kimdaba-demo-blackie" );
-        }
-
-    virtual QString comment()
+    virtual QString comment() const
         {
             return "a demo comment";
         }

@@ -14,7 +14,6 @@ namespace KIPI
         virtual QString name() = 0;
         virtual QString comment() = 0;
         virtual KURL::List images() = 0;
-        virtual KURL root() = 0;
 
     private:
         friend class ImageCollection;
