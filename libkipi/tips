@@ -1,6 +1,22 @@
+<tip category="KipiPlugins|BatchProcessImages">
+<html>
+<p>Did you know that you could brighten up your images using Batch Color Images plugin for increase contrast?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
+</html>
+</tip>
+
 <tip category="KipiPlugins|Slideshow">
 <html>
 <p>Did you know that you could abort a slideshow using <b>ESC</b>?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -8,6 +24,11 @@
 <tip category="KipiPlugins|Scanner">
 <html>
 <p>Did you know that Kipi library provide a scanner plugin that gives you direct access to your flat scanner?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -15,6 +36,11 @@
 <tip category="KipiPlugins|Screenshot">
 <html>
 <p>Did you know that you can take a screenshoot with Kipi library and save the result to an Album with some comments?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -22,6 +48,11 @@
 <tip category="KipiPlugins|ConvertImages">
 <html>
 <p>Did you know that you can use the <b>LZW</b> compression to reduce the size of the <b>TIFF</b> image files in the Convert Images plugin?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -29,6 +60,11 @@
 <tip category="KipiPlugins|BatchProcessImages">
 <html>
 <p>Did you know that all images operations in the batch processing images plugins run without losing the <b>EXIF</b> information in the <b>JPEG</b> files?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -36,6 +72,11 @@
 <tip category="KipiPlugins|FilterImages">
 <html>
 <p>Did you know that the <b>Noise Reduction</b> option in the <b>Filter Images</b> plugin can be used to improve the rendering of images taken with an analog camera?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -43,6 +84,11 @@
 <tip category="KipiPlugins|SendImages">
 <html>
 <p>Did you know that you can use the drag and drop feature in e-mail images to add some items to the list?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -50,6 +96,11 @@
 <tip category="KipiPlugins|RecompressImages">
 <html>
 <p>Did you know that if you want reduce the space disk used by your images in the Albums database, you could try using the recompressImages plugin?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -57,6 +108,11 @@
 <tip category="KipiPlugins|ResizeImages">
 <html>
 <p>Did you know that if you want to resize images to prepare them for printing on photographic paper sizes, you could use the resizeImages plugin?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -65,6 +121,11 @@
 <html>
 <p>Did you know that you could use the images files from differents Albums in 'batch-process images' 
 plugins? The processed results will then be merged in the selected target Album.
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -72,6 +133,11 @@ plugins? The processed results will then be merged in the selected target Album.
 <tip category="KipiPlugins|BatchRenameImages">
 <html>
 <p>Did you know that you can change the timeStamp of the target images files in the batch-rename images plugin?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
@@ -79,6 +145,11 @@ plugins? The processed results will then be merged in the selected target Album.
 <tip category="KipiPlugins|SlideShow">
 <html>
 <p>Did you know that you can navigate on the slideshow with the left and right mouse buttons?
+</p>
+<br>
+<center>
+<img src="hicolor/48x48/apps/kipi.png">
+</center>
 </html>
 </tip>
 
