@@ -35,7 +35,7 @@ namespace KIPI
     class PluginLoader
     {
     public:
-        PluginLoader( Interface* interface );
+        PluginLoader( const QStringList& ignores, Interface* interface );
         static PluginLoader* instance();
 
         typedef QPtrList<KIPI::Plugin> List;
@@ -57,7 +57,7 @@ namespace KIPI
         QStringList  m_pluginNames;
         QStringList  m_libraryNames;
         Interface* m_interface;
-
+        QStringList m_ignores;
     };
 }
 

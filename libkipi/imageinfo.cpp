@@ -74,3 +74,23 @@ KIPI::ImageInfo::~ImageInfo()
 {
     _data->removeRef();
 }
+
+void KIPI::ImageInfo::setName( const QString& name )
+{
+    _data->setName( name );
+}
+
+void KIPI::ImageInfo::setDescription( const QString& description )
+{
+    _data->setDescription( description );
+}
+
+void KIPI::ImageInfo::clearAttributes()
+{
+    _data->clearAttributes();
+}
+
+void KIPI::ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
+{
+    _data->addAttributes( attributes );
+}

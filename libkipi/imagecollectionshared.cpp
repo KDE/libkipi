@@ -12,7 +12,9 @@ void KIPI::ImageCollectionShared::addRef()
 void KIPI::ImageCollectionShared::removeRef()
 {
     _count--;
-    if ( _count == 0 )
+    if ( _count == 0 ) {
+        // qDebug("Deleting!");
         delete this;
+    }
 }
 

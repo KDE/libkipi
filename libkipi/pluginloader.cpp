@@ -30,8 +30,8 @@ using namespace KIPI;
 
 KIPI::PluginLoader* KIPI::PluginLoader::m_instance = 0;
 
-KIPI::PluginLoader::PluginLoader( Interface* interface )
-    : m_interface( interface )
+KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
+    : m_interface( interface ), m_ignores( ignores )
 {
     Q_ASSERT( m_instance == 0 );
     m_pluginList.setAutoDelete(true);
@@ -51,7 +51,8 @@ void KIPI::PluginLoader::init()
         KService::Ptr service = *iter;
         QString name    = service->name();
         QString library = service->library();
-        if (!library.isEmpty() && !name.isEmpty()) {
+
+        if (!library.isEmpty() && !name.isEmpty() && !m_ignores.contains( name ) ) {
             m_pluginNames.append(name);
             m_libraryNames.append(library);
         }

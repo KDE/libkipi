@@ -16,10 +16,17 @@ namespace KIPI
     public:
         // Interface for plugins.
         QString name() const;
-        KURL path() const;
+        void setName( const QString& name );
+
         QString description() const;
-        QDateTime time() const;
+        void setDescription( const QString& description);
+
         QMap<QString,QVariant> attributes() const;
+        void clearAttributes();
+        void addAttributes( const QMap<QString,QVariant>& );
+
+        KURL path() const;
+        QDateTime time() const;
         QString toString( const QVariant& ) const;
         int size() const;
 
