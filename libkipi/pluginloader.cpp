@@ -250,3 +250,5 @@ void KIPI::ConfigWidget::apply()
 
 
 
+
+#include "pluginloader.moc"
