@@ -7,7 +7,7 @@
 #include <klocale.h>
 #include <kio/previewjob.h>
 
-#include "imagecollectiondialog.moc"
+#include "imagechooser.moc"
 
 
 const int PREVIEW_SIZE=128;
@@ -33,7 +33,7 @@ struct ImageLVI : public KListViewItem {
 };
 
 
-struct ImageCollectionDialog::Private {
+struct ImageChooser::Private {
     KURL _url;
     KIPI::Interface* _interface;
     KListView* _albumList;
@@ -43,7 +43,7 @@ struct ImageCollectionDialog::Private {
 };
 
 
-ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* interface)
+ImageChooser::ImageChooser(QWidget* parent, KIPI::Interface* interface)
     : KDialogBase(parent, "album-dialog", true, i18n("Select an image from an album"),
         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
@@ -78,18 +78,18 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
 }
 
 
-ImageCollectionDialog::~ImageCollectionDialog() {
+ImageChooser::~ImageChooser() {
     delete d;
 }
 
 
-KURL ImageCollectionDialog::url() const {
+KURL ImageChooser::url() const {
     return d->_url;
 }
 
 
-KURL ImageCollectionDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) {
-    ImageCollectionDialog dlg(parent, interface);
+KURL ImageChooser::getImageURL(QWidget* parent, KIPI::Interface* interface) {
+    ImageChooser dlg(parent, interface);
     if (dlg.exec()) {
         return dlg.url();
     } else {
@@ -99,7 +99,7 @@ KURL ImageCollectionDialog::getImageURL(QWidget* parent, KIPI::Interface* interf
 
 
 
-void ImageCollectionDialog::fillImageList(QListViewItem* item) {
+void ImageChooser::fillImageList(QListViewItem* item) {
     d->_imageList->clear();
     if (!item) return;
 
@@ -113,7 +113,7 @@ void ImageCollectionDialog::fillImageList(QListViewItem* item) {
 }
 
 
-void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
+void ImageChooser::slotImageSelected(QListViewItem* item) {
     if (!item) {
         enableButtonOK(false);
         d->_preview->setText(i18n("No image selected"));
@@ -130,7 +130,7 @@ void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
 }
 
 
-void ImageCollectionDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
+void ImageChooser::slotGotPreview(const KFileItem*, const QPixmap& pix) {
 
     d->_preview->setPixmap(pix);
 }

@@ -1,5 +1,5 @@
-#ifndef IMAGECOLLECTIONDIALOG_H
-#define IMAGECOLLECTIONDIALOG_H
+#ifndef IMAGECHOOSER_H
+#define IMAGECHOOSER_H
 
 #include <qvaluelist.h>
 #include <qwidget.h>
@@ -19,12 +19,12 @@ namespace KIPI
 {
 
 
-class ImageCollectionDialog : public KDialogBase {
+class ImageChooser : public KDialogBase {
 Q_OBJECT
 	class Private;
 public:
-    ImageCollectionDialog(QWidget*, Interface*);
-    ~ImageCollectionDialog();
+    ImageChooser(QWidget*, Interface*);
+    ~ImageChooser();
     KURL url() const;
     static KURL getImageURL(QWidget*, Interface*);
 
