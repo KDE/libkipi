@@ -235,3 +235,7 @@ void KIPI::ImageCollection::printNullError() const
                        << "should do that." << endl;
 }
 
+
+bool KIPI::ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
+    return *_data == *(ic._data);
+}

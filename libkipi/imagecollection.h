@@ -58,6 +58,7 @@ namespace KIPI
         ImageCollection();
         ImageCollection& operator=( const ImageCollection& );
 
+        bool operator==(const ImageCollection&) const;
     private:
         mutable KIPI::ImageCollectionShared* _data;
         void printNullError() const;

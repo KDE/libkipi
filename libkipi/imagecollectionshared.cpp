@@ -104,3 +104,8 @@ QDate KIPI::ImageCollectionShared::date()
             "have been overriden in the host application.\n";
     return QDate();
 }
+
+
+bool KIPI::ImageCollectionShared::operator==(ImageCollectionShared& ics) {
+    return images()==ics.images();
+}
