@@ -36,11 +36,13 @@ QString KIPI::ImageInfo::description() const
 }
 
 /**
-   PENDING(blackie) document
+   Returns the time of the image.
+   In case the host application supports time range, the spec argument
+   specifies if it is the start or end time that should be returned.
 */
-QDateTime KIPI::ImageInfo::time() const
+QDateTime KIPI::ImageInfo::time( TimeSpec spec ) const
 {
-    return _data->time();
+    return _data->time( spec );
 }
 
 /**
@@ -112,5 +114,20 @@ int KIPI::ImageInfo::angle()
 void KIPI::ImageInfo::setAngle( int angle )
 {
     _data->setAngle( angle );
+}
+
+/**
+   In the case the application supports time ranges (like this image is
+   from 1998-2000), this method will return true if the time is an exact
+   specification, and thus not a range.
+*/
+bool KIPI::ImageInfo::isTimeExact() const
+{
+    return _data->isTimeExact();
+}
+
+void KIPI::ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
+{
+    _data->setTime( time, spec );
 }
 

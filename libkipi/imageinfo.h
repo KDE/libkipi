@@ -10,6 +10,7 @@
 namespace KIPI
 {
     class ImageInfoShared;
+    enum TimeSpec { FromInfo, ToInfo };
 
     class ImageInfo
     {
@@ -26,12 +27,15 @@ namespace KIPI
         void addAttributes( const QMap<QString,QVariant>& );
 
         KURL path() const;
-        QDateTime time() const;
-        QString toString( const QVariant& ) const;
+        QDateTime time( TimeSpec spec = FromInfo ) const;
+        void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+        bool isTimeExact() const;
         int size() const;
 
         int angle();
         void setAngle( int );
+
+        QString toString( const QVariant& ) const;
 
         // Interface for host application + general stuff
         ImageInfo( ImageInfoShared* );

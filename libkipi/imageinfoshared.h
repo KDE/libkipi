@@ -5,6 +5,7 @@
 #include <qmap.h>
 #include <qdatetime.h>
 #include <qvariant.h>
+#include <libkipi/imageinfo.h>
 
 namespace KIPI
 {
@@ -24,7 +25,11 @@ namespace KIPI
         virtual void addAttributes( const QMap<QString,QVariant>& ) = 0;
 
         virtual KURL path();
-        virtual QDateTime time();
+        virtual QDateTime time( KIPI::TimeSpec spec );
+        virtual void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+
+        virtual bool isTimeExact();
+
         virtual int size();
 
         virtual int angle();

@@ -22,7 +22,7 @@ int KIPI::ImageInfoShared::size()
         return QFileInfo( _url.path() ).size();
 }
 
-QDateTime KIPI::ImageInfoShared::time()
+QDateTime KIPI::ImageInfoShared::time( KIPI::TimeSpec )
 {
     if ( ! _url.isLocalFile() ) {
         kdFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
@@ -51,5 +51,14 @@ int KIPI::ImageInfoShared::angle()
 }
 
 void KIPI::ImageInfoShared::setAngle( int )
+{
+}
+
+bool KIPI::ImageInfoShared::isTimeExact()
+{
+    return true;
+}
+
+void KIPI::ImageInfoShared::setTime( const QDateTime& time, TimeSpec spec )
 {
 }

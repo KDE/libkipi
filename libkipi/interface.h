@@ -33,7 +33,9 @@ namespace KIPI
     enum Features {
         AlbumsHaveDescriptions = 0x0001,
         AlbumEQDir             = 0x0002,
-        ImagesHasComments      = 0x0004
+        ImagesHasComments      = 0x0004,
+        ImagesHasTime          = 0x0008,
+        SupportsDateRanges     = 0x0010
     };
 
     class Interface : public QObject

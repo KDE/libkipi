@@ -38,6 +38,17 @@
   This feature specifies that images in the host application has descriptions associated to them.
  */
 
+/*!
+  \enum KIPI::ImagesHasTime
+  This feature specifies that images has a date associated with it, which the host application can display and set
+*/
+
+/*!
+  \enum KIPI::SupportsDateRanges
+  This feature specify whether the host application supports that the user can specify a date range for images,
+  like 1998-2000.
+*/
+
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
