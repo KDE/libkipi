@@ -76,14 +76,14 @@ bool KIPI::Interface::hasFeature( KIPI::Features feature )
 
 bool KIPI::Interface::hasFeature( const QString& feature )
 {
-    if ( feature == "AlbumsHaveDescriptions" )
-        return hasFeature( KIPI::AlbumsHaveDescriptions );
+    if ( feature == "AlbumsHaveComments" )
+        return hasFeature( KIPI::AlbumsHaveComments );
     else if ( feature == "AlbumEQDir" )
         return hasFeature( KIPI::AlbumEQDir );
     else if ( feature == "ImagesHasComments" )
         return hasFeature( KIPI::ImagesHasComments );
     else {
-        kdWarning( 51000 ) << "Unknow feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
+        kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
     }
 }
