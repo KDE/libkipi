@@ -50,40 +50,34 @@ namespace KIPI
         Interface(QObject *parent, const char *name=0);
         virtual ~Interface();
 
-        /** List in current album say 500 images of Jesper */
         virtual ImageCollection currentAlbum() = 0;
-
-        /** current selection in the thumbnail viewer - 5 images selected e.g. */
         virtual ImageCollection currentSelection() = 0;
-
-        /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
+        virtual ImageCollection currentScope();
         virtual QValueList<ImageCollection> allAlbums() = 0;
 
         virtual ImageInfo info( const KURL& ) = 0;
         virtual bool addImage( const KURL&, QString& err );
         virtual void delImage( const KURL& );
 
-        /** Tells the host app that the following images has changed on disk */
         virtual void refreshImages( const KURL::List& );
 
         bool hasFeature( KIPI::Features feature );
 
     protected:
-        /** Return a bitwise or if the KIPI::Features that thus application support. */
         virtual int features() const = 0;
+
+    protected slots:
+        void stateChange();
+
 
     private:
         friend class PluginLoader;
         bool hasFeature( const QString& feature );
 
     signals:
-        // PENDING(blackie) signals is something we haven't discussed yet.
-        //void signalAlbumCurrentChanged(Album* album);
-        //void signalItemsSelected(bool val);
-        //
-        //void signalAlbumAdded(Album* album);
-        //void signalAlbumRemoved(Album* album);
-        //void signalAlbumsCleared();
+        void selectionChanged( bool hasSelection );
+        void currentAlbumChanged( bool anyAlbum );
+        void currentScopeChanged( bool asScope );
     };
 }
 

@@ -74,12 +74,17 @@
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
+    connect( this, SIGNAL( selectionChanged( bool ) ), this, SLOT( stateChange() ) );
+    connect( this, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT( stateChange() ) );
 }
 
 KIPI::Interface::~Interface()
 {
 }
 
+/**
+   Tells the host app that the following images has changed on disk
+*/
 void KIPI::Interface::refreshImages( const KURL::List& )
 {
 }
@@ -131,5 +136,75 @@ bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
 void KIPI::Interface::delImage( const KURL& )
 {
 }
+
+/**
+   Returns list of all images in current album.
+   If there are no current album, the returned
+   KIPI::ImageCollection::isValid() will return false.
+*/
+KIPI::ImageCollection KIPI::Interface::currentAlbum()
+{
+    // This implementation is just to be able to write documentation above.
+    return KIPI::ImageCollection();
+}
+
+/**
+   Current selection in a thumbnail view for example.
+   If there are no current selection, the returned
+   KIPI::ImageCollection::isValid() will return false.
+*/
+KIPI::ImageCollection KIPI::Interface::currentSelection()
+{
+    // This implementation is just to be able to write documentation above.
+    return KIPI::ImageCollection();
+}
+
+/**
+   Returns a list of albums.
+*/
+QValueList<KIPI::ImageCollection> KIPI::Interface::allAlbums()
+{
+    // This implementation is just to be able to write documentation above.
+    return QValueList<KIPI::ImageCollection>();
+}
+
+
+/**
+   Returns the current selection if one exists, otherwise the current
+   album.
+   Plugins should with everything else equal act the same way, which is to
+   use the selection if one exists, otherwise use the whole album.
+   This instead of writing code like below, you should instead use this
+   function:
+   \code
+    ImageCollection images = interface->currentSelection();
+    if ( !images.isValid() )
+        images = interface->currentAlbum();
+   \endcode
+*/
+KIPI::ImageCollection KIPI::Interface::currentScope()
+{
+    ImageCollection images = currentSelection();
+    if ( images.isValid() )
+        return images;
+    else
+        return currentAlbum();
+}
+
+void KIPI::Interface::stateChange()
+{
+    ImageCollection images = currentScope();
+    emit currentScopeChanged( images.isValid() );
+}
+
+/**
+   Return a bitwise or of the KIPI::Features that thus application support.
+*/
+int KIPI::Interface::features() const
+{
+    // This implementation is just to be able to write documentation above.
+    return 0;
+}
+
 
 #include "interface.moc"
