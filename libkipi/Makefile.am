@@ -41,10 +41,3 @@ messages: rc.cpp
 		$(XGETTEXT) $$LIST -o $(podir)/libkipi.pot; \
 	fi
 	rm -f tips.cpp
-
-check_PROGRAMS = testimagecollectionselector
-testimagecollectionselector_SOURCES = testimagecollectionselector.cpp
-testimagecollectionselector_LDADD = \
-	$(LIB_KFILE) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_KDEPRINT) $(LIB_QT) \
-	$(LIBJPEG) libkipi.la
-testimagecollectionselector_LDFLAGS = $(all_libraries) 
