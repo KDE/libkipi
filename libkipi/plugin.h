@@ -24,8 +24,9 @@
 
 #include <qobject.h>
 #include "libkipi/interface.h"
+#include <kactioncollection.h>
 
-class KActionCollection;
+class KInstance;
 
 namespace KIPI
 {
@@ -40,18 +41,23 @@ namespace KIPI
     class Plugin : public QObject
     {
     public:
-        Plugin( QObject *parent, const char* name);
+        Plugin( KInstance* instance, QObject *parent, const char* name);
         virtual ~Plugin();
 
-        KActionCollection* actionCollection();
-
+        KActionPtrList actions();
         virtual Category category() const = 0;
 
         virtual bool     mergeContextMenu() const;
         virtual bool     mergeToolBar() const;
 
+    protected:
+        KActionCollection* actionCollection();
+        void addAction( KAction* action );
+
     private:
-        KActionCollection *m_actions;
+        KActionCollection *m_actionCollection;
+        KInstance* m_instance;
+        KActionPtrList m_actions;
     };
 
 }

@@ -22,14 +22,14 @@
 #include <kaction.h>
 
 #include "plugin.h"
+#include <kinstance.h>
 
 namespace KIPI
 {
 
-Plugin::Plugin( QObject *parent, const char* name)
-    : QObject(parent, name)
+Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
+    : QObject( parent, name), m_actionCollection( 0 ), m_instance( instance )
 {
-    m_actions = 0;
 }
 
 Plugin::~Plugin()
@@ -38,10 +38,10 @@ Plugin::~Plugin()
 
 KActionCollection* Plugin::actionCollection()
 {
-    if (!m_actions)
-        m_actions = new KActionCollection(this);
+    if (!m_actionCollection)
+        m_actionCollection = new KActionCollection(this, "m_actions", m_instance );
 
-    return m_actions;
+    return m_actionCollection;
 }
 
 bool Plugin::mergeContextMenu() const
@@ -54,5 +54,15 @@ bool Plugin::mergeToolBar() const
     return false;
 }
 
+}
+
+void KIPI::Plugin::addAction( KAction* action )
+{
+    m_actions.append( action );
+}
+
+KActionPtrList KIPI::Plugin::actions()
+{
+    return m_actions;
 }
 

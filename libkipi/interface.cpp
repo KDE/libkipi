@@ -87,6 +87,14 @@ bool KIPI::Interface::hasFeature( const QString& feature )
         return hasFeature( KIPI::AlbumEQDir );
     else if ( feature == "ImagesHasComments" )
         return hasFeature( KIPI::ImagesHasComments );
+    else if ( feature == "ImagesHasTime" )
+        return hasFeature( KIPI::ImagesHasTime );
+    else if ( feature == "SupportsDateRanges" )
+        return hasFeature( KIPI::SupportsDateRanges );
+    else if ( feature == "AcceptNewImages" )
+        return hasFeature( KIPI::AcceptNewImages );
+    else if ( feature == "ImageTitlesWritable" )
+        return hasFeature( KIPI::ImageTitlesWritable );
     else {
         kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
