@@ -2,6 +2,7 @@
 #define DEMOINTERFACE_H
 
 #include <libkipi/interface.h>
+#include <libkipi/imageinfoshared.h>
 using namespace KIPI;
 
 class DemoInterface :public KIPI::Interface {
@@ -16,6 +17,14 @@ public:
     virtual  QValueList<ImageCollection*> allAlbums();
 };
 
+class DemoImageInfo :public ImageInfoShared
+{
+public:
+    DemoImageInfo( const KURL& url );
+    virtual QString name();
+    virtual QString descrion();
+    virtual QMap<QString,QVariant> attributes();
+};
 
 #endif /* DEMOINTERFACE_H */
 

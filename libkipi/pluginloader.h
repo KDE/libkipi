@@ -59,7 +59,6 @@ namespace KIPI
         Interface* m_interface;
 
     };
-
 }
 
 #endif /* PLUGINLOADER_H */

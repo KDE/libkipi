@@ -61,13 +61,7 @@ ImageCollection* DemoInterface::currentSelection()
 
 ImageInfo DemoInterface::info( const KURL& url )
 {
-    ImageInfo info;
-    info.name = url.fileName();
-    info.path = url;
-    info.descrion = QString("Description for %1").arg(info.name);
-    info.time = QFileInfo( url.path() ).lastModified();
-    info.size = QFileInfo( url.path() ).size();
-    return info;
+    return ImageInfo( new DemoImageInfo( url ) );
 }
 
 QValueList<ImageCollection*> DemoInterface::allAlbums()
@@ -87,6 +81,26 @@ QValueList<ImageCollection*> DemoInterface::allAlbums()
     albumlist  << album1 << album2;
     return albumlist;
 
+}
+
+DemoImageInfo::DemoImageInfo( const KURL& url )
+    :ImageInfoShared( url )
+{
+}
+
+QString DemoImageInfo::name()
+{
+    return _url.fileName();
+}
+
+QString DemoImageInfo::descrion()
+{
+    return QString( "description for %1" ).arg( name() );
+}
+
+QMap<QString,QVariant> DemoImageInfo::attributes()
+{
+    return QMap<QString,QVariant>();
 }
 
 #include "demointerface.moc"
