@@ -36,6 +36,8 @@ class KProgress;
 namespace KIPI
 {
 
+class BatchProgressItem;
+
 enum ActionMessageType
 {
     StartingMessage = 0,
@@ -54,15 +56,15 @@ Q_OBJECT
    BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
    ~BatchProgressDialog();
 
-   void addedAction(QString text, int type);
+   void addedAction(const QString &text, int type);
    void reset();
    void setProgress(int current, int total);
    
  protected:
-
-   KListView *m_actionsList;
-   KProgress *m_progress;
-   QGroupBox *groupBox1;
+   KIPI::BatchProgressItem *m_item;
+   KListView               *m_actionsList;
+   KProgress               *m_progress;
+   QGroupBox               *groupBox1;
 };
 
 }  // NameSpace KIPI

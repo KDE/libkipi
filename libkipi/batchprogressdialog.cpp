@@ -33,6 +33,7 @@
 #include <qhgroupbox.h>
 #include <qvgroupbox.h>
 #include <qheader.h>
+#include <qlistview.h>
 
 // Include files for KDE
 
@@ -43,8 +44,8 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdialogbase.h>
-#include <klistview.h>
 #include <kiconloader.h>
+#include <klistview.h>
 
 // Local includes
 
@@ -56,12 +57,12 @@ namespace KIPI
 class BatchProgressItem : public KListViewItem
 {
 public:
-   BatchProgressItem(QListView * parent, QListViewItem *after, QString message, int messageType)
+   BatchProgressItem(KListView * parent, QListViewItem *after, const QString &message, int messageType)
                    : KListViewItem( parent, after), m_messagetype(messageType)
    {
    // Set the icon.
    
-   switch( messageType ) 
+   switch( m_messagetype ) 
      {
      case KIPI::StartingMessage:
         setPixmap( 0, SmallIcon( "run" ) );
@@ -156,13 +157,13 @@ BatchProgressDialog::~BatchProgressDialog()
 
 ///////////////////////////////////// FONCTIONS /////////////////////////////////////////////
 
-void BatchProgressDialog::addedAction(QString text, int type)
+void BatchProgressDialog::addedAction(const QString &text, int type)
 {
-    BatchProgressItem *item = new BatchProgressItem(m_actionsList, 
-                                                    m_actionsList->lastItem(),
-                                                    text, type);
+    m_item = new KIPI::BatchProgressItem(m_actionsList, 
+                                         m_actionsList->lastItem(),
+                                         text, type);
     
-    m_actionsList->ensureItemVisible(item);
+    m_actionsList->ensureItemVisible(m_item);
 }
 
 
