@@ -239,8 +239,16 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     // Album Comments
     if (d->_interface->hasFeature(AlbumsHaveComments))
     {
+        // Limit the comments string to 20 char...
+        QString comments = imcollItem->imageCollection().comment();
+	if (!comments.isEmpty())
+	{
+	comments.truncate(20);
+	comments.append("...");
+	}
+	
         text += cellBeg + i18n("Comments :") +
-                cellMid + imcollItem->imageCollection().comment() +
+                cellMid + comments +
                 cellEnd;
     }
 
