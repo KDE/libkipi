@@ -58,7 +58,7 @@ KIPI::ImageCollection::~ImageCollection()
 
 KIPI::ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
-    if ( _data ) {
+    if ( rhs._data ) {
         _data = rhs._data;
         _data->addRef();
     }
@@ -73,13 +73,17 @@ KIPI::ImageCollection::ImageCollection()
     _data = 0;
 }
 
-KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollection::ImageCollection& rhs )
+KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollection& rhs )
 {
     if ( rhs._data == _data )
         return *this;
 
     if ( _data )
         _data->removeRef();
+    if ( !rhs._data ) {
+        kdFatal() << "You are now using a null ImageCollection, you should have constructed one with"
+            "the constructor taking a ImageCollectionShared* as argument!\n";
+    }
     _data = rhs._data;
     _data->addRef();
     return *this;
