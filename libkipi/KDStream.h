@@ -32,6 +32,8 @@
 #define KIPI_KDSTREAM
 
 // Forward declarations.
+class QImage;
+class QPixmap;
 class QColor;
 class QColorGroup;
 class QPalette;
@@ -127,6 +129,8 @@ public:
   KDStream& operator<<( const QBrush& );
   KDStream& operator<<( const QSizePolicy& );
   KDStream& operator<<( const QKeySequence& );
+  KDStream& operator<<( const QPixmap& );
+  KDStream& operator<<( const QImage& );
 
   // misc
   KDStream& operator<<( KDSTREAMFUNC );

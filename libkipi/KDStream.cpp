@@ -54,6 +54,8 @@
 
 #if (QT_VERSION >= 300 )
 #include <qkeysequence.h>
+#include <qpixmap.h>
+#include <qimage.h>
 #endif
 
 /**
@@ -571,7 +573,7 @@ KDStream& KDStream::operator<<( const QVariant& var)
     case QVariant::String: *this << var.toString(); break;
     case QVariant::StringList: *this << var.toStringList(); break;
     case QVariant::Font: *this << var.toFont(); break;
-    case QVariant::Pixmap: *this << QString::fromLatin1("-");break;
+    case QVariant::Pixmap: *this << var.toPixmap();break;
 
     case QVariant::Brush: *this << var.toBrush(); break;
     case QVariant::Rect: *this << var.toRect(); break;
@@ -581,7 +583,7 @@ KDStream& KDStream::operator<<( const QVariant& var)
     case QVariant::ColorGroup: *this << var.toColorGroup(); break;
     case QVariant::IconSet: *this << QString::fromLatin1("-"); break;
     case QVariant::Point: *this << var.toPoint(); break;
-    case QVariant::Image: *this << QString::fromLatin1("-"); break;
+    case QVariant::Image: *this << var.toImage(); break;
     case QVariant::Int: *this << var.toInt(); break;
     case QVariant::UInt: *this << var.toUInt(); break;
     case QVariant::Bool: *this << var.toBool(); break;
@@ -700,7 +702,22 @@ KDStream& KDStream::operator<<( const QStrList& list )
 }
 
 
+KDStream& KDStream::operator<<( const QPixmap& pixmap )
+{
+    _output += QString("QPixmap[null=%1,width=%2,heigth=%3,depth=%4,hasMask=%5,hasAlpha=%6]")
+               .arg(pixmap.isNull()).arg(pixmap.width()).arg(pixmap.height())
+               .arg(pixmap.depth()).arg(pixmap.mask() != 0).arg(pixmap.hasAlpha() );
+    return *this;
+}
 
+
+KDStream& KDStream::operator<<( const QImage& pixmap )
+{
+    _output += QString("QImage[null=%1,width=%2,heigth=%3,depth=%4,hasAlpha=%5]")
+               .arg(pixmap.isNull()).arg(pixmap.width()).arg(pixmap.height())
+               .arg(pixmap.depth()).arg(pixmap.hasAlphaBuffer() );
+    return *this;
+}
 
 /* Classes that do not need to be supported:
 
@@ -875,7 +892,6 @@ QIconDragItem
 QIconSet
 QIconView
 QIconViewItem
-QImage
 QImageConsumer
 QImageDecoder
 QImageDrag
@@ -936,7 +952,6 @@ QPaintDeviceMetrics
 QPaintEvent
 QPainter
 QPicture
-QPixmap
 QPixmapCache
 QPlatinumStyle
 QPluginManager// Qt 3
