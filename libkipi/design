@@ -1,156 +1,91 @@
-OK here comes a brand new idea for the interface, but lets set the stage
-first:
+Suggested redesign of currentAlbum() / currentSelection() / allAlbums()
+=======================================================================
 
-Priorities - complexity
-=======================
-- plugin code must be simple to write (we want as many plugins as possible,
-it should not require month of work to fight the framework)
+Problem 1
+=========
+Plugins should be as similar as possible when it comes to user
+interaction. The topic for discussion here are what set of images does the
+plugin work on.
 
-- it shouldn't be waaaay to hard to add the pluginn structure to a new
-application, but it is indeed much less of a priority compared to the
-plugins - people wanting KIPI in their app will get a lot for free (the
-plugins), so they may work a bit for it ;-)
+Currently most KIPI plugins have been changed so that they use
+Interface::currentScope() which uses the selection if one exist, otherwise
+they use the currentAlbum if that exists.
 
-- KIPI implementation itself may be as complex as needed, this is basically
-just use three working on this, and we are clever and hardworking enough ;-)
+However, some plugins do not work like this, examples of alternative ways
+are:
+  - always use selection (set wall paper)
+  - ask what to use using a set of radio buttons ( can't remember which
+    does this)
+  - ask the user to select albums using check boxes.
 
-Priority - feature wise
-=======================
-Now the hard part
-- Memory management should be no hassle - i.e. plugins should not follow
-strange rules to when an object is valid, nor should they be forced to free
-memory all the time, simply because chances are they will forget.
+Problem 2
+=========
+Asking the user for an image set by the last method above only work well
+when the host application uses the concept of an Album - which KimDaBa
+doesn't.
 
-- data should not need to be calculated before needed. The example is the
-cdarchiving plugin, which needs to get info sizes of all albums, as an
-album can have images from different locations, and as these locations
-might be on network, we do not want it to download each and every image to
-get the sizes, unless really needed. It should even be possible for each
-host application to cache the information internally so no stat operation
-is needed.
+Solution - step 1
+=================
 
-The Design
-==========
-My solution to the above is indeed more complicated than what we have had
-so far (for KIPI), but much easier for the plugins!
+Aurelien suggested the following solution, which works well when an
+application uses the concept of Albums:
 
-The idea is to have a reference counted proxy. Let me show some code, that
-will make it easier to understand:
+Replaces all the different ways above with a QListView showing the albums,
+and inside each album shows the images of the album. The current album will
+then be open, and the current selection will be selected in the album
+listview.
 
-// This is the class the plugins see.
-Class ImageInfo {
-public:
-   ImageInfo( ImageInfoHost* );
+If the user needs to select images from several albums, he can do so, and
+if he want to select several albums, he can just select the albums.
 
-   // Reference counting stuff
-   ImageInfo( ImageInfo& other ) {
-     _data = other->_data;
-     _data->addRef();
-   }
-   ImageInfo& operator=( .. ) { /* same as copy constructor */ }
-   ~ImageInfo {
-     _data->removeRef();
-   }
+Solution - step 2
+=================
+The above will seriously break with how KimDaBa approaches albums. A
+solution to this would be to make it up to the individual host applications
+to offer a browser for selecting images.
 
-   // Interface for the plugin
-   int size() {
-     return _data->size();
-   }
-   QString description() {
-     return _data->description();
-   }
-   
-private:
-  ImageInfoHost* _data;
-};
+The implementation would looks something like this:
 
-With the above in place the Interface class would simply look like this:
+  class Interface {
+     ...
+     virtual Browser browser() = 0;
+  }
 
-namespace KIPI {
-    class Interface {
-        ...
-        ImageInfo info( const KURL& url ) = 0 ;
-    }
-} 
+  class Browser {
+  public:
+    Browser( BrowserShared* );
+    virtual QWidget* widget( QWidget* parent );
+    KURL::List images();
 
-Note no pointers or reference returned. 
+  // all the other stuff to make a shared class.
 
-The ImageInfoHost class looks like this:
+  signals:
+    void descriptionChanged( const QString& );
+    void previewChanged( const QPixmap& );
+  }
 
-class ImageInfoHost {
-public:
-   // reference counting stuff
-   ImageInfoHost() :_count(0) {}
-   void addRef() { _count++; }
-   void removeRef() { 
-      _count--;
-      if ( _count == 0 )
-          delete this;
-   }
-private:
-   int _count;
+  class BrowserShared {
+  public:
+    virtual QWidget* widget( QWidget* parent ) = 0;
+    KURL::List images() = 0;
+  signals:
+    ...
+  }
 
-   // Interface for ImageInfo:
-   int size() = 0; // Might even have a default implementation.
-   QString description() = 0;
-}             
+The widget method should return the configuration widget, this might
+e.g. be the listview suggested by aurelien, or something else
+If the widget returned are 0, then the application do not want to offer any
+configuration, and the images must somehow be chosen before the plugin
+appears (This will be the case in KimDaBa).
 
-Now to implement the KIPI::Interface class, one would have to implement a
-subclass of ImageInfoHost first:
+The images() method must return the selected images to operated on.
 
-class MyImageInfoHost {
-  ...
-  int size() {  return myDataBase->size(); }
-  ...
-}
+The signals are for host application which offers dir==album, and have a
+description and preview for the dir (as is the case for digikam).
 
-and 
+The above replaces the currentAlbum(), currentSelection(), currentScope() and
+allAlbums() from KIPI::Interface.
+[Question: Should we remove these methods?]
 
-class MyInterface :public KIPI::Interface {
-   ImageInfo info( const KURL& url ) {
-     return ImageInfo( new MyImageInfo( url ) );
-   }
-}
-
-
-With the above the host application still inherits a class to implement the
-interface (namely ImageInfoHost), and has the possibility to defer fetching
-the real info till it is needed  - there really isn't much extra fuzz there.
-
-The plugins never has to worry about pointers, they simply have an
-ImageInfo instance, and when they are done with it, reference counting will
-take care of deleting the real data.
-
-Similar needs to happen to ImageCollection and ImageCollectionHost, so we
-end getting this interface:
-
-namespace KIPI
-{
-    class Interface : public QObject
-    {
-        Q_OBJECT
-
-    public:
-        Interface(QObject *parent, const char *name=0);
-        virtual ~Interface();
-
-        /** List in current album say 500 images of Jesper */
-        virtual ImageCollection currentAlbum() = 0;
-
-        /** Current set of images in the thumbnail viewer - the first 150 images of Jesper */
-        virtual ImageCollection currentView() { return currentAlbum(); }
-
-        /** current selection in the thumbnail viewer - 5 images selected e.g. */
-        virtual ImageCollection currentSelection() = 0;
-
-        /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
-        virtual QValueList<ImageCollection> allAlbums() = 0;
-
-        /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
-        virtual ImageInfo info( const KURL& ) = 0;
-   }
-}
-
-The important point is allAlbums above, which also did avoid any pointers.
-
-Does this sound OK to you?
+Also the ImageCollection class goes away.
+[Question: What do we do about uploadPath() and uploadURL().]
