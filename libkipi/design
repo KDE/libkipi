@@ -30,13 +30,18 @@ Solution - step 1
 Aurelien suggested the following solution, which works well when an
 application uses the concept of Albums:
 
-Replaces all the different ways above with a QListView showing the albums,
-and inside each album shows the images of the album. The current album will
-then be open, and the current selection will be selected in the album
-listview.
+Replaces all the different ways above with a QListView showing the albums as
+returned by allAlbums(). The album returned by currentAlbum() would be
+selected by default.
 
-If the user needs to select images from several albums, he can do so, and
-if he want to select several albums, he can just select the albums.
+In the case of Gwenview, allAlbums() would return three virtual albums:
+- Selected images
+- All images in the current dir
+- All images in the current dir and subdirs
+
+In the case of KimDaBa, allAlbums() would return the list of keywords and a
+special "Any" keyword which would be contains the union of all the other
+keywords.
 
 Solution - step 2
 =================
