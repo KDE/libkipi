@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Hello
+Comment=Hello World plug for kipi
+ServiceTypes=KIPI/Plugin
+Type=Service
+X-KDE-Library=libkipi_hello

@@ -30,8 +30,10 @@ using namespace KIPI;
 
 KIPI::PluginLoader* KIPI::PluginLoader::m_instance = 0;
 
-KIPI::PluginLoader::PluginLoader()
+KIPI::PluginLoader::PluginLoader( Interface* interface )
+    : m_interface( interface )
 {
+    Q_ASSERT( m_instance == 0 );
     m_pluginList.setAutoDelete(true);
     init();
 }
@@ -89,7 +91,7 @@ void KIPI::PluginLoader::loadPlugins()
 
         Plugin *plugin =
             KParts::ComponentFactory
-            ::createInstanceFromLibrary<KIPI::Plugin>((*it).local8Bit().data());
+            ::createInstanceFromLibrary<KIPI::Plugin>((*it).local8Bit().data(), m_interface );
 
         if (plugin) {
             m_pluginList.append(plugin);
@@ -149,8 +151,7 @@ Plugin* KIPI::PluginLoader::pluginIsLoaded(const QString& name)
 
 PluginLoader* KIPI::PluginLoader::instance()
 {
-    if ( m_instance == 0)
-        m_instance = new PluginLoader;
+    Q_ASSERT( m_instance != 0);
     return m_instance;
 }
 

@@ -24,38 +24,41 @@
 
 #include <qstringlist.h>
 #include <qptrlist.h>
+#include <libkipi/interface.h>
+
 
 namespace KIPI
 {
+    class Plugin;
+    class Interface;
 
-class Plugin;
+    class PluginLoader
+    {
+    public:
+        PluginLoader( Interface* interface );
+        static PluginLoader* instance();
 
-class PluginLoader
-{
-public:
-    static PluginLoader* instance();
+        typedef QPtrList<KIPI::Plugin> List;
 
-    typedef QPtrList<KIPI::Plugin> List;
+        const List& pluginList();
 
-    const List& pluginList();
+        QStringList availablePlugins() const;
+        QStringList loadedPlugins() const;
 
-    QStringList availablePlugins() const;
-    QStringList loadedPlugins() const;
+        void    loadPlugins();
+        void    loadPlugins(const QStringList& names);
+        Plugin* pluginIsLoaded(const QString& name);
 
-    void    loadPlugins();
-    void    loadPlugins(const QStringList& names);
-    Plugin* pluginIsLoaded(const QString& name);
+    private:
+        static PluginLoader* m_instance;
+        void init();
 
-private:
-    PluginLoader();
-    static PluginLoader* m_instance;
-    void init();
+        List         m_pluginList;
+        QStringList  m_pluginNames;
+        QStringList  m_libraryNames;
+        Interface* m_interface;
 
-    List         m_pluginList;
-    QStringList  m_pluginNames;
-    QStringList  m_libraryNames;
-
-};
+    };
 
 }
 

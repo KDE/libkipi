@@ -22,7 +22,7 @@
 #include "pluginloader.h"
 #include "interface.h"
 
-KIPI::Interface::Interface(QObject *parent, char *name )
+KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
 }

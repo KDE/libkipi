@@ -30,34 +30,32 @@ class KActionCollection;
 namespace KIPI
 {
 
-class Plugin : public QObject
-{
-public:
+    class Plugin : public QObject
+    {
+    public:
 
-    enum Category {
-        IMAGESPLUGIN = 0,
-        EFFECTSPLUGIN,
-        TOOLSPLUGIN,
-        IMPORTPLUGIN,
-        EXPORTPLUGIN
+        enum Category {
+            IMAGESPLUGIN = 0,
+            EFFECTSPLUGIN,
+            TOOLSPLUGIN,
+            IMPORTPLUGIN,
+            EXPORTPLUGIN
+        };
+
+        Plugin( QObject *parent, const char* name);
+        virtual ~Plugin();
+
+        KActionCollection* actionCollection();
+
+        virtual Category category() const = 0;
+        virtual bool     mergeContextMenu() const;
+        virtual bool     mergeToolBar() const;
+
+
+    private:
+
+        KActionCollection *m_actions;
     };
-
-    Plugin( Interface* interface, QObject *parent, const char* name);
-    virtual ~Plugin();
-
-    KActionCollection* actionCollection();
-
-    virtual Category category() const = 0;
-    virtual bool     mergeContextMenu() const;
-    virtual bool     mergeToolBar() const;
-
-protected:
-    Interface* m_interface;
-
-private:
-
-    KActionCollection *m_actions;
-};
 
 }
 

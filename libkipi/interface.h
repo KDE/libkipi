@@ -38,11 +38,8 @@ namespace KIPI
         Q_OBJECT
 
     public:
-        Interface(QObject *parent, char *name=0);
+        Interface(QObject *parent, const char *name=0);
         virtual ~Interface();
-
-        // PENDING(blackie) Renchi I've made this into a singleton class on its own
-        // PluginLoader* pluginLoader() const;
 
         /** List in current album say 500 images of Jesper */
         virtual ImageCollection* currentAlbum() = 0;
@@ -56,7 +53,7 @@ namespace KIPI
         /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
         // PENDING(blackie) Renchi: I think we were confused here, this is not an interface as the others, it should
         // be something like virtual AllAlbumsInterface* allAlbums() = 0;
-        virtual QValueList<ImageCollection>* allAlbums() = 0;
+        // virtual QValueList<ImageCollection>* allAlbums() = 0;
         // more interfaces will come as we go on
 
         /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */

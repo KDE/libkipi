@@ -1,1 +1,1 @@
-SUBDIRS = libkipi
+SUBDIRS = libkipi kipidemo helloworld

@@ -26,8 +26,8 @@
 namespace KIPI
 {
 
-Plugin::Plugin( Interface* interface, QObject *parent, const char* name)
-    : QObject(parent, name), m_interface( interface )
+Plugin::Plugin( QObject *parent, const char* name)
+    : QObject(parent, name)
 {
     m_actions = 0;
 }
