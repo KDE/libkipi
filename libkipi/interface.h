@@ -29,10 +29,6 @@
 
 namespace KIPI
 {
-
-    // When writing the plugin howto, I'm sure I found a very good reason why this must inherit QObject
-    // I just can't remember which -- 13 Mar. 2004 20:12 -- Jesper K. Pedersen
-	// I would say this is needed to be able to emit signals -- 16 Mar. 2004 -- Aurélien Gâteau
     class Interface : public QObject
     {
         Q_OBJECT

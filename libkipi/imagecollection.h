@@ -10,6 +10,7 @@ namespace KIPI
     public:
         virtual ~ImageCollection() {}
         virtual QString name() const = 0;
+        virtual QString comment() const;
         virtual KURL::List images() const = 0;
         virtual KURL root() const ;
     };

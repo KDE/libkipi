@@ -2,6 +2,7 @@
 #include <qwidget.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <qfileinfo.h>
 
 class MyImageCollection :public KIPI::ImageCollection
 {
@@ -30,6 +31,11 @@ public:
             return KURL( "file:/tmp/kimdaba-demo-blackie" );
         }
 
+    virtual QString comment() const
+        {
+            return "a demo comment";
+        }
+
 private:
     QString _name;
     KURL::List _urls;
@@ -53,9 +59,15 @@ ImageCollection* DemoInterface::currentSelection()
     return new MyImageCollection( "Hello collection", KURL::List() );
 }
 
-ImageInfo DemoInterface::info( const KURL& )
+ImageInfo DemoInterface::info( const KURL& url )
 {
-    return ImageInfo();
+    ImageInfo info;
+    info.name = url.fileName();
+    info.path = url;
+    info.descrion = QString("Description for %1").arg(info.name);
+    info.time = QFileInfo( url.path() ).lastModified();
+    info.size = QFileInfo( url.path() ).size();
+    return info;
 }
 
 QValueList<ImageCollection*> DemoInterface::allAlbums()

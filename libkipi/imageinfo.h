@@ -17,6 +17,7 @@ namespace KIPI
         QDateTime time;
         QMap<QString,QVariant> attributes;
         QString toString( const QVariant& );
+        int size;
     };
 }
 

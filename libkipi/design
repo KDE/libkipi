@@ -1,0 +1,156 @@
+OK here comes a brand new idea for the interface, but lets set the stage
+first:
+
+Priorities - complexity
+=======================
+- plugin code must be simple to write (we want as many plugins as possible,
+it should not require month of work to fight the framework)
+
+- it shouldn't be waaaay to hard to add the pluginn structure to a new
+application, but it is indeed much less of a priority compared to the
+plugins - people wanting KIPI in their app will get a lot for free (the
+plugins), so they may work a bit for it ;-)
+
+- KIPI implementation itself may be as complex as needed, this is basically
+just use three working on this, and we are clever and hardworking enough ;-)
+
+Priority - feature wise
+=======================
+Now the hard part
+- Memory management should be no hassle - i.e. plugins should not follow
+strange rules to when an object is valid, nor should they be forced to free
+memory all the time, simply because chances are they will forget.
+
+- data should not need to be calculated before needed. The example is the
+cdarchiving plugin, which needs to get info sizes of all albums, as an
+album can have images from different locations, and as these locations
+might be on network, we do not want it to download each and every image to
+get the sizes, unless really needed. It should even be possible for each
+host application to cache the information internally so no stat operation
+is needed.
+
+The Design
+==========
+My solution to the above is indeed more complicated than what we have had
+so far (for KIPI), but much easier for the plugins!
+
+The idea is to have a reference counted proxy. Let me show some code, that
+will make it easier to understand:
+
+// This is the class the plugins see.
+Class ImageInfo {
+public:
+   ImageInfo( ImageInfoHost* );
+
+   // Reference counting stuff
+   ImageInfo( ImageInfo& other ) {
+     _data = other->_data;
+     _data->addRef();
+   }
+   ImageInfo& operator=( .. ) { /* same as copy constructor */ }
+   ~ImageInfo {
+     _data->removeRef();
+   }
+
+   // Interface for the plugin
+   int size() {
+     return _data->size();
+   }
+   QString description() {
+     return _data->description();
+   }
+   
+private:
+  ImageInfoHost* _data;
+};
+
+With the above in place the Interface class would simply look like this:
+
+namespace KIPI {
+    class Interface {
+        ...
+        ImageInfo info( const KURL& url ) = 0 ;
+    }
+} 
+
+Note no pointers or reference returned. 
+
+The ImageInfoHost class looks like this:
+
+class ImageInfoHost {
+public:
+   // reference counting stuff
+   ImageInfoHost() :_count(0) {}
+   void addRef() { _count++; }
+   void removeRef() { 
+      _count--;
+      if ( _count == 0 )
+          delete this;
+   }
+private:
+   int _count;
+
+   // Interface for ImageInfo:
+   int size() = 0; // Might even have a default implementation.
+   QString description() = 0;
+}             
+
+Now to implement the KIPI::Interface class, one would have to implement a
+subclass of ImageInfoHost first:
+
+class MyImageInfoHost {
+  ...
+  int size() {  return myDataBase->size(); }
+  ...
+}
+
+and 
+
+class MyInterface :public KIPI::Interface {
+   ImageInfo info( const KURL& url ) {
+     return ImageInfo( new MyImageInfo( url ) );
+   }
+}
+
+
+With the above the host application still inherits a class to implement the
+interface (namely ImageInfoHost), and has the possibility to defer fetching
+the real info till it is needed  - there really isn't much extra fuzz there.
+
+The plugins never has to worry about pointers, they simply have an
+ImageInfo instance, and when they are done with it, reference counting will
+take care of deleting the real data.
+
+Similar needs to happen to ImageCollection and ImageCollectionHost, so we
+end getting this interface:
+
+namespace KIPI
+{
+    class Interface : public QObject
+    {
+        Q_OBJECT
+
+    public:
+        Interface(QObject *parent, const char *name=0);
+        virtual ~Interface();
+
+        /** List in current album say 500 images of Jesper */
+        virtual ImageCollection currentAlbum() = 0;
+
+        /** Current set of images in the thumbnail viewer - the first 150 images of Jesper */
+        virtual ImageCollection currentView() { return currentAlbum(); }
+
+        /** current selection in the thumbnail viewer - 5 images selected e.g. */
+        virtual ImageCollection currentSelection() = 0;
+
+        /** list of albums, in digikam this would be all the albums, in KimDaBa this would not make any sence */
+        virtual QValueList<ImageCollection> allAlbums() = 0;
+
+        /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
+        virtual ImageInfo info( const KURL& ) = 0;
+   }
+}
+
+The important point is allAlbums above, which also did avoid any pointers.
+
+Does this sound OK to you?
