@@ -14,9 +14,9 @@ QString KIPI::ImageInfo::toString( const QVariant& data ) const
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::name() const
+QString KIPI::ImageInfo::title() const
 {
-    return _data->name();
+    return _data->title();
 }
 
 /**
@@ -77,9 +77,9 @@ KIPI::ImageInfo::~ImageInfo()
     _data->removeRef();
 }
 
-void KIPI::ImageInfo::setName( const QString& name )
+void KIPI::ImageInfo::setTitle( const QString& name )
 {
-    _data->setName( name );
+    _data->setTitle( name );
 }
 
 void KIPI::ImageInfo::setDescription( const QString& description )
@@ -103,7 +103,7 @@ void KIPI::ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
    while other host application will rotate the image when displaying it, and will thus not rotate
    the image on disk.
 */
-int KIPI::ImageInfo::angle()
+int KIPI::ImageInfo::angle() const
 {
     return _data->angle();
 }
@@ -129,5 +129,13 @@ bool KIPI::ImageInfo::isTimeExact() const
 void KIPI::ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 {
     _data->setTime( time, spec );
+}
+
+/**
+   Copies all the attibutes, description etc from the other imageinfo
+*/
+void KIPI::ImageInfo::cloneData( const ImageInfo& other )
+{
+    _data->cloneData( other._data );
 }
 

@@ -3,7 +3,6 @@
 #include "libkipi/imagecollection.h"
 #include <klocale.h>
 #include <qheader.h>
-#include <qapplication.h>
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <kio/jobclasses.h>

@@ -9,13 +9,15 @@
 
 namespace KIPI
 {
+    class Interface;
+
     class ImageInfoShared
     {
     public:
-        ImageInfoShared( const KURL& url );
+        ImageInfoShared( KIPI::Interface* interface, const KURL& url );
         virtual ~ImageInfoShared() {}
-        virtual QString name() = 0;
-        virtual void setName( const QString& ) = 0;
+        virtual QString title() {return QString::null;}
+        virtual void setTitle( const QString& );
 
         virtual QString description() = 0;
         virtual void setDescription( const QString& ) = 0;
@@ -37,6 +39,8 @@ namespace KIPI
 
         QString toString( const QVariant& );
 
+        virtual void cloneData( ImageInfoShared* other );
+
     protected:
         KURL _url;
 
@@ -47,6 +51,7 @@ namespace KIPI
         void addRef();
         void removeRef();
         int _count;
+        Interface* _interface;
     };
 }
 

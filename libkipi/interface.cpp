@@ -56,6 +56,11 @@
   \ref addImage() to tell the host application about the new image.
 */
 
+/*!
+  \enum KIPI::ImageTitlesWritable
+  This features specifies whether the plugin can change the title for images
+*/
+
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
@@ -99,6 +104,10 @@ bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
             "AcceptNewImages - if the host application do support that, then this function should\n"
             "have been overriden in the host application.");
     return false;
+}
+
+void KIPI::Interface::delImage( const KURL& )
+{
 }
 
 #include "interface.moc"

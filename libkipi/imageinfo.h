@@ -16,8 +16,8 @@ namespace KIPI
     {
     public:
         // Interface for plugins.
-        QString name() const;
-        void setName( const QString& name );
+        QString title() const;
+        void setTitle( const QString& name );
 
         QString description() const;
         void setDescription( const QString& description);
@@ -32,10 +32,12 @@ namespace KIPI
         bool isTimeExact() const;
         int size() const;
 
-        int angle();
+        int angle() const;
         void setAngle( int );
 
         QString toString( const QVariant& ) const;
+
+        void cloneData( const ImageInfo& other );
 
         // Interface for host application + general stuff
         ImageInfo( ImageInfoShared* );

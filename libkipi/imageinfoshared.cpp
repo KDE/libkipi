@@ -1,9 +1,10 @@
 #include "imageinfoshared.h"
 #include <kdebug.h>
 #include <qfileinfo.h>
+#include "interface.h"
 
-KIPI::ImageInfoShared::ImageInfoShared( const KURL& url )
-    :_url( url ), _count(1)
+KIPI::ImageInfoShared::ImageInfoShared( Interface* interface, const KURL& url )
+    : _url( url ), _count(1), _interface( interface )
 {
 }
 
@@ -61,4 +62,29 @@ bool KIPI::ImageInfoShared::isTimeExact()
 
 void KIPI::ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 {
+}
+
+void KIPI::ImageInfoShared::setTitle( const QString& )
+{
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
+        "If the host application do support that, then this function should\n"
+        "have been overriden in the host application.\n";
+}
+
+void KIPI::ImageInfoShared::cloneData( ImageInfoShared* other )
+{
+    if ( _interface->hasFeature( ImageTitlesWritable ) )
+        setTitle( other->title() );
+
+    if ( _interface->hasFeature( ImagesHasComments ) )
+        setDescription( other->description() );
+
+    clearAttributes();
+    addAttributes( other->attributes() );
+
+    setTime( other->time( FromInfo ), FromInfo );
+    if ( _interface->hasFeature( SupportsDateRanges ) )
+        setTime( other->time( ToInfo ), ToInfo );
+
+    setAngle( other->angle() );
 }
