@@ -69,12 +69,15 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
 
     QString root = album.uploadRoot().path();
     QString uploadPath = album.uploadPath().path();
-    if ( !uploadPath.startsWith( root ) ) {
+    
+    if ( !uploadPath.startsWith( root ) ) 
+        {
         kdWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
                          << "uploadPath() = " << album.uploadPath().prettyURL() << endl
                          << "uploadRoot() = " << album.uploadRoot().prettyURL() << endl;
-    }
-    else {
+        }
+    else
+        {
         uploadPath = uploadPath.mid( root.length() );
         
         m_pendingPath = QStringList::split( "/", uploadPath, true );
@@ -86,7 +89,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
         
         connect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ),
                  this, SLOT( load() ) );
-    }
+        }
 }
 
 KURL KIPI::UploadWidget::path() const
@@ -114,41 +117,50 @@ void KIPI::UploadWidget::load()
     m_handled += item;
 
     KFileTreeViewItem* branch = m_treeView->findItem( m_item, m_handled );
-    if ( !branch ) {
+    
+    if ( !branch ) 
+        {
         kdDebug( 51000 ) << "Unable to open " << m_handled << endl;
-    }
-    else {
+        }
+    else
+        {
         branch->setOpen( true );
         m_treeView->setSelected( branch, true );
+        m_treeView->ensureItemVisible ( branch );
+        
         if ( branch->alreadyListed() )
             load();
-    }
+        }
 
 }
 
 void KIPI::UploadWidget::mkdir()
 {
-    if ( !path().isValid() ) {
+    if ( !path().isValid() ) 
+        {
         KMessageBox::error( this, i18n("Please select a directory first") );
         return;
-    }
+        }
 
     bool ok;
     QString dir = KInputDialog::getText( i18n("Create directory"),
                                          i18n("<qt>Enter new directory name (to be created as subdir of %1</qt>")
                                         .arg(path().prettyURL()), "", &ok, this);
+    
     if (!ok) return;
 
     KURL url = path();
     url.addPath( dir );
 
     KIO::SimpleJob* job = KIO::mkdir(url);
-    connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(slotAlbumCreated(KIO::Job*)));
+    connect(job, SIGNAL(result(KIO::Job*)), 
+            this, SLOT(slotAlbumCreated(KIO::Job*)));
 }
 
 void KIPI::UploadWidget::slotAlbumCreated(KIO::Job* job)
 {
     int code = job->error();
+    
     if ( code )
         job->showErrorDialog( this );
 }
