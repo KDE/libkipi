@@ -23,12 +23,13 @@ uninstall-local:
 lib_LTLIBRARIES = libkipi.la
 
 libkipi_la_SOURCES = interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp imagecollection.cpp \
-		     imageinfoshared.cpp imagecollectionshared.cpp imagecollectiondialog.cpp uploadwidget.cpp
+		     imageinfoshared.cpp imagecollectionshared.cpp imagecollectiondialog.cpp uploadwidget.cpp \
+		     batchprogressdialog.cpp
 
 noinst_HEADERS = KDStream.h
 
 libkipiinclude_HEADERS = interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h imageinfoshared.h \
-		         imagecollectionshared.h imagecollectiondialog.h uploadwidget.h
+		         imagecollectionshared.h imagecollectiondialog.h uploadwidget.h batchprogressdialog.h
 
 libkipi_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) \
 		-version-info 0:0:0 -no-undefined
