@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=ServiceType
+X-KDE-ServiceType=KIPI/Plugin
+X-KDE-DerivedName=KIPI Plugin
+Comment=A KIPI Plugin
+Name[de]=Externe Module für KIPI
+Name[es]=Complemento para KIPI
+Name[fr]=Module externe pour KIPI
+Name[it]=Plugin per KIPI
+Name[da]=KIPI plugin
+Comment[de]=Ein externes Modul für KIPI
+Comment[es]=Un complemento para KIPI
+Comment[fr]=Un module externe pour KIPI
+Comment[it]=Modulo esterno per KIPI
+Comment[da]=KIPI plugin
