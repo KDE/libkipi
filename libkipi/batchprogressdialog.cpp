@@ -67,7 +67,7 @@ public:
      case KIPI::StartingMessage:
         setPixmap( 0, SmallIcon( "run" ) );
         break;
-     case KIPI::SucessMessage:
+     case KIPI::SuccessMessage:
         setPixmap( 0, SmallIcon( "ok" ) );
         break;
      case KIPI::WarningMessage:

@@ -41,7 +41,7 @@ class BatchProgressItem;
 enum ActionMessageType
 {
     StartingMessage = 0,
-    SucessMessage,
+    SuccessMessage,
     WarningMessage,
     ErrorMessage,
     ProgressMessage
