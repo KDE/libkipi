@@ -4,7 +4,7 @@
 */
 
 /****************************************************************************
-** Copyright (C) 2001-2003 Klarälvdalens Datakonsult AB.  All rights reserved.
+** Copyright (C) 2001-2005 Klarälvdalens Datakonsult AB.  All rights reserved.
 **
 ** This file is part of the KD Tools library.
 **
@@ -19,9 +19,6 @@
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-**
-** See http://www.klaralvdalens-datakonsult.se/?page=products for
-**   information about KD Tools Commercial License Agreements.
 **
 ** Contact info@klaralvdalens-datakonsult.se if any conditions of this
 ** licensing are not clear to you.
