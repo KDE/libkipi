@@ -74,7 +74,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     KIPI::ImageCollection album = interface->currentAlbum();
     
     // If no current album selected, get the first album in the list.
-    if ( !album.isValid() ) 
+    if ( !album.isValid() || !album.isDirectory() ) 
        album = interface->allAlbums().first();
     
     d->m_item = d->m_treeView->addBranch( album.uploadRoot(), album.uploadRootName() );
@@ -85,7 +85,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     d->m_treeView->header()->setStretchEnabled( true, 0 );
 
     QString root = album.uploadRoot().path();
-    QString uploadPath = album.uploadPath().path();
+    QString uploadPath = album.isDirectory() ? album.uploadPath().path() : root;
     
     if ( !uploadPath.startsWith( root ) ) 
         {
