@@ -3,7 +3,13 @@
 
    This page will tell you both how to develop a new
    plugin for KIPI, and how to add KIPI support to a new
-   application (referred to as host application.).
+   application (referred to as host application).
+   
+   You can find more informations about KIPI at this <a
+   href="http://http://extragear.kde.org/apps/kipi.php">url</a>.
+   
+   This documentation has been writen by Renchi Raju, Gilles Caulier,
+    Jesper K. Pedersen, and Aurelien Gateau. 
 
    <h1>Developing a new Plugin</h1>
    The easiest way to start a new plugin, is to copy the hello world

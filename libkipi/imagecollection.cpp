@@ -211,7 +211,6 @@ KURL KIPI::ImageCollection::uploadRoot() const
   This fonction return the name of the upload root path used by the 
   the KIPI::UploadWidget. This name can be different for each host 
   app (like "Images" for Kimdaba or "My Albums" for Digikam).
-  .
 */
 QString KIPI::ImageCollection::uploadRootName() const
 {
