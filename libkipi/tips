@@ -1,19 +1,35 @@
 <tip category="Kipi|BatchProcessImages">
-<html><p><table border="0" cellpadding="0" cellspacing="10" align="center"><tr>
-<td><img src="hicolor/48x48/apps/kipi.png"></td>
+<html>
+<p>
+<table border="0" cellpadding="0" cellspacing="10" align="center">
+<tr>
+<td>
+<img src="hicolor/48x48/apps/kipi.png">
+</td>
 <td>
 Did you know that you could brighten up your images using Batch Color Images plugin for increased contrast?
 </td>
-</tr></table></p></html>
+</tr>
+</table>
+</p>
+</html>
 </tip>
 
 <tip category="Kipi|Slideshow">
-<html><p><table border="0" cellpadding="0" cellspacing="10" align="center"><tr>
-<td><img src="hicolor/48x48/apps/kipi.png"></td>
+<html>
+<p>
+<table border="0" cellpadding="0" cellspacing="10" align="center">
+<tr>
+<td>
+<img src="hicolor/48x48/apps/kipi.png">
+</td>
 <td>
 Did you know that you could abort a slideshow using <b>ESC</b>?
 </td>
-</tr></table></p></html>
+</tr>
+</table>
+</p>
+</html>
 </tip>
 
 <tip category="Kipi|Scanner">
