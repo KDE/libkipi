@@ -40,15 +40,16 @@
 namespace KIPI
 {
     enum Features {
-        AlbumsHaveComments      = 0x0001,
-        AlbumEQDir              = 0x0002,
-        ImagesHasComments       = 0x0004,
-        ImagesHasTime           = 0x0008,
-        SupportsDateRanges      = 0x0010,
-        AcceptNewImages         = 0x0020,
-        ImageTitlesWritable     = 0x0040,
-        AlbumsHaveCategory      = 0x0060,
-        AlbumsHaveCreationDate  = 0x0080
+        AlbumsHaveComments         = 0x0001,
+        AlbumEQDir                 = 0x0002,
+        ImagesHasComments          = 0x0004,
+        ImagesHasTime              = 0x0008,
+        SupportsDateRanges         = 0x0010,
+        AcceptNewImages            = 0x0020,
+        ImageTitlesWritable        = 0x0040,
+        AlbumsHaveCategory         = 0x0060,
+        AlbumsHaveCreationDate     = 0x0080,
+        AlbumsUseFirstImagePreview = 0x0100
         // When adding new items, remember to update "hasFeature( const QString& feature )"
         // and the hello world plugin.
     };

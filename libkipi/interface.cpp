@@ -88,6 +88,13 @@
   This feature specify that albums are a creation date associated to them.
 */
 
+/*!
+  \enum KIPI::AlbumsUseFirstImagePreview
+  This feature specify that albums use the first image of the collection like preview.
+  This flag is used in ImageGallery, CDArchiving, and FinDuplicateImages dialog for 
+  to lauch a preview of the album.
+*/
+
 
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
@@ -139,6 +146,8 @@ bool KIPI::Interface::hasFeature( const QString& feature )
         return hasFeature( KIPI::AlbumsHaveCategory );
     else if ( feature == "AlbumsHaveCreationDate" )
         return hasFeature( KIPI::AlbumsHaveCreationDate );
+    else if ( feature == "AlbumsUseFirstImagePreview" )
+        return hasFeature( KIPI::AlbumsUseFirstImagePreview );
     else {
         kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
