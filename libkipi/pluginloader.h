@@ -37,16 +37,26 @@ namespace KIPI
     {
         Q_OBJECT
     public:
-        struct Info
+        class Info
         {
-            Info( const QString& name, const QString& comment, const QString& library, bool shouldLoad )
-                : name(name), comment(comment), library(library), plugin( 0 ),  shouldLoad( shouldLoad ) {}
-            Info() {}
-            QString name;
-            QString comment;
-            QString library;
-            Plugin* plugin;
-            bool shouldLoad;
+		public:
+            Info( const QString& name, const QString& comment, const QString& library, bool shouldLoad );
+            ~Info();
+            QString name() const;
+            
+			QString comment() const;
+            
+			QString library() const;
+            
+			Plugin* plugin() const;
+			void setPlugin(Plugin*);
+			
+            bool shouldLoad() const;
+            void setShouldLoad(bool);
+
+		private:
+			struct Private;
+			Private* d;
         };
 
         PluginLoader( const QStringList& ignores, Interface* interface );
@@ -84,6 +94,7 @@ namespace KIPI
         void apply();
     private:
 		struct Private;
+		Private* d;
     };
 }
 

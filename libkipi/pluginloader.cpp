@@ -100,13 +100,90 @@
   PluginLoader::configWidget(), and insert the widget into your normal
   configuration dialog.
 */
-namespace KIPI
+namespace KIPI {
+
+//---------------------------------------------------------------------
+//
+// PluginLoader::Info
+//
+//---------------------------------------------------------------------
+struct PluginLoader::Info::Private {
+    QString m_name;
+    QString m_comment;
+    QString m_library;
+    Plugin* m_plugin;
+    bool m_shouldLoad;
+};
+
+
+PluginLoader::Info::Info(const QString& name, const QString& comment, const QString& library, bool shouldLoad)
 {
-    static PluginLoader* s_instance = 0;
+    d=new Private;
+    d->m_name=name;
+    d->m_comment=comment;
+    d->m_library=library;
+    d->m_plugin=0;
+    d->m_shouldLoad=shouldLoad;
 }
 
 
-struct KIPI::PluginLoader::Private
+PluginLoader::Info::~Info()
+{
+    delete d;
+}
+
+
+QString PluginLoader::Info::name() const
+{
+    return d->m_name;
+}
+
+
+QString PluginLoader::Info::comment() const
+{
+    return d->m_comment;
+}
+
+
+QString PluginLoader::Info::library() const
+{
+    return d->m_library;
+}
+
+
+Plugin* PluginLoader::Info::plugin() const
+{
+    return d->m_plugin;
+}
+
+
+void PluginLoader::Info::setPlugin(Plugin* plugin)
+{
+    d->m_plugin=plugin;
+}
+
+
+bool PluginLoader::Info::shouldLoad() const
+{
+    return d->m_shouldLoad;
+}
+
+
+void PluginLoader::Info::setShouldLoad(bool value)
+{
+    d->m_shouldLoad=value;
+}
+
+
+//---------------------------------------------------------------------
+//
+// PluginLoader
+//
+//---------------------------------------------------------------------
+static PluginLoader* s_instance = 0;
+
+
+struct PluginLoader::Private
 {
     PluginList m_pluginList;
     Interface* m_interface;
@@ -114,7 +191,7 @@ struct KIPI::PluginLoader::Private
 };
 
 
-KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
+PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 {
     Q_ASSERT( s_instance == 0 );
     s_instance = this;
@@ -166,12 +243,12 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
     }
 }
 
-KIPI::PluginLoader::~PluginLoader()
+PluginLoader::~PluginLoader()
 {
     delete d;
 }
 
-void KIPI::PluginLoader::loadPlugins()
+void PluginLoader::loadPlugins()
 {
     for( PluginList::Iterator it = d->m_pluginList.begin(); it != d->m_pluginList.end(); ++it ) {
         loadPlugin( *it );
@@ -179,61 +256,67 @@ void KIPI::PluginLoader::loadPlugins()
     emit replug();
 }
 
-void KIPI::PluginLoader::loadPlugin( Info* info )
+void PluginLoader::loadPlugin( Info* info )
 {
-    if ( info->plugin == 0 && info->shouldLoad ) {
+    if ( info->plugin() == 0 && info->shouldLoad() ) {
         Plugin *plugin = 0;
         plugin =  KParts::ComponentFactory
-                  ::createInstanceFromLibrary<KIPI::Plugin>(info->library.local8Bit().data(), d->m_interface );
+                  ::createInstanceFromLibrary<Plugin>(info->library().local8Bit().data(), d->m_interface );
 
         if (plugin)
             kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name()<< endl;
         else
-            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for " << info->name
-                               << "(" << info->library << ")" << endl;
-        info->plugin = plugin;
+            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for " << info->name()
+                               << "(" << info->library() << ")" << endl;
+        info->setPlugin(plugin);
     }
-    if ( info->plugin ) // Do not emit if we had trouble loading the plugin.
+    if ( info->plugin() ) // Do not emit if we had trouble loading the plugin.
         emit PluginLoader::instance()->plug( info );
 }
 
 
-const KIPI::PluginLoader::PluginList& KIPI::PluginLoader::pluginList()
+const PluginLoader::PluginList& PluginLoader::pluginList()
 {
     return d->m_pluginList;
 }
 
-KIPI::PluginLoader* KIPI::PluginLoader::instance()
+PluginLoader* PluginLoader::instance()
 {
     Q_ASSERT( s_instance != 0);
     return s_instance;
 }
 
-KIPI::ConfigWidget* KIPI::PluginLoader::configWidget( QWidget* parent )
+
+//---------------------------------------------------------------------
+//
+// ConfigWidget
+//
+//---------------------------------------------------------------------
+ConfigWidget* PluginLoader::configWidget( QWidget* parent )
 {
-    return new KIPI::ConfigWidget( parent );
+    return new ConfigWidget( parent );
 }
 
 
 class PluginCheckBox :public QCheckBox
 {
 public:
-    PluginCheckBox( KIPI::PluginLoader::Info* info, QWidget* parent )
-        : QCheckBox( info->comment, parent ), info( info )
+    PluginCheckBox( PluginLoader::Info* info, QWidget* parent )
+        : QCheckBox( info->comment(), parent ), info( info )
         {
-            setChecked( info->shouldLoad );
+            setChecked( info->shouldLoad() );
         }
-    KIPI::PluginLoader::Info* info;
+    PluginLoader::Info* info;
 };
 
 
-struct KIPI::ConfigWidget::Private
+struct ConfigWidget::Private
 {
     QValueList< PluginCheckBox* > _boxes;
 };
 
 
-KIPI::ConfigWidget::ConfigWidget( QWidget* parent )
+ConfigWidget::ConfigWidget( QWidget* parent )
     :QScrollView( parent, "KIPI::PluginLoader::ConfigWidget" )
 {
     d=new Private;
@@ -243,8 +326,8 @@ KIPI::ConfigWidget::ConfigWidget( QWidget* parent )
 
     QVBoxLayout* lay = new QVBoxLayout( top, 0, 6 );
 
-    KIPI::PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
-    for( KIPI::PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) {
+    PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
+    for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
         lay->addWidget( cb );
         d->_boxes.append( cb );
@@ -252,36 +335,38 @@ KIPI::ConfigWidget::ConfigWidget( QWidget* parent )
 }
 
 
-KIPI::ConfigWidget::~ConfigWidget()
+ConfigWidget::~ConfigWidget()
 {
     delete d;
 }
 
 
-void KIPI::ConfigWidget::apply()
+void ConfigWidget::apply()
 {
     KConfig* config = KGlobal::config();
     config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
     bool changes = false;
 
     for( QValueList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) {
-        bool orig = (*it)->info->shouldLoad;
+        bool orig = (*it)->info->shouldLoad();
         bool load = (*it)->isChecked();
         if ( orig != load ) {
             changes = true;
-            config->writeEntry( (*it)->info->name, load );
-            (*it)->info->shouldLoad = load;
+            config->writeEntry( (*it)->info->name(), load );
+            (*it)->info->setShouldLoad(load);
             if ( load ) {
-                PluginLoader::instance()->loadPlugin( (*it)->info );
+                PluginLoader::instance()->loadPlugin( (*it)->info);
             }
             else {
-                if ( (*it)->info->plugin ) // Do not emit if we had trouble loading plugin.
-                    emit PluginLoader::instance()->unplug( (*it)->info );
+                if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
+                    emit PluginLoader::instance()->unplug( (*it)->info);
             }
         }
     }
     emit PluginLoader::instance()->replug();
 }
 
+
+} // namespace
 
 #include "pluginloader.moc"
