@@ -20,10 +20,10 @@
  * ============================================================ */
 
 
-#ifndef VERSION_H
-#define VERSION_H
+#ifndef KIPI_VERSION_H
+#define KIPI_VERSION_H
 
 static const char * const kipi_version = "0.1.0-cvs";
 
-#endif // VERSION_H
+#endif // KIPI_VERSION_H
 
