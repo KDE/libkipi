@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : plugin.h
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
