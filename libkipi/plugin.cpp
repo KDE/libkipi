@@ -24,36 +24,21 @@
 #include "plugin.h"
 #include <kinstance.h>
 
-namespace KIPI
-{
-
-Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
+KIPI::Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
     : QObject( parent, name), m_actionCollection( 0 ), m_instance( instance )
 {
 }
 
-Plugin::~Plugin()
+KIPI::Plugin::~Plugin()
 {
 }
 
-KActionCollection* Plugin::actionCollection()
+KActionCollection* KIPI::Plugin::actionCollection()
 {
     if (!m_actionCollection)
         m_actionCollection = new KActionCollection(this, "m_actions", m_instance );
 
     return m_actionCollection;
-}
-
-bool Plugin::mergeContextMenu() const
-{
-    return false;
-}
-
-bool Plugin::mergeToolBar() const
-{
-    return false;
-}
-
 }
 
 void KIPI::Plugin::addAction( KAction* action )

@@ -66,9 +66,14 @@ namespace KIPI
         /** Tells the host app that the following images has changed on disk */
         virtual void refreshImages( const KURL::List& );
 
+        bool hasFeature( KIPI::Features feature );
+
+    protected:
         /** Return a bitwise or if the KIPI::Features that thus application support. */
         virtual int features() const = 0;
-        bool hasFeature( KIPI::Features feature );
+
+    private:
+        friend class PluginLoader;
         bool hasFeature( const QString& feature );
 
     signals:

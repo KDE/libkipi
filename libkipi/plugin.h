@@ -47,9 +47,6 @@ namespace KIPI
         KActionPtrList actions();
         virtual Category category() const = 0;
 
-        virtual bool     mergeContextMenu() const;
-        virtual bool     mergeToolBar() const;
-
     protected:
         KActionCollection* actionCollection();
         void addAction( KAction* action );

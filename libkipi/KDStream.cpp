@@ -288,7 +288,7 @@ KDStream& KDStream::operator<<( const QChar& ch )
 
 
 /*!
-  Writes a QColor value to the stream. See \QColor2Str for a
+  Writes a QColor value to the stream. See \ref QColor2Str for a
   description of the output format.
 */
 KDStream& KDStream::operator<<( const QColor& col )

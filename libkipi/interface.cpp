@@ -24,7 +24,17 @@
 #include <kdebug.h>
 
 /*!
-  \enum KIPI::AlbumsHaveDescriptions
+  \enum KIPI::Features
+  Not all host applications support the full subset of features that KIPI
+  allows access to. As an example <a
+  href="http://ktown.kde.org/kimdaba/">KimDaBa</a> do not support comments
+  for albums. Thus before a plugin expect a decant value for the comment,
+  it should check whether \ref KIPI::AlbumsHaveComments are set. It does so
+  using \ref KIPI::Interface::hasFeature()
+*/
+
+/*!
+  \enum KIPI::AlbumsHaveComments
   This feature specify that albums have descriptions associated to them.
  */
 
@@ -53,7 +63,7 @@
   \enum KIPI::AcceptNewImages
   This feature specifies that the host application do accept new images.
   Use \ref ImageCollection::uploadPath to find the location to place the image, and
-  \ref addImage() to tell the host application about the new image.
+  \ref KIPI::Interface::addImage() to tell the host application about the new image.
 */
 
 /*!
@@ -74,6 +84,10 @@ void KIPI::Interface::refreshImages( const KURL::List& )
 {
 }
 
+/**
+   Tells whether the host application under which the plugin currently executes a given feature.
+   See \ref KIPI::Features for details on the individual features.
+*/
 bool KIPI::Interface::hasFeature( KIPI::Features feature )
 {
     return ( features() & feature ) != 0;
