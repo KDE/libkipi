@@ -222,8 +222,8 @@ void ImageDialog::slotImagesSelected()
     else
     {
         d->_url = d->_urls.first();
-        d->_preview->setText(i18n("%1 images selected")
-                             .arg(d->_urls.count()));
+        d->_preview->setText(i18n("1 image selected", "%n images selected", d->_urls.count()));
+                             
     }
     
 }
