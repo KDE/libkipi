@@ -119,13 +119,8 @@ void KIPI::UploadWidget::load()
 
     m_pendingPath.pop_front();
 
-    // Bugfix by Gilles (23/06/2004) : It's work fine like this with Digikam and Kimdaba.
-    // This is must be tested with Gwenview
-    //
-    //m_handled += "/" + item;
+    m_handled += "/" + item;
     
-    m_handled += item;
-
     KFileTreeViewItem* branch = m_treeView->findItem( m_item, m_handled );
     
     if ( !branch ) 
