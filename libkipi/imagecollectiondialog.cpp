@@ -1,10 +1,17 @@
+#include <qguardedptr.h>
 #include <qhbox.h>
+#include <qlabel.h>
 
+#include <kdebug.h>
 #include <klistview.h>
 #include <klocale.h>
 
+#include <libkipi/thumbnailjob.h>
+
 #include "imagecollectiondialog.moc"
 
+
+const int PREVIEW_SIZE=128;
 
 namespace KIPI
 {
@@ -32,7 +39,9 @@ struct ImageCollectionDialog::Private {
     KIPI::Interface* _interface;
     KListView* _albumList;
     KListView* _imageList;
+    QLabel* _preview;
     QValueList<ImageCollection> _albums;
+    QGuardedPtr<KIPI::ThumbnailJob> _thumbJob;
 };
 
 
@@ -40,8 +49,9 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
     : KDialogBase(parent, "album-dialog", true, i18n("Select an image from an album"),
         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
-	d=new Private;
-	d->_interface=interface;
+    d=new Private;
+    d->_interface=interface;
+    d->_thumbJob=0;
     QHBox* box=makeHBoxMainWidget();
     d->_albumList=new KListView(box);
     d->_albumList->addColumn(i18n("Album Name"));
@@ -49,6 +59,11 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
     
     d->_imageList=new KListView(box);
     d->_imageList->addColumn(i18n("Image Name"));
+
+    d->_preview=new QLabel(box);
+	d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
+    d->_preview->setFixedWidth(PREVIEW_SIZE);
+	d->_preview->setText(i18n("No image selected"));
 
     d->_albums=d->_interface->allAlbums();
     QValueList<ImageCollection>::ConstIterator it=d->_albums.begin();
@@ -60,19 +75,19 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
         this, SLOT(fillImageList(QListViewItem*)) );
 
     connect(d->_imageList, SIGNAL(selectionChanged(QListViewItem*)),
-        this, SLOT(selectImage(QListViewItem*)) );
+        this, SLOT(slotImageSelected(QListViewItem*)) );
 
     enableButtonOK(false);
 }
 
 
 ImageCollectionDialog::~ImageCollectionDialog() {
-	delete d;
+    delete d;
 }
 
 
 KURL ImageCollectionDialog::url() const {
-	return d->_url;
+    return d->_url;
 }
 
 
@@ -101,15 +116,29 @@ void ImageCollectionDialog::fillImageList(QListViewItem* item) {
 }
 
 
-void ImageCollectionDialog::selectImage(QListViewItem* item) {
+void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
     if (!item) {
         enableButtonOK(false);
+		d->_preview->setText(i18n("No image selected"));
         d->_url=KURL();
         return;
     }
     enableButtonOK(true);
     d->_url=static_cast<ImageLVI*>(item)->_url;
+
+    if (!d->_thumbJob.isNull()) {
+        delete d->_thumbJob;
+    }
+    d->_thumbJob=new KIPI::ThumbnailJob(d->_url, PREVIEW_SIZE); 
+    connect(d->_thumbJob, SIGNAL(signalThumbnail(const KURL&, const QPixmap&)),
+        SLOT(slotGotPreview(const KURL&, const QPixmap&)));
 }
- 
+
+
+void ImageCollectionDialog::slotGotPreview(const KURL&, const QPixmap& pix) {
+	
+    d->_preview->setPixmap(pix);
+}
+
 
 } // namespace

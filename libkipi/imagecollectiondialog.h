@@ -29,7 +29,8 @@ public:
 
 private slots:
     void fillImageList(QListViewItem*);
-    void selectImage(QListViewItem*);
+    void slotImageSelected(QListViewItem*);
+	void slotGotPreview(const KURL&, const QPixmap&);
     
 private:
 	Private* d;
