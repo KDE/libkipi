@@ -47,7 +47,8 @@ namespace KIPI
        IMPORTPLUGIN,
        EXPORTPLUGIN,
        BATCHPLUGIN,
-       COLLECTIONSPLUGIN
+       COLLECTIONSPLUGIN,
+       UNDEFINEDPLUGIN
        };
 
     class Plugin : public QObject
@@ -59,7 +60,8 @@ namespace KIPI
         virtual void setup( QWidget* widget ) = 0;
         KActionPtrList actions( QWidget* parent = 0 );
         KActionCollection* actionCollection( QWidget* parent = 0 );
-        virtual Category category() const = 0;
+        virtual Category category() const;
+        virtual Category category( KAction* action );
 
     protected:
         void addAction( KAction* action );
