@@ -24,6 +24,7 @@
 #include <ktrader.h>
 #include <kparts/componentfactory.h>
 #include <kdebug.h>
+#include <kdialog.h>
 
 #include "plugin.h"
 #include "pluginloader.h"
@@ -334,7 +335,7 @@ ConfigWidget::ConfigWidget( QWidget* parent )
     addChild( top );
     setResizePolicy( AutoOneFit );
 
-    QVBoxLayout* lay = new QVBoxLayout( top, 0, 6 );
+    QVBoxLayout* lay = new QVBoxLayout( top, KDialog::marginHint(), KDialog::spacingHint() );
 
     PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
     for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) {
@@ -342,6 +343,8 @@ ConfigWidget::ConfigWidget( QWidget* parent )
         lay->addWidget( cb );
         d->_boxes.append( cb );
     }
+
+    lay->addStretch(10);
 }
 
 
