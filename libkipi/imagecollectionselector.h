@@ -25,9 +25,13 @@
 // Qt
 #include <qwidget.h>
 #include <qvaluelist.h>
+#include <qpixmap.h>
 
 // KIPI
 #include "libkipi/imagecollection.h"
+
+class QListViewItem;
+class KFileItem;
 
 namespace KIPI {
 
@@ -50,6 +54,9 @@ private slots:
     void slotSelectAll();
     void slotInvertSelection();
     void slotSelectNone();
+    void slotSelectionChanged(QListViewItem* listItem);
+    void slotGotPreview(const KFileItem*, const QPixmap&);
+    void slotInitialShow();
 };
 
 } // KIPI

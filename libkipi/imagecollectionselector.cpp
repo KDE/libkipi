@@ -21,27 +21,25 @@
  * ============================================================ */
 #include "imagecollectionselector.moc"
 
+#include "imagecollectionselector.h"
+
 // Qt
 #include <qheader.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
+#include <qlabel.h>
+#include <qvgroupbox.h>
+#include <qtimer.h>
 
 // KDE
 #include <kbuttonbox.h>
 #include <kdialog.h>
 #include <klistview.h>
 #include <klocale.h>
+#include <kio/previewjob.h>
 
 // KIPI
 #include "libkipi/interface.h"
-
-/* Missing features:
- * - Album details:
- *  - comments
- *  - date
- *  - preview
- *  - image count
- */
 
 namespace KIPI {
 
@@ -63,6 +61,9 @@ private:
 struct ImageCollectionSelector::Private {
     Interface* _interface;
     KListView* _list;
+    QLabel*    _thumbLabel;
+    QLabel*    _textLabel;
+    QListViewItem* _itemToSelect;
 };
 
 
@@ -71,17 +72,23 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
 {
     d=new Private;
     d->_interface=interface;
+    d->_itemToSelect = 0;
     
     d->_list=new KListView(this);
     d->_list->setResizeMode( QListView::LastColumn );
     d->_list->addColumn("");
     d->_list->header()->hide();
+
+    connect(d->_list, SIGNAL(selectionChanged(QListViewItem*)),
+            SLOT(slotSelectionChanged(QListViewItem*)));
     
     QHBoxLayout* mainLayout=new QHBoxLayout(this, 0, KDialog::spacingHint());
     mainLayout->addWidget(d->_list);
-    
+
+    QVBoxLayout* rightLayout = new QVBoxLayout(mainLayout, 0);
+
     KButtonBox* box=new KButtonBox(this, Vertical);
-    mainLayout->addWidget(box);
+    rightLayout->addWidget(box);
     QPushButton* selectAll=box->addButton(i18n("Select All"));
     QPushButton* invertSelection=box->addButton(i18n("Invert Selection"));
     QPushButton* selectNone=box->addButton(i18n("Select None"));
@@ -90,8 +97,29 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
     connect(selectAll, SIGNAL(clicked()), this, SLOT(slotSelectAll()) );
     connect(invertSelection, SIGNAL(clicked()), this, SLOT(slotInvertSelection()) );
     connect(selectNone, SIGNAL(clicked()), this, SLOT(slotSelectNone()) );
+
+    rightLayout->addItem(new QSpacerItem(10,20,QSizePolicy::Fixed,
+                                         QSizePolicy::Expanding));
+    
+    QVGroupBox* rightBox = new QVGroupBox(this);
+    rightBox->setInsideMargin(KDialog::marginHint());
+    rightBox->setInsideSpacing(KDialog::spacingHint());
+    rightLayout->addWidget(rightBox);
+
+    if (interface->hasFeature(AlbumsUseFirstImagePreview))
+    {
+        d->_thumbLabel = new QLabel(rightBox);
+        d->_thumbLabel->setFixedSize(QSize(128,128));
+        d->_thumbLabel->setAlignment(AlignHCenter | AlignVCenter);
+    }
+    else
+    {
+        d->_thumbLabel = 0;
+    }
+    d->_textLabel = new QLabel(rightBox);
     
     fillList();
+    QTimer::singleShot(0, this, SLOT(slotInitialShow()));
 }
 
 
@@ -113,11 +141,14 @@ void ImageCollectionSelector::fillList() {
         if (!currentWasInList && *it == current) {
             item->setOn(true);
             currentWasInList = true;
+            if (!d->_itemToSelect)
+                d->_itemToSelect = item;
         }
     }
 
     if (!currentWasInList) {
         slotSelectAll();
+        d->_itemToSelect = d->_list->firstChild();
     }
 }
 
@@ -163,6 +194,90 @@ void ImageCollectionSelector::slotSelectNone() {
     for (; it.current(); ++it) {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(false);
+    }
+}
+
+void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
+{
+    if (d->_thumbLabel)
+        d->_thumbLabel->clear();
+    d->_textLabel->clear();
+
+    if (!listItem)
+        return;
+
+    ImageCollectionItem* imcollItem =
+        static_cast<ImageCollectionItem*>(listItem);
+
+    if (d->_thumbLabel)
+    {
+        KURL::List images(imcollItem->imageCollection().images());
+        if (!images.isEmpty())
+        {
+            KIO::PreviewJob* thumbJob = KIO::filePreview(images.first(), 128);
+            connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                 SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+        }
+    }
+    
+    // Layout the ImageCollection information nicely
+    
+    QString cellBeg("<tr><td><nobr><font size=-1><i>");
+    QString cellMid("</i></font></nobr></td><td><font size=-1>");
+    QString cellEnd("</font></td></tr>");
+
+    QString text("<table cellspacing=0 cellpadding=0>");
+
+    // number of images 
+    text += cellBeg + i18n("Images :") +
+            cellMid + QString::number(imcollItem->imageCollection().images().count()) +
+            cellEnd;
+
+    // Optional features -------------------------------------------------------
+    
+    // Album Comments
+    if (d->_interface->hasFeature(AlbumsHaveComments))
+    {
+        text += cellBeg + i18n("Comments :") +
+                cellMid + imcollItem->imageCollection().comment() +
+                cellEnd;
+    }
+
+    // Album Category
+    if (d->_interface->hasFeature(AlbumsHaveCategory))
+    {
+        text += cellBeg + i18n("Category :") +
+                cellMid + imcollItem->imageCollection().category() +
+                cellEnd;
+    }
+
+    // Album Creation Date
+    if (d->_interface->hasFeature(AlbumsHaveCreationDate))
+    {
+        text += cellBeg + i18n("Date :") +
+                cellMid + imcollItem->imageCollection().date().toString() +
+                cellEnd;
+    }
+
+    
+    text += "</table>";
+
+
+    d->_textLabel->setText(text);
+}
+
+void ImageCollectionSelector::slotGotPreview(const KFileItem*, const QPixmap& pix)
+{
+    d->_thumbLabel->setPixmap(pix);
+}
+
+void ImageCollectionSelector::slotInitialShow()
+{
+    if (d->_itemToSelect)
+    {
+        d->_list->setSelected(d->_itemToSelect, true);
+        d->_list->ensureItemVisible(d->_itemToSelect);
+        d->_itemToSelect = 0;
     }
 }
 
