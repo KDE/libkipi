@@ -35,15 +35,11 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
     : m_interface( interface ), m_ignores( ignores )
 {
     Q_ASSERT( m_instance == 0 );
-    m_pluginList.setAutoDelete(true);
     init();
 }
 
 void KIPI::PluginLoader::init()
 {
-    m_libraryNames.clear();
-    m_pluginNames.clear();
-
     KTrader::OfferList offers = KTrader::self()->query("KIPI/Plugin");
 
     KTrader::OfferList::ConstIterator iter;
@@ -51,6 +47,7 @@ void KIPI::PluginLoader::init()
 
         KService::Ptr service = *iter;
         QString name    = service->name();
+        QString comment = service->comment();
         QString library = service->library();
         QStringList reqFeatures = service->property( QString::fromLatin1( "X-KIPI-ReqFeatures" ) ).toStringList();
 
@@ -68,9 +65,18 @@ void KIPI::PluginLoader::init()
         }
 
 		if (appHasAllReqFeatures) {
-	        m_pluginNames.append(name);
-    	    m_libraryNames.append(library);
-		}
+            Plugin *plugin =
+                KParts::ComponentFactory
+                ::createInstanceFromLibrary<KIPI::Plugin>(library.local8Bit().data(), m_interface );
+
+            if (plugin) {
+                kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
+                m_pluginList.append( Info( name, comment, library, plugin ) );
+            }
+            else {
+                kdWarning( 51001 ) << "KIPI::PluginLoader: failed to load plugin " << library << endl;
+            }
+        }
     }
 }
 
@@ -78,90 +84,6 @@ const KIPI::PluginLoader::List& KIPI::PluginLoader::pluginList()
 {
     return m_pluginList;
 }
-
-QStringList KIPI::PluginLoader::availablePlugins() const
-{
-    return m_pluginNames;
-}
-
-QStringList KIPI::PluginLoader::loadedPlugins() const
-{
-    QStringList plist;
-
-    QPtrListIterator<KIPI::Plugin> it(m_pluginList);
-
-    while (Plugin *plugin = it.current()) {
-        ++it;
-        plist.append(plugin->name());
-    }
-
-    return plist;
-}
-
-void KIPI::PluginLoader::loadPlugins()
-{
-    m_pluginList.clear();
-
-    for (QStringList::Iterator it = m_libraryNames.begin();
-         it != m_libraryNames.end(); ++it) {
-
-        Plugin *plugin =
-            KParts::ComponentFactory
-            ::createInstanceFromLibrary<KIPI::Plugin>((*it).local8Bit().data(), m_interface );
-
-        if (plugin) {
-            m_pluginList.append(plugin);
-            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
-        }
-    }
-}
-
-void KIPI::PluginLoader::loadPlugins(const QStringList& names)
-{
-    QStringList::Iterator itLib;
-    QStringList::Iterator itName = m_pluginNames.begin();
-
-    for (itLib = m_libraryNames.begin(), itName = m_pluginNames.begin() ;
-         itLib != m_libraryNames.end() && itName != m_pluginNames.end();
-         ++itName, ++itLib) {
-
-        if (!names.contains(*itName)) {
-
-            Plugin* plugin = pluginIsLoaded(*itName);
-            if (plugin)
-                m_pluginList.remove(plugin);
-            continue;
-        }
-
-        if (!pluginIsLoaded(*itName)) {
-
-            Plugin *plugin =
-                KParts::ComponentFactory
-                ::createInstanceFromLibrary<KIPI::Plugin>(
-                    (*itLib).local8Bit().data());
-
-            if (plugin) {
-                m_pluginList.append(plugin);
-                kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
-            }
-        }
-
-    }
-}
-
-Plugin* KIPI::PluginLoader::pluginIsLoaded(const QString& name)
-{
-    for (Plugin* plugin = m_pluginList.first(); plugin;
-         plugin = m_pluginList.next()) {
-
-        if (plugin->name() == name) {
-            return plugin;
-        }
-    }
-
-    return 0;
-}
-
 
 PluginLoader* KIPI::PluginLoader::instance()
 {
