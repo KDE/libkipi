@@ -35,7 +35,8 @@ namespace KIPI
         EFFECTSPLUGIN,
         TOOLSPLUGIN,
         IMPORTPLUGIN,
-        EXPORTPLUGIN
+        EXPORTPLUGIN,
+	BATCHPLUGIN	
     };
 
     class Plugin : public QObject
