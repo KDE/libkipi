@@ -18,7 +18,7 @@ namespace KIPI
         QMap<QString,QVariant> attributes;
         QString toString( const QVariant& );
     };
-};
+}
 
 #endif /* IMAGEINFO_H */
 
