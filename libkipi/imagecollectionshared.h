@@ -12,7 +12,7 @@ namespace KIPI
         ImageCollectionShared();
         virtual ~ImageCollectionShared() {}
         virtual QString name() = 0;
-        virtual QString comment() = 0;
+        virtual QString comment();
         virtual KURL::List images() = 0;
         virtual KURL path();
         virtual KURL uploadPath();

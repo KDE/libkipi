@@ -1,4 +1,7 @@
 #include "imagecollectionshared.h"
+
+#include <kdebug.h>
+
 KIPI::ImageCollectionShared::ImageCollectionShared()
      : _count(1)
 {
@@ -20,14 +23,17 @@ void KIPI::ImageCollectionShared::removeRef()
 
 KURL KIPI::ImageCollectionShared::path()
 {
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
+            "AlbumEQDir - if the host application do support that, then this function should\n"
+            "have been overriden in the host application.\n";
     return KURL();
 }
 
 KURL KIPI::ImageCollectionShared::uploadPath()
 {
-    qFatal( "This method should only be invoked if the host application supports the KIPI::Features\n"
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overriden in the host application.");
+            "have been overriden in the host application.\n";
     return KURL();
 }
 
@@ -42,3 +48,10 @@ KURL KIPI::ImageCollectionShared::uploadRoot()
         return KURL( "file:/" );
 }
 
+QString KIPI::ImageCollectionShared::comment()
+{
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
+            "AlbumsHaveComments - if the host application do support that, then this function should\n"
+            "have been overriden in the host application.\n";
+    return QString::null;
+}
