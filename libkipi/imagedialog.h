@@ -41,21 +41,27 @@ namespace KIPI
 
 
 class ImageDialog : public KDialogBase {
-Q_OBJECT
-	class Private;
+
+    Q_OBJECT
+    class Private;
 public:
-    ImageDialog(QWidget*, Interface*);
+    ImageDialog(QWidget*, Interface*, bool singleSelection=false);
     ~ImageDialog();
-    KURL url() const;
+
+    KURL       url() const;
+    KURL::List urls() const;
+    
     static KURL getImageURL(QWidget*, Interface*);
+    static KURL::List getImageURLs(QWidget*, Interface*);
 
 private slots:
     void fillImageList(QListViewItem*);
     void slotImageSelected(QListViewItem*);
-	void slotGotPreview(const KFileItem* , const QPixmap&);
+    void slotImagesSelected();
+    void slotGotPreview(const KFileItem* , const QPixmap&);
 
 private:
-	Private* d;
+    Private* d;
 };
 
 } // namespace

@@ -23,6 +23,8 @@
 #include <qlabel.h>
 #include <qsplitter.h>
 
+#include "imagedialog.h"
+
 #include <kdebug.h>
 #include <klistview.h>
 #include <klocale.h>
@@ -56,30 +58,39 @@ struct ImageLVI : public KListViewItem {
 
 struct ImageDialog::Private {
     KURL _url;
+    KURL::List _urls;
     KIPI::Interface* _interface;
     KListView* _albumList;
     KListView* _imageList;
     QLabel* _preview;
     QValueList<ImageCollection> _albums;
+    bool _singleSelection;
 };
 
 
-ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface)
+ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
+                         bool singleSelection)
     : KDialogBase(parent, "album-dialog", true, i18n("Select Image From Album"),
-        KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
+                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
     d=new Private;
     d->_interface=interface;
+    d->_singleSelection = singleSelection;
+    
     QSplitter* splitter=new QSplitter(this);
     setMainWidget(splitter);
     d->_albumList=new KListView(splitter);
     d->_albumList->addColumn(i18n("Album Name"));
     d->_albumList->setMinimumWidth(200);
+    d->_albumList->setResizeMode(QListView::LastColumn);
 
     d->_imageList=new KListView(splitter);
     d->_imageList->addColumn(i18n("Image Name"));
     d->_imageList->setMinimumWidth(200);
-
+    d->_imageList->setSelectionMode(singleSelection ? QListView::Single :
+                                    QListView::Extended);
+    d->_imageList->setResizeMode(QListView::LastColumn);
+    
     d->_preview=new QLabel(splitter);
     d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
     d->_preview->setFixedWidth(PREVIEW_SIZE);
@@ -94,8 +105,12 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface)
     connect(d->_albumList, SIGNAL(selectionChanged(QListViewItem*)),
         this, SLOT(fillImageList(QListViewItem*)) );
 
-    connect(d->_imageList, SIGNAL(selectionChanged(QListViewItem*)),
-        this, SLOT(slotImageSelected(QListViewItem*)) );
+    if (singleSelection)
+        connect(d->_imageList, SIGNAL(selectionChanged(QListViewItem*)),
+                this, SLOT(slotImageSelected(QListViewItem*)) );
+    else
+        connect(d->_imageList, SIGNAL(selectionChanged()),
+                this, SLOT(slotImagesSelected()));
 
     enableButtonOK(false);
 }
@@ -110,16 +125,31 @@ KURL ImageDialog::url() const {
     return d->_url;
 }
 
+KURL::List ImageDialog::urls() const
+{
+    return d->_urls;    
+}
 
 KURL ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) {
-    ImageDialog dlg(parent, interface);
-    if (dlg.exec()) {
+    ImageDialog dlg(parent, interface, true);
+    if (dlg.exec() == QDialog::Accepted) {
         return dlg.url();
     } else {
         return KURL();
     }
 }
 
+KURL::List ImageDialog::getImageURLs(QWidget* parent, Interface* interface)
+{
+    ImageDialog dlg(parent, interface, false);
+    if (dlg.exec() == QDialog::Accepted)
+        return dlg.urls();
+    else
+    {
+        KURL::List urls;
+        return urls;
+    }
+}
 
 
 void ImageDialog::fillImageList(QListViewItem* item) {
@@ -150,6 +180,52 @@ void ImageDialog::slotImageSelected(QListViewItem* item) {
     KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
     connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
         SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+}
+
+void ImageDialog::slotImagesSelected()
+{
+    d->_url = KURL();
+    d->_urls.clear();
+    d->_preview->clear();
+
+    QListViewItem* selectedItem = 0;
+    QListViewItem* listItem = d->_imageList->firstChild();
+    while (listItem)
+    {
+        if (listItem->isSelected())
+        {
+            selectedItem = listItem;
+            d->_urls.append(static_cast<ImageLVI*>(listItem)->_url);
+        }
+        listItem = listItem->nextSibling();
+    }
+
+    if (!selectedItem)
+    {
+        enableButtonOK(false);
+        d->_preview->setText(i18n("No images selected"));
+        d->_url=KURL();
+        d->_urls.clear();
+        return;
+    }
+
+    enableButtonOK(true);
+    
+    if (d->_urls.count() == 1)
+    {
+        d->_url = d->_urls.first();
+
+        KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
+        connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
+                 SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+    }
+    else
+    {
+        d->_url = d->_urls.first();
+        d->_preview->setText(i18n("%1 images selected")
+                             .arg(d->_urls.count()));
+    }
+    
 }
 
 
