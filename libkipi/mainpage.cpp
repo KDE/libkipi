@@ -6,7 +6,7 @@
    application (referred to as host application).
    
    You can find more information about KIPI at this <a
-   href="http://extragear.kde.org/apps/kipi.php">url</a>.
+   href="http://extragear.kde.org/apps/kipi">url</a>.
    
    This documentation has been writen by Renchi Raju, Gilles Caulier,
     Jesper K. Pedersen, and Aurelien Gateau. 
