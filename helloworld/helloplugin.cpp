@@ -3,7 +3,10 @@
 #include <qwidget.h>
 #include <kaction.h>
 #include <kshortcut.h>
+#include <kdebug.h>
 #include <qiconset.h>
+
+
 
 /***************************************************************************
  *   Copyright (C) 2004 by Jesper K. Pedersen                              *
