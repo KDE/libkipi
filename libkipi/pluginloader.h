@@ -22,14 +22,11 @@
 #ifndef KIPI_PLUGINLOADER_H
 #define KIPI_PLUGINLOADER_H
 
-#include <qstringlist.h>
-#include <qptrlist.h>
 #include <libkipi/interface.h>
 #include <qwidget.h>
 #include <qscrollview.h>
 
 
-class PluginCheckBox;
 namespace KIPI
 {
     class Plugin;
@@ -53,8 +50,8 @@ namespace KIPI
         };
 
         PluginLoader( const QStringList& ignores, Interface* interface );
+        virtual ~PluginLoader();
         void loadPlugins();
-        virtual ~PluginLoader() {}
         static PluginLoader* instance();
         ConfigWidget* configWidget( QWidget* parent );
 
@@ -71,12 +68,10 @@ namespace KIPI
         friend class ConfigWidget;
         friend class PluginCheckBox;
 
-        static PluginLoader* m_instance;
         void loadPlugin( Info* );
 
-        PluginList m_pluginList;
-        Interface* m_interface;
-        QStringList m_ignores;
+		struct Private;
+		Private* d;
     };
 
     class ConfigWidget :public QScrollView
@@ -84,10 +79,11 @@ namespace KIPI
         Q_OBJECT
     public:
         ConfigWidget( QWidget* parent );
+		~ConfigWidget();
     public slots:
         void apply();
     private:
-        QValueList< PluginCheckBox* > _boxes;
+		struct Private;
     };
 }
 

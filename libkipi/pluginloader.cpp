@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+#include <qstringlist.h>
+
 #include <ktrader.h>
 #include <kparts/componentfactory.h>
 #include <kdebug.h>
@@ -98,15 +100,28 @@
   PluginLoader::configWidget(), and insert the widget into your normal
   configuration dialog.
 */
-using namespace KIPI;
+namespace KIPI
+{
+    static PluginLoader* s_instance = 0;
+}
 
-KIPI::PluginLoader* KIPI::PluginLoader::m_instance = 0;
+
+struct KIPI::PluginLoader::Private
+{
+    PluginList m_pluginList;
+    Interface* m_interface;
+    QStringList m_ignores;
+};
+
 
 KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
-    : m_interface( interface ), m_ignores( ignores )
 {
-    Q_ASSERT( m_instance == 0 );
-    m_instance = this;
+    Q_ASSERT( s_instance == 0 );
+    s_instance = this;
+
+    d=new Private;
+    d->m_interface = interface;
+    d->m_ignores = ignores;
 
     KTrader::OfferList offers = KTrader::self()->query("KIPI/Plugin");
     KConfig* config = KGlobal::config();
@@ -126,15 +141,15 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
             continue;
         }
 
-        if ( m_ignores.contains( name ) ) {
-            kdDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " was in the ignore for host application list" << endl;
+        if ( d->m_ignores.contains( name ) ) {
+            kdDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application" << endl;
             continue;
         }
 
         bool appHasAllReqFeatures=true;
         for( QStringList::Iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) {
-            if ( !m_interface->hasFeature( *featureIt ) ) {
-                kdDebug( 51001 ) << "Plugin " << name << " was not loaded due to the host application was missing\n"
+            if ( !d->m_interface->hasFeature( *featureIt ) ) {
+                kdDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
                                  << "the feature " << *featureIt << endl;
 				appHasAllReqFeatures=false;
 				break;
@@ -147,13 +162,18 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
             continue;
 
         Info* info = new Info( name, comment, library, load );
-        m_pluginList.append( info );
+        d->m_pluginList.append( info );
     }
+}
+
+KIPI::PluginLoader::~PluginLoader()
+{
+    delete d;
 }
 
 void KIPI::PluginLoader::loadPlugins()
 {
-    for( PluginList::Iterator it = m_pluginList.begin(); it != m_pluginList.end(); ++it ) {
+    for( PluginList::Iterator it = d->m_pluginList.begin(); it != d->m_pluginList.end(); ++it ) {
         loadPlugin( *it );
     }
     emit replug();
@@ -164,7 +184,7 @@ void KIPI::PluginLoader::loadPlugin( Info* info )
     if ( info->plugin == 0 && info->shouldLoad ) {
         Plugin *plugin = 0;
         plugin =  KParts::ComponentFactory
-                  ::createInstanceFromLibrary<KIPI::Plugin>(info->library.local8Bit().data(), m_interface );
+                  ::createInstanceFromLibrary<KIPI::Plugin>(info->library.local8Bit().data(), d->m_interface );
 
         if (plugin)
             kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name()<< endl;
@@ -180,13 +200,13 @@ void KIPI::PluginLoader::loadPlugin( Info* info )
 
 const KIPI::PluginLoader::PluginList& KIPI::PluginLoader::pluginList()
 {
-    return m_pluginList;
+    return d->m_pluginList;
 }
 
-PluginLoader* KIPI::PluginLoader::instance()
+KIPI::PluginLoader* KIPI::PluginLoader::instance()
 {
-    Q_ASSERT( m_instance != 0);
-    return m_instance;
+    Q_ASSERT( s_instance != 0);
+    return s_instance;
 }
 
 KIPI::ConfigWidget* KIPI::PluginLoader::configWidget( QWidget* parent )
@@ -206,22 +226,37 @@ public:
     KIPI::PluginLoader::Info* info;
 };
 
+
+struct KIPI::ConfigWidget::Private
+{
+    QValueList< PluginCheckBox* > _boxes;
+};
+
+
 KIPI::ConfigWidget::ConfigWidget( QWidget* parent )
     :QScrollView( parent, "KIPI::PluginLoader::ConfigWidget" )
 {
+    d=new Private;
     QWidget* top = new QWidget( viewport() );
     addChild( top );
     setResizePolicy( AutoOneFit );
 
     QVBoxLayout* lay = new QVBoxLayout( top, 0, 6 );
 
-    KIPI::PluginLoader::PluginList list = PluginLoader::instance()->m_pluginList;
+    KIPI::PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
     for( KIPI::PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
         lay->addWidget( cb );
-        _boxes.append( cb );
+        d->_boxes.append( cb );
     }
 }
+
+
+KIPI::ConfigWidget::~ConfigWidget()
+{
+    delete d;
+}
+
 
 void KIPI::ConfigWidget::apply()
 {
@@ -229,7 +264,7 @@ void KIPI::ConfigWidget::apply()
     config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
     bool changes = false;
 
-    for( QValueList<PluginCheckBox*>::Iterator it = _boxes.begin(); it != _boxes.end(); ++it ) {
+    for( QValueList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) {
         bool orig = (*it)->info->shouldLoad;
         bool load = (*it)->isChecked();
         if ( orig != load ) {
@@ -247,8 +282,6 @@ void KIPI::ConfigWidget::apply()
     }
     emit PluginLoader::instance()->replug();
 }
-
-
 
 
 #include "pluginloader.moc"
