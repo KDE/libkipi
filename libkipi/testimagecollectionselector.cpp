@@ -61,14 +61,27 @@ public:
 
 class TestInterface : public Interface {
 public:
-    TestInterface(QObject* parent) : Interface(parent) {
-        KURL::List list;
-        _collections << KIPI::ImageCollection(new TestImageCollection("First album", list));
-        _collections << KIPI::ImageCollection(new TestImageCollection("Second album", list));
-        _collections << KIPI::ImageCollection(new TestImageCollection("Third album", list));
+    TestInterface(bool currentNotInAll) : Interface(0) {
+        KURL::List list1;
+        KURL::List list2;
+        KURL::List list3;
+        KURL::List list4;
+        list1 << KURL("file://url1");
+        list2 << KURL("file://url2");
+        list3 << KURL("file://url3");
+        list4 << KURL("file://url4");
+        _collections << KIPI::ImageCollection(new TestImageCollection("First album", list1));
+        _collections << KIPI::ImageCollection(new TestImageCollection("Second album", list2));
+        _collections << KIPI::ImageCollection(new TestImageCollection("Third album", list3));
+
+        if (currentNotInAll) {
+            _currentAlbum=KIPI::ImageCollection(new TestImageCollection("Current album", list4));
+        } else {
+            _currentAlbum=_collections.first();
+        }
     }
     ImageCollection currentAlbum() {
-        return _collections.first();
+        return _currentAlbum;
     }
     ImageCollection currentSelection() {
         return _collections.last();
@@ -82,12 +95,23 @@ public:
     int features() const { return 0; }
     
     QValueList<ImageCollection> _collections;
+    ImageCollection _currentAlbum;
+};
+
+static KCmdLineOptions sOptions[] = {
+    { "current-not-in-all", "Simulate an interface were the current album is not in allAlbums()", 0 },
+    { 0, 0, 0 }
 };
 
 int main(int argc, char* argv[]) {
 	KCmdLineArgs::init(argc, argv, argv[0], "test app", "1.0");
+    KCmdLineArgs::addCmdLineOptions(sOptions);
+    
     KApplication app;
-    TestInterface interface(0);
+
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TestInterface interface(args->isSet("current-not-in-all"));
+    args->clear();
 
     TestWindow testWindow(&interface);
     app.setMainWidget(&testWindow);

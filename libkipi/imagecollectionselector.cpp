@@ -14,6 +14,14 @@
 // KIPI
 #include "libkipi/interface.h"
 
+/* Missing features:
+ * - Album details:
+ *  - comments
+ *  - date
+ *  - preview
+ *  - image count
+ */
+
 namespace KIPI {
 
 class ImageCollectionItem : public QCheckListItem
@@ -74,10 +82,21 @@ ImageCollectionSelector::~ImageCollectionSelector() {
 void ImageCollectionSelector::fillList() {
     QValueList<ImageCollection> collections = d->_interface->allAlbums();
     d->_list->clear();
+    ImageCollection current = d->_interface->currentAlbum();
+    bool currentWasInList = false;
+    
     for( QValueList<ImageCollection>::Iterator it = collections.begin() ;
          it != collections.end() ; ++it )
     {
-        new ImageCollectionItem( d->_list, *it);
+        ImageCollectionItem* item = new ImageCollectionItem( d->_list, *it);
+        if (!currentWasInList && *it == current) {
+            item->setOn(true);
+            currentWasInList = true;
+        }
+    }
+
+    if (!currentWasInList) {
+        slotSelectAll();
     }
 }
 

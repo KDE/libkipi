@@ -20,11 +20,10 @@ public:
     ImageCollectionSelector(QWidget* parent, Interface*, const char* name=0);
     ~ImageCollectionSelector();
     QValueList<ImageCollection> selectedImageCollections() const;
-
-    void fillList();
     
 private:
     Private* d;
+    void fillList();
 
 private slots:
     void slotSelectAll();
