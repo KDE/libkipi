@@ -1,11 +1,11 @@
 /* ============================================================
  * File   : uploadwidget.h
- * Authors: Jesper K. Pedersen <blackie@kde.org>
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02-19
  * Description :
  *
- * Copyright 2004 by Jesper K. Pedersen
+ * Copyright 2004 by the KIPI team
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -31,14 +31,18 @@
 // KDE includes.
 
 #include <kfiletreeview.h>
+#include <kurl.h>
 
 // LibKIPI includes.
 
 #include <libkipi/interface.h>
 
+class QListViewItem;
+
 namespace KIPI
 {
-    class UploadWidget :public QWidget {
+    class UploadWidget :public QWidget 
+    {
         Q_OBJECT
 
     public:
@@ -48,9 +52,13 @@ namespace KIPI
     public slots:
         void mkdir();
 
+    signals :
+        void folderItemSelected(const KURL &url);
+        
     protected slots:
         void load();
         void slotAlbumCreated(KIO::Job* job);
+        void slotFolderSelected(QListViewItem *);
 
     private:
         KFileTreeView* m_treeView;
@@ -59,7 +67,6 @@ namespace KIPI
         QString m_handled;
         KURL m_root;
     };
-
 }
 
 #endif /* KIPI_UPLOADWIDGET_H */

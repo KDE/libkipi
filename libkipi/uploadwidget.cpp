@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : uploadwidget.cpp
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
@@ -24,6 +24,7 @@
   
 #include <qlayout.h>
 #include <qheader.h>
+#include <qlistview.h>
 
 // KDE includes
 
@@ -52,7 +53,7 @@
 */
 
 KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name )
-    :QWidget( parent, name )
+                  : QWidget( parent, name )
 {
     QVBoxLayout* layout = new QVBoxLayout( this, 0 );
     m_treeView = new KFileTreeView( this );
@@ -60,6 +61,11 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
 
     // Fetch the current album, so we can start out there.
     KIPI::ImageCollection album = interface->currentAlbum();
+    
+    // If no current album selected, get the first album in the list.
+    if ( !album.isValid() ) 
+       album = interface->allAlbums().first();
+    
     m_item = m_treeView->addBranch( album.uploadRoot(), album.uploadRootName() );
     m_treeView->setDirOnlyMode( m_item, true );
 
@@ -90,6 +96,9 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
         connect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ),
                  this, SLOT( load() ) );
         }
+    
+    connect( m_treeView, SIGNAL( executed(QListViewItem *) ),
+             this, SLOT( slotFolderSelected(QListViewItem *) ) );
 }
 
 KURL KIPI::UploadWidget::path() const
@@ -112,8 +121,9 @@ void KIPI::UploadWidget::load()
 
     // Bugfix by Gilles (23/06/2004) : It's work fine like this with Digikam and Kimdaba.
     // This is must be tested with Gwenview
-    
+    //
     //m_handled += "/" + item;
+    
     m_handled += item;
 
     KFileTreeViewItem* branch = m_treeView->findItem( m_item, m_handled );
@@ -153,6 +163,7 @@ void KIPI::UploadWidget::mkdir()
     url.addPath( dir );
 
     KIO::SimpleJob* job = KIO::mkdir(url);
+    
     connect(job, SIGNAL(result(KIO::Job*)), 
             this, SLOT(slotAlbumCreated(KIO::Job*)));
 }
@@ -163,6 +174,11 @@ void KIPI::UploadWidget::slotAlbumCreated(KIO::Job* job)
     
     if ( code )
         job->showErrorDialog( this );
+}
+
+void KIPI::UploadWidget::slotFolderSelected(QListViewItem *)
+{
+    emit folderItemSelected(m_treeView->currentURL());
 }
 
 #include "uploadwidget.moc"
