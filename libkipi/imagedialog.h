@@ -72,6 +72,7 @@ private slots:
     void slotImagesSelected();
     void slotGotPreview(const KFileItem* , const QPixmap&);
     void slotHelp( void );
+    void slotInitialShow();
 
 private:
     Private* d;

@@ -28,6 +28,7 @@
 #include <qlayout.h>
 #include <qframe.h>
 #include <qpushbutton.h>
+#include <qtimer.h>
 
 // KDE includes.
 
@@ -167,6 +168,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     for(; it!=d->_albums.end(); ++it) {
         new AlbumLVI(d->_albumList, *it);
     }
+    QTimer::singleShot(0, this, SLOT(slotInitialShow()));
 
     connect(d->_albumList, SIGNAL(selectionChanged(QListViewItem*)),
             this, SLOT(fillImageList(QListViewItem*)) );
@@ -299,10 +301,26 @@ void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
 
 void ImageDialog::slotHelp( void )
 {
-    KApplication::kApplication()->invokeHelp("",
-                                             "kipi-plugins");
+    KApplication::kApplication()->invokeHelp("", "kipi-plugins");
 }
 
+void ImageDialog::slotInitialShow()
+{
+    ImageCollection current = d->_interface->currentAlbum();
+
+    QListViewItemIterator it( d->_albumList );
+    while ( it.current() )
+    {
+        AlbumLVI* lvi = static_cast<AlbumLVI*>( it.current() );
+        if ( lvi->_album == current )
+        {
+            d->_albumList->ensureItemVisible( lvi );
+            d->_albumList->setSelected( lvi, true );
+            break;
+        }
+        ++it;
+    }
+}
 
 } // namespace KIPI
 
