@@ -222,6 +222,21 @@ QString KIPI::ImageCollection::uploadRootName() const
     }
 }
 
+/*
+  Returns whether an imagecollection is a physical folder on the filesystem
+  or not. Its important to check this, if your plugin needs to do folder
+  based operations for an imagecollection
+*/
+bool KIPI::ImageCollection::isDirectory() const
+{
+    if ( _data )
+        return _data->isDirectory();
+    else {
+        printNullError();
+        return false;
+    }
+}
+
 bool KIPI::ImageCollection::isValid() const
 {
     return (_data != 0);

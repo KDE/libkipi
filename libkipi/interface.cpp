@@ -46,11 +46,6 @@
  */
 
 /*!
-  \enum KIPI::AlbumEQDir
-  This feature specifies that each album is equal to a directory for the host application.
- */
-
-/*!
   \enum KIPI::ImagesHasComments
   This feature specifies that images in the host application has descriptions associated to them.
  */
@@ -130,8 +125,6 @@ bool KIPI::Interface::hasFeature( const QString& feature )
 {
     if ( feature == "AlbumsHaveComments" )
         return hasFeature( KIPI::AlbumsHaveComments );
-    else if ( feature == "AlbumEQDir" )
-        return hasFeature( KIPI::AlbumEQDir );
     else if ( feature == "ImagesHasComments" )
         return hasFeature( KIPI::ImagesHasComments );
     else if ( feature == "ImagesHasTime" )

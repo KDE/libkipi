@@ -81,6 +81,11 @@ QString KIPI::ImageCollectionShared::uploadRootName()
    return (i18n("Images"));
 }
 
+bool KIPI::ImageCollectionShared::isDirectory()
+{
+    return false;
+}
+
 QString KIPI::ImageCollectionShared::comment()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"

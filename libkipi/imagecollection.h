@@ -49,6 +49,7 @@ namespace KIPI
         KURL uploadPath() const;
         KURL uploadRoot() const;
         QString uploadRootName() const;
+        bool isDirectory() const;
         bool isValid() const;
 
         // Interface for host application + general stuff
