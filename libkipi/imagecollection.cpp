@@ -252,5 +252,10 @@ void KIPI::ImageCollection::printNullError() const
 
 
 bool KIPI::ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
+    if (!_data || !(ic._data))
+    {
+        printNullError();
+        return false;
+    }
     return *_data == *(ic._data);
 }
