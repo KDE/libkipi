@@ -57,7 +57,7 @@ namespace KIPI
         virtual QValueList<ImageCollection> allAlbums() = 0;
 
         virtual ImageInfo info( const KURL& ) = 0;
-        virtual bool addImage( const KURL& );
+        virtual bool addImage( const KURL&, QString& err );
 
         /** Tells the host app that the following images has changed on disk */
         virtual void refreshImages( const KURL::List& );

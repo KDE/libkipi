@@ -90,9 +90,10 @@ bool KIPI::Interface::hasFeature( const QString& feature )
 
 /*!
   Tell the host application that a new image has been made available to it.
-  Returns true if the host application did accept the new image.
+  Returns true if the host application did accept the new image, otherwise err will be filled with
+  an error description.
 */
-bool KIPI::Interface::addImage( const KURL& )
+bool KIPI::Interface::addImage( const KURL&, QString& err )
 {
     qFatal( "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"

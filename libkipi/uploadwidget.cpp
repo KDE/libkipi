@@ -39,3 +39,8 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
             qDebug("shiot");
 #endif
 }
+
+KURL KIPI::UploadWidget::path() const
+{
+    return m_treeView->currentURL();
+}
