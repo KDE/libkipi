@@ -14,8 +14,19 @@ namespace KIPI
         UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
         KURL path() const;
 
+    public slots:
+        void mkdir();
+
+    protected slots:
+        void load();
+        void slotAlbumCreated(KIO::Job* job);
+
     private:
         KFileTreeView* m_treeView;
+        KFileTreeBranch* m_item;
+        QStringList m_pendingPath;
+        QString m_handled;
+        KURL m_root;
     };
 
 }

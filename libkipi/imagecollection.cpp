@@ -105,10 +105,13 @@ KURL KIPI::ImageCollection::path() const
   Returns the directory to place images into.
   This function should only be called if KIPI::Features AcceptNewImages
   is available.
+
   The function may choose to return the directory for the image collection
   or if images from the collection are not available in a common directory,
   then instead a common upload directory.
   In contrast to \ref path, this function must return a valid url.
+
+  <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
 KURL KIPI::ImageCollection::uploadPath() const
 {
@@ -127,6 +130,8 @@ KURL KIPI::ImageCollection::uploadPath() const
   <li> The root directory returned by uploadPath() (which is the default implementation for this method)
   <li> The directory returned by uploadPath().
   </ul>
+
+  <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
 KURL KIPI::ImageCollection::uploadRoot() const
 {

@@ -59,6 +59,6 @@ bool KIPI::ImageInfoShared::isTimeExact()
     return true;
 }
 
-void KIPI::ImageInfoShared::setTime( const QDateTime& time, TimeSpec spec )
+void KIPI::ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 {
 }
