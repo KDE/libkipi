@@ -61,9 +61,9 @@ ImageCollectionDialog::ImageCollectionDialog(QWidget* parent, KIPI::Interface* i
     d->_imageList->addColumn(i18n("Image Name"));
 
     d->_preview=new QLabel(box);
-	d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
+    d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
     d->_preview->setFixedWidth(PREVIEW_SIZE);
-	d->_preview->setText(i18n("No image selected"));
+    d->_preview->setText(i18n("No image selected"));
 
     d->_albums=d->_interface->allAlbums();
     QValueList<ImageCollection>::ConstIterator it=d->_albums.begin();
@@ -119,7 +119,7 @@ void ImageCollectionDialog::fillImageList(QListViewItem* item) {
 void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
     if (!item) {
         enableButtonOK(false);
-		d->_preview->setText(i18n("No image selected"));
+        d->_preview->setText(i18n("No image selected"));
         d->_url=KURL();
         return;
     }
@@ -136,7 +136,7 @@ void ImageCollectionDialog::slotImageSelected(QListViewItem* item) {
 
 
 void ImageCollectionDialog::slotGotPreview(const KURL&, const QPixmap& pix) {
-	
+    
     d->_preview->setPixmap(pix);
 }
 
