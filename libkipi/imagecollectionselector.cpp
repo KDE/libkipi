@@ -19,11 +19,9 @@
  * GNU Library General Public License for more details.
  *
  * ============================================================ */
-#include "imagecollectionselector.moc"
 
-#include "imagecollectionselector.h"
+// Qt includes.
 
-// Qt
 #include <qheader.h>
 #include <qlayout.h>
 #include <qpushbutton.h>
@@ -31,7 +29,8 @@
 #include <qvgroupbox.h>
 #include <qtimer.h>
 
-// KDE
+// KDE includes.
+
 #include <kbuttonbox.h>
 #include <kdialog.h>
 #include <klistview.h>
@@ -39,10 +38,16 @@
 #include <kglobal.h>
 #include <kio/previewjob.h>
 
-// KIPI
+// KIPI includes.
+
 #include "libkipi/interface.h"
 
-namespace KIPI {
+// Local includes.
+
+#include "imagecollectionselector.h"
+
+namespace KIPI 
+{
 
 class ImageCollectionItem : public QCheckListItem
 {
@@ -69,7 +74,7 @@ struct ImageCollectionSelector::Private {
 
 
 ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* interface, const char* name)
-: QWidget(parent, name)
+                       : QWidget(parent, name)
 {
     d=new Private;
     d->_interface=interface;
@@ -95,9 +100,12 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
     QPushButton* selectNone=box->addButton(i18n("Select None"));
     box->layout();
 
-    connect(selectAll, SIGNAL(clicked()), this, SLOT(slotSelectAll()) );
-    connect(invertSelection, SIGNAL(clicked()), this, SLOT(slotInvertSelection()) );
-    connect(selectNone, SIGNAL(clicked()), this, SLOT(slotSelectNone()) );
+    connect(selectAll, SIGNAL(clicked()),
+            this, SLOT(slotSelectAll()) );
+    connect(invertSelection, SIGNAL(clicked()),
+            this, SLOT(slotInvertSelection()) );
+    connect(selectNone, SIGNAL(clicked()), 
+            this, SLOT(slotSelectNone()) );
 
     rightLayout->addItem(new QSpacerItem(10,20,QSizePolicy::Fixed,
                                          QSizePolicy::Expanding));
@@ -176,6 +184,7 @@ void ImageCollectionSelector::slotSelectAll() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(true);
     }
+    emit signalSelectionChanged();
 }
 
 
@@ -186,6 +195,7 @@ void ImageCollectionSelector::slotInvertSelection() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(!item->isOn());
     }
+    emit signalSelectionChanged();
 }
 
 
@@ -196,6 +206,7 @@ void ImageCollectionSelector::slotSelectNone() {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(false);
     }
+    emit signalSelectionChanged();
 }
 
 void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
@@ -217,7 +228,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
         {
             KIO::PreviewJob* thumbJob = KIO::filePreview(images.first(), 128);
             connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-                 SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+                     SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
         }
     }
     
@@ -272,8 +283,9 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     
     text += "</table>";
 
-
     d->_textLabel->setText(text);
+    
+    emit signalSelectionChanged();
 }
 
 void ImageCollectionSelector::slotGotPreview(const KFileItem*, const QPixmap& pix)
@@ -289,6 +301,9 @@ void ImageCollectionSelector::slotInitialShow()
         d->_list->ensureItemVisible(d->_itemToSelect);
         d->_itemToSelect = 0;
     }
+    emit signalSelectionChanged();
 }
 
 } // KIPI
+
+#include "imagecollectionselector.moc"

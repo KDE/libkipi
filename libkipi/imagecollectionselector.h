@@ -19,38 +19,51 @@
  * GNU Library General Public License for more details.
  *
  * ============================================================ */
+
 #ifndef IMAGECOLLECTIONSELECTOR_H
 #define IMAGECOLLECTIONSELECTOR_H   
 
-// Qt
+// Qt includes.
+
 #include <qwidget.h>
 #include <qvaluelist.h>
 #include <qpixmap.h>
 
-// KIPI
+// KIPI includes.
+
 #include "libkipi/imagecollection.h"
 
 class QListViewItem;
 class KFileItem;
 
-namespace KIPI {
+namespace KIPI 
+{
 
 class Interface;
     
-class ImageCollectionSelector : public QWidget {
+class ImageCollectionSelector : public QWidget 
+{
 Q_OBJECT
     class Private;
 
 public:
+    
     ImageCollectionSelector(QWidget* parent, Interface*, const char* name=0);
     ~ImageCollectionSelector();
+    
     QValueList<ImageCollection> selectedImageCollections() const;
     
+signals:    
+
+    void signalSelectionChanged(void);
+    
 private:
+    
     Private* d;
     void fillList();
 
 private slots:
+    
     void slotSelectAll();
     void slotInvertSelection();
     void slotSelectNone();
