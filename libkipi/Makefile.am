@@ -13,7 +13,7 @@ noinst_HEADERS = KDStream.h
 
 libkipiinclude_HEADERS = interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h imageinfoshared.h \
 		         imagecollectionshared.h imagedialog.h uploadwidget.h batchprogressdialog.h \
-				 imagecollectionselector.h
+		         imagecollectionselector.h version.h 
 
 libkipi_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) \
 		-version-info 0:0:0 -no-undefined
