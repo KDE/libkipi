@@ -168,9 +168,10 @@ void KIPI::PluginLoader::loadPlugin( Info* info )
                   ::createInstanceFromLibrary<KIPI::Plugin>(info->library.local8Bit().data(), m_interface );
 
         if (plugin)
-            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
+            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name()<< endl;
         else
-            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0";
+            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for " << info->name
+                               << "(" << info->library << ")" << endl;
         info->plugin = plugin;
     }
     if ( info->plugin ) // Do not emit if we had trouble loading the plugin.
