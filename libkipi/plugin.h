@@ -47,7 +47,7 @@ namespace KIPI
        IMPORTPLUGIN,
        EXPORTPLUGIN,
        BATCHPLUGIN,
-       COLLECTIONSPLUGIN,
+       COLLECTIONSPLUGIN
        };
 
     class Plugin : public QObject
