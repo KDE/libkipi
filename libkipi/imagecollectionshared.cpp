@@ -1,6 +1,34 @@
+/* ============================================================
+ * File   : imagecollectionshared.cpp
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
+ * Description :
+ *
+ * Copyright 2004 by the KIPI team
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+ 
+// KDE Includes.
+
+#include <klocale.h>
+#include <kdebug.h>
+
+// Local Includes.
+
 #include "imagecollectionshared.h"
 
-#include <kdebug.h>
 
 KIPI::ImageCollectionShared::ImageCollectionShared()
      : _count(1)
@@ -46,6 +74,11 @@ KURL KIPI::ImageCollectionShared::uploadRoot()
     }
     else
         return KURL( "file:/" );
+}
+
+QString KIPI::ImageCollectionShared::uploadRootName()
+{
+   return (i18n("Images"));
 }
 
 QString KIPI::ImageCollectionShared::comment()

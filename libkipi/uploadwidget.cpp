@@ -1,9 +1,34 @@
-#include "uploadwidget.h"
+/* ============================================================
+ * File   : uploadwidget.cpp
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
+ * Description :
+ *
+ * Copyright 2004 by the KIPI team
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+// Qt includes. 
+  
 #include <qlayout.h>
-#include "libkipi/imagecollection.h"
-#include <klocale.h>
 #include <qheader.h>
+
+// KDE includes
+
 #include <kdebug.h>
+#include <klocale.h>
 #include <kio/jobclasses.h>
 #include <kmessagebox.h>
 
@@ -14,6 +39,12 @@
 #include <klineeditdlg.h>
 #define KInputDialog KLineEditDlg
 #endif
+
+// Local includes.
+
+#include "uploadwidget.h"
+#include "libkipi/imagecollection.h"
+
 
 /*!
   \class KIPI::UploadWidget
@@ -29,7 +60,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
 
     // Fetch the current album, so we can start out there.
     KIPI::ImageCollection album = interface->currentAlbum();
-    m_item = m_treeView->addBranch( album.uploadRoot(), i18n("Images") );
+    m_item = m_treeView->addBranch( album.uploadRoot(), album.uploadRootName() );
     m_treeView->setDirOnlyMode( m_item, true );
 
     m_treeView->addColumn( i18n("Folder" ) );

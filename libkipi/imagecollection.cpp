@@ -1,6 +1,34 @@
+/* ============================================================
+ * File   : imagecollection.cpp
+ * Authors: KIPI team developers
+ *	    
+ * Date   : 2004-02
+ * Description :
+ *
+ * Copyright 2004 by the KIPI team
+ *
+ * This program is free software; you can redistribute it
+ * and/or modify it under the terms of the GNU General
+ * Public License as published bythe Free Software Foundation;
+ * either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * ============================================================ */
+
+// KDE includes.
+
+#include <kdebug.h>
+#include <klocale.h>
+
+// Local includes.
+  
 #include "imagecollection.h"
 #include "imagecollectionshared.h"
-#include <kdebug.h>
 
 /**
    returns the comment for the collection of images or QString::null if that doesn't make any sense.
@@ -147,6 +175,22 @@ KURL KIPI::ImageCollection::uploadRoot() const
     else {
         printNullError();
         return KURL();
+    }
+}
+
+/*!
+  This fonction return the name of the upload root path used by the 
+  the KIPI::UploadWidget. This name can be different for each host 
+  app (like "Images" for Kimdaba or "My Albums" for Digikam).
+  .
+*/
+QString KIPI::ImageCollection::uploadRootName() const
+{
+    if ( _data )
+        return _data->uploadRootName();
+    else {
+        printNullError();
+        return QString::null;
     }
 }
 
