@@ -31,4 +31,8 @@ KIPI::Interface::~Interface()
 {
 }
 
+void KIPI::Interface::refreshImages( const KURL::List& )
+{
+}
+
 #include "interface.moc"

@@ -295,7 +295,7 @@ void ThumbnailJob::createFolderThumbnail()
     dir.setFilter(QDir::Files);
     const QFileInfoList *list = dir.entryInfoList();
     if (!list) {
-        kdWarning() << "Could not read Directory"
+        kdWarning( 51000 ) << "Could not read Directory"
                     << d->curr_url.path() << endl;
         processNext();
         return;
@@ -383,7 +383,7 @@ void ThumbnailJob::slotThumbData(KIO::Job*, const QByteArray &data)
     }
 
     if (thumb.isNull()) {
-        kdWarning() << "thumbnail is null" << endl;
+        kdWarning( 51000 ) << "thumbnail is null" << endl;
         return;
     }
 

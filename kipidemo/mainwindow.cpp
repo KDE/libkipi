@@ -87,7 +87,7 @@ void MainWindow::loadPlugins()
         if (plugin) {
             guiFactory()->addClient(plugin);
 
-            kdDebug() << "PluginDemo: Loaded plugin "
+            kdDebug( 51001 ) << "PluginDemo: Loaded plugin "
                       << plugin->name() << endl;
         }
 

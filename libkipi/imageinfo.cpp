@@ -94,3 +94,23 @@ void KIPI::ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 {
     _data->addAttributes( attributes );
 }
+
+/**
+   Returns the angle the application rotates the image with when displaying it.
+   Certain host applications may choose to rotate the image on disk, and will always return 0,
+   while other host application will rotate the image when displaying it, and will thus not rotate
+   the image on disk.
+*/
+int KIPI::ImageInfo::angle()
+{
+    return _data->angle();
+}
+
+/**
+   See \ref angle
+*/
+void KIPI::ImageInfo::setAngle( int angle )
+{
+    _data->setAngle( angle );
+}
+

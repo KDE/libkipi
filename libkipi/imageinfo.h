@@ -30,6 +30,9 @@ namespace KIPI
         QString toString( const QVariant& ) const;
         int size() const;
 
+        int angle();
+        void setAngle( int );
+
         // Interface for host application + general stuff
         ImageInfo( ImageInfoShared* );
         ImageInfo( const ImageInfo& );

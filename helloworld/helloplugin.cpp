@@ -34,7 +34,7 @@ K_EXPORT_COMPONENT_FACTORY( libkipi_hello,
 HelloPlugin::HelloPlugin( QObject* parent, const char* name, const QStringList& )
     : KIPI::Plugin( parent, name )
 {
-    kdDebug() << "Loaded hello plugin\n";
+    kdDebug( 51001 ) << "Loaded hello plugin\n";
 
     m_interface = dynamic_cast< KIPI::Interface* >( parent );
     Q_ASSERT( m_interface );
@@ -44,7 +44,7 @@ HelloPlugin::HelloPlugin( QObject* parent, const char* name, const QStringList& 
 
 void HelloPlugin::go()
 {
-    kdDebug() << "Hello world!\n";
+    kdDebug( 51000 ) << "Hello world!\n";
     (void) m_interface->currentAlbum();
 }
 

@@ -96,7 +96,7 @@ void KIPI::PluginLoader::loadPlugins()
 
         if (plugin) {
             m_pluginList.append(plugin);
-            kdDebug() << "KIPI::PluginLoader: Loaded plugin "
+            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin "
                       << plugin->name() << endl;
         }
     }
@@ -128,7 +128,7 @@ void KIPI::PluginLoader::loadPlugins(const QStringList& names)
 
             if (plugin) {
                 m_pluginList.append(plugin);
-                kdDebug() << "KIPI::PluginLoader: Loaded plugin "
+                kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin "
                           << plugin->name() << endl;
             }
         }

@@ -27,6 +27,9 @@ namespace KIPI
         virtual QDateTime time();
         virtual int size();
 
+        virtual int angle();
+        virtual void setAngle( int );
+
         QString toString( const QVariant& );
 
     protected:

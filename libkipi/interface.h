@@ -25,6 +25,7 @@
 #include <qobject.h>
 #include "libkipi/imagecollection.h"
 #include "libkipi/imageinfo.h"
+#include <kurl.h>
 
 
 namespace KIPI
@@ -49,6 +50,8 @@ namespace KIPI
         /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
         virtual ImageInfo info( const KURL& ) = 0;
 
+        /** Tells the host app that the following images has changed on disk */
+        virtual void refreshImages( const KURL::List& );
 
     signals:
         // PENDING(blackie) signals is something we haven't discussed yet.

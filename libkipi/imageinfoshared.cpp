@@ -45,3 +45,11 @@ void KIPI::ImageInfoShared::removeRef()
     }
 }
 
+int KIPI::ImageInfoShared::angle()
+{
+    return 0;
+}
+
+void KIPI::ImageInfoShared::setAngle( int )
+{
+}
