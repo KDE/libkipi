@@ -35,7 +35,8 @@ namespace KIPI
         AlbumEQDir             = 0x0002,
         ImagesHasComments      = 0x0004,
         ImagesHasTime          = 0x0008,
-        SupportsDateRanges     = 0x0010
+        SupportsDateRanges     = 0x0010,
+        AcceptNewImages        = 0x0020
     };
 
     class Interface : public QObject
@@ -57,6 +58,7 @@ namespace KIPI
 
         /** Application keeps owner ship of the returned pointer, will only be valid till next call of this method */
         virtual ImageInfo info( const KURL& ) = 0;
+        virtual bool addImage( const KURL& );
 
         /** Tells the host app that the following images has changed on disk */
         virtual void refreshImages( const KURL::List& );

@@ -49,6 +49,13 @@
   like 1998-2000.
 */
 
+/*!
+  \enum KIPI::AcceptNewImages
+  This feature specifies that the host application do accept new images.
+  Use \ref ImageCollection::uploadPath to find the location to place the image, and
+  \ref addImage() to tell the host application about the new image.
+*/
+
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
@@ -79,6 +86,18 @@ bool KIPI::Interface::hasFeature( const QString& feature )
         kdWarning( 51000 ) << "Unknow feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
     }
+}
+
+/*!
+  Tell the host application that a new image has been made available to it.
+  Returns true if the host application did accept the new image.
+*/
+bool KIPI::Interface::addImage( const KURL& )
+{
+    qFatal( "This method should only be invoked if the host application supports the KIPI::Features\n"
+            "AcceptNewImages - if the host application do support that, then this function should\n"
+            "have been overriden in the host application.");
+    return false;
 }
 
 #include "interface.moc"

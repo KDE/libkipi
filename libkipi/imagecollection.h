@@ -14,7 +14,8 @@ namespace KIPI
         QString name() const;
         QString comment() const;
         KURL::List images() const;
-        KURL root() const ;
+        KURL path() const;
+        KURL uploadPath() const;
 
         // Interface for host application + general stuff
         ImageCollection( ImageCollectionShared* );

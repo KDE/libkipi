@@ -88,3 +88,30 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
     _data->addRef();
     return *this;
 }
+
+/*!
+  Returns the directory for the image collections.
+  The host application may, however, return anything in case it does not
+  support the KIPI::Features AlbumEQDir, e.g. the directory of the first
+  image in the collection, the root of the image collection (in case all
+  images has a common root), or even an empty URL.
+*/
+KURL KIPI::ImageCollection::path() const
+{
+    return _data->path();
+}
+
+/*!
+  Returns the directory to place images into.
+  This function should only be called if KIPI::Features AcceptNewImages
+  is available.
+  The function may choose to return the directory for the image collection
+  or if images from the collection are not available in a common directory,
+  then instead a common upload directory.
+  In contrast to \ref path, this function must return a valid url.
+*/
+KURL KIPI::ImageCollection::uploadPath() const
+{
+    return _data->uploadPath();
+}
+
