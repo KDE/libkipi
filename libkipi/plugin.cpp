@@ -75,23 +75,5 @@ void KIPI::Plugin::setup( QWidget* widget )
     m_actionCollection.insert( widget, new KActionCollection( widget, widget, name.latin1(), m_instance ) );
 }
 
-KIPI::Category KIPI::Plugin::category() const
-{
-    // If this method isn't re-implemented, the host must tested the category with 
-    // the category( KAction* action) method.
-    
-    return KIPI::UNDEFINEDPLUGIN;
-}
-
-KIPI::Category KIPI::Plugin::category( KAction* action )
-{
-    // By default, if this method isn't re-implemented, we use the 
-    // standard category identification method.
-    // A re-implementation of that must be used for differenciate the 
-    // plugins part intégrated in a same plugin (like RawConverter single
-    // and batch).
-    
-    return category();     
-}
 
 
