@@ -47,6 +47,7 @@ namespace KIPI
 
     public:
         UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
+        ~UploadWidget();
         KURL path() const;
 
     public slots:
@@ -61,11 +62,8 @@ namespace KIPI
         void slotFolderSelected(QListViewItem *);
 
     private:
-        KFileTreeView* m_treeView;
-        KFileTreeBranch* m_item;
-        QStringList m_pendingPath;
-        QString m_handled;
-        KURL m_root;
+        struct Private;
+        Private* d;
     };
 }
 
