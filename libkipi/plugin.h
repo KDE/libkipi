@@ -40,13 +40,17 @@ namespace KIPI
     class Plugin : public QObject
     {
     public:
-
         Plugin( QObject *parent, const char* name);
         virtual ~Plugin();
 
         KActionCollection* actionCollection();
 
         virtual Category category() const = 0;
+
+        /** An identifier with which host application can identify plugins in case it want to
+            handle certain plugins special */
+        virtual QString id() const = 0;
+
         virtual bool     mergeContextMenu() const;
         virtual bool     mergeToolBar() const;
 

@@ -105,7 +105,7 @@ void KDStream::flush()
   if ( _out )
       *_out += _output;
   else
-      qDebug( "%s", _output.local8Bit() );
+      qDebug( "%s", _output.local8Bit().data() );
   _output = QString();
 }
 
