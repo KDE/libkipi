@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : imagecollection.cpp
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
@@ -54,6 +54,34 @@ QString KIPI::ImageCollection::name() const
     else {
         printNullError();
         return QString::null;
+    }
+}
+
+/**
+   Return the category of the image collection. For example in Digikam, 
+   a category is a sorting class like 'travels', 'friends', 'monuments', etc.
+*/
+QString KIPI::ImageCollection::category() const
+{
+    if ( _data )
+        return _data->category();
+    else {
+        printNullError();
+        return QString::null;
+    }
+}
+
+/**
+   Return the Creation date of the image collection. The default implementation 
+   return a null date.
+*/
+QDate KIPI::ImageCollection::date() const
+{
+    if ( _data )
+        return _data->date();
+    else {
+        printNullError();
+        return QDate();
     }
 }
 

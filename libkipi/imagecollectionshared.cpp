@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : imagecollectionshared.cpp
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
@@ -87,4 +87,20 @@ QString KIPI::ImageCollectionShared::comment()
             "AlbumsHaveComments - if the host application do support that, then this function should\n"
             "have been overriden in the host application.\n";
     return QString::null;
+}
+
+QString KIPI::ImageCollectionShared::category()
+{
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
+            "AlbumsHaveCategory - if the host application do support that, then this function should\n"
+            "have been overriden in the host application.\n";
+    return QString::null;
+}
+
+QDate KIPI::ImageCollectionShared::date()
+{
+    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
+            "AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
+            "have been overriden in the host application.\n";
+    return QDate();
 }

@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : interface.cpp
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
@@ -78,11 +78,25 @@
   This features specifies whether the plugin can change the title for images
 */
 
+/*!
+  \enum KIPI::AlbumsHaveCategory
+  This feature specify that albums are category associated to them ('travels', 'friends', 'monuments', etc.).
+*/
+
+/*!
+  \enum KIPI::AlbumsHaveCreationDate
+  This feature specify that albums are a creation date associated to them.
+*/
+
+
 KIPI::Interface::Interface(QObject *parent, const char *name )
     : QObject(parent, name)
 {
-    connect( this, SIGNAL( selectionChanged( bool ) ), this, SLOT( stateChange() ) );
-    connect( this, SIGNAL( currentAlbumChanged( bool ) ), this, SLOT( stateChange() ) );
+    connect( this, SIGNAL( selectionChanged( bool ) ), 
+             this, SLOT( stateChange() ) );
+             
+    connect( this, SIGNAL( currentAlbumChanged( bool ) ), 
+             this, SLOT( stateChange() ) );
 }
 
 KIPI::Interface::~Interface()
@@ -121,6 +135,10 @@ bool KIPI::Interface::hasFeature( const QString& feature )
         return hasFeature( KIPI::AcceptNewImages );
     else if ( feature == "ImageTitlesWritable" )
         return hasFeature( KIPI::ImageTitlesWritable );
+    else if ( feature == "AlbumsHaveCategory" )
+        return hasFeature( KIPI::AlbumsHaveCategory );
+    else if ( feature == "AlbumsHaveCreationDate" )
+        return hasFeature( KIPI::AlbumsHaveCreationDate );
     else {
         kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
@@ -224,6 +242,5 @@ QString KIPI::Interface::fileExtensions()
     QString imagesFileFilter = KDEImagetypes.join(" ");
     return ( imagesFileFilter.lower() + " " + imagesFileFilter.upper() );
 }
-
 
 #include "interface.moc"

@@ -1,11 +1,11 @@
 /* ============================================================
  * File   : imagecollection.h
- * Authors: Jesper K. Pedersen <blackie@kde.org>
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
- * Date   : 2004-02-19
+ * Date   : 2004-02
  * Description :
  *
- * Copyright 2004 by Jesper K. Pedersen
+ * Copyright 2004 by the KIPI team
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -26,6 +26,7 @@
 // Qt includes
 
 #include <qstring.h>
+#include <qdatetime.h>
 
 // KDE includes.
 
@@ -41,6 +42,8 @@ namespace KIPI
         // Interface for plugins.
         QString name() const;
         QString comment() const;
+        QString category() const;
+        QDate date() const;
         KURL::List images() const;
         KURL path() const;
         KURL uploadPath() const;

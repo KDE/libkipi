@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : imagecollectionshared.h
- * Authors: KIPI team developers
+ * Authors: KIPI team developers (see AUTHORS files for details)
  *	    
  * Date   : 2004-02
  * Description :
@@ -26,6 +26,7 @@
 // Qt Includes.
 
 #include <qstring.h>
+#include <qdatetime.h>
 
 // KDE includes.
 
@@ -44,6 +45,8 @@ namespace KIPI
         virtual ~ImageCollectionShared() {}
         virtual QString name() = 0;
         virtual QString comment();
+        virtual QString category();
+        virtual QDate date();
         virtual KURL::List images() = 0;
         virtual KURL path();
         virtual KURL uploadPath();
