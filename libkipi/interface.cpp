@@ -127,9 +127,9 @@ bool KIPI::Interface::hasFeature( const QString& feature )
 */
 bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
 {
-    qFatal( "This method should only be invoked if the host application supports the KIPI::Features\n"
+    kdWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overriden in the host application.");
+            "have been overriden in the host application.\n";
     return false;
 }
 
