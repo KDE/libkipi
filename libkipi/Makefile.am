@@ -36,11 +36,4 @@ messages: rc.cpp
 	fi
 	rm -f tips.cpp
 
-install-data-local:
-	$(mkinstalldirs) $(kde_icondir)/hicolor/32x32/apps/
-	$(INSTALL_DATA) $(srcdir)/hi32-app-kipi.png $(kde_icondir)/hicolor/32x32/apps/kipi.png
-
-uninstall-local:
-	-rm -f $(kde_icondir)/hicolor/32x32/apps/hi32-app-kipi.png
-
-        
+KDE_ICON = AUTO
