@@ -76,12 +76,16 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     }
     else {
         uploadPath = uploadPath.mid( root.length() );
+        
         m_pendingPath = QStringList::split( "/", uploadPath, true );
+        
         if ( !m_pendingPath[0].isEmpty() )
             m_pendingPath.prepend( "" ); // ensure we open the root first.
-
+        
         load();
-        connect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ), this, SLOT( load() ) );
+        
+        connect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ),
+                 this, SLOT( load() ) );
     }
 }
 
@@ -92,14 +96,22 @@ KURL KIPI::UploadWidget::path() const
 
 void KIPI::UploadWidget::load()
 {
-    if ( m_pendingPath.isEmpty() ) {
-        disconnect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ), this, SLOT( load() ) );
+    if ( m_pendingPath.isEmpty() ) 
+        {
+        disconnect( m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
+                    this, SLOT( load() ) );
         return;
-    }
+        }
 
     QString item = m_pendingPath.front();
+
     m_pendingPath.pop_front();
-    m_handled += "/" + item;
+
+    // Bugfix by Gilles (23/06/2004) : It's work fine like this with Digikam and Kimdaba.
+    // This is must be tested with Gwenview
+    
+    //m_handled += "/" + item;
+    m_handled += item;
 
     KFileTreeViewItem* branch = m_treeView->findItem( m_item, m_handled );
     if ( !branch ) {
