@@ -23,3 +23,5 @@ ImageInfo DemoInterface::info( const KURL& )
     kdDebug() << "DemoInterface::info\n";
     return ImageInfo();
 }
+
+#include "demointerface.moc"

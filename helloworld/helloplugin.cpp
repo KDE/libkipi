@@ -49,3 +49,5 @@ KIPI::Plugin::Category HelloPlugin::category() const
 {
     return KIPI::Plugin::IMAGESPLUGIN;
 }
+
+#include "helloplugin.moc"

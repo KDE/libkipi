@@ -30,3 +30,5 @@ KIPI::Interface::Interface(QObject *parent, const char *name )
 KIPI::Interface::~Interface()
 {
 }
+
+#include "interface.moc"
