@@ -126,13 +126,12 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
             continue;
         }
 
-        bool loadDefault = true;
         if ( m_ignores.contains( name ) ) {
             kdDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " was in the ignore for host application list" << endl;
-            loadDefault = false;
+            continue;
         }
 
-		bool appHasAllReqFeatures=true;
+        bool appHasAllReqFeatures=true;
         for( QStringList::Iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) {
             if ( !m_interface->hasFeature( *featureIt ) ) {
                 kdDebug( 51001 ) << "Plugin " << name << " was not loaded due to the host application was missing\n"
@@ -142,9 +141,9 @@ KIPI::PluginLoader::PluginLoader( const QStringList& ignores, Interface* interfa
             }
         }
 
-        bool load = config->readBoolEntry( name, loadDefault );
+        bool load = config->readBoolEntry( name, true );
 
-		if (!appHasAllReqFeatures)
+        if (!appHasAllReqFeatures)
             continue;
 
         Info* info = new Info( name, comment, library, load );
