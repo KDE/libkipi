@@ -76,8 +76,8 @@ public:
                    : KListViewItem( parent, after), m_messagetype(messageType)
    {
    // Set the icon.
-   
-   switch( m_messagetype ) 
+
+   switch( m_messagetype )
      {
      case KIPI::StartingMessage:
         setPixmap( 0, SmallIcon( "run" ) );
@@ -99,13 +99,13 @@ public:
      }
 
    // Set the message text.
-           
+
    setText(1, message);
    }
 
 private:
-   int m_messagetype;   
-    
+   int m_messagetype;
+
    void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
       {
       QColorGroup _cg( cg );
@@ -123,7 +123,7 @@ private:
           KListViewItem::paintCell( p, _cg, column, width, alignment );
           return;
           }
-              
+
       KListViewItem::paintCell( p, cg, column, width, alignment );
       }
 };
@@ -144,7 +144,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -157,28 +157,28 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     dvlay->addWidget( headerFrame );
-    
+
     QString dir;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     dir = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( dir + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
-    
+
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch process dialog"), 
+                                       I18N_NOOP("Batch process dialog"),
                                        kipi_version,
                                        I18N_NOOP("A Kipi dialog for batch process operations"),
                                        KAboutData::License_GPL,
-                                       "(c) 2004, Kipi development team", 
+                                       "(c) 2004, Kipi development team",
                                        0,
                                        "http://extragear.kde.org/apps/kipi.php");
-    
+
     QPushButton *helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -186,20 +186,20 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     helpButton->setPopup( helpMenu->menu() );
 
     //---------------------------------------------
-    
-    
+
+
     QGroupBox* groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
-    
+
     m_actionsList = new KListView( groupBox1 );
-    m_actionsList->addColumn("Status");
-    m_actionsList->addColumn("Current actions");
+    m_actionsList->addColumn(i18n( "Status" ));
+    m_actionsList->addColumn(i18n( "Current actions" ));
     m_actionsList->setSorting(-1);
     m_actionsList->setItemMargin(1);
     m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
     QWhatsThis::add( m_actionsList, i18n("<p>This is the current tasks list released.") );
     dvlay->addWidget( groupBox1 );
-    
+
     //---------------------------------------------
 
     m_progress = new KProgress( box, "Progress" );
@@ -223,10 +223,10 @@ BatchProgressDialog::~BatchProgressDialog()
 
 void BatchProgressDialog::addedAction(const QString &text, int type)
 {
-    m_item = new KIPI::BatchProgressItem(m_actionsList, 
+    m_item = new KIPI::BatchProgressItem(m_actionsList,
                                          m_actionsList->lastItem(),
                                          text, type);
-    
+
     m_actionsList->ensureItemVisible(m_item);
 }
 
