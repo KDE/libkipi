@@ -1,7 +1,7 @@
 /* ============================================================
  * File   : imagedialog.cpp
  * Authors: KIPI team developers (see AUTHORS files for details)
- *	    
+ *      
  * Date   : 2004-05
  * Description :
  *
@@ -20,8 +20,8 @@
  *
  * ============================================================ */
 #include <qguardedptr.h>
-#include <qhbox.h>
 #include <qlabel.h>
+#include <qsplitter.h>
 
 #include <kdebug.h>
 #include <klistview.h>
@@ -39,7 +39,7 @@ namespace KIPI
 
 struct AlbumLVI : public KListViewItem {
     AlbumLVI(KListView* parent, const KIPI::ImageCollection& album)
-    : KListViewItem(parent, album.name(), QString::number(album.images().size()))
+    : KListViewItem(parent, album.name())
     , _album(album) {}
 
     const KIPI::ImageCollection& _album;
@@ -70,15 +70,17 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface)
 {
     d=new Private;
     d->_interface=interface;
-    QHBox* box=makeHBoxMainWidget();
-    d->_albumList=new KListView(box);
+    QSplitter* splitter=new QSplitter(this);
+    setMainWidget(splitter);
+    d->_albumList=new KListView(splitter);
     d->_albumList->addColumn(i18n("Album Name"));
-    d->_albumList->addColumn(i18n("Images"));
+    d->_albumList->setMinimumWidth(200);
 
-    d->_imageList=new KListView(box);
+    d->_imageList=new KListView(splitter);
     d->_imageList->addColumn(i18n("Image Name"));
+    d->_imageList->setMinimumWidth(200);
 
-    d->_preview=new QLabel(box);
+    d->_preview=new QLabel(splitter);
     d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
     d->_preview->setFixedWidth(PREVIEW_SIZE);
     d->_preview->setText(i18n("No image selected"));
