@@ -44,3 +44,5 @@ KURL KIPI::UploadWidget::path() const
 {
     return m_treeView->currentURL();
 }
+
+#include "uploadwidget.moc"
