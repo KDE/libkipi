@@ -65,7 +65,7 @@ struct ImageDialog::Private {
 
 
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface)
-    : KDialogBase(parent, "album-dialog", true, i18n("Select an image from an album"),
+    : KDialogBase(parent, "album-dialog", true, i18n("Select Image From Album"),
         KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true)
 {
     d=new Private;

@@ -148,8 +148,8 @@ void KIPI::UploadWidget::mkdir()
         }
 
     bool ok;
-    QString dir = KInputDialog::getText( i18n("Create directory"),
-                                         i18n("<qt>Enter new directory name (to be created as subdir of %1)</qt>")
+    QString dir = KInputDialog::getText( i18n("Create Directory"),
+                                         i18n("<qt>Enter new directory name (to be created as subdir of %1):</qt>")
                                         .arg(path().prettyURL()), "", &ok, this);
     
     if (!ok) return;
