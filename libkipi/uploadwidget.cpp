@@ -162,7 +162,7 @@ void KIPI::UploadWidget::mkdir()
 {
     if ( !path().isValid() ) 
         {
-        KMessageBox::error( this, i18n("Please select a directory first") );
+        KMessageBox::error( this, i18n("Please select a directory first.") );
         return;
         }
 

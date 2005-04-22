@@ -192,7 +192,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
 
     m_actionsList = new KListView( groupBox1 );
     m_actionsList->addColumn(i18n( "Status" ));
-    m_actionsList->addColumn(i18n( "Current actions" ));
+    m_actionsList->addColumn(i18n( "Current Actions" ));
     m_actionsList->setSorting(-1);
     m_actionsList->setItemMargin(1);
     m_actionsList->header()->hide();
