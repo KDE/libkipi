@@ -32,6 +32,7 @@
 // KIPI includes.
 
 #include "libkipi/imagecollection.h"
+#include "libkipi/libkipi_export.h"
 
 class QListViewItem;
 class KFileItem;
@@ -41,7 +42,7 @@ namespace KIPI
 
 class Interface;
     
-class ImageCollectionSelector : public QWidget 
+class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget 
 {
 Q_OBJECT
     class Private;

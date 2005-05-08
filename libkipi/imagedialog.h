@@ -37,7 +37,7 @@
 
 #include <libkipi/interface.h>
 #include <libkipi/imagecollection.h>
-
+#include <libkipi/libkipi_export.h>
 
 class QListViewItem;
 
@@ -48,7 +48,7 @@ namespace KIPI
 {
 
 
-class ImageDialog : public KDialogBase 
+class LIBKIPI_EXPORT ImageDialog : public KDialogBase 
 {
 Q_OBJECT
     

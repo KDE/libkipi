@@ -23,6 +23,7 @@
 #define KIPI_PLUGINLOADER_H
 
 #include <libkipi/interface.h>
+#include <libkipi/libkipi_export.h>
 #include <qwidget.h>
 #include <qscrollview.h>
 
@@ -33,11 +34,11 @@ namespace KIPI
     class Interface;
     class ConfigWidget;
 
-    class PluginLoader :public QObject
+    class LIBKIPI_EXPORT PluginLoader :public QObject
     {
         Q_OBJECT
     public:
-        class Info
+        class LIBKIPI_EXPORT Info
         {
 		public:
             Info( const QString& name, const QString& comment, const QString& library, bool shouldLoad );
@@ -84,7 +85,7 @@ namespace KIPI
 		Private* d;
     };
 
-    class ConfigWidget :public QScrollView
+    class LIBKIPI_EXPORT ConfigWidget :public QScrollView
     {
         Q_OBJECT
     public:

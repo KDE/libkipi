@@ -27,7 +27,7 @@
 // Include files for KDE
 
 #include <kdialogbase.h>
-
+#include <libkipi/libkipi_export.h>
 class KListView;
 class KProgress;
 
@@ -45,7 +45,7 @@ enum ActionMessageType
     ProgressMessage
 };
 
-class BatchProgressDialog : public KDialogBase
+class LIBKIPI_EXPORT BatchProgressDialog : public KDialogBase
 {
 Q_OBJECT
 

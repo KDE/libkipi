@@ -31,12 +31,13 @@
 // KDE includes.
 
 #include <kurl.h>
+#include <libkipi/libkipi_export.h>
 
 namespace KIPI
 {
     class ImageCollectionShared;
 
-    class ImageCollection
+    class LIBKIPI_EXPORT ImageCollection
     {
     public:
         // Interface for plugins.

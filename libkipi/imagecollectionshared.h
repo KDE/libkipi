@@ -35,10 +35,11 @@
 // Local includes.
 
 #include "imagecollection.h"
+#include <libkipi/libkipi_export.h>
 
 namespace KIPI
 {
-    class ImageCollectionShared
+    class LIBKIPI_EXPORT ImageCollectionShared
     {
     public:
         ImageCollectionShared();

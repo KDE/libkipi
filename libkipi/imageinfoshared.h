@@ -37,12 +37,13 @@
 // LibKIPI includes.
 
 #include <libkipi/imageinfo.h>
+#include <libkipi/libkipi_export.h>
 
 namespace KIPI
 {
     class Interface;
 
-    class ImageInfoShared
+    class LIBKIPI_EXPORT ImageInfoShared
     {
     public:
         ImageInfoShared( KIPI::Interface* interface, const KURL& url );

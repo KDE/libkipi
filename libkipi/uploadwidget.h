@@ -36,12 +36,13 @@
 // LibKIPI includes.
 
 #include <libkipi/interface.h>
+#include <libkipi/libkipi_export.h>
 
 class QListViewItem;
 
 namespace KIPI
 {
-    class UploadWidget :public QWidget 
+    class LIBKIPI_EXPORT UploadWidget :public QWidget 
     {
         Q_OBJECT
 

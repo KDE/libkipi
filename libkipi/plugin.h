@@ -35,6 +35,8 @@
 
 #include "libkipi/interface.h"
 
+#include "libkipi/libkipi_export.h"
+
 class KInstance;
 
 namespace KIPI
@@ -50,7 +52,7 @@ namespace KIPI
        COLLECTIONSPLUGIN
        };
 
-    class Plugin : public QObject
+    class LIBKIPI_EXPORT Plugin : public QObject
     {
     public:
         Plugin( KInstance* instance, QObject *parent, const char* name);

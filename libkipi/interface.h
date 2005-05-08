@@ -36,6 +36,7 @@
 
 #include "libkipi/imagecollection.h"
 #include "libkipi/imageinfo.h"
+#include "libkipi/libkipi_export.h"
 
 namespace KIPI
 {
@@ -53,7 +54,7 @@ namespace KIPI
         // and the hello world plugin.
     };
 
-    class Interface : public QObject
+    class LIBKIPI_EXPORT Interface : public QObject
     {
         Q_OBJECT
 

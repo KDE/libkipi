@@ -26,14 +26,14 @@
 #include <qdatetime.h>
 #include <qmap.h>
 #include <qvariant.h>
-
+#include "libkipi/libkipi_export.h"
 
 namespace KIPI
 {
     class ImageInfoShared;
     enum TimeSpec { FromInfo, ToInfo };
 
-    class ImageInfo
+    class LIBKIPI_EXPORT ImageInfo
     {
     public:
         // Interface for plugins.
