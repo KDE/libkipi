@@ -25,6 +25,11 @@
 #include <kdemacros.h>
 #endif
 
+#ifndef __KDE_HAVE_GCC_VISIBILITY
+#undef KDE_EXPORT
+#define KDE_EXPORT
+#endif
+
 #ifdef KDE_EXPORT
 #define LIBKIPI_EXPORT KDE_EXPORT
 #else
