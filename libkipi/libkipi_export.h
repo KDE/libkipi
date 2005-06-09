@@ -21,16 +21,15 @@
 #ifndef _LIBKIPI_EXPORT_H
 #define _LIBKIPI_EXPORT_H
 
-#include <kdeversion.h>
-
-#ifdef __KDE_HAVE_GCC_VISIBILITY
-
+#ifdef HAVE_KDEMACROS
 #include <kdemacros.h>
+#endif
 
+#ifdef KDE_EXPORT
 #define LIBKIPI_EXPORT KDE_EXPORT
-
 #else
 #define LIBKIPI_EXPORT
 #endif
+
 #endif /* _LIBKIPI_EXPORT_H */
 

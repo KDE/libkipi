@@ -1,2 +1,8 @@
 AC_OUTPUT([ libkipi/libkipi.pc ])
 KDE_ENABLE_HIDDEN_VISIBILITY
+
+KDE_CHECK_HEADER(kdemacros.h, have_kdemacros=yes, have_kdemacros=no)
+if test "x$have_kdemacros" = "xyes"; then
+   AC_MSG_NOTICE([kdemacros.h found])
+   AC_DEFINE(HAVE_KDEMACROS, 1, [Defined if kdemacros.h is found])
+fi
