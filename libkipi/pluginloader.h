@@ -70,6 +70,8 @@ namespace KIPI
 
         const PluginList& pluginList();
 
+        void loadPlugin( Info* );
+
     signals:
         void plug( KIPI::PluginLoader::Info* );
         void unplug( KIPI::PluginLoader::Info* );
@@ -78,8 +80,6 @@ namespace KIPI
     private:
         friend class ConfigWidget;
         friend class PluginCheckBox;
-
-        void loadPlugin( Info* );
 
 		struct Private;
 		Private* d;
