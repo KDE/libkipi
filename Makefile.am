@@ -10,3 +10,7 @@ messages:
 	if test -n "$$LIST"; then \
 		$(XGETTEXT) $$LIST -o $(podir)/libkipi.pot; \
 	fi
+
+
+include $(top_srcdir)/admin/Doxyfile.am
+
