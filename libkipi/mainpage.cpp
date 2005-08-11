@@ -31,7 +31,7 @@
    <ul>
    <li> Create a class that inherits KIPI::Plugin. In the constructor you
    must create instances of KAction for your application. The topmost
-   actions should be given to the Plugin super class using \ref
+   actions should be given to the Plugin super class using 
    KIPI::Plugin::addAction().
    <li> As described in the tutorial <a href="http://developer.kde.org/documentation/tutorials/developing-a-plugin-structure/index.html#understanding_loading">here</a>, you must call the macro
    <tt>K_EXPORT_COMPONENT_FACTORY</tt>.

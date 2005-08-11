@@ -19,7 +19,7 @@
  * GNU Library General Public License for more details.
  *
  * ============================================================ */
- 
+
 #ifndef IMAGEDIALOG_H
 #define IMAGEDIALOG_H
 

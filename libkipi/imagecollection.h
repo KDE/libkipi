@@ -20,6 +20,8 @@
  *
  * ============================================================ */
  
+/** @file imagecollection.h */
+
 #ifndef KIPI_IMAGECOLLECTION_H
 #define KIPI_IMAGECOLLECTION_H
 
@@ -33,14 +35,17 @@
 #include <kurl.h>
 #include <libkipi/libkipi_export.h>
 
+/** @namespace KIPI */
 namespace KIPI
 {
     class ImageCollectionShared;
 
+    /** @class ImageCollection 
+        Holds info about the collection
+      */
     class LIBKIPI_EXPORT ImageCollection
     {
     public:
-        // Interface for plugins.
         QString name() const;
         QString comment() const;
         QString category() const;

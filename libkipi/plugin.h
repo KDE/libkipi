@@ -39,6 +39,7 @@
 
 class KInstance;
 
+/** @namespace KIPI */
 namespace KIPI
 {
     enum Category 

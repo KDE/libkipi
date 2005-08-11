@@ -19,6 +19,8 @@
  * 
  * ============================================================ */
 
+/** @file imageinfo.h */
+
 #ifndef KIPI_IMAGEINFO_H
 #define KIPI_IMAGEINFO_H
 #include <kurl.h>
@@ -33,10 +35,12 @@ namespace KIPI
     class ImageInfoShared;
     enum TimeSpec { FromInfo, ToInfo };
 
+    /** @class ImageInfo 
+        Holds info about an image 
+      */
     class LIBKIPI_EXPORT ImageInfo
     {
     public:
-        // Interface for plugins.
         QString title() const;
         void setTitle( const QString& name );
 
@@ -60,7 +64,9 @@ namespace KIPI
 
         void cloneData( const ImageInfo& other );
 
-        // Interface for host application + general stuff
+        /** constructor
+            Interface for host application + general stuff
+          */
         ImageInfo( ImageInfoShared* );
         ImageInfo( const ImageInfo& );
         ~ImageInfo();

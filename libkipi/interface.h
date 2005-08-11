@@ -20,6 +20,7 @@
  *
  * ============================================================ */
 
+/** @file interface.h */
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 
@@ -38,6 +39,7 @@
 #include "libkipi/imageinfo.h"
 #include "libkipi/libkipi_export.h"
 
+/** @namespace KIPI */
 namespace KIPI
 {
     enum Features {
@@ -50,10 +52,9 @@ namespace KIPI
         AlbumsHaveCategory         = 1 << 6,
         AlbumsHaveCreationDate     = 1 << 7,
         AlbumsUseFirstImagePreview = 1 << 8 
-        // When adding new items, remember to update "hasFeature( const QString& feature )"
-        // and the hello world plugin.
     };
 
+    /** class Interface */
     class LIBKIPI_EXPORT Interface : public QObject
     {
         Q_OBJECT

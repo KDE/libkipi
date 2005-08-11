@@ -23,6 +23,8 @@
 #include "KDStream.h"
 #include "imageinfoshared.h"
 
+/** @file imageinfo.cpp
+*/
 QString KIPI::ImageInfo::toString( const QVariant& data ) const
 {
     QString string;

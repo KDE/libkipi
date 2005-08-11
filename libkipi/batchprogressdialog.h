@@ -20,6 +20,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+/** @file batchprogressdialog.h */
 
 #ifndef BATCHPROGRESSDIALOG_H
 #define BATCHPROGRESSDIALOG_H
@@ -31,6 +32,10 @@
 class KListView;
 class KProgress;
 
+/** 
+  @namespace KIPI 
+  This is the namespace
+*/
 namespace KIPI
 {
 

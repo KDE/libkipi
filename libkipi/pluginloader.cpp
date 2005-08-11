@@ -19,6 +19,8 @@
  *
  * ============================================================ */
 
+/** @file pluginloader.cpp */
+
 #include <qstringlist.h>
 
 #include <ktrader.h>
@@ -34,6 +36,7 @@
 #include <qlayout.h>
 
 /**
+   \author Renchi Raju
    \class KIPI::PluginLoader
    This is the class that will help host applications to load plugins.
 

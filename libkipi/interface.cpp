@@ -20,6 +20,8 @@
  *
  * ============================================================ */
 
+/** @file interface.cpp */
+
 // KDE includes.
 
 #include <kdebug.h>
@@ -31,14 +33,16 @@
 #include "interface.h"
 
 /*!
-  \enum KIPI::Features
+  @enum KIPI::Features
   Not all host applications support the full subset of features that KIPI
   allows access to. As an example <a
   href="http://ktown.kde.org/kimdaba/">KimDaBa</a> do not support comments
   for albums. Thus before a plugin expect a decant value for the comment,
-  it should check whether \ref KIPI::AlbumsHaveComments are set. It does so
-  using \ref KIPI::Interface::hasFeature()
-*/
+  it should check whether KIPI::AlbumsHaveComments are set. It does so
+  using KIPI::Interface::hasFeature()
+  When adding new items, remember to update "hasFeature( const QString& feature )"
+  and the hello world plugin.
+  */
 
 /*!
   \enum KIPI::AlbumsHaveComments
@@ -109,7 +113,7 @@ void KIPI::Interface::refreshImages( const KURL::List& )
 
 /**
    Tells whether the host application under which the plugin currently executes a given feature.
-   See \ref KIPI::Features for details on the individual features.
+   See KIPI::Features for details on the individual features.
 */
 bool KIPI::Interface::hasFeature( KIPI::Features feature )
 {

@@ -56,6 +56,7 @@
 #endif
 
 /**
+   \file KDStream.cpp
    \class KDStream KDStream.h
    \brief Streaming operators for Qt classes.
 
