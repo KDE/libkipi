@@ -16,6 +16,7 @@ Name[pt_BR]='Plugin' do KIPI
 Name[sr]=KIPI прикључак
 Name[sr@Latn]=KIPI priključak
 Name[sv]=KIPI-insticksprogram
+Name[tg]=KIPIПлагин
 Name[tr]=KIPIEklentisi
 Name[zh_CN]=KIPI 插件
 Comment=A KIPI Plugin
@@ -35,6 +36,7 @@ Comment[pt_BR]=Um 'Plugin' do KIPI
 Comment[sr]=KIPI прикључак
 Comment[sr@Latn]=KIPI priključak
 Comment[sv]=Ett KIPI-insticksprogram
+Comment[tg]=KIPI Плагин
 Comment[tr]=Bir KIPI Eklentisi
 Comment[zh_CN]=一个 KIPI 插件
 
