@@ -18,6 +18,7 @@ Name[sr@Latn]=KIPI priključak
 Name[sv]=KIPI-insticksprogram
 Name[tg]=KIPIПлагин
 Name[tr]=KIPIEklentisi
+Name[xx]=xxKIPIPluginxx
 Name[zh_CN]=KIPI 插件
 Comment=A KIPI Plugin
 Comment[br]=Ul lugent KIPI
@@ -38,6 +39,7 @@ Comment[sr@Latn]=KIPI priključak
 Comment[sv]=Ett KIPI-insticksprogram
 Comment[tg]=KIPI Плагин
 Comment[tr]=Bir KIPI Eklentisi
+Comment[xx]=xxA KIPI Pluginxx
 Comment[zh_CN]=一个 KIPI 插件
 
 [PropertyDef::X-KIPI-Id]
