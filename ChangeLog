@@ -1,3 +1,90 @@
+v0.1.2                                                            2005-02-08
+----------------------------------------------------------------------------
+
+2005-08-11 17:01  toma
+
+	* trunk/extragear/libs/libkipi/libkipi/KDStream.cpp,
+	  trunk/extragear/libs/libkipi/libkipi/batchprogressdialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollection.cpp,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollection.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagedialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfo.cpp,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfo.h,
+	  trunk/extragear/libs/libkipi/libkipi/interface.cpp,
+	  trunk/extragear/libs/libkipi/libkipi/interface.h,
+	  trunk/extragear/libs/libkipi/libkipi/mainpage.cpp,
+	  trunk/extragear/libs/libkipi/libkipi/plugin.h,
+	  trunk/extragear/libs/libkipi/libkipi/pluginloader.cpp: Made some
+	  minor changes to generate the Dox for some classes. It is
+	  documented better then I thought.
+
+2005-06-22 13:34  lunakl
+
+	* trunk/extragear/libs/libkipi/libkipi/pluginloader.h,
+	  trunk/extragear/libs/libkipi/libkipi/version.h: Make
+	  loadPlugin() public, so that it's possible to load plugins
+	  selectively, and raise version, so that this API change can be
+	  detected.
+
+2005-05-08 11:55  mlaurent
+
+    * trunk/extragear/libs/libkipi/configure.in.in,
+	  trunk/extragear/libs/libkipi/libkipi/Makefile.am,
+	  trunk/extragear/libs/libkipi/libkipi/batchprogressdialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollection.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollectionselector.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagecollectionshared.h,
+	  trunk/extragear/libs/libkipi/libkipi/imagedialog.h,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfo.h,
+	  trunk/extragear/libs/libkipi/libkipi/imageinfoshared.h,
+	  trunk/extragear/libs/libkipi/libkipi/interface.h,
+	  trunk/extragear/libs/libkipi/libkipi/libkipi_export.h,
+	  trunk/extragear/libs/libkipi/libkipi/plugin.h,
+	  trunk/extragear/libs/libkipi/libkipi/pluginloader.h,
+	  trunk/extragear/libs/libkipi/libkipi/uploadwidget.h: Add support
+	  -fvisibility
+
+2005-02-14 20:44  ach
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi.lsm,
+	  trunk/kdeextragear-libs-1/libkipi/libkipi/batchprogressdialog.cpp,
+	  trunk/kdeextragear-libs-1/libkipi/libkipi/imagedialog.cpp: fix
+	  homepage URL CCMAIL: kde-imaging@kde.org
+
+2005-02-10 07:49  blackie
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi/KDStream.cpp,
+	  trunk/kdeextragear-libs-1/libkipi/libkipi/KDStream.h: updated
+	  license header
+
+2005-02-09 20:21  ach
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi/batchprogressdialog.cpp,
+	  trunk/kdeextragear-libs-1/libkipi/libkipi/batchprogressdialog.h:
+	  CVS_SILENT: As Gilles request: update FSF address too CCMAIL:
+	  caulier.gilles@free.fr
+
+2005-02-09 19:29  blackie
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi/KDTools-License-US,
+	  trunk/kdeextragear-libs-1/libkipi/libkipi/KDTools-License-non-US:
+	  licenses to make debian happy
+
+2005-02-09 18:54  ach
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi/mainpage.cpp: fix kipi
+	  URL
+
+2005-02-09 18:21  ach
+
+	* trunk/kdeextragear-libs-1/libkipi/COPYING.GPL2:
+	  libkipi/kdstream* uses GPL v2. Added a copy of the license.
+
+2005-02-09 18:21  blackie
+
+	* trunk/kdeextragear-libs-1/libkipi/libkipi/LICENSE.GPL: added
+	  license file needed by KDStream
+
 v0.1.1                                                            2005-02-08
 ----------------------------------------------------------------------------
 
