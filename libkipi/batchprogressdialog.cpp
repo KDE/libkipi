@@ -175,7 +175,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
                                        kipi_version,
                                        I18N_NOOP("A Kipi dialog for batch process operations"),
                                        KAboutData::License_GPL,
-                                       "(c) 2004, Kipi development team",
+                                       "(c) 2004,2005, Kipi development team",
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
 
