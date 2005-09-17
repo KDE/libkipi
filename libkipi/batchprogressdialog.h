@@ -28,7 +28,7 @@
 // Include files for KDE
 
 #include <kdialogbase.h>
-#include <libkipi/libkipi_export.h>
+#include "libkipi/libkipi_export.h"
 class KListView;
 class KProgress;
 

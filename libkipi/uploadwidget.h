@@ -35,8 +35,8 @@
 
 // LibKIPI includes.
 
-#include <libkipi/interface.h>
-#include <libkipi/libkipi_export.h>
+#include "libkipi/interface.h"
+#include "libkipi/libkipi_export.h"
 
 class QListViewItem;
 

@@ -35,7 +35,7 @@
 // Local includes.
 
 #include "imagecollection.h"
-#include <libkipi/libkipi_export.h>
+#include "libkipi/libkipi_export.h"
 
 namespace KIPI
 {

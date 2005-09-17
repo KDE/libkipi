@@ -60,7 +60,7 @@
 
 // Include files for libKipi.
 
-#include <libkipi/version.h>
+#include "libkipi/version.h"
 
 // Local includes
 

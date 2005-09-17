@@ -36,8 +36,8 @@
 
 // LibKIPI includes.
 
-#include <libkipi/imageinfo.h>
-#include <libkipi/libkipi_export.h>
+#include "libkipi/imageinfo.h"
+#include "libkipi/libkipi_export.h"
 
 namespace KIPI
 {

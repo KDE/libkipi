@@ -22,8 +22,8 @@
 #ifndef KIPI_PLUGINLOADER_H
 #define KIPI_PLUGINLOADER_H
 
-#include <libkipi/interface.h>
-#include <libkipi/libkipi_export.h>
+#include "libkipi/interface.h"
+#include "libkipi/libkipi_export.h"
 #include <qwidget.h>
 #include <qscrollview.h>
 
