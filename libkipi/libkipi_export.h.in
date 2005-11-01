@@ -21,6 +21,8 @@
 #ifndef _LIBKIPI_EXPORT_H
 #define _LIBKIPI_EXPORT_H
 
+#undef KDEMACROS_USABLE
+
 #ifdef KDEMACROS_USABLE
 #include <kdemacros.h>
 #endif
