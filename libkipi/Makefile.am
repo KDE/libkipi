@@ -18,7 +18,7 @@ libkipiinclude_HEADERS = interface.h plugin.h pluginloader.h imageinfo.h imageco
 libkipi_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) \
 		-version-info 1:0:1 -no-undefined
 
-libkipi_la_LIBADD = $(LIB_KIO) $(LIB_KUI)
+libkipi_la_LIBADD = $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 libkipiincludedir = $(includedir)/libkipi
 
