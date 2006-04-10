@@ -136,12 +136,11 @@ struct BatchProgressDialog::Private {
 /////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
-                   : KDialogBase( KDialogBase::Plain, caption, Help|Cancel,
-                                  Cancel, parent, "KIPIBatchProgressDialog", true )
+                   : KDialogBase( parent, "KIPIBatchProgressDialog", true /* modal */,
+                                  caption, Help|Cancel)
 {
     d = new Private;
-    QWidget* box = plainPage();
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
+    QWidget* box = makeVBoxMainWidget();
 
     //---------------------------------------------
 
@@ -156,7 +155,6 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
-    dvlay->addWidget( headerFrame );
 
     QString dir;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
@@ -188,9 +186,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     //---------------------------------------------
 
 
-    QGroupBox* groupBox1 = new QGroupBox( 2, Qt::Horizontal, box );
-
-    m_actionsList = new KListView( groupBox1 );
+    m_actionsList = new KListView( box );
     m_actionsList->addColumn(i18n( "Status" ));
     m_actionsList->addColumn(i18n( "Current Actions" ));
     m_actionsList->setSorting(-1);
@@ -198,7 +194,6 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
     QWhatsThis::add( m_actionsList, i18n("<p>This is the current tasks list released.") );
-    dvlay->addWidget( groupBox1 );
 
     //---------------------------------------------
 
@@ -206,7 +201,6 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
     QWhatsThis::add( m_progress, i18n("<p>This is the list current percent task released.") );
-    dvlay->addWidget( m_progress );
     resize( 600, 400 );
 }
 
