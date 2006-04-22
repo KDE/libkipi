@@ -73,10 +73,6 @@ Q_OBJECT
  
    struct Private;
    Private* d;
-   
- private slots:
-
-    void slotHelp( void );
 };
 
 }  // NameSpace KIPI

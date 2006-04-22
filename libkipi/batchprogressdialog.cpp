@@ -137,7 +137,7 @@ struct BatchProgressDialog::Private {
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
                    : KDialogBase( parent, "KIPIBatchProgressDialog", true /* modal */,
-                                  caption, Help|Cancel)
+                                  caption, Cancel)
 {
     d = new Private;
     QWidget* box = makeVBoxMainWidget();
@@ -163,25 +163,6 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( dir + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    //---------------------------------------------
-
-    // About data and help button.
-
-    KAboutData* about = new KAboutData("kipiplugins",
-                                       I18N_NOOP("Batch process dialog"),
-                                       kipi_version,
-                                       I18N_NOOP("A Kipi dialog for batch process operations"),
-                                       KAboutData::License_GPL,
-                                       "(c) 2004,2005, Kipi development team",
-                                       0,
-                                       "http://extragear.kde.org/apps/kipi");
-
-    QPushButton *helpButton = actionButton( Help );
-    KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
-    helpMenu->menu()->removeItemAt(0);
-    helpMenu->menu()->insertItem(i18n("Kipi Plugins Handbooks"), this, SLOT(slotHelp()), 0, -1, 0);
-    helpButton->setPopup( helpMenu->menu() );
 
     //---------------------------------------------
 
@@ -236,15 +217,6 @@ void BatchProgressDialog::setProgress(int current, int total)
 {
     m_progress->setTotalSteps(total);
     m_progress->setValue(current);
-}
-
-/////////////////////////////////////// SLOTS ///////////////////////////////////////////////
-
-
-void BatchProgressDialog::slotHelp( void )
-{
-    KApplication::kApplication()->invokeHelp("",
-                                             "kipi-plugins");
 }
 
 }  // NameSpace KIPI
