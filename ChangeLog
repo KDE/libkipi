@@ -1,5 +1,32 @@
 v0.1.3 - Last Changed Rev: 537369 - 2006-05-04
 ----------------------------------------------------------------------------
+2006-05-06 20:45  anaselli
+
+    * trunk/extragear/libs/kipi-plugins/ChangeLog,
+      trunk/extragear/libs/libkexif/ChangeLog,
+      trunk/extragear/libs/libkipi/ChangeLog: fix ChangeLog files
+
+2006-05-06 20:31  anaselli
+
+    * trunk/extragear/libs/libkexif/NEWS,
+      trunk/extragear/libs/libkipi/NEWS: added a note into news to
+      check the Changelog
+
+2006-05-06 20:26  anaselli
+
+    * trunk/extragear/libs/libkipi/libkipi.lsm,
+      trunk/extragear/libs/libkipi/libkipi/version.h: updated version
+      for incoming release 0.1.3
+
+2006-05-04 19:47  anaselli
+
+    * trunk/extragear/libs/libkipi/ChangeLog: Added revision marker
+
+2006-05-04 16:16  toma
+
+    * trunk/extragear/libs/libkexif/ChangeLog,
+      trunk/extragear/libs/libkipi/ChangeLog: Updates.
+
 2006-04-22 22:18  gateau
 
 	* trunk/extragear/libs/libkipi/libkipi/batchprogressdialog.cpp,
