@@ -80,6 +80,9 @@ v0.1.3 - Last Changed Rev: 537369 - 2006-05-04
 	  trunk/extragear/libs/libkipi/libkipi/imagedialog.cpp: Add 2005
 	  to copyright notice in about dialog
 
+v0.1.2                                                            2005-09-04
+----------------------------------------------------------------------------
+
 2005-09-04 22:15  toma
 
 	* trunk/extragear/libs/libkipi/ChangeLog: SVN_SILENT update date,
@@ -95,9 +98,6 @@ v0.1.3 - Last Changed Rev: 537369 - 2006-05-04
 
 	* trunk/extragear/libs/libkexif/AUTHORS,
 	  trunk/extragear/libs/libkipi/AUTHORS: email address updates
-
-v0.1.2                                                            2005-09-04
-----------------------------------------------------------------------------
 
 2005-08-11 17:01  toma
 
