@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: libkipi
 Description: KDE library for shared plugins between graphical applications
 Requires:
-Version: 0.1.2
+Version: 0.1.3
 Libs: -L${libdir} -lkipi
 Cflags: -I${includedir}
