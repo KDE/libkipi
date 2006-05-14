@@ -1,5 +1,5 @@
 METASOURCES = AUTO
-INCLUDES= $(LIBKIPI_CFLAGS) $(all_includes)
+INCLUDES = -I.. -I$(srcdir)/.. $(LIBKIPI_CFLAGS) $(all_includes)
 
 KDE_ICON = kipi
 
