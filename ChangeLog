@@ -1,5 +1,27 @@
+v0.1.4 - 2006-05-15
+----------------------------------------------------------------------------
+2006-05-14 08:58 +0000 [r540613]  ach
+
+	* libkipi/libkipi/Makefile.am: libkipi: fix include path: Header
+	  files are accessed like #include <libkipi/file.h>. Therefore
+	  standard -I. -I$(srcdir) don't work. Adding -I.. -I$(srcdir)/..
+	  fixes this. BUG: 127238
+
+2006-05-10 20:11 +0000 [r539513]  anaselli
+
+	* libkipi/INSTALL: Added general install info
+
 v0.1.3 - Last Changed Rev: 537369 - 2006-05-04
 ----------------------------------------------------------------------------
+2006-05-07 15:43 +0000 [r538348]  anaselli
+
+	* libkipi/libkipi.pc.in: updated version for incoming release 0.1.3
+
+2006-05-06 22:01 +0000 [r538121]  toma
+
+	* kipi-plugins/ChangeLog, libkexif/ChangeLog, libkipi/ChangeLog:
+	  updates
+
 2006-05-06 20:45  anaselli
 
     * trunk/extragear/libs/kipi-plugins/ChangeLog,

@@ -23,9 +23,9 @@
 #ifndef KIPI_VERSION_H
 #define KIPI_VERSION_H
 
-static const char kipi_version[] = "0.1.3";
+static const char kipi_version[] = "0.1.4";
 
-#define KIPI_VERSION 0x000103
+#define KIPI_VERSION 0x000104
 
 #endif // KIPI_VERSION_H
 
