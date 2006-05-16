@@ -1,1 +1,26 @@
+-------------------------------------------------------------------------
+0.1.4
+
+Bugs fixed:
+
+	o fix FTBFS (fails to build from source) when libkipi is
+	  build the first time on a system.
+
+-------------------------------------------------------------------------
+0.1.3
+
+New features:
+
+	o Make loadPlugin() public, so that it's possible to load plugins
+          selectively, and raise version to 1.0.1, so that this API change
+	  can be detected
+
+Bugs fixed:
+
+	o various build fixes
+
+	o batchprogressdialog: Removed help button. It does not point to
+	  any usefull documentation. BUG: 99418
+
+-------------------------------------------------------------------------
 For details and info about previous versions, see ChangeLog.
