@@ -1,5 +1,15 @@
-v0.1.4 - 2006-05-15
+v 0.1.4 - 2006-05-15
 ----------------------------------------------------------------------------
+2006-05-16 19:36 +0000 [r541625]  ach
+
+	* libkipi/NEWS: libkipi: add 0.1.3 and 0.1.4 infos to NEWS
+
+2006-05-15 18:26 +0000 [r541201]  anaselli
+
+	* libkipi/ChangeLog, libkipi/libkipi.pc.in, libkipi/libkipi.lsm,
+	  libkipi/libkipi/version.h: Prepare release 0.1.4 to fix bug
+	  127238 CCMAIL: kde-imaging@kde.org
+
 2006-05-14 08:58 +0000 [r540613]  ach
 
 	* libkipi/libkipi/Makefile.am: libkipi: fix include path: Header
