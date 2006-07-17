@@ -140,6 +140,8 @@ bool KIPI::Interface::hasFeature( const QString& feature )
         return hasFeature( KIPI::AlbumsHaveCreationDate );
     else if ( feature == "AlbumsUseFirstImagePreview" )
         return hasFeature( KIPI::AlbumsUseFirstImagePreview );
+    else if ( feature == "HostSupportsTags" )
+        return hasFeature( KIPI::HostSupportsTags );
     else {
         kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;

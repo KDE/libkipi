@@ -69,7 +69,12 @@ QDateTime KIPI::ImageInfo::time( TimeSpec spec ) const
 }
 
 /**
-   PENDING(blackie) document
+   Returns a Map of attributes of the image
+   In case the host application supports some special attributes of the image
+   this function can be used to return them.
+   Tags are supported by this feature: "tags" key contains QStringList() 
+   encapsulated in a QVariant
+   
 */
 QMap<QString,QVariant> KIPI::ImageInfo::attributes() const
 {
