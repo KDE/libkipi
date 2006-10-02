@@ -51,7 +51,7 @@
 struct KIPI::UploadWidget::Private
 {
     KFileTreeView* m_treeView;
-    KFileTreeBranch* m_item;
+    KFileTreeBranch* m_branch;
     QStringList m_pendingPath;
     QString m_handled;
 };
@@ -79,9 +79,9 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     if ( !album.isValid() || !album.isDirectory() ) 
        album = interface->allAlbums().first();
     
-    d->m_item = d->m_treeView->addBranch( QDir::cleanDirPath(album.uploadRoot().path()),
+    d->m_branch = d->m_treeView->addBranch( QDir::cleanDirPath(album.uploadRoot().path()),
                                           album.uploadRootName() );
-    d->m_treeView->setDirOnlyMode( d->m_item, true );
+    d->m_treeView->setDirOnlyMode( d->m_branch, true );
 
     d->m_treeView->addColumn( i18n("Folder" ) );
 
@@ -105,10 +105,10 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
         
         d->m_pendingPath = QStringList::split( "/", uploadPath, false );
         
-        connect( d->m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ),
+        connect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ),
                  this, SLOT( load() ) );
 
-        d->m_item->setOpen(true);
+        d->m_branch->setOpen(true);
     }
     
     connect( d->m_treeView, SIGNAL( executed(QListViewItem *) ),
@@ -129,30 +129,30 @@ void KIPI::UploadWidget::load()
 {
     if ( d->m_pendingPath.isEmpty() ) 
     {
-        disconnect( d->m_item, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
+        disconnect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
                     this, SLOT( load() ) );
         return;
     }
 
-    QString item = d->m_pendingPath.front();
+    QString itemName = d->m_pendingPath.front();
 
     d->m_pendingPath.pop_front();
 
-    d->m_handled += "/" + item;
+    d->m_handled += "/" + itemName;
 
-    KFileTreeViewItem* branch = d->m_treeView->findItem( d->m_item, d->m_handled );
+    KFileTreeViewItem* item = d->m_treeView->findItem( d->m_branch, d->m_handled );
     
-    if ( !branch ) 
+    if ( !item ) 
     {
         kdDebug( 51000 ) << "Unable to open " << d->m_handled << endl;
     }
     else
     {
-        branch->setOpen( true );
-        d->m_treeView->setSelected( branch, true );
-        d->m_treeView->ensureItemVisible ( branch );
+        item->setOpen( true );
+        d->m_treeView->setSelected( item, true );
+        d->m_treeView->ensureItemVisible ( item );
         
-        if ( branch->alreadyListed() )
+        if ( item->alreadyListed() )
             load();
     }
 
