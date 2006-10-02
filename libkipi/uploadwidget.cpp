@@ -85,6 +85,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
     d->m_treeView->addColumn( i18n("Folder" ) );
 
     d->m_treeView->header()->setStretchEnabled( true, 0 );
+    d->m_treeView->header()->hide();
 
     QString root = album.uploadRoot().path();
     QString uploadPath = album.isDirectory() ? album.uploadPath().path() : root;
