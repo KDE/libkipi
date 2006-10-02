@@ -53,7 +53,6 @@ struct KIPI::UploadWidget::Private
     KFileTreeView* m_treeView;
     KFileTreeBranch* m_branch;
     QStringList m_pendingPath;
-    QString m_handled;
 };
 
 
@@ -106,7 +105,7 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
         d->m_pendingPath = QStringList::split( "/", uploadPath, false );
         
         connect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ),
-                 this, SLOT( load() ) );
+                 this, SLOT( slotPopulateFinished(KFileTreeViewItem *) ) );
 
         d->m_branch->setOpen(true);
     }
@@ -125,12 +124,17 @@ KURL KIPI::UploadWidget::path() const
     return d->m_treeView->currentURL();
 }
 
-void KIPI::UploadWidget::load()
+void KIPI::UploadWidget::load( )
+{
+    kdWarning() << "KIPI::UploadWidget::load(): This method is obsolete\n";
+}
+
+void KIPI::UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
 {
     if ( d->m_pendingPath.isEmpty() ) 
     {
         disconnect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
-                    this, SLOT( load() ) );
+                    this, SLOT( slotPopulateFinished(KFileTreeViewItem *) ) );
         return;
     }
 
@@ -138,13 +142,18 @@ void KIPI::UploadWidget::load()
 
     d->m_pendingPath.pop_front();
 
-    d->m_handled += "/" + itemName;
-
-    KFileTreeViewItem* item = d->m_treeView->findItem( d->m_branch, d->m_handled );
+    QListViewItem * item;
+    for ( item = parentItem->firstChild(); item; item = item->nextSibling() )
+    {
+        if ( item->text(0) == itemName )
+        {
+            break;
+        }
+    }
     
     if ( !item ) 
     {
-        kdDebug( 51000 ) << "Unable to open " << d->m_handled << endl;
+        kdDebug( 51000 ) << "Unable to open " << itemName << endl;
     }
     else
     {
@@ -152,8 +161,9 @@ void KIPI::UploadWidget::load()
         d->m_treeView->setSelected( item, true );
         d->m_treeView->ensureItemVisible ( item );
         
-        if ( item->alreadyListed() )
-            load();
+        KFileTreeViewItem * ftvItem = static_cast<KFileTreeViewItem *>( item );
+        if ( ftvItem->alreadyListed() )
+            slotPopulateFinished( ftvItem );
     }
 
 }

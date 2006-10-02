@@ -62,6 +62,9 @@ namespace KIPI
         void slotAlbumCreated(KIO::Job* job);
         void slotFolderSelected(QListViewItem *);
 
+    private slots:
+        void slotPopulateFinished(KFileTreeViewItem *);
+
     private:
         struct Private;
         Private* d;
