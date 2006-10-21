@@ -26,7 +26,7 @@ kde_servicetypes_DATA = kipiplugin.desktop
 
 
 picsdir = $(kde_datadir)/kipi/data
-pics_DATA = banner_left.png
+pics_DATA = kipi-plugins_logo.png banner_left.png
 
 EXTRA_DIST = $(pics_DATA)
 
