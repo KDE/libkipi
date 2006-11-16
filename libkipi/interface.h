@@ -52,7 +52,7 @@ namespace KIPI
         AlbumsHaveCategory         = 1 << 6,
         AlbumsHaveCreationDate     = 1 << 7,
         AlbumsUseFirstImagePreview = 1 << 8,
-		HostSupportsTags		   = 1 << 9
+        HostSupportsTags           = 1 << 9
     };
 
     /** class Interface */
