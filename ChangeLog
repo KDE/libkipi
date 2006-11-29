@@ -1,5 +1,74 @@
+v 0.1.5 - 2006-11-29
+----------------------------------------------------------------------------
+
+2006-11-17 16:23 +0000 [r605643]  vfuoglio
+
+	* libkipi/libkipi/banner_left.png: Integraded new kipi icon CCMAIL:
+	  kde-imaging@kde.org
+
+2006-11-16 23:25 +0000 [r605501]  vfuoglio
+
+	* libkipi/pics/kipi-logo.svg (added), libkipi/pics (added),
+	  libkipi/pics/kipi-icon.svg (added): Added logo and icon svg files
+	  CCMAIL: kde-imaging@kde.org
+
+2006-11-16 22:33 +0000 [r605496]  vfuoglio
+
+	* libkipi/libkipi/hi22-app-kipi.png,
+	  libkipi/libkipi/hi32-app-kipi.png,
+	  libkipi/libkipi/hi16-app-kipi.png,
+	  libkipi/libkipi/hi48-app-kipi.png: Added new kipi icons CCMAIL:
+	  kde-imaging@kde.org
+
+2006-11-16 13:28 +0000 [r605354]  cgilles
+
+	* libkipi/libkipi/interface.h: never use tabs in source code.
+
+2006-11-12 23:06 +0000 [r604476]  vfuoglio
+
+	* libkipi/libkipi/kipi-plugins_logo.png: Fixed previous fonts
+	  mismatch.
+
+2006-10-21 21:37 +0000 [r597867]  anaselli
+
+	* libkipi/libkipi/kipi-plugins_logo.png (added),
+	  libkipi/libkipi/Makefile.am: Add new kipi-plugins logo
+
+2006-10-02 14:15 +0000 [r591477-591480]  gateau
+
+	* libkipi/libkipi/uploadwidget.cpp: Hide listview header to save
+	  some space
+
+	* libkipi/libkipi/uploadwidget.h, libkipi/libkipi/uploadwidget.cpp:
+	  Make sure upload tree automatically expands.
+
+	* libkipi/libkipi/uploadwidget.cpp: Rename some vars.
+
+2006-09-22 15:29 +0000 [r587385]  seb
+
+	* libkipi/libkipi, libkexif, /, kipi-plugins/htmlexport: Update
+	  ignores
+
+2006-09-05 14:15 +0000 [r581161]  cgilles
+
+	* libkipi/libkipi/version.h: The libkipi API has changed. Need to
+	  increase release version.
+
+2006-07-17 20:21 +0000 [r563548]  jaiva
+
+	* libkipi/libkipi/imageinfo.cpp, libkipi/libkipi/interface.cpp,
+	  libkipi/libkipi/interface.h: HostSupportsTags feature added to
+	  features enum, documentation for "tags" attribute added in
+	  imageinfo CCMAIL:blackie@blackie.dk
+
 v 0.1.4 - 2006-05-15
 ----------------------------------------------------------------------------
+
+2006-06-10 15:52 +0000 [r550002]  anaselli
+
+	* libkipi/ChangeLog: fixed changelog with all the entries of rel.
+	  0.1.4
+
 2006-05-16 19:36 +0000 [r541625]  ach
 
 	* libkipi/NEWS: libkipi: add 0.1.3 and 0.1.4 infos to NEWS
