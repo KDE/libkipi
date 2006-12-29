@@ -4,11 +4,15 @@ New features:
 
 Bugs fixed:
 
+API changes:
 
 -------------------------------------------------------------------------
 0.1.5
 	o changed icons and added new kipi logo
 	o changed uploadwidget
+
+API changes:
+	o added KIPI::Features enum value: HostSupportsTags
 
 -------------------------------------------------------------------------
 0.1.4
