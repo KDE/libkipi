@@ -1,6 +1,6 @@
 /* ============================================================
  * File   : version.h
- * Authors: Gilles Caulier <caulier dot gilles at free.fr>
+ * Authors: Gilles Caulier <caulier dot gilles at gmail dot com>
  * Date   : 2004-09-09
  * Description : KIPI release ID header.
  * 
