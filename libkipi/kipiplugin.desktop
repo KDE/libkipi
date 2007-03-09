@@ -5,6 +5,7 @@ X-KDE-ServiceType=KIPI/Plugin
 X-KDE-DerivedName=KIPI Plugin
 Name=KIPIPlugin
 Comment=A KIPI Plugin
+Comment[el]=Ένα πρόσθετο του KIPI
 
 [PropertyDef::X-KIPI-Id]
 Type=QString
