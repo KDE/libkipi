@@ -157,7 +157,7 @@ bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
 {
     kdWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overriden in the host application.\n";
+            "have been overridden in the host application.\n";
     return false;
 }
 
@@ -207,7 +207,7 @@ int KIPI::Interface::features() const
 }
 
 /**
-   Return a list of images file extention will be used in the plugins for 
+   Return a list of images file extension will be used in the plugins for 
    to sort the files list before a treatment. The default implementation return,
    the supported images formats by KDE.
 */

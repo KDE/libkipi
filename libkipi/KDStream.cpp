@@ -329,7 +329,7 @@ KDStream& KDStream::operator<<( const QPalette& palette )
 {
   *this << QString::fromLatin1("active: ") << palette.active() << endl
         << QString::fromLatin1("inactive: ") << palette.inactive() << endl
-        << QString::fromLatin1("diabled: ") << palette.disabled();
+        << QString::fromLatin1("disabled: ") << palette.disabled();
 
   return *this;
 }
@@ -702,7 +702,7 @@ KDStream& KDStream::operator<<( const QStrList& list )
 
 KDStream& KDStream::operator<<( const QPixmap& pixmap )
 {
-    _output += QString("QPixmap[null=%1,width=%2,heigth=%3,depth=%4,hasMask=%5,hasAlpha=%6]")
+    _output += QString("QPixmap[null=%1,width=%2,height=%3,depth=%4,hasMask=%5,hasAlpha=%6]")
                .arg(pixmap.isNull()).arg(pixmap.width()).arg(pixmap.height())
                .arg(pixmap.depth()).arg(pixmap.mask() != 0).arg(pixmap.hasAlpha() );
     return *this;
@@ -711,7 +711,7 @@ KDStream& KDStream::operator<<( const QPixmap& pixmap )
 
 KDStream& KDStream::operator<<( const QImage& pixmap )
 {
-    _output += QString("QImage[null=%1,width=%2,heigth=%3,depth=%4,hasAlpha=%5]")
+    _output += QString("QImage[null=%1,width=%2,height=%3,depth=%4,hasAlpha=%5]")
                .arg(pixmap.isNull()).arg(pixmap.width()).arg(pixmap.height())
                .arg(pixmap.depth()).arg(pixmap.hasAlphaBuffer() );
     return *this;

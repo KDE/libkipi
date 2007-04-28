@@ -5,7 +5,7 @@
  * Date   : 2004-02-19
  * Description :
  *
- * Copyright 2004 by Jesper K. Pedersen
+ * Copyright 2004 by Jesper K. Pedersen <blackie@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Library General
@@ -98,7 +98,7 @@ void KIPI::ImageInfoShared::setTitle( const QString& )
 {
     kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
         "If the host application do support that, then this function should\n"
-        "have been overriden in the host application.\n";
+        "have been overridden in the host application.\n";
 }
 
 void KIPI::ImageInfoShared::cloneData( ImageInfoShared* other )

@@ -4,7 +4,7 @@
  * Date  : 2004-02-19
  * Description :
  *
- * Copyright 2004 by Renchi Raju
+ * Copyright 2004 by Renchi Raju <renchi@pooh.tam.uiuc.edu>
 
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Library General
@@ -52,7 +52,7 @@
    list this:
       &lt;ActionList name="image_actions"/&gt;
 
-   Then plugin plugins into menus could be done with code similiar to this from KimDaBa:
+   Then plugin plugins into menus could be done with code similar to this from KimDaBa:
    \code
     void slotReplug() {
       unplugActionList( QString::fromLatin1("file_actions") );

@@ -61,7 +61,7 @@ KURL KIPI::ImageCollectionShared::uploadPath()
 {
     kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overriden in the host application.\n";
+            "have been overridden in the host application.\n";
     return KURL();
 }
 
@@ -90,7 +90,7 @@ QString KIPI::ImageCollectionShared::comment()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
-        "have been overriden in the host application.\n";
+        "have been overridden in the host application.\n";
     return QString::null;
 }
 
@@ -98,7 +98,7 @@ QString KIPI::ImageCollectionShared::category()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
-        "have been overriden in the host application.\n";
+        "have been overridden in the host application.\n";
     return QString::null;
 }
 
@@ -106,7 +106,7 @@ QDate KIPI::ImageCollectionShared::date()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
-        "have been overriden in the host application.\n";
+        "have been overridden in the host application.\n";
     return QDate();
 }
 
