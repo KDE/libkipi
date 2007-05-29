@@ -1,25 +1,28 @@
 /* ============================================================
- * File   : imagedialog.cpp
- * Authors: KIPI team developers (see AUTHORS files for details)
- *      
- * Date   : 2004-05
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2004-05-01
  * Description : an image files selector dialog.
  *
- * Copyright 2004 by the KIPI team
+ * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
+ * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
+ * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
  *
  * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Library General
+ * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
+ * either version 2, or (at your option) any later version.
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
- *
+ * GNU General Public License for more details.
+ * 
  * ============================================================ */
- 
+
 // Qt includes.
  
 #include <qguardedptr.h>
@@ -50,30 +53,33 @@
 // Local includes.
 
 #include "imagedialog.h"
+#include "imagedialog.moc"
 
 const int PREVIEW_SIZE = 128;
 
 namespace KIPI
 {
 
-struct AlbumLVI : public KListViewItem {
+struct AlbumLVI : public KListViewItem 
+{
     AlbumLVI(KListView* parent, const KIPI::ImageCollection& album)
-    : KListViewItem(parent, album.name())
-    , _album(album) {}
+        : KListViewItem(parent, album.name()), _album(album) {}
 
     const KIPI::ImageCollection& _album;
 };
 
 
-struct ImageLVI : public KListViewItem {
+struct ImageLVI : public KListViewItem 
+{
     ImageLVI(KListView* parent, const KURL& url)
-    : KListViewItem(parent, url.fileName()), _url(url) {}
+        : KListViewItem(parent, url.fileName()), _url(url) {}
 
     KURL _url;
 };
 
 
-struct ImageDialog::Private {
+struct ImageDialog::Private 
+{
     KURL _url;
     KURL::List _urls;
     KIPI::Interface* _interface;
@@ -88,17 +94,17 @@ struct ImageDialog::Private {
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
                          bool singleSelection)
            : KDialogBase(KDialogBase::Plain, i18n("Select Image From Album"), Help|Ok|Cancel,
-                         Ok, parent, "album-dialog", true, true)                         
+                         Ok, parent, "album-dialog", true, true)
 {
     d = new Private;
     d->_interface=interface;
     d->_singleSelection = singleSelection;
-        
+
     QWidget* box = plainPage();
     QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
 
     //---------------------------------------------
-   
+
     QFrame *headerFrame = new QFrame( box );
     headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
@@ -111,19 +117,19 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
     dvlay->addWidget( headerFrame );
-    
+
     QString directory;
     KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
     directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-    
+
     pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
     pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
     labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
 
     //---------------------------------------------
-    
+
     // About data and help button.
-    
+
     KAboutData* about = new KAboutData("kipiplugins",
                                        I18N_NOOP("Image selector dialog"), 
                                        kipi_version,
@@ -132,7 +138,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
                                        "(c) 2004,2005, Kipi development team", 
                                        0,
                                        "http://extragear.kde.org/apps/kipi");
-    
+
     QPushButton *helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
     helpMenu->menu()->removeItemAt(0);
@@ -142,7 +148,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     //---------------------------------------------
 
     QSplitter* splitter = new QSplitter(box);
-        
+
     d->_albumList=new KListView(splitter);
     d->_albumList->addColumn(i18n("Album Name"));
     d->_albumList->setMinimumWidth(200);
@@ -154,7 +160,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
     d->_imageList->setSelectionMode(singleSelection ? QListView::Single :
                                     QListView::Extended);
     d->_imageList->setResizeMode(QListView::LastColumn);
-    
+
     d->_preview=new QLabel(splitter);
     d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
     d->_preview->setFixedWidth(PREVIEW_SIZE);
@@ -164,8 +170,9 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
 
     d->_albums=d->_interface->allAlbums();
     QValueList<ImageCollection>::ConstIterator it=d->_albums.begin();
-    
-    for(; it!=d->_albums.end(); ++it) {
+
+    for(; it!=d->_albums.end(); ++it) 
+    {
         new AlbumLVI(d->_albumList, *it);
     }
     QTimer::singleShot(0, this, SLOT(slotInitialShow()));
@@ -184,25 +191,30 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
 }
 
 
-ImageDialog::~ImageDialog() {
+ImageDialog::~ImageDialog() 
+{
     delete d;
 }
 
-
-KURL ImageDialog::url() const {
+KURL ImageDialog::url() const 
+{
     return d->_url;
 }
 
 KURL::List ImageDialog::urls() const
 {
-    return d->_urls;    
+    return d->_urls;
 }
 
-KURL ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) {
+KURL ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) 
+{
     ImageDialog dlg(parent, interface, true);
-    if (dlg.exec() == QDialog::Accepted) {
+    if (dlg.exec() == QDialog::Accepted) 
+    {
         return dlg.url();
-    } else {
+    }
+    else 
+    {
         return KURL();
     }
 }
@@ -219,8 +231,8 @@ KURL::List ImageDialog::getImageURLs(QWidget* parent, Interface* interface)
     }
 }
 
-
-void ImageDialog::fillImageList(QListViewItem* item) {
+void ImageDialog::fillImageList(QListViewItem* item) 
+{
     d->_imageList->clear();
     if (!item) return;
 
@@ -228,14 +240,16 @@ void ImageDialog::fillImageList(QListViewItem* item) {
     KURL::List images=album.images();
 
     KURL::List::ConstIterator it=images.begin();
-    for (;it!=images.end(); ++it) {
+    for (;it!=images.end(); ++it) 
+    {
         new ImageLVI(d->_imageList, *it);
     }
 }
 
-
-void ImageDialog::slotImageSelected(QListViewItem* item) {
-    if (!item) {
+void ImageDialog::slotImageSelected(QListViewItem* item) 
+{
+    if (!item) 
+    {
         enableButtonOK(false);
         d->_preview->setText(i18n("No image selected"));
         d->_url=KURL();
@@ -278,7 +292,7 @@ void ImageDialog::slotImagesSelected()
     }
 
     enableButtonOK(true);
-    
+
     if (d->_urls.count() == 1)
     {
         d->_url = d->_urls.first();
@@ -294,8 +308,8 @@ void ImageDialog::slotImagesSelected()
     }
 }
 
-void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) {
-
+void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) 
+{
     d->_preview->setPixmap(pix);
 }
 
@@ -324,4 +338,3 @@ void ImageDialog::slotInitialShow()
 
 } // namespace KIPI
 
-#include "imagedialog.moc"

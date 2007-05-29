@@ -1,23 +1,26 @@
 /* ============================================================
- * File   : imagedialog.h
- * Authors: KIPI team developers (see AUTHORS files for details)
- *	    
- * Date   : 2004-05
+ *
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2004-05-01
  * Description : an image files selector dialog.
  *
- * Copyright 2004 by the KIPI team
+ * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
+ * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
+ * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
  *
  * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Library General
+ * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
+ * either version 2, or (at your option) any later version.
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
- *
+ * GNU General Public License for more details.
+ * 
  * ============================================================ */
 
 #ifndef IMAGEDIALOG_H
@@ -47,13 +50,12 @@ class KListView;
 namespace KIPI
 {
 
-
 class LIBKIPI_EXPORT ImageDialog : public KDialogBase 
 {
 Q_OBJECT
-    
+
     class Private;
-    
+
 public:
 
     ImageDialog(QWidget*, Interface*, bool singleSelection=false);
@@ -61,7 +63,7 @@ public:
 
     KURL       url() const;
     KURL::List urls() const;
-    
+
     static KURL getImageURL(QWidget*, Interface*);
     static KURL::List getImageURLs(QWidget*, Interface*);
 
@@ -75,6 +77,7 @@ private slots:
     void slotInitialShow();
 
 private:
+
     Private* d;
 };
 
