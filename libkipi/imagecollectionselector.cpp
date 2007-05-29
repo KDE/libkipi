@@ -1,23 +1,26 @@
 /* ============================================================
- * File   : imagecollectionselector.cpp
- * Authors: KIPI team developers (see AUTHORS files for details)
- *	    
- * Date   : 2004-07
- * Description :
  *
- * Copyright 2004 by the KIPI team
+ * This file is a part of kipi-plugins project
+ * http://www.kipi-plugins.org
+ *
+ * Date        : 2004-07-01
+ * Description : image collection selector
+ *
+ * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
+ * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
+ * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
  *
  * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU Library General
+ * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
+ * either version 2, or (at your option) any later version.
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Library General Public License for more details.
- *
+ * GNU General Public License for more details.
+ * 
  * ============================================================ */
 
 // Qt includes.
@@ -45,6 +48,7 @@
 // Local includes.
 
 #include "imagecollectionselector.h"
+#include "imagecollectionselector.moc"
 
 namespace KIPI 
 {
@@ -52,6 +56,7 @@ namespace KIPI
 class ImageCollectionItem : public QCheckListItem
 {
 public:
+
     ImageCollectionItem(ImageCollectionSelector* selector,
                         QListView * parent, ImageCollection collection)
     : QCheckListItem( parent, collection.name(), QCheckListItem::CheckBox),
@@ -67,14 +72,15 @@ protected:
         QCheckListItem::stateChange(val);
         _selector->emitSelectionChanged();
     }
-    
+
 private:
-    
+
     ImageCollection          _imageCollection;
     ImageCollectionSelector* _selector;
 };
 
-struct ImageCollectionSelector::Private {
+struct ImageCollectionSelector::Private 
+{
     Interface* _interface;
     KListView* _list;
     QLabel*    _thumbLabel;
@@ -82,14 +88,13 @@ struct ImageCollectionSelector::Private {
     QListViewItem* _itemToSelect;
 };
 
-
 ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* interface, const char* name)
                        : QWidget(parent, name)
 {
     d=new Private;
     d->_interface=interface;
     d->_itemToSelect = 0;
-    
+
     d->_list=new KListView(this);
     d->_list->setResizeMode( QListView::LastColumn );
     d->_list->addColumn("");
@@ -97,7 +102,7 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
 
     connect(d->_list, SIGNAL(selectionChanged(QListViewItem*)),
             SLOT(slotSelectionChanged(QListViewItem*)));
-    
+
     QHBoxLayout* mainLayout=new QHBoxLayout(this, 0, KDialog::spacingHint());
     mainLayout->addWidget(d->_list);
 
@@ -119,7 +124,7 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
 
     rightLayout->addItem(new QSpacerItem(10,20,QSizePolicy::Fixed,
                                          QSizePolicy::Expanding));
-    
+
     QVGroupBox* rightBox = new QVGroupBox(this);
     rightBox->setInsideMargin(KDialog::marginHint());
     rightBox->setInsideSpacing(KDialog::spacingHint());
@@ -136,18 +141,20 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
         d->_thumbLabel = 0;
     }
     d->_textLabel = new QLabel(rightBox);
-    
+
     fillList();
     QTimer::singleShot(0, this, SLOT(slotInitialShow()));
 }
 
 
-ImageCollectionSelector::~ImageCollectionSelector() {
+ImageCollectionSelector::~ImageCollectionSelector() 
+{
     delete d;
 }
 
 
-void ImageCollectionSelector::fillList() {
+void ImageCollectionSelector::fillList() 
+{
     QValueList<ImageCollection> collections = d->_interface->allAlbums();
     d->_list->clear();
     ImageCollection current = d->_interface->currentAlbum();
@@ -156,13 +163,14 @@ void ImageCollectionSelector::fillList() {
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
        them */
-    
+
     blockSignals(true);
     for( QValueList<ImageCollection>::Iterator it = collections.begin() ;
          it != collections.end() ; ++it )
     {
         ImageCollectionItem* item = new ImageCollectionItem( this, d->_list, *it);
-        if (!currentWasInList && *it == current) {
+        if (!currentWasInList && *it == current) 
+        {
             item->setOn(true);
             currentWasInList = true;
             if (!d->_itemToSelect)
@@ -170,7 +178,8 @@ void ImageCollectionSelector::fillList() {
         }
     }
 
-    if (!currentWasInList) {
+    if (!currentWasInList) 
+    {
         slotSelectAll();
         d->_itemToSelect = d->_list->firstChild();
     }
@@ -182,15 +191,18 @@ void ImageCollectionSelector::emitSelectionChanged()
     emit selectionChanged();
 }
 
-QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const {
+QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const 
+{
     QValueList<ImageCollection> list;
 
     QListViewItemIterator it( d->_list );
 
-    for (; it.current(); ++it) {
+    for (; it.current(); ++it) 
+    {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
 
-        if (item->isOn()) {
+        if (item->isOn()) 
+        {
             list << item->imageCollection();
         }
     }
@@ -198,31 +210,35 @@ QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() 
     return list;
 }
 
-void ImageCollectionSelector::slotSelectAll() {
+void ImageCollectionSelector::slotSelectAll() 
+{
     QListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
        them */
     blockSignals(true);
-    for (; it.current(); ++it) {
+    for (; it.current(); ++it) 
+    {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(true);
     }
     blockSignals(false);
-    
+
     emit selectionChanged();
 }
 
 
-void ImageCollectionSelector::slotInvertSelection() {
+void ImageCollectionSelector::slotInvertSelection() 
+{
     QListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
        them */
     blockSignals(true);
-    for (; it.current(); ++it) {
+    for (; it.current(); ++it) 
+    {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(!item->isOn());
     }
@@ -232,19 +248,21 @@ void ImageCollectionSelector::slotInvertSelection() {
 }
 
 
-void ImageCollectionSelector::slotSelectNone() {
+void ImageCollectionSelector::slotSelectNone() 
+{
     QListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
        them */
     blockSignals(true);
-    for (; it.current(); ++it) {
+    for (; it.current(); ++it) 
+    {
         ImageCollectionItem *item = static_cast<ImageCollectionItem*>( it.current() );
         item->setOn(false);
     }
     blockSignals(false);
-    
+
     emit selectionChanged();
 }
 
@@ -257,8 +275,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     if (!listItem)
         return;
 
-    ImageCollectionItem* imcollItem =
-        static_cast<ImageCollectionItem*>(listItem);
+    ImageCollectionItem* imcollItem = static_cast<ImageCollectionItem*>(listItem);
 
     if (d->_thumbLabel)
     {
@@ -270,9 +287,9 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
                      SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
         }
     }
-    
+
     // Layout the ImageCollection information nicely
-    
+
     QString cellBeg("<tr><td><nobr><font size=-1><i>");
     QString cellMid("</i></font></nobr></td><td><font size=-1>");
     QString cellEnd("</font></td></tr>");
@@ -285,7 +302,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
             cellEnd;
 
     // Optional features -------------------------------------------------------
-    
+
     // Album Comments
     if (d->_interface->hasFeature(AlbumsHaveComments))
     {
@@ -293,8 +310,8 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
         QString comments = imcollItem->imageCollection().comment();
 	if (!comments.isEmpty())
 	{
-	comments.truncate(20);
-	comments.append("...");
+            comments.truncate(20);
+            comments.append("...");
 	}
 	
         text += cellBeg + i18n("Comments:") +
@@ -319,11 +336,10 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
                 cellEnd;
     }
 
-    
     text += "</table>";
 
     d->_textLabel->setText(text);
-    
+
     emit selectionChanged();
 }
 
@@ -345,4 +361,3 @@ void ImageCollectionSelector::slotInitialShow()
 
 } // KIPI
 
-#include "imagecollectionselector.moc"
