@@ -100,8 +100,9 @@
 
 
 KIPI::Interface::Interface(QObject *parent, const char *name )
-    : QObject(parent, name)
+    : QObject(parent)
 {
+    setObjectName(name);
 }
 
 KIPI::Interface::~Interface()
@@ -111,7 +112,7 @@ KIPI::Interface::~Interface()
 /**
    Tells the host app that the following images has changed on disk
 */
-void KIPI::Interface::refreshImages( const KURL::List& )
+void KIPI::Interface::refreshImages( const KUrl::List& )
 {
 }
 
@@ -157,7 +158,7 @@ bool KIPI::Interface::hasFeature( const QString& feature )
   Returns true if the host application did accept the new image, otherwise err will be filled with
   an error description.
 */
-bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
+bool KIPI::Interface::addImage( const KUrl&, QString& /*err*/ )
 {
     kdWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
@@ -165,7 +166,7 @@ bool KIPI::Interface::addImage( const KURL&, QString& /*err*/ )
     return false;
 }
 
-void KIPI::Interface::delImage( const KURL& )
+void KIPI::Interface::delImage( const KUrl& )
 {
 }
 
@@ -219,5 +220,5 @@ QString KIPI::Interface::fileExtensions()
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
     QString imagesFileFilter = KDEImagetypes.join(" ");
-    return ( imagesFileFilter.lower() + " " + imagesFileFilter.upper() );
+    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
