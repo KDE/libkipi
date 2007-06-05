@@ -28,14 +28,14 @@
 
 // Qt includes.
 
-#include <qwidget.h>
-#include <qvaluelist.h>
-#include <qpixmap.h>
+#include <QWidget>
+#include <QList>
+#include <QPixmap>
 
 // KIPI includes.
 
-#include "libkipi/imagecollection.h"
-#include "libkipi/libkipi_export.h"
+#include "imagecollection.h"
+#include "libkipi_export.h"
 
 class QListViewItem;
 class KFileItem;
@@ -47,6 +47,7 @@ class Interface;
 
 class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget 
 {
+
 Q_OBJECT
 
     class Private;
@@ -56,7 +57,7 @@ public:
     ImageCollectionSelector(QWidget* parent, Interface*, const char* name=0);
     ~ImageCollectionSelector();
 
-    QValueList<ImageCollection> selectedImageCollections() const;
+    QList<ImageCollection> selectedImageCollections() const;
 
 signals:
 
@@ -80,7 +81,6 @@ private:
     friend class ImageCollectionItem;
 };
 
-} // KIPI
-
+} // namespace KIPI
 
 #endif /* IMAGECOLLECTIONSELECTOR_H */

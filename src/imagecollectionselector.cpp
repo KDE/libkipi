@@ -25,12 +25,12 @@
 
 // Qt includes.
 
-#include <qheader.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qvgroupbox.h>
-#include <qtimer.h>
+#include <QHeader>
+#include <QLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QVGroupbox>
+#include <QTimer>
 
 // KDE includes.
 
@@ -191,7 +191,7 @@ void ImageCollectionSelector::emitSelectionChanged()
     emit selectionChanged();
 }
 
-QValueList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const 
+QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const 
 {
     QValueList<ImageCollection> list;
 
@@ -359,5 +359,5 @@ void ImageCollectionSelector::slotInitialShow()
     emit selectionChanged();
 }
 
-} // KIPI
+} // namespace KIPI
 
