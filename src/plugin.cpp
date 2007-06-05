@@ -37,7 +37,10 @@
 
 #include "plugin.h"
 
-struct KIPI::Plugin::Private 
+namespace KIPI
+{
+
+struct Plugin::Private 
 {
     QMap<QWidget*, KActionCollection*> m_actionCollection;
     KInstance*                         m_instance;
@@ -45,19 +48,19 @@ struct KIPI::Plugin::Private
     QWidget*                           m_defaultWidget;
 };
 
-KIPI::Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
+Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
             : QObject( parent, name)
 {
     d=new Private;
     d->m_instance=instance;
 }
 
-KIPI::Plugin::~Plugin()
+Plugin::~Plugin()
 {
     delete d;
 }
 
-KActionCollection* KIPI::Plugin::actionCollection( QWidget* widget )
+KActionCollection* Plugin::actionCollection( QWidget* widget )
 {
     if ( widget == 0 )
         widget = d->m_defaultWidget;
@@ -68,12 +71,12 @@ KActionCollection* KIPI::Plugin::actionCollection( QWidget* widget )
     return d->m_actionCollection[widget];
 }
 
-void KIPI::Plugin::addAction( KAction* action )
+void Plugin::addAction( KAction* action )
 {
     d->m_actions[d->m_defaultWidget].append( action );
 }
 
-QList<KAction*> KIPI::Plugin::actions( QWidget* widget )
+QList<KAction*> Plugin::actions( QWidget* widget )
 {
     if ( widget == 0 )
         widget = d->m_defaultWidget;
@@ -81,10 +84,12 @@ QList<KAction*> KIPI::Plugin::actions( QWidget* widget )
     return d->m_actions[widget];
 }
 
-void KIPI::Plugin::setup( QWidget* widget )
+void Plugin::setup( QWidget* widget )
 {
     d->m_defaultWidget = widget;
     d->m_actions.insert( widget, QList<KAction*>() );
     QString name = QString( "action collection for %1" ).arg( widget->name() );
     d->m_actionCollection.insert( widget, new KActionCollection( widget, widget, name.latin1(), d->m_instance ) );
 }
+
+} // namespace KIPI

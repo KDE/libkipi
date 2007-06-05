@@ -46,6 +46,7 @@ class KInstance;
 /** @namespace KIPI */
 namespace KIPI
 {
+
     enum Category 
     {
        IMAGESPLUGIN = 0,
@@ -78,6 +79,7 @@ namespace KIPI
         struct Private;
         Private* d;
     };
-}
+
+} // namespace KIPI
 
 #endif  // KIPI_PLUGIN_H 

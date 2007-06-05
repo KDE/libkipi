@@ -37,6 +37,7 @@
 
 namespace KIPI
 {
+
     class Plugin;
     class Interface;
     class ConfigWidget;
@@ -118,6 +119,7 @@ namespace KIPI
         struct Private;
         Private* d;
     };
-}
+
+} // namespace KIPI
 
 #endif /* PLUGINLOADER_H */

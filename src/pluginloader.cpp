@@ -392,5 +392,5 @@ void ConfigWidget::apply()
     emit PluginLoader::instance()->replug();
 }
 
-} // namespace
+} // namespace KIPI
 

@@ -46,6 +46,7 @@
 /** @namespace KIPI */
 namespace KIPI
 {
+
     enum Features 
     {
         AlbumsHaveComments         = 1 << 0,
@@ -98,6 +99,7 @@ namespace KIPI
         friend class PluginLoader;
         bool hasFeature( const QString& feature );
     };
-}
+
+}  // namespace KIPI
 
 #endif /* KIPI_INTERFACE_H */

@@ -98,21 +98,23 @@
   to lauch a preview of the album.
 */
 
+namespace KIPI
+{
 
-KIPI::Interface::Interface(QObject *parent, const char *name )
-    : QObject(parent)
+Interface::Interface(QObject *parent, const char *name )
+         : QObject(parent)
 {
     setObjectName(name);
 }
 
-KIPI::Interface::~Interface()
+Interface::~Interface()
 {
 }
 
 /**
    Tells the host app that the following images has changed on disk
 */
-void KIPI::Interface::refreshImages( const KUrl::List& )
+void Interface::refreshImages( const KUrl::List& )
 {
 }
 
@@ -120,33 +122,33 @@ void KIPI::Interface::refreshImages( const KUrl::List& )
    Tells whether the host application under which the plugin currently executes a given feature.
    See KIPI::Features for details on the individual features.
 */
-bool KIPI::Interface::hasFeature( KIPI::Features feature )
+bool Interface::hasFeature( KIPI::Features feature )
 {
     return ( features() & feature ) != 0;
 }
 
-bool KIPI::Interface::hasFeature( const QString& feature )
+bool Interface::hasFeature( const QString& feature )
 {
     if ( feature == "AlbumsHaveComments" )
-        return hasFeature( KIPI::AlbumsHaveComments );
+        return hasFeature( AlbumsHaveComments );
     else if ( feature == "ImagesHasComments" )
-        return hasFeature( KIPI::ImagesHasComments );
+        return hasFeature( ImagesHasComments );
     else if ( feature == "ImagesHasTime" )
-        return hasFeature( KIPI::ImagesHasTime );
+        return hasFeature( ImagesHasTime );
     else if ( feature == "SupportsDateRanges" )
-        return hasFeature( KIPI::SupportsDateRanges );
+        return hasFeature( SupportsDateRanges );
     else if ( feature == "AcceptNewImages" )
-        return hasFeature( KIPI::AcceptNewImages );
+        return hasFeature( AcceptNewImages );
     else if ( feature == "ImageTitlesWritable" )
-        return hasFeature( KIPI::ImageTitlesWritable );
+        return hasFeature( ImageTitlesWritable );
     else if ( feature == "AlbumsHaveCategory" )
-        return hasFeature( KIPI::AlbumsHaveCategory );
+        return hasFeature( AlbumsHaveCategory );
     else if ( feature == "AlbumsHaveCreationDate" )
-        return hasFeature( KIPI::AlbumsHaveCreationDate );
+        return hasFeature( AlbumsHaveCreationDate );
     else if ( feature == "AlbumsUseFirstImagePreview" )
-        return hasFeature( KIPI::AlbumsUseFirstImagePreview );
+        return hasFeature( AlbumsUseFirstImagePreview );
     else if ( feature == "HostSupportsTags" )
-        return hasFeature( KIPI::HostSupportsTags );
+        return hasFeature( HostSupportsTags );
     else {
         kdWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
         return false;
@@ -158,7 +160,7 @@ bool KIPI::Interface::hasFeature( const QString& feature )
   Returns true if the host application did accept the new image, otherwise err will be filled with
   an error description.
 */
-bool KIPI::Interface::addImage( const KUrl&, QString& /*err*/ )
+bool Interface::addImage( const KUrl&, QString& /*err*/ )
 {
     kdWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
@@ -166,7 +168,7 @@ bool KIPI::Interface::addImage( const KUrl&, QString& /*err*/ )
     return false;
 }
 
-void KIPI::Interface::delImage( const KUrl& )
+void Interface::delImage( const KUrl& )
 {
 }
 
@@ -178,7 +180,7 @@ void KIPI::Interface::delImage( const KUrl& )
 KIPI::ImageCollection KIPI::Interface::currentAlbum()
 {
     // This implementation is just to be able to write documentation above.
-    return KIPI::ImageCollection();
+    return ImageCollection();
 }
 
 /**
@@ -186,7 +188,7 @@ KIPI::ImageCollection KIPI::Interface::currentAlbum()
    If there are no current selection, the returned
    KIPI::ImageCollection::isValid() will return false.
 */
-KIPI::ImageCollection KIPI::Interface::currentSelection()
+ImageCollection Interface::currentSelection()
 {
     // This implementation is just to be able to write documentation above.
     return KIPI::ImageCollection();
@@ -195,17 +197,17 @@ KIPI::ImageCollection KIPI::Interface::currentSelection()
 /**
    Returns a list of albums.
 */
-QList<KIPI::ImageCollection> KIPI::Interface::allAlbums()
+QList<ImageCollection> Interface::allAlbums()
 {
     // This implementation is just to be able to write documentation above.
-    return QList<KIPI::ImageCollection>();
+    return QList<ImageCollection>();
 }
 
 
 /**
    Return a bitwise or of the KIPI::Features that thus application support.
 */
-int KIPI::Interface::features() const
+int Interface::features() const
 {
     // This implementation is just to be able to write documentation above.
     return 0;
@@ -216,9 +218,11 @@ int KIPI::Interface::features() const
    to sort the files list before a treatment. The default implementation return,
    the supported images formats by KDE.
 */
-QString KIPI::Interface::fileExtensions()
+QString Interface::fileExtensions()
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
     QString imagesFileFilter = KDEImagetypes.join(" ");
     return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
+
+} // namespace KIPI
