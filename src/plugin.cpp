@@ -40,9 +40,9 @@
 struct KIPI::Plugin::Private 
 {
     QMap<QWidget*, KActionCollection*> m_actionCollection;
-    KInstance* m_instance;
-    QMap<QWidget*, KActionPtrList> m_actions;
-    QWidget* m_defaultWidget;
+    KInstance*                         m_instance;
+    QMap<QWidget*, QList<KAction*>>    m_actions;
+    QWidget*                           m_defaultWidget;
 };
 
 KIPI::Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
@@ -84,7 +84,7 @@ QList<KAction*> KIPI::Plugin::actions( QWidget* widget )
 void KIPI::Plugin::setup( QWidget* widget )
 {
     d->m_defaultWidget = widget;
-    d->m_actions.insert( widget, KActionPtrList() );
+    d->m_actions.insert( widget, QList<KAction*>() );
     QString name = QString( "action collection for %1" ).arg( widget->name() );
     d->m_actionCollection.insert( widget, new KActionCollection( widget, widget, name.latin1(), d->m_instance ) );
 }

@@ -40,6 +40,7 @@
 #include "interface.h"
 #include "libkipi_export.h"
 
+class KActionCollection;
 class KInstance;
 
 /** @namespace KIPI */
