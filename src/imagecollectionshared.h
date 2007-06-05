@@ -54,10 +54,10 @@ namespace KIPI
         virtual QString comment();
         virtual QString category();
         virtual QDate date();
-        virtual KURL::List images() = 0;
-        virtual KURL path();
-        virtual KURL uploadPath();
-        virtual KURL uploadRoot();
+        virtual KUrl::List images() = 0;
+        virtual KUrl path();
+        virtual KUrl uploadPath();
+        virtual KUrl uploadRoot();
         virtual QString uploadRootName();
         virtual bool isDirectory();
         virtual bool operator==(ImageCollectionShared&);
