@@ -3,10 +3,10 @@
  * This file is a part of kipi-plugins project
  * http://www.kipi-plugins.org
  *
- * Date        : 2005-01-01
- * Description : libkipi export.
+ * Date        : 2005-09-15
+ * Description : KIPI library interface for KDE
  *
- * Copyright (C) 2005 by Laurent Montel <montel@kde.org>
+ * Copyright (C) 2005-2007 by Laurent Montel <montel@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -17,22 +17,28 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef _LIBKIPI_EXPORT_H
 #define _LIBKIPI_EXPORT_H
 
-#undef KDEMACROS_USABLE
-
-#ifdef KDEMACROS_USABLE
 #include <kdemacros.h>
+
+#ifdef Q_WS_WIN
+
+#ifndef LIBKIPI_EXPORT
+# ifdef MAKE_KIPI_LIB
+#  define LIBKIPI_EXPORT KDE_EXPORT
+# else
+#  define LIBKIPI_EXPORT KDE_IMPORT
+# endif
 #endif
 
-#ifdef KDE_EXPORT
+#else // not windows
+
 #define LIBKIPI_EXPORT KDE_EXPORT
-#else
-#define LIBKIPI_EXPORT
+
 #endif
 
 #endif /* _LIBKIPI_EXPORT_H */
