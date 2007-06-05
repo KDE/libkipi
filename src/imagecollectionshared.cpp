@@ -52,32 +52,32 @@ void KIPI::ImageCollectionShared::removeRef()
     }
 }
 
-KURL KIPI::ImageCollectionShared::path()
+KUrl KIPI::ImageCollectionShared::path()
 {
     kdWarning(51000) << "This method should only be invoked if this imagecollection is a directory.\n"
                      <<  "See KIPI::ImageCollectionShared::isDirectory()"
                      << endl;
-    return KURL();
+    return KUrl();
 }
 
-KURL KIPI::ImageCollectionShared::uploadPath()
+KUrl KIPI::ImageCollectionShared::uploadPath()
 {
     kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
             "have been overridden in the host application.\n" << endl;
-    return KURL();
+    return KUrl();
 }
 
-KURL KIPI::ImageCollectionShared::uploadRoot()
+KUrl KIPI::ImageCollectionShared::uploadRoot()
 {
-    KURL path = uploadPath();
+    KUrl path = uploadPath();
     if ( path.isValid() ) 
     {
         path.setPath("/");
         return path;
     }
     else
-        return KURL( "file:/" );
+        return KUrl( "file:/" );
 }
 
 QString KIPI::ImageCollectionShared::uploadRootName()
@@ -95,7 +95,7 @@ QString KIPI::ImageCollectionShared::comment()
     kdWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
         "have been overridden in the host application.\n" << endl;
-    return QString::null;
+    return QString();
 }
 
 QString KIPI::ImageCollectionShared::category()
@@ -103,7 +103,7 @@ QString KIPI::ImageCollectionShared::category()
     kdWarning(51000) << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
         "have been overridden in the host application.\n" << endl;
-    return QString::null;
+    return QString();
 }
 
 QDate KIPI::ImageCollectionShared::date()
