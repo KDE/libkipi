@@ -62,7 +62,7 @@ QString ImageCollection::name() const
     else 
     {
         printNullError();
-        return QString::null;
+        return QString();
     }
 }
 
@@ -99,14 +99,14 @@ QDate ImageCollection::date() const
 /**
    PENDING(blackie) document
 */
-KURL::List ImageCollection::images() const
+KUrl::List ImageCollection::images() const
 {
     if ( _data )
         return _data->images();
     else 
     {
         printNullError();
-        return KURL::List();
+        return KUrl::List();
     }
 }
 
@@ -165,14 +165,14 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
    of the image collection (in case all images has a common root), or
    even an empty URL.
 */
-KURL ImageCollection::path() const
+KUrl ImageCollection::path() const
 {
     if ( _data )
         return _data->path();
     else 
     {
         printNullError();
-        return KURL();
+        return KUrl();
     }
 }
 
@@ -188,14 +188,14 @@ KURL ImageCollection::path() const
 
   <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
-KURL ImageCollection::uploadPath() const
+KUrl ImageCollection::uploadPath() const
 {
     if ( _data )
         return _data->uploadPath();
     else 
     {
         printNullError();
-        return KURL();
+        return KUrl();
     }
 }
 
@@ -214,14 +214,14 @@ KURL ImageCollection::uploadPath() const
 
   <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
-KURL ImageCollection::uploadRoot() const
+KUrl ImageCollection::uploadRoot() const
 {
     if ( _data )
         return _data->uploadRoot();
     else 
     {
         printNullError();
-        return KURL();
+        return KUrl();
     }
 }
 
@@ -237,7 +237,7 @@ QString ImageCollection::uploadRootName() const
     else 
     {
         printNullError();
-        return QString::null;
+        return QString();
     }
 }
 
