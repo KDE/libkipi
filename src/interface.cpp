@@ -194,10 +194,10 @@ KIPI::ImageCollection KIPI::Interface::currentSelection()
 /**
    Returns a list of albums.
 */
-QValueList<KIPI::ImageCollection> KIPI::Interface::allAlbums()
+QList<KIPI::ImageCollection> KIPI::Interface::allAlbums()
 {
     // This implementation is just to be able to write documentation above.
-    return QValueList<KIPI::ImageCollection>();
+    return QList<KIPI::ImageCollection>();
 }
 
 

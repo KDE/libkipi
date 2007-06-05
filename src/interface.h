@@ -29,8 +29,9 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qobject.h>
+#include <QString>
+#include <QObject>
+#include <QList>
 
 // KDE includes.
 
@@ -38,9 +39,9 @@
 
 // Local includes.
 
-#include "libkipi/imagecollection.h"
-#include "libkipi/imageinfo.h"
-#include "libkipi/libkipi_export.h"
+#include "imagecollection.h"
+#include "imageinfo.h"
+#include "libkipi_export.h"
 
 /** @namespace KIPI */
 namespace KIPI
@@ -71,13 +72,13 @@ namespace KIPI
 
         virtual ImageCollection currentAlbum() = 0;
         virtual ImageCollection currentSelection() = 0;
-        virtual QValueList<ImageCollection> allAlbums() = 0;
+        virtual QList<ImageCollection> allAlbums() = 0;
 
-        virtual ImageInfo info( const KURL& ) = 0;
-        virtual bool addImage( const KURL&, QString& err );
-        virtual void delImage( const KURL& );
+        virtual ImageInfo info( const KUrl& ) = 0;
+        virtual bool addImage( const KUrl&, QString& err );
+        virtual void delImage( const KUrl& );
 
-        virtual void refreshImages( const KURL::List& );
+        virtual void refreshImages( const KUrl::List& );
 
         virtual QString fileExtensions();
 

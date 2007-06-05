@@ -30,8 +30,8 @@
 
 // Qt includes
 
-#include <qstring.h>
-#include <qdatetime.h>
+#include <QString>
+#include <QDateTime>
 
 // KDE includes.
 
@@ -39,7 +39,7 @@
 
 // Local includes.
 
-#include "libkipi/libkipi_export.h"
+#include "libkipi_export.h"
 
 /** @namespace KIPI */
 namespace KIPI
@@ -51,15 +51,17 @@ namespace KIPI
       */
     class LIBKIPI_EXPORT ImageCollection
     {
+
     public:
+
         QString name() const;
         QString comment() const;
         QString category() const;
         QDate date() const;
-        KURL::List images() const;
-        KURL path() const;
-        KURL uploadPath() const;
-        KURL uploadRoot() const;
+        KUrl::List images() const;
+        KUrl path() const;
+        KUrl uploadPath() const;
+        KUrl uploadRoot() const;
         QString uploadRootName() const;
         bool isDirectory() const;
         bool isValid() const;
@@ -72,7 +74,9 @@ namespace KIPI
         ImageCollection& operator=( const ImageCollection& );
 
         bool operator==(const ImageCollection&) const;
+
     private:
+
         mutable KIPI::ImageCollectionShared* _data;
         void printNullError() const;
     };

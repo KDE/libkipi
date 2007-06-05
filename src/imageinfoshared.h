@@ -28,10 +28,10 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qmap.h>
-#include <qdatetime.h>
-#include <qvariant.h>
+#include <QString>
+#include <QMap>
+#include <QDateTime>
+#include <QVariant>
 
 // KDE includes.
 
@@ -39,8 +39,8 @@
 
 // Local includes.
 
-#include "libkipi/imageinfo.h"
-#include "libkipi/libkipi_export.h"
+#include "imageinfo.h"
+#include "libkipi_export.h"
 
 namespace KIPI
 {
@@ -50,7 +50,7 @@ namespace KIPI
     {
     public:
 
-        ImageInfoShared( KIPI::Interface* interface, const KURL& url );
+        ImageInfoShared( KIPI::Interface* interface, const KUrl& url );
         virtual ~ImageInfoShared() {}
         virtual QString title() {return QString::null;}
         virtual void setTitle( const QString& );
@@ -62,7 +62,7 @@ namespace KIPI
         virtual void clearAttributes() = 0;
         virtual void addAttributes( const QMap<QString,QVariant>& ) = 0;
 
-        virtual KURL path();
+        virtual KUrl path();
         virtual QDateTime time( KIPI::TimeSpec spec );
         virtual void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
 
@@ -79,7 +79,7 @@ namespace KIPI
 
     protected:
 
-        KURL _url;
+        KUrl _url;
 
     private:
 
@@ -88,7 +88,10 @@ namespace KIPI
         friend class ImageInfo;
         void addRef();
         void removeRef();
-        int _count;
+	
+    private:
+
+        int        _count;
         Interface* _interface;
     };
 }

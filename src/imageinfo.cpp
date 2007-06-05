@@ -51,7 +51,7 @@ QString KIPI::ImageInfo::title() const
 /**
    PENDING(blackie) document
 */
-KURL KIPI::ImageInfo::path() const
+KUrl KIPI::ImageInfo::path() const
 {
     return _data->path();
 }

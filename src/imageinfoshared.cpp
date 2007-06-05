@@ -25,7 +25,7 @@
 
 // Qt includes.
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 
 // KDE includes.
   
@@ -36,12 +36,12 @@
 #include "imageinfoshared.h"
 #include "interface.h"
 
-KIPI::ImageInfoShared::ImageInfoShared( Interface* interface, const KURL& url )
+KIPI::ImageInfoShared::ImageInfoShared( Interface* interface, const KUrl& url )
     : _url( url ), _count(1), _interface( interface )
 {
 }
 
-KURL KIPI::ImageInfoShared::path()
+KUrl KIPI::ImageInfoShared::path()
 {
     return _url;
 }

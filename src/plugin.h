@@ -28,7 +28,8 @@
 
 // Qt includes.
 
-#include <qobject.h>
+#include <QObject>
+#include <QList>
 
 // KDE includes.
 
@@ -36,8 +37,8 @@
 
 // Local includes.
 
-#include "libkipi/interface.h"
-#include "libkipi/libkipi_export.h"
+#include "interface.h"
+#include "libkipi_export.h"
 
 class KInstance;
 
@@ -63,7 +64,7 @@ namespace KIPI
         virtual ~Plugin();
 
         virtual void setup( QWidget* widget ) = 0;
-        KActionPtrList actions( QWidget* parent = 0 );
+        QList<KAction*> actions( QWidget* parent = 0 );
         KActionCollection* actionCollection( QWidget* parent = 0 );
         virtual Category category( KAction* action ) const = 0;
 

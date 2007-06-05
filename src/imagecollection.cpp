@@ -42,7 +42,8 @@ QString KIPI::ImageCollection::comment() const
 {
     if ( _data )
         return _data->comment();
-    else {
+    else 
+    {
         printNullError();
         return QString::null;
     }
@@ -55,7 +56,8 @@ QString KIPI::ImageCollection::name() const
 {
     if ( _data )
         return _data->name();
-    else {
+    else 
+    {
         printNullError();
         return QString::null;
     }
@@ -69,7 +71,8 @@ QString KIPI::ImageCollection::category() const
 {
     if ( _data )
         return _data->category();
-    else {
+    else 
+    {
         printNullError();
         return QString::null;
     }
@@ -83,7 +86,8 @@ QDate KIPI::ImageCollection::date() const
 {
     if ( _data )
         return _data->date();
-    else {
+    else 
+    {
         printNullError();
         return QDate();
     }
@@ -96,7 +100,8 @@ KURL::List KIPI::ImageCollection::images() const
 {
     if ( _data )
         return _data->images();
-    else {
+    else 
+    {
         printNullError();
         return KURL::List();
     }
@@ -115,7 +120,8 @@ KIPI::ImageCollection::~ImageCollection()
 
 KIPI::ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
-    if ( rhs._data ) {
+    if ( rhs._data ) 
+    {
         _data = rhs._data;
         _data->addRef();
     }
@@ -135,11 +141,13 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
 
     if ( _data )
         _data->removeRef();
-    if ( !rhs._data ) {
+    if ( !rhs._data ) 
+    {
         printNullError();
         _data = 0;
     }
-    else {
+    else 
+    {
         _data = rhs._data;
         _data->addRef();
     }
@@ -158,7 +166,8 @@ KURL KIPI::ImageCollection::path() const
 {
     if ( _data )
         return _data->path();
-    else {
+    else 
+    {
         printNullError();
         return KURL();
     }
@@ -180,7 +189,8 @@ KURL KIPI::ImageCollection::uploadPath() const
 {
     if ( _data )
         return _data->uploadPath();
-    else {
+    else 
+    {
         printNullError();
         return KURL();
     }
@@ -205,7 +215,8 @@ KURL KIPI::ImageCollection::uploadRoot() const
 {
     if ( _data )
         return _data->uploadRoot();
-    else {
+    else 
+    {
         printNullError();
         return KURL();
     }
@@ -220,7 +231,8 @@ QString KIPI::ImageCollection::uploadRootName() const
 {
     if ( _data )
         return _data->uploadRootName();
-    else {
+    else 
+    {
         printNullError();
         return QString::null;
     }
@@ -235,7 +247,8 @@ bool KIPI::ImageCollection::isDirectory() const
 {
     if ( _data )
         return _data->isDirectory();
-    else {
+    else 
+    {
         printNullError();
         return false;
     }

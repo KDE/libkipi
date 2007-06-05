@@ -1,5 +1,5 @@
 
-set(kipi_LIB_SRCS interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp imagecollection.cpp imageinfoshared.cpp imagecollectionshared.cpp imagedialog.cpp uploadwidget.cpp batchprogressdialog.cpp imagecollectionselector.cpp)
+set(kipi_LIB_SRCS pluginloader.cpp interface.cpp plugin.cpp KDStream.cpp imageinfo.cpp imagecollection.cpp imageinfoshared.cpp imagecollectionshared.cpp imagedialog.cpp uploadwidget.cpp batchprogressdialog.cpp imagecollectionselector.cpp)
 
 kde4_automoc(${kipi_LIB_SRCS})
 

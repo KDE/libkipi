@@ -30,10 +30,10 @@
 
 // Qt includes.
 
-#include <qstring.h>
-#include <qdatetime.h>
-#include <qmap.h>
-#include <qvariant.h>
+#include <QString>
+#include <QDateTime>
+#include <QMap>
+#include <QVariant>
 
 // KDE includes.
 
@@ -41,7 +41,7 @@
 
 // Local includes.
 
-#include "libkipi/libkipi_export.h"
+#include "libkipi_export.h"
 
 namespace KIPI
 {
@@ -66,7 +66,7 @@ namespace KIPI
         void clearAttributes();
         void addAttributes( const QMap<QString,QVariant>& );
 
-        KURL path() const;
+        KUrl path() const;
         QDateTime time( TimeSpec spec = FromInfo ) const;
         void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
         bool isTimeExact() const;

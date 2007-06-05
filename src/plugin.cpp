@@ -25,7 +25,7 @@
 
 // Qt includes.
  
-#include <qwidget.h>
+#include <QWidget>
 
 // KDE includes.
 
@@ -73,7 +73,7 @@ void KIPI::Plugin::addAction( KAction* action )
     d->m_actions[d->m_defaultWidget].append( action );
 }
 
-KActionPtrList KIPI::Plugin::actions( QWidget* widget )
+QList<KAction*> KIPI::Plugin::actions( QWidget* widget )
 {
     if ( widget == 0 )
         widget = d->m_defaultWidget;
