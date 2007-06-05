@@ -3,8 +3,6 @@ project(libkipi)
 subdirs(pics)
 subdirs(src)
 
-include_directories(${KDE4_INCLUDES} ${QT4_INCLUDES})
-
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
