@@ -1,6 +1,6 @@
 include_directories(${KDE4_INCLUDES} ${QT4_INCLUDES})
 
-set(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp imagecollectionshared.cpp imageinfoshared.cpp imageinfo.cpp plugin.cpp KDStream.cpp imagedialog.cpp uploadwidget.cpp batchprogressdialog.cpp imagecollectionselector.cpp)
+set(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp imagecollectionshared.cpp imageinfoshared.cpp plugin.cpp imageinfo.cpp  KDStream.cpp imagedialog.cpp uploadwidget.cpp batchprogressdialog.cpp imagecollectionselector.cpp)
 
 kde4_automoc(${kipi_LIB_SRCS})
 

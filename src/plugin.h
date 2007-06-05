@@ -31,15 +31,12 @@
 #include <QObject>
 #include <QList>
 
-// KDE includes.
-
-#include <kaction.h>
-
 // Local includes.
 
 #include "interface.h"
 #include "libkipi_export.h"
 
+class KAction;
 class KActionCollection;
 class KInstance;
 

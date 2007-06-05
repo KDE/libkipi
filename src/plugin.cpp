@@ -29,9 +29,9 @@
 
 // KDE includes.
 
+#include <kdebug.h>
 #include <kaction.h>
 #include <kinstance.h>
-#include <kdebug.h>
 
 // Local includes.
 
