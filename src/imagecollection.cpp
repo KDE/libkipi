@@ -33,12 +33,15 @@
 #include "imagecollection.h"
 #include "imagecollectionshared.h"
 
+namespace KIPI
+{
+
 /**
    @file imagecollection.cpp
    returns the comment for the collection of images or QString::null if that doesn't make any sense.
    A comment makes sense for an album, but not for a KIPI::Interface::currentSelection().
 */
-QString KIPI::ImageCollection::comment() const
+QString ImageCollection::comment() const
 {
     if ( _data )
         return _data->comment();
@@ -52,7 +55,7 @@ QString KIPI::ImageCollection::comment() const
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageCollection::name() const
+QString ImageCollection::name() const
 {
     if ( _data )
         return _data->name();
@@ -67,7 +70,7 @@ QString KIPI::ImageCollection::name() const
    Return the category of the image collection. For example in Digikam, 
    a category is a sorting class like 'travels', 'friends', 'monuments', etc.
 */
-QString KIPI::ImageCollection::category() const
+QString ImageCollection::category() const
 {
     if ( _data )
         return _data->category();
@@ -82,7 +85,7 @@ QString KIPI::ImageCollection::category() const
    Return the Creation date of the image collection. The default implementation 
    return a null date.
 */
-QDate KIPI::ImageCollection::date() const
+QDate ImageCollection::date() const
 {
     if ( _data )
         return _data->date();
@@ -96,7 +99,7 @@ QDate KIPI::ImageCollection::date() const
 /**
    PENDING(blackie) document
 */
-KURL::List KIPI::ImageCollection::images() const
+KURL::List ImageCollection::images() const
 {
     if ( _data )
         return _data->images();
@@ -107,18 +110,18 @@ KURL::List KIPI::ImageCollection::images() const
     }
 }
 
-KIPI::ImageCollection::ImageCollection( ImageCollectionShared* data )
-    : _data( data )
+ImageCollection::ImageCollection( ImageCollectionShared* data )
+               : _data( data )
 {
 }
 
-KIPI::ImageCollection::~ImageCollection()
+ImageCollection::~ImageCollection()
 {
     if ( _data )
         _data->removeRef();
 }
 
-KIPI::ImageCollection::ImageCollection( const ImageCollection& rhs )
+ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
     if ( rhs._data ) 
     {
@@ -129,12 +132,12 @@ KIPI::ImageCollection::ImageCollection( const ImageCollection& rhs )
         _data = 0;
 }
 
-KIPI::ImageCollection::ImageCollection()
+ImageCollection::ImageCollection()
 {
     _data = 0;
 }
 
-KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollection& rhs )
+ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 {
     if ( rhs._data == _data )
         return *this;
@@ -162,7 +165,7 @@ KIPI::ImageCollection& KIPI::ImageCollection::operator=( const KIPI::ImageCollec
    of the image collection (in case all images has a common root), or
    even an empty URL.
 */
-KURL KIPI::ImageCollection::path() const
+KURL ImageCollection::path() const
 {
     if ( _data )
         return _data->path();
@@ -185,7 +188,7 @@ KURL KIPI::ImageCollection::path() const
 
   <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
-KURL KIPI::ImageCollection::uploadPath() const
+KURL ImageCollection::uploadPath() const
 {
     if ( _data )
         return _data->uploadPath();
@@ -211,7 +214,7 @@ KURL KIPI::ImageCollection::uploadPath() const
 
   <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
 */
-KURL KIPI::ImageCollection::uploadRoot() const
+KURL ImageCollection::uploadRoot() const
 {
     if ( _data )
         return _data->uploadRoot();
@@ -227,7 +230,7 @@ KURL KIPI::ImageCollection::uploadRoot() const
   the KIPI::UploadWidget. This name can be different for each host 
   app (like "Images" for Kimdaba or "My Albums" for Digikam).
 */
-QString KIPI::ImageCollection::uploadRootName() const
+QString ImageCollection::uploadRootName() const
 {
     if ( _data )
         return _data->uploadRootName();
@@ -238,12 +241,12 @@ QString KIPI::ImageCollection::uploadRootName() const
     }
 }
 
-/*
+/*!
   Returns whether an imagecollection is a physical folder on the filesystem
   or not. Its important to check this, if your plugin needs to do folder
   based operations for an imagecollection
 */
-bool KIPI::ImageCollection::isDirectory() const
+bool ImageCollection::isDirectory() const
 {
     if ( _data )
         return _data->isDirectory();
@@ -254,12 +257,12 @@ bool KIPI::ImageCollection::isDirectory() const
     }
 }
 
-bool KIPI::ImageCollection::isValid() const
+bool ImageCollection::isValid() const
 {
     return (_data != 0);
 }
 
-void KIPI::ImageCollection::printNullError() const
+void ImageCollection::printNullError() const
 {
     kdWarning( 51000 ) << "Image collection is invalid - this might be the case if you asked for an album, " << endl
                        << "and not album existed. You should check using .isValid() first." << endl
@@ -268,7 +271,7 @@ void KIPI::ImageCollection::printNullError() const
 }
 
 
-bool KIPI::ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
+bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
     if (!_data || !(ic._data))
     {
         printNullError();
@@ -276,3 +279,5 @@ bool KIPI::ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
     }
     return *_data == *(ic._data);
 }
+
+} // namespace KIPI

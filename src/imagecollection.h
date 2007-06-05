@@ -44,6 +44,7 @@
 /** @namespace KIPI */
 namespace KIPI
 {
+
     class ImageCollectionShared;
 
     /** @class ImageCollection 
@@ -77,10 +78,11 @@ namespace KIPI
 
     private:
 
-        mutable KIPI::ImageCollectionShared* _data;
+        mutable ImageCollectionShared* _data;
         void printNullError() const;
     };
-}
+
+} // namespace KIPI
 
 #endif /* IMAGECOLLECTION_H */
 
