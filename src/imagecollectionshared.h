@@ -28,8 +28,8 @@
 
 // Qt Includes.
 
-#include <qstring.h>
-#include <qdatetime.h>
+#include <QString>
+#include <QDateTime>
 
 // KDE includes.
 
@@ -38,13 +38,16 @@
 // Local includes.
 
 #include "imagecollection.h"
-#include "libkipi/libkipi_export.h"
+#include "libkipi_export.h"
 
 namespace KIPI
 {
+
     class LIBKIPI_EXPORT ImageCollectionShared
     {
+
     public:
+
         ImageCollectionShared();
         virtual ~ImageCollectionShared() {}
         virtual QString name() = 0;
@@ -60,12 +63,14 @@ namespace KIPI
         virtual bool operator==(ImageCollectionShared&);
 
     private:
+
         friend class ImageCollection;
         void addRef();
         void removeRef();
         int _count;
     };
-}
+
+} // namespace KIPI
 
 #endif /* IMAGECOLLECTIONSHARED_H */
 

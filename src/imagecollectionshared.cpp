@@ -32,7 +32,6 @@
 
 #include "imagecollectionshared.h"
 
-
 KIPI::ImageCollectionShared::ImageCollectionShared()
      : _count(1)
 {
