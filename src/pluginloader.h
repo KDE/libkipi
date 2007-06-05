@@ -26,8 +26,9 @@
 
 // Qt includes.
 
-#include <qwidget.h>
-#include <qscrollview.h>
+#include <QList>
+#include <QWidget>
+#include <QAbstractScrollArea>
 
 // Local includes.
 
@@ -40,7 +41,7 @@ namespace KIPI
     class Interface;
     class ConfigWidget;
 
-    class LIBKIPI_EXPORT PluginLoader :public QObject
+    class LIBKIPI_EXPORT PluginLoader : public QObject
     {
         Q_OBJECT
 
@@ -78,7 +79,7 @@ namespace KIPI
         static PluginLoader* instance();
         ConfigWidget* configWidget( QWidget* parent );
 
-        typedef QValueList<Info*> PluginList;
+        typedef QList<Info*> PluginList;
 
         const PluginList& pluginList();
 
@@ -99,7 +100,7 @@ namespace KIPI
         Private* d;
     };
 
-    class LIBKIPI_EXPORT ConfigWidget :public QScrollView
+    class LIBKIPI_EXPORT ConfigWidget : public QAbstractScrollArea
     {
         Q_OBJECT
 

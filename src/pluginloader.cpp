@@ -25,17 +25,21 @@
 
 // Qt include.
 
-#include <qstringlist.h>
-#include <qcheckbox.h>
-#include <qlayout.h>
+#include <QStringList>
+#include <QCheckBox>
+#include <QLayout> 
+#include <QList> 
 
 // KDE includes.
 
-#include <ktrader.h>
+#include <kservicetypetrader.h>
 #include <kparts/componentfactory.h>
 #include <kdebug.h>
 #include <kdialog.h>
+#include <ksharedconfig.h>
 #include <kconfig.h>
+#include <kglobal.h>
+#include <klibloader.h>
 
 // Local includes.
 
@@ -204,11 +208,11 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
     d->m_interface = interface;
     d->m_ignores = ignores;
 
-    KTrader::OfferList offers = KTrader::self()->query("KIPI/Plugin");
-    KConfig* config = KGlobal::config();
+    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
+    KSharedConfigPtr config = KGlobal::config();
     config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
 
-    KTrader::OfferList::ConstIterator iter;
+    KService::List::ConstIterator iter;
     for(iter = offers.begin(); iter != offers.end(); ++iter) 
     {
         KService::Ptr service = *iter;
@@ -270,13 +274,13 @@ void PluginLoader::loadPlugin( Info* info )
     if ( info->plugin() == 0 && info->shouldLoad() ) 
     {
         Plugin *plugin = 0;
-        int error;
+        int error=0;
         plugin =  KParts::ComponentFactory
-                  ::createInstanceFromLibrary<Plugin>(info->library().local8Bit().data(),
-                                                      d->m_interface, 0, QStringList(), &error);
+                  ::createPartInstanceFromLibrary<Plugin>(info->library().toLocal8Bit().data(), 0,
+                                                          d->m_interface, QStringList(), &error);
 
         if (plugin)
-            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->name() << endl;
+            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
         else
         {
             kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
@@ -284,7 +288,7 @@ void PluginLoader::loadPlugin( Info* info )
                                << " (" << info->library() << ")"
                                << " with error number "
                                << error << endl;
-            if (error == KParts::ComponentFactory::ErrNoLibrary)
+            if (error == KLibLoader::ErrNoLibrary)
                 kdWarning( 51001 ) << "KLibLoader says: "
                                    << KLibLoader::self()->lastErrorMessage() << endl;
         }
@@ -315,8 +319,7 @@ ConfigWidget* PluginLoader::configWidget( QWidget* parent )
     return new ConfigWidget( parent );
 }
 
-
-class PluginCheckBox :public QCheckBox
+class PluginCheckBox : public QCheckBox
 {
 public:
 
@@ -330,18 +333,19 @@ public:
 
 struct ConfigWidget::Private
 {
-    QValueList< PluginCheckBox* > _boxes;
+    QList< PluginCheckBox* > _boxes;
 };
 
-ConfigWidget::ConfigWidget( QWidget* parent )
-            : QScrollView( parent, "KIPI::PluginLoader::ConfigWidget" )
+ConfigWidget::ConfigWidget(QWidget* parent)
+            : QAbstractScrollArea(parent)
 {
     d=new Private;
     QWidget* top = new QWidget( viewport() );
-    addChild( top );
-    setResizePolicy( AutoOneFit );
+    setViewport( top );
 
-    QVBoxLayout* lay = new QVBoxLayout( top, KDialog::marginHint(), KDialog::spacingHint() );
+    QVBoxLayout* lay = new QVBoxLayout(top);
+    lay->setMargin(KDialog::marginHint());
+    lay->setSpacing(KDialog::spacingHint());
 
     PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
     for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) 
@@ -361,11 +365,11 @@ ConfigWidget::~ConfigWidget()
 
 void ConfigWidget::apply()
 {
-    KConfig* config = KGlobal::config();
+    KSharedConfigPtr config = KGlobal::config();
     config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
     bool changes = false;
 
-    for( QValueList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) 
+    for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) 
     {
         bool orig = (*it)->info->shouldLoad();
         bool load = (*it)->isChecked();
