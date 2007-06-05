@@ -115,12 +115,6 @@ ImageCollection::ImageCollection( ImageCollectionShared* data )
 {
 }
 
-ImageCollection::~ImageCollection()
-{
-    if ( _data )
-        _data->removeRef();
-}
-
 ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
     if ( rhs._data ) 
@@ -135,6 +129,12 @@ ImageCollection::ImageCollection( const ImageCollection& rhs )
 ImageCollection::ImageCollection()
 {
     _data = 0;
+}
+
+ImageCollection::~ImageCollection()
+{
+    if ( _data )
+        _data->removeRef();
 }
 
 ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
@@ -270,8 +270,8 @@ void ImageCollection::printNullError() const
                        << "should do that." << endl;
 }
 
-
-bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const {
+bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const 
+{
     if (!_data || !(ic._data))
     {
         printNullError();

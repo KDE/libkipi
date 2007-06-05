@@ -32,17 +32,20 @@
 
 #include "imagecollectionshared.h"
 
-KIPI::ImageCollectionShared::ImageCollectionShared()
-     : _count(1)
+namespace KIPI
+{
+
+ImageCollectionShared::ImageCollectionShared()
+                     : _count(1)
 {
 }
 
-void KIPI::ImageCollectionShared::addRef()
+void ImageCollectionShared::addRef()
 {
     _count++;
 }
 
-void KIPI::ImageCollectionShared::removeRef()
+void ImageCollectionShared::removeRef()
 {
     _count--;
     if ( _count == 0 ) 
@@ -52,7 +55,7 @@ void KIPI::ImageCollectionShared::removeRef()
     }
 }
 
-KUrl KIPI::ImageCollectionShared::path()
+KUrl ImageCollectionShared::path()
 {
     kdWarning(51000) << "This method should only be invoked if this imagecollection is a directory.\n"
                      <<  "See KIPI::ImageCollectionShared::isDirectory()"
@@ -60,7 +63,7 @@ KUrl KIPI::ImageCollectionShared::path()
     return KUrl();
 }
 
-KUrl KIPI::ImageCollectionShared::uploadPath()
+KUrl ImageCollectionShared::uploadPath()
 {
     kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
             "AcceptNewImages - if the host application do support that, then this function should\n"
@@ -68,7 +71,7 @@ KUrl KIPI::ImageCollectionShared::uploadPath()
     return KUrl();
 }
 
-KUrl KIPI::ImageCollectionShared::uploadRoot()
+KUrl ImageCollectionShared::uploadRoot()
 {
     KUrl path = uploadPath();
     if ( path.isValid() ) 
@@ -80,17 +83,17 @@ KUrl KIPI::ImageCollectionShared::uploadRoot()
         return KUrl( "file:/" );
 }
 
-QString KIPI::ImageCollectionShared::uploadRootName()
+QString ImageCollectionShared::uploadRootName()
 {
    return (i18n("Images"));
 }
 
-bool KIPI::ImageCollectionShared::isDirectory()
+bool ImageCollectionShared::isDirectory()
 {
     return false;
 }
 
-QString KIPI::ImageCollectionShared::comment()
+QString ImageCollectionShared::comment()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
@@ -98,7 +101,7 @@ QString KIPI::ImageCollectionShared::comment()
     return QString();
 }
 
-QString KIPI::ImageCollectionShared::category()
+QString ImageCollectionShared::category()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
@@ -106,7 +109,7 @@ QString KIPI::ImageCollectionShared::category()
     return QString();
 }
 
-QDate KIPI::ImageCollectionShared::date()
+QDate ImageCollectionShared::date()
 {
     kdWarning(51000) << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
         "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
@@ -114,7 +117,9 @@ QDate KIPI::ImageCollectionShared::date()
     return QDate();
 }
 
-bool KIPI::ImageCollectionShared::operator==(ImageCollectionShared& ics) 
+bool ImageCollectionShared::operator==(ImageCollectionShared& ics) 
 {
     return images()==ics.images();
 }
+
+} // namespace KIPI
