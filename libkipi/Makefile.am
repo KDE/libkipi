@@ -22,9 +22,6 @@ libkipi_la_LIBADD = $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 libkipiincludedir = $(includedir)/libkipi
 
-kde_servicetypes_DATA = kipiplugin.desktop
-
-
 picsdir = $(kde_datadir)/kipi/data
 pics_DATA = kipi-plugins_logo.png banner_left.png
 

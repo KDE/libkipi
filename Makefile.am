@@ -14,3 +14,4 @@ messages:
 
 include $(top_srcdir)/admin/Doxyfile.am
 
+kde_servicetypes_DATA = kipiplugin.desktop
