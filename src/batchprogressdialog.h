@@ -25,10 +25,12 @@
 #ifndef BATCHPROGRESSDIALOG_H
 #define BATCHPROGRESSDIALOG_H
 
-// Include files for KDE
+// KDE includes.
 
-#include <kdialogbase.h>
-#include "libkipi/libkipi_export.h"
+#include <kdialog.h>
+
+// Local includes.
+#include "libkipi_export.h"
 
 class KListView;
 class KProgress;

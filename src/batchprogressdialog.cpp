@@ -22,36 +22,32 @@
 
 // Include files for Qt
 
-#include <QVbox>
-#include <QLayout>
 #include <QDir>
 #include <QWidget>
 #include <QGroupBox>
 #include <QColor>
-#include <QHeader>
 #include <QListView>
 #include <QFrame>
 #include <QLabel>
 #include <QPixmap>
 #include <QPushButton>
+#include <QProgressBar>
 
 // Include files for KDE
 
 #include <klocale.h>
-#include <kprogress.h>
-#include <kinstance.h>
 #include <kconfig.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 
 // Include files for libKipi.
 
@@ -133,11 +129,15 @@ struct BatchProgressDialog::Private
 };
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
-                   : KDialogBase( parent, "KIPIBatchProgressDialog", true /* modal */,
-                                  caption, Cancel)
+                   : KDialog( parent )
 {
     d = new Private;
-    QWidget* box = makeVBoxMainWidget();
+    
+    setCaption(caption);
+    setButtons( KDialog::Cancel );
+
+    KVBox *box = new KVBox( this );
+    setMainWidget( box );
 
     //---------------------------------------------
 
@@ -146,10 +146,10 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     QHBoxLayout* layout = new QHBoxLayout( headerFrame );
     layout->setMargin( 2 ); // to make sure the frame gets displayed
     layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
+    QLabel *pixmapLabelLeft = new QLabel( headerFrame );
     pixmapLabelLeft->setScaledContents( false );
     layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( caption, headerFrame, "labelTitle" );
+    QLabel *labelTitle = new QLabel( caption, headerFrame );
     layout->addWidget( labelTitle );
     layout->setStretchFactor( labelTitle, 1 );
 
