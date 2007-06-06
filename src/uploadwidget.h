@@ -28,7 +28,7 @@
 
 // Qt includes.
 
-#include <qwidget.h>
+#include <QWidget>
 
 // KDE includes.
 
@@ -37,29 +37,31 @@
 
 // Local includes.
 
-#include "libkipi/interface.h"
-#include "libkipi/libkipi_export.h"
+#include "interface.h"
+#include "libkipi_export.h"
 
 class QListViewItem;
 
 namespace KIPI
 {
-    class LIBKIPI_EXPORT UploadWidget :public QWidget 
+
+    class LIBKIPI_EXPORT UploadWidget : public QWidget 
     {
         Q_OBJECT
 
     public:
 
-        UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name = 0 );
+        UploadWidget( Interface* interface, QWidget* parent, const char* name = 0 );
         ~UploadWidget();
-        KURL path() const;
+        KUrl path() const;
 
     public slots:
 
         void mkdir();
 
     signals :
-        void folderItemSelected(const KURL &url);
+    
+        void folderItemSelected(const KUrl&);
 
     protected slots:
 
@@ -76,6 +78,7 @@ namespace KIPI
         struct Private;
         Private* d;
     };
-}
+    
+} // namespace KIPI
 
 #endif /* KIPI_UPLOADWIDGET_H */

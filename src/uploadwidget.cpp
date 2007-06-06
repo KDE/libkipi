@@ -25,10 +25,10 @@
 
 // Qt includes. 
 
-#include <qlayout.h>
-#include <qheader.h>
-#include <qlistview.h>
-#include <qdir.h>
+#include <QLayout>
+#include <QHeader>
+#include <QListView>
+#include <QDir>
 
 // KDE includes
 
@@ -47,11 +47,14 @@
 
 // Local includes.
 
-#include "libkipi/imagecollection.h"
+#include "imagecollection.h"
 #include "uploadwidget.h"
 #include "uploadwidget.moc"
 
-struct KIPI::UploadWidget::Private
+namespace KIPI
+{
+
+struct UploadWidget::Private
 {
     KFileTreeView* m_treeView;
     KFileTreeBranch* m_branch;
@@ -62,8 +65,8 @@ struct KIPI::UploadWidget::Private
   \class KIPI::UploadWidget
   This widget is used to specify an upload directory for new images.
 */
-KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name )
-                  : QWidget( parent, name )
+UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name )
+            : QWidget( parent, name )
 {
     d = new Private;
 
@@ -116,22 +119,22 @@ KIPI::UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, c
              this, SLOT( slotFolderSelected(QListViewItem *) ) );
 }
 
-KIPI::UploadWidget::~UploadWidget()
+UploadWidget::~UploadWidget()
 {
     delete d;
 }
 
-KURL KIPI::UploadWidget::path() const
+KUrl UploadWidget::path() const
 {
     return d->m_treeView->currentURL();
 }
 
-void KIPI::UploadWidget::load( )
+void UploadWidget::load( )
 {
     kdWarning() << "KIPI::UploadWidget::load(): This method is obsolete\n";
 }
 
-void KIPI::UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
+void UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
 {
     if ( d->m_pendingPath.isEmpty() ) 
     {
@@ -184,7 +187,7 @@ void KIPI::UploadWidget::mkdir()
 
     if (!ok) return;
 
-    KURL url = path();
+    KUrl url = path();
     url.addPath( dir );
 
     KIO::SimpleJob* job = KIO::mkdir(url);
@@ -193,7 +196,7 @@ void KIPI::UploadWidget::mkdir()
             this, SLOT(slotAlbumCreated(KIO::Job*)));
 }
 
-void KIPI::UploadWidget::slotAlbumCreated(KIO::Job* job)
+void UploadWidget::slotAlbumCreated(KIO::Job* job)
 {
     int code = job->error();
 
@@ -201,7 +204,9 @@ void KIPI::UploadWidget::slotAlbumCreated(KIO::Job* job)
         job->showErrorDialog( this );
 }
 
-void KIPI::UploadWidget::slotFolderSelected(QListViewItem *)
+void UploadWidget::slotFolderSelected(QListViewItem *)
 {
     emit folderItemSelected(d->m_treeView->currentURL());
 }
+
+} // namespace KIPI
