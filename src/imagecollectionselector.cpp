@@ -25,42 +25,40 @@
 
 // Qt includes.
 
-#include <QHeader>
+#include <Q3Header>
 #include <QLayout>
 #include <QPushButton>
+#include <QList>
 #include <QLabel>
-#include <QVGroupbox>
+#include <Q3VGroupBox>
 #include <QTimer>
 
 // KDE includes.
 
-#include <kbuttonbox.h>
 #include <kdialog.h>
-#include <klistview.h>
+#include <k3listview.h>
+#include <k3buttonbox.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <kio/previewjob.h>
 
-// KIPI includes.
-
-#include "libkipi/interface.h"
-
 // Local includes.
 
+#include "interface.h"
 #include "imagecollectionselector.h"
 #include "imagecollectionselector.moc"
 
 namespace KIPI 
 {
 
-class ImageCollectionItem : public QCheckListItem
+class ImageCollectionItem : public Q3CheckListItem
 {
 public:
 
     ImageCollectionItem(ImageCollectionSelector* selector,
-                        QListView * parent, ImageCollection collection)
-    : QCheckListItem( parent, collection.name(), QCheckListItem::CheckBox),
-      _imageCollection(collection), _selector(selector)
+                        Q3ListView* parent, ImageCollection collection)
+        : Q3CheckListItem( parent, collection.name(), Q3CheckListItem::CheckBox),
+          _imageCollection(collection), _selector(selector)
     {}
 
     ImageCollection imageCollection() const { return _imageCollection; }
@@ -69,7 +67,7 @@ protected:
 
     virtual void stateChange(bool val)
     {
-        QCheckListItem::stateChange(val);
+        Q3CheckListItem::stateChange(val);
         _selector->emitSelectionChanged();
     }
 
@@ -81,34 +79,37 @@ private:
 
 struct ImageCollectionSelector::Private 
 {
-    Interface* _interface;
-    KListView* _list;
-    QLabel*    _thumbLabel;
-    QLabel*    _textLabel;
-    QListViewItem* _itemToSelect;
+    Interface*      _interface;
+    K3ListView*     _list;
+    QLabel*         _thumbLabel;
+    QLabel*         _textLabel;
+    Q3ListViewItem* _itemToSelect;
 };
 
 ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* interface, const char* name)
-                       : QWidget(parent, name)
+                       : QWidget(parent)
 {
-    d=new Private;
+    setObjectName(name);
+    d = new Private;
     d->_interface=interface;
     d->_itemToSelect = 0;
 
-    d->_list=new KListView(this);
-    d->_list->setResizeMode( QListView::LastColumn );
+    d->_list=new K3ListView(this);
+    d->_list->setResizeMode( Q3ListView::LastColumn );
     d->_list->addColumn("");
     d->_list->header()->hide();
 
-    connect(d->_list, SIGNAL(selectionChanged(QListViewItem*)),
-            SLOT(slotSelectionChanged(QListViewItem*)));
+    connect(d->_list, SIGNAL(selectionChanged(Q3ListViewItem*)),
+            SLOT(slotSelectionChanged(Q3ListViewItem*)));
 
-    QHBoxLayout* mainLayout=new QHBoxLayout(this, 0, KDialog::spacingHint());
+    QHBoxLayout* mainLayout=new QHBoxLayout(this);
+    mainLayout->setSpacing(KDialog::spacingHint());
     mainLayout->addWidget(d->_list);
 
-    QVBoxLayout* rightLayout = new QVBoxLayout(mainLayout, 0);
+    QVBoxLayout* rightLayout = new QVBoxLayout();
+    mainLayout->addLayout(rightLayout);
 
-    KButtonBox* box=new KButtonBox(this, Vertical);
+    K3ButtonBox* box = new K3ButtonBox(this, Qt::Vertical);
     rightLayout->addWidget(box);
     QPushButton* selectAll=box->addButton(i18n("Select All"));
     QPushButton* invertSelection=box->addButton(i18n("Invert Selection"));
@@ -117,15 +118,16 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
 
     connect(selectAll, SIGNAL(clicked()),
             this, SLOT(slotSelectAll()) );
+
     connect(invertSelection, SIGNAL(clicked()),
             this, SLOT(slotInvertSelection()) );
+
     connect(selectNone, SIGNAL(clicked()), 
             this, SLOT(slotSelectNone()) );
 
-    rightLayout->addItem(new QSpacerItem(10,20,QSizePolicy::Fixed,
-                                         QSizePolicy::Expanding));
+    rightLayout->addItem(new QSpacerItem(10, 20, QSizePolicy::Fixed, QSizePolicy::Expanding));
 
-    QVGroupBox* rightBox = new QVGroupBox(this);
+    Q3VGroupBox* rightBox = new Q3VGroupBox(this);
     rightBox->setInsideMargin(KDialog::marginHint());
     rightBox->setInsideSpacing(KDialog::spacingHint());
     rightLayout->addWidget(rightBox);
@@ -134,7 +136,7 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
     {
         d->_thumbLabel = new QLabel(rightBox);
         d->_thumbLabel->setFixedSize(QSize(128,128));
-        d->_thumbLabel->setAlignment(AlignHCenter | AlignVCenter);
+        d->_thumbLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     }
     else
     {
@@ -146,16 +148,14 @@ ImageCollectionSelector::ImageCollectionSelector(QWidget* parent, Interface* int
     QTimer::singleShot(0, this, SLOT(slotInitialShow()));
 }
 
-
 ImageCollectionSelector::~ImageCollectionSelector() 
 {
     delete d;
 }
 
-
 void ImageCollectionSelector::fillList() 
 {
-    QValueList<ImageCollection> collections = d->_interface->allAlbums();
+    QList<ImageCollection> collections = d->_interface->allAlbums();
     d->_list->clear();
     ImageCollection current = d->_interface->currentAlbum();
     bool currentWasInList = false;
@@ -165,7 +165,7 @@ void ImageCollectionSelector::fillList()
        them */
 
     blockSignals(true);
-    for( QValueList<ImageCollection>::Iterator it = collections.begin() ;
+    for( QList<ImageCollection>::Iterator it = collections.begin() ;
          it != collections.end() ; ++it )
     {
         ImageCollectionItem* item = new ImageCollectionItem( this, d->_list, *it);
@@ -193,9 +193,9 @@ void ImageCollectionSelector::emitSelectionChanged()
 
 QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const 
 {
-    QValueList<ImageCollection> list;
+    QList<ImageCollection> list;
 
-    QListViewItemIterator it( d->_list );
+    Q3ListViewItemIterator it( d->_list );
 
     for (; it.current(); ++it) 
     {
@@ -212,7 +212,7 @@ QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const
 
 void ImageCollectionSelector::slotSelectAll() 
 {
-    QListViewItemIterator it( d->_list );
+    Q3ListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
@@ -228,10 +228,9 @@ void ImageCollectionSelector::slotSelectAll()
     emit selectionChanged();
 }
 
-
 void ImageCollectionSelector::slotInvertSelection() 
 {
-    QListViewItemIterator it( d->_list );
+    Q3ListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
@@ -247,10 +246,9 @@ void ImageCollectionSelector::slotInvertSelection()
     emit selectionChanged();
 }
 
-
 void ImageCollectionSelector::slotSelectNone() 
 {
-    QListViewItemIterator it( d->_list );
+    Q3ListViewItemIterator it( d->_list );
 
     /* note: the extensive use of blocksignals is to prevent bombarding
        the plugin with too many selection changed signals. do not remove
@@ -266,7 +264,7 @@ void ImageCollectionSelector::slotSelectNone()
     emit selectionChanged();
 }
 
-void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
+void ImageCollectionSelector::slotSelectionChanged(Q3ListViewItem* listItem)
 {
     if (d->_thumbLabel)
         d->_thumbLabel->clear();
@@ -279,12 +277,12 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
 
     if (d->_thumbLabel)
     {
-        KURL::List images(imcollItem->imageCollection().images());
+        KUrl::List images(imcollItem->imageCollection().images());
         if (!images.isEmpty())
         {
             KIO::PreviewJob* thumbJob = KIO::filePreview(images.first(), 128);
-            connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-                     SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+            connect( thumbJob, SIGNAL(gotPreview(const K3FileItem*, const QPixmap&)),
+                     SLOT(slotGotPreview(const K3FileItem* , const QPixmap&)));
         }
     }
 
@@ -343,7 +341,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
     emit selectionChanged();
 }
 
-void ImageCollectionSelector::slotGotPreview(const KFileItem*, const QPixmap& pix)
+void ImageCollectionSelector::slotGotPreview(const K3FileItem*, const QPixmap& pix)
 {
     d->_thumbLabel->setPixmap(pix);
 }
@@ -360,4 +358,3 @@ void ImageCollectionSelector::slotInitialShow()
 }
 
 } // namespace KIPI
-

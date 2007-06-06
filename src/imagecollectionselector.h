@@ -37,8 +37,8 @@
 #include "imagecollection.h"
 #include "libkipi_export.h"
 
-class QListViewItem;
-class KFileItem;
+class Q3ListViewItem;
+class K3FileItem;
 
 namespace KIPI 
 {
@@ -68,8 +68,8 @@ private slots:
     void slotSelectAll();
     void slotInvertSelection();
     void slotSelectNone();
-    void slotSelectionChanged(QListViewItem* listItem);
-    void slotGotPreview(const KFileItem*, const QPixmap&);
+    void slotSelectionChanged(Q3ListViewItem* listItem);
+    void slotGotPreview(const K3FileItem*, const QPixmap&);
     void slotInitialShow();
 
 private:
@@ -77,7 +77,7 @@ private:
     void fillList();
     void emitSelectionChanged();
     friend class ImageCollectionItem;
-    
+
 private:
 
     Private* d;
