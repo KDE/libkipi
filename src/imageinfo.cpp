@@ -26,18 +26,13 @@
 // Local includes.
 
 #include "imageinfo.h"
-#include "KDStream.h"
 #include "imageinfoshared.h"
 
 /** @file imageinfo.cpp
 */
-QString KIPI::ImageInfo::toString( const QVariant& data ) const
+QString KIPI::ImageInfo::toString( const QVariant& /*data*/ ) const
 {
-    QString string;
-    KDStream stream( &string );
-    stream << data
-           << flush ;
-    return string;
+    return QString();
 }
 
 /**
