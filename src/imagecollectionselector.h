@@ -61,7 +61,7 @@ public:
 
 signals:
 
-    void selectionChanged(void);
+    void selectionChanged();
 
 private slots:
 
@@ -72,13 +72,15 @@ private slots:
     void slotGotPreview(const KFileItem*, const QPixmap&);
     void slotInitialShow();
 
-
 private:
 
-    Private* d;
     void fillList();
     void emitSelectionChanged();
     friend class ImageCollectionItem;
+    
+private:
+
+    Private* d;
 };
 
 } // namespace KIPI
