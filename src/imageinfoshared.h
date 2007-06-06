@@ -44,6 +44,7 @@
 
 namespace KIPI
 {
+
     class Interface;
 
     class LIBKIPI_EXPORT ImageInfoShared
@@ -94,6 +95,7 @@ namespace KIPI
         int        _count;
         Interface* _interface;
     };
-}
+
+} // namespace KIPI
 
 #endif /* IMAGEINFOSHARED_H */

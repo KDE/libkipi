@@ -36,17 +36,20 @@
 #include "imageinfoshared.h"
 #include "interface.h"
 
-KIPI::ImageInfoShared::ImageInfoShared( Interface* interface, const KUrl& url )
-    : _url( url ), _count(1), _interface( interface )
+namespace KIPI
+{
+
+ImageInfoShared::ImageInfoShared( Interface* interface, const KUrl& url )
+               : _url( url ), _count(1), _interface( interface )
 {
 }
 
-KUrl KIPI::ImageInfoShared::path()
+KUrl ImageInfoShared::path()
 {
     return _url;
 }
 
-int KIPI::ImageInfoShared::size()
+int ImageInfoShared::size()
 {
     if ( ! _url.isLocalFile() ) 
     {
@@ -57,7 +60,7 @@ int KIPI::ImageInfoShared::size()
         return QFileInfo( _url.path() ).size();
 }
 
-QDateTime KIPI::ImageInfoShared::time( KIPI::TimeSpec )
+QDateTime ImageInfoShared::time( TimeSpec )
 {
     if ( ! _url.isLocalFile() ) 
     {
@@ -68,12 +71,12 @@ QDateTime KIPI::ImageInfoShared::time( KIPI::TimeSpec )
         return QFileInfo( _url.path() ).lastModified();
 }
 
-void KIPI::ImageInfoShared::addRef()
+void ImageInfoShared::addRef()
 {
     _count++;
 }
 
-void KIPI::ImageInfoShared::removeRef()
+void ImageInfoShared::removeRef()
 {
     _count--;
     if ( _count == 0 ) 
@@ -82,32 +85,32 @@ void KIPI::ImageInfoShared::removeRef()
     }
 }
 
-int KIPI::ImageInfoShared::angle()
+int ImageInfoShared::angle()
 {
     return 0;
 }
 
-void KIPI::ImageInfoShared::setAngle( int )
+void ImageInfoShared::setAngle( int )
 {
 }
 
-bool KIPI::ImageInfoShared::isTimeExact()
+bool ImageInfoShared::isTimeExact()
 {
     return true;
 }
 
-void KIPI::ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
+void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 {
 }
 
-void KIPI::ImageInfoShared::setTitle( const QString& )
+void ImageInfoShared::setTitle( const QString& )
 {
     kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
         "If the host application do support that, then this function should\n"
         "have been overridden in the host application.\n" << endl;
 }
 
-void KIPI::ImageInfoShared::cloneData( ImageInfoShared* other )
+void ImageInfoShared::cloneData( ImageInfoShared* other )
 {
     if ( _interface->hasFeature( ImageTitlesWritable ) )
         setTitle( other->title() );
@@ -124,3 +127,5 @@ void KIPI::ImageInfoShared::cloneData( ImageInfoShared* other )
 
     setAngle( other->angle() );
 }
+
+} // namespace KIPI
