@@ -28,21 +28,21 @@
 
 // Qt includes.
 
-#include <qvaluelist.h>
-#include <qwidget.h>
+#include <QList>
+#include <QWidget>
 
 // KDE includes.
 
 #include <kurl.h>
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 // LibKipi includes.
 
-#include "libkipi/interface.h"
-#include "libkipi/imagecollection.h"
-#include "libkipi/libkipi_export.h"
+#include "interface.h"
+#include "imagecollection.h"
+#include "libkipi_export.h"
 
-class QListViewItem;
+class Q3ListViewItem;
 
 class KFileItem;
 class KListView;
@@ -50,7 +50,7 @@ class KListView;
 namespace KIPI
 {
 
-class LIBKIPI_EXPORT ImageDialog : public KDialogBase 
+class LIBKIPI_EXPORT ImageDialog : public KDialog 
 {
 Q_OBJECT
 
@@ -61,19 +61,18 @@ public:
     ImageDialog(QWidget*, Interface*, bool singleSelection=false);
     ~ImageDialog();
 
-    KURL       url() const;
-    KURL::List urls() const;
+    KUrl       url() const;
+    KUrl::List urls() const;
 
-    static KURL getImageURL(QWidget*, Interface*);
-    static KURL::List getImageURLs(QWidget*, Interface*);
+    static KUrl getImageURL(QWidget*, Interface*);
+    static KUrl::List getImageURLs(QWidget*, Interface*);
 
 private slots:
 
-    void fillImageList(QListViewItem*);
-    void slotImageSelected(QListViewItem*);
+    void fillImageList(Q3ListViewItem*);
+    void slotImageSelected(Q3ListViewItem*);
     void slotImagesSelected();
-    void slotGotPreview(const KFileItem* , const QPixmap&);
-    void slotHelp( void );
+    void slotGotPreview(const KFileItem*, const QPixmap&);
     void slotInitialShow();
 
 private:
