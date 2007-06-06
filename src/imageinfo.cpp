@@ -30,7 +30,11 @@
 
 /** @file imageinfo.cpp
 */
-QString KIPI::ImageInfo::toString( const QVariant& /*data*/ ) const
+
+namespace KIPI
+{
+
+QString ImageInfo::toString( const QVariant& /*data*/ ) const
 {
     return QString();
 }
@@ -38,7 +42,7 @@ QString KIPI::ImageInfo::toString( const QVariant& /*data*/ ) const
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::title() const
+QString ImageInfo::title() const
 {
     return _data->title();
 }
@@ -46,7 +50,7 @@ QString KIPI::ImageInfo::title() const
 /**
    PENDING(blackie) document
 */
-KUrl KIPI::ImageInfo::path() const
+KUrl ImageInfo::path() const
 {
     return _data->path();
 }
@@ -54,7 +58,7 @@ KUrl KIPI::ImageInfo::path() const
 /**
    PENDING(blackie) document
 */
-QString KIPI::ImageInfo::description() const
+QString ImageInfo::description() const
 {
     return _data->description();
 }
@@ -64,7 +68,7 @@ QString KIPI::ImageInfo::description() const
    In case the host application supports time range, the spec argument
    specifies if it is the start or end time that should be returned.
 */
-QDateTime KIPI::ImageInfo::time( TimeSpec spec ) const
+QDateTime ImageInfo::time( TimeSpec spec ) const
 {
     return _data->time( spec );
 }
@@ -77,7 +81,7 @@ QDateTime KIPI::ImageInfo::time( TimeSpec spec ) const
    encapsulated in a QVariant
    
 */
-QMap<QString,QVariant> KIPI::ImageInfo::attributes() const
+QMap<QString,QVariant> ImageInfo::attributes() const
 {
     return _data->attributes();
 }
@@ -85,43 +89,43 @@ QMap<QString,QVariant> KIPI::ImageInfo::attributes() const
 /**
    PENDING(blackie) document
 */
-int KIPI::ImageInfo::size() const
+int ImageInfo::size() const
 {
     return _data->size();
 }
 
-KIPI::ImageInfo::ImageInfo( ImageInfoShared* shared )
-    : _data( shared )
+ImageInfo::ImageInfo( ImageInfoShared* shared )
+         : _data( shared )
 {
 }
 
-KIPI::ImageInfo::ImageInfo( const KIPI::ImageInfo& rhs )
+ImageInfo::ImageInfo( const ImageInfo& rhs )
 {
     _data = rhs._data;
     _data->addRef();
 }
 
-KIPI::ImageInfo::~ImageInfo()
+ImageInfo::~ImageInfo()
 {
     _data->removeRef();
 }
 
-void KIPI::ImageInfo::setTitle( const QString& name )
+void ImageInfo::setTitle( const QString& name )
 {
     _data->setTitle( name );
 }
 
-void KIPI::ImageInfo::setDescription( const QString& description )
+void ImageInfo::setDescription( const QString& description )
 {
     _data->setDescription( description );
 }
 
-void KIPI::ImageInfo::clearAttributes()
+void ImageInfo::clearAttributes()
 {
     _data->clearAttributes();
 }
 
-void KIPI::ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
+void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 {
     _data->addAttributes( attributes );
 }
@@ -132,7 +136,7 @@ void KIPI::ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
    while other host application will rotate the image when displaying it, and will thus not rotate
    the image on disk.
 */
-int KIPI::ImageInfo::angle() const
+int ImageInfo::angle() const
 {
     return _data->angle();
 }
@@ -140,7 +144,7 @@ int KIPI::ImageInfo::angle() const
 /**
    See \ref angle
 */
-void KIPI::ImageInfo::setAngle( int angle )
+void ImageInfo::setAngle( int angle )
 {
     _data->setAngle( angle );
 }
@@ -150,12 +154,12 @@ void KIPI::ImageInfo::setAngle( int angle )
    from 1998-2000), this method will return true if the time is an exact
    specification, and thus not a range.
 */
-bool KIPI::ImageInfo::isTimeExact() const
+bool ImageInfo::isTimeExact() const
 {
     return _data->isTimeExact();
 }
 
-void KIPI::ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
+void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 {
     _data->setTime( time, spec );
 }
@@ -163,7 +167,9 @@ void KIPI::ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 /**
    Copies all the attibutes, description etc from the other imageinfo
 */
-void KIPI::ImageInfo::cloneData( const ImageInfo& other )
+void ImageInfo::cloneData( const ImageInfo& other )
 {
     _data->cloneData( other._data );
 }
+
+} // namespace KIPI
