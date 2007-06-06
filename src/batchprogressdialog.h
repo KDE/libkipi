@@ -32,8 +32,8 @@
 // Local includes.
 #include "libkipi_export.h"
 
-class KListView;
-class KProgress;
+class QProgressBar;
+class QListWidget;
 
 /** 
   @namespace KIPI 
@@ -41,8 +41,6 @@ class KProgress;
 */
 namespace KIPI
 {
-
-class BatchProgressItem;
 
 enum ActionMessageType
 {
@@ -53,7 +51,7 @@ enum ActionMessageType
     ProgressMessage
 };
 
-class LIBKIPI_EXPORT BatchProgressDialog : public KDialogBase
+class LIBKIPI_EXPORT BatchProgressDialog : public KDialog
 {
 Q_OBJECT
 
@@ -68,9 +66,9 @@ Q_OBJECT
    
  protected:
  
-   BatchProgressItem *m_item;
-   KListView         *m_actionsList;
-   KProgress         *m_progress;
+   QProgressBar      *m_progress;
+
+   QListWidget       *m_actionsList;
 
  private:
  

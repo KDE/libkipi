@@ -22,32 +22,18 @@
 
 // Include files for Qt
 
-#include <QDir>
+#include <QBrush>
 #include <QWidget>
-#include <QGroupBox>
-#include <QColor>
-#include <QListView>
-#include <QFrame>
-#include <QLabel>
-#include <QPixmap>
-#include <QPushButton>
+#include <QColorGroup>
+#include <QListWidget>
 #include <QProgressBar>
 
 // Include files for KDE
 
 #include <klocale.h>
-#include <kconfig.h>
-#include <kapplication.h>
+#include <kiconloader.h>
 #include <kdebug.h>
-#include <kdialog.h>
-#include <kiconloader.h>
-#include <k3listview.h>
-#include <kstandarddirs.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <khelpmenu.h>
-#include <kiconloader.h>
-#include <kmenu.h>
+#include <kvbox.h>
 
 // Include files for libKipi.
 
@@ -61,65 +47,43 @@
 namespace KIPI
 {
 
-class BatchProgressItem : public KListViewItem
+class BatchProgressItem : public QListWidgetItem
 {
 public:
 
-BatchProgressItem(KListView * parent, QListViewItem *after, const QString &message, int messageType)
-                  : KListViewItem( parent, after), m_messagetype(messageType)
+BatchProgressItem(QListWidget * parent, const QString& message, int messageType)
+    : QListWidgetItem(message, parent)
 {
    // Set the icon.
 
-   switch( m_messagetype )
+   switch( messageType )
    {
-     case KIPI::StartingMessage:
-        setPixmap( 0, SmallIcon( "run" ) );
+     case StartingMessage:
+        setIcon(SmallIcon( "run" ));
         break;
-     case KIPI::SuccessMessage:
-        setPixmap( 0, SmallIcon( "ok" ) );
+     case SuccessMessage:
+        setIcon(SmallIcon( "ok" ));
         break;
-     case KIPI::WarningMessage:
-        setPixmap( 0, SmallIcon( "flag" ) );
+     case WarningMessage:
+        setIcon(SmallIcon( "flag" ));
+        setForeground( QBrush(Qt::darkYellow) );
         break;
-     case KIPI::ErrorMessage:
-        setPixmap( 0, SmallIcon( "stop" ) );
+     case ErrorMessage:
+        setIcon(SmallIcon( "stop" ));
+        setForeground( QBrush(Qt::red) );
         break;
-     case KIPI::ProgressMessage:
-        setPixmap( 0, SmallIcon( "info" ) );
+     case ProgressMessage:
+        setIcon(SmallIcon( "info" ));
         break;
      default:
-        setPixmap( 0, SmallIcon( "info" ) );
+        setIcon(SmallIcon( "info" ));
    }
 
    // Set the message text.
 
-   setText(1, message);
+   setText(message);
 }
 
-private:
-
-   int m_messagetype;
-
-   void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-   {
-      QColorGroup _cg( cg );
-
-      if ( m_messagetype == KIPI::ErrorMessage )
-          {
-          _cg.setColor( QColorGroup::Text, Qt::red );
-          KListViewItem::paintCell( p, _cg, column, width, alignment );
-          return;
-          }
-
-      if ( m_messagetype == KIPI::WarningMessage )
-          {
-          _cg.setColor( QColorGroup::Text, Qt::darkYellow );
-          KListViewItem::paintCell( p, _cg, column, width, alignment );
-          return;
-          }
-
-      KListViewItem::paintCell( p, cg, column, width, alignment );
-   }
 };
 
 // ----------------------------------------------------------------------
@@ -141,42 +105,14 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
 
     //---------------------------------------------
 
-    QFrame *headerFrame = new QFrame( box );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( caption, headerFrame );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-
-    QString dir;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    dir = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( dir + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
-
-    //---------------------------------------------
-
-
-    m_actionsList = new KListView( box );
-    m_actionsList->addColumn(i18n( "Status" ));
-    m_actionsList->addColumn(i18n( "Current Actions" ));
-    m_actionsList->setSorting(-1);
-    m_actionsList->setItemMargin(1);
-    m_actionsList->header()->hide();
-    m_actionsList->setResizeMode(QListView::LastColumn);
+    m_actionsList = new QListWidget( box );
+    m_actionsList->setSortingEnabled(false);
     m_actionsList->setWhatsThis( i18n("<p>This is the current tasks list released.") );
 
     //---------------------------------------------
 
-    m_progress = new KProgress( box, "Progress" );
-    m_progress->setTotalSteps(100);
+    m_progress = new QProgressBar( box );
+    m_progress->setRange(0, 100);
     m_progress->setValue(0);
     m_progress->setWhatsThis( i18n("<p>This is the list current percent task released.") );
     resize( 600, 400 );
@@ -189,13 +125,9 @@ BatchProgressDialog::~BatchProgressDialog()
 
 void BatchProgressDialog::addedAction(const QString &text, int type)
 {
-    m_item = new BatchProgressItem(m_actionsList,
-                                   m_actionsList->lastItem(),
-                                   text, type);
-
-    m_actionsList->ensureItemVisible(m_item);
+    BatchProgressItem *item = new BatchProgressItem(m_actionsList, text, type);
+    m_actionsList->setCurrentItem(item);
 }
-
 
 void BatchProgressDialog::reset()
 {
@@ -203,10 +135,9 @@ void BatchProgressDialog::reset()
     m_progress->setValue(0);
 }
 
-
 void BatchProgressDialog::setProgress(int current, int total)
 {
-    m_progress->setTotalSteps(total);
+    m_progress->setMaximum(total);
     m_progress->setValue(current);
 }
 
