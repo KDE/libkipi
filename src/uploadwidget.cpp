@@ -26,8 +26,7 @@
 // Qt includes. 
 
 #include <QLayout>
-#include <QHeader>
-#include <QListView>
+#include <Q3Header>
 #include <QDir>
 
 // KDE includes
@@ -36,14 +35,7 @@
 #include <klocale.h>
 #include <kio/jobclasses.h>
 #include <kmessagebox.h>
-
-#include <kdeversion.h>
-#if KDE_VERSION >= 0x30200
 #include <kinputdialog.h>
-#else
-#include <klineeditdlg.h>
-#define KInputDialog KLineEditDlg
-#endif
 
 // Local includes.
 
@@ -56,9 +48,9 @@ namespace KIPI
 
 struct UploadWidget::Private
 {
-    KFileTreeView* m_treeView;
+    K3FileTreeView*  m_treeView;
     KFileTreeBranch* m_branch;
-    QStringList m_pendingPath;
+    QStringList      m_pendingPath;
 };
 
 /*!
@@ -66,24 +58,25 @@ struct UploadWidget::Private
   This widget is used to specify an upload directory for new images.
 */
 UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const char* name )
-            : QWidget( parent, name )
+            : QWidget( parent )
 {
     d = new Private;
+    setObjectName(name);
 
-    QVBoxLayout* layout = new QVBoxLayout( this, 0 );
-    d->m_treeView = new KFileTreeView( this );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    d->m_treeView = new K3FileTreeView( this );
     d->m_treeView->setRootIsDecorated( true );
     layout->addWidget( d->m_treeView );
 
     // Fetch the current album, so we can start out there.
-    KIPI::ImageCollection album = interface->currentAlbum();
+    ImageCollection album = interface->currentAlbum();
 
     // If no current album selected, get the first album in the list.
     if ( !album.isValid() || !album.isDirectory() ) 
        album = interface->allAlbums().first();
 
-    d->m_branch = d->m_treeView->addBranch( QDir::cleanDirPath(album.uploadRoot().path()),
-                                          album.uploadRootName() );
+    d->m_branch = d->m_treeView->addBranch( QDir::cleanPath(album.uploadRoot().path()),
+                                            album.uploadRootName() );
     d->m_treeView->setDirOnlyMode( d->m_branch, true );
 
     d->m_treeView->addColumn( i18n("Folder" ) );
@@ -91,23 +84,23 @@ UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const c
     d->m_treeView->header()->setStretchEnabled( true, 0 );
     d->m_treeView->header()->hide();
 
-    QString root = album.uploadRoot().path();
+    QString root       = album.uploadRoot().path();
     QString uploadPath = album.isDirectory() ? album.uploadPath().path() : root;
 
-    root       = QDir::cleanDirPath(root);
-    uploadPath = QDir::cleanDirPath(uploadPath);
+    root       = QDir::cleanPath(root);
+    uploadPath = QDir::cleanPath(uploadPath);
 
     if ( !uploadPath.startsWith( root ) ) 
     {
         kdWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
-                         << "uploadPath() = " << album.uploadPath().prettyURL() << endl
-                         << "uploadRoot() = " << album.uploadRoot().prettyURL() << endl;
+                         << "uploadPath() = " << album.uploadPath().prettyUrl() << endl
+                         << "uploadRoot() = " << album.uploadRoot().prettyUrl() << endl;
     }
     else
     {
         uploadPath = uploadPath.mid( root.length() );
 
-        d->m_pendingPath = QStringList::split( "/", uploadPath, false );
+        d->m_pendingPath = uploadPath.split( QString("/"), QString::SkipEmptyParts );
 
         connect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ),
                  this, SLOT( slotPopulateFinished(KFileTreeViewItem *) ) );
@@ -116,7 +109,7 @@ UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const c
     }
 
     connect( d->m_treeView, SIGNAL( executed(QListViewItem *) ),
-             this, SLOT( slotFolderSelected(QListViewItem *) ) );
+             this, SLOT( slotFolderSelected() ) );
 }
 
 UploadWidget::~UploadWidget()
@@ -126,7 +119,7 @@ UploadWidget::~UploadWidget()
 
 KUrl UploadWidget::path() const
 {
-    return d->m_treeView->currentURL();
+    return d->m_treeView->currentUrl();
 }
 
 void UploadWidget::load( )
@@ -134,12 +127,12 @@ void UploadWidget::load( )
     kdWarning() << "KIPI::UploadWidget::load(): This method is obsolete\n";
 }
 
-void UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
+void UploadWidget::slotPopulateFinished( K3FileTreeViewItem * parentItem )
 {
     if ( d->m_pendingPath.isEmpty() ) 
     {
-        disconnect( d->m_branch, SIGNAL( populateFinished(KFileTreeViewItem *) ), 
-                    this, SLOT( slotPopulateFinished(KFileTreeViewItem *) ) );
+        disconnect( d->m_branch, SIGNAL( populateFinished(K3FileTreeViewItem *) ), 
+                    this, SLOT( slotPopulateFinished(K3FileTreeViewItem *) ) );
         return;
     }
 
@@ -147,7 +140,7 @@ void UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
 
     d->m_pendingPath.pop_front();
 
-    QListViewItem * item;
+    Q3ListViewItem* item;
     for ( item = parentItem->firstChild(); item; item = item->nextSibling() )
     {
         if ( item->text(0) == itemName )
@@ -164,9 +157,9 @@ void UploadWidget::slotPopulateFinished( KFileTreeViewItem * parentItem )
     {
         item->setOpen( true );
         d->m_treeView->setSelected( item, true );
-        d->m_treeView->ensureItemVisible ( item );
+        d->m_treeView->ensureItemVisible( item );
 
-        KFileTreeViewItem * ftvItem = static_cast<KFileTreeViewItem *>( item );
+        K3FileTreeViewItem * ftvItem = static_cast<K3FileTreeViewItem *>( item );
         if ( ftvItem->alreadyListed() )
             slotPopulateFinished( ftvItem );
     }
@@ -183,7 +176,7 @@ void KIPI::UploadWidget::mkdir()
     bool ok;
     QString dir = KInputDialog::getText( i18n("Create Directory"),
                                          i18n("<qt>Enter new directory name (to be created as subdir of %1):</qt>")
-                                        .arg(path().prettyURL()), "", &ok, this);
+                                        .arg(path().prettyUrl()), "", &ok, this);
 
     if (!ok) return;
 
@@ -204,9 +197,9 @@ void UploadWidget::slotAlbumCreated(KIO::Job* job)
         job->showErrorDialog( this );
 }
 
-void UploadWidget::slotFolderSelected(QListViewItem *)
+void UploadWidget::slotFolderSelected()
 {
-    emit folderItemSelected(d->m_treeView->currentURL());
+    emit folderItemSelected(d->m_treeView->currentUrl());
 }
 
 } // namespace KIPI

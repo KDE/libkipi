@@ -32,15 +32,13 @@
 
 // KDE includes.
 
-#include <kfiletreeview.h>
+#include <k3filetreeview.h>
 #include <kurl.h>
 
 // Local includes.
 
 #include "interface.h"
 #include "libkipi_export.h"
-
-class QListViewItem;
 
 namespace KIPI
 {
@@ -67,11 +65,11 @@ namespace KIPI
 
         void load();
         void slotAlbumCreated(KIO::Job* job);
-        void slotFolderSelected(QListViewItem *);
+        void slotFolderSelected();
 
     private slots:
 
-        void slotPopulateFinished(KFileTreeViewItem *);
+        void slotPopulateFinished(K3FileTreeViewItem *);
 
     private:
 
