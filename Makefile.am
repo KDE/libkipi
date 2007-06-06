@@ -1,4 +1,4 @@
-SUBDIRS = libkipi
+SUBDIRS = libkipi pics 
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libkipi.pc
