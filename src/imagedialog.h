@@ -44,8 +44,7 @@
 
 class Q3ListViewItem;
 
-class KFileItem;
-class KListView;
+class K3FileItem;
 
 namespace KIPI
 {
@@ -72,7 +71,7 @@ private slots:
     void fillImageList(Q3ListViewItem*);
     void slotImageSelected(Q3ListViewItem*);
     void slotImagesSelected();
-    void slotGotPreview(const KFileItem*, const QPixmap&);
+    void slotGotPreview(const K3FileItem*, const QPixmap&);
     void slotInitialShow();
 
 private:

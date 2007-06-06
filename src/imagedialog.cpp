@@ -35,6 +35,7 @@
 
 // KDE includes.
 
+#include <kvbox.h>
 #include <kdebug.h>
 #include <k3listview.h>
 #include <klocale.h>
@@ -53,95 +54,75 @@ const int PREVIEW_SIZE = 128;
 namespace KIPI
 {
 
-struct AlbumLVI : public KListViewItem 
+struct AlbumLVI : public K3ListViewItem 
 {
-    AlbumLVI(KListView* parent, const KIPI::ImageCollection& album)
-        : KListViewItem(parent, album.name()), _album(album) {}
+    AlbumLVI(K3ListView* parent, const ImageCollection& album)
+        : K3ListViewItem(parent, album.name()), _album(album) {}
 
-    const KIPI::ImageCollection& _album;
+    const ImageCollection& _album;
 };
 
 
-struct ImageLVI : public KListViewItem 
+struct ImageLVI : public K3ListViewItem 
 {
-    ImageLVI(KListView* parent, const KUrl& url)
-        : KListViewItem(parent, url.fileName()), _url(url) {}
+    ImageLVI(K3ListView* parent, const KUrl& url)
+        : K3ListViewItem(parent, url.fileName()), _url(url) {}
 
     KUrl _url;
 };
 
 struct ImageDialog::Private 
 {
-    KUrl                        _url;
-    KUrl::List                  _urls;
-    KIPI::Interface*            _interface;
-    KListView*                  _albumList;
-    KListView*                  _imageList;
-    QLabel*                     _preview;
-    QValueList<ImageCollection> _albums;
-    bool                        _singleSelection;
+    KUrl                   _url;
+    KUrl::List             _urls;
+    KIPI::Interface*       _interface;
+    K3ListView*            _albumList;
+    K3ListView*            _imageList;
+    QLabel*                _preview;
+    QList<ImageCollection> _albums;
+    bool                   _singleSelection;
 };
 
 ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
                          bool singleSelection)
-           : KDialog(KDialogBase::Plain, i18n("Select Image From Album"), Help|Ok|Cancel,
-                         Ok, parent, true, true)
+           : KDialog(parent)
 {
     d = new Private;
     d->_interface       = interface;
     d->_singleSelection = singleSelection;
 
-    QWidget* box = plainPage();
-    QVBoxLayout *dvlay = new QVBoxLayout( box, 6 );
+    setCaption(i18n("Select Image From Album"));
+    setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
 
-    //---------------------------------------------
-
-    QFrame *headerFrame = new QFrame( box );
-    headerFrame->setFrameStyle(QFrame::Panel|QFrame::Sunken);
-    QHBoxLayout* layout = new QHBoxLayout( headerFrame );
-    layout->setMargin( 2 ); // to make sure the frame gets displayed
-    layout->setSpacing( 0 );
-    QLabel *pixmapLabelLeft = new QLabel( headerFrame, "pixmapLabelLeft" );
-    pixmapLabelLeft->setScaledContents( false );
-    layout->addWidget( pixmapLabelLeft );
-    QLabel *labelTitle = new QLabel( i18n("Select Image From Album"), headerFrame, "labelTitle" );
-    layout->addWidget( labelTitle );
-    layout->setStretchFactor( labelTitle, 1 );
-    dvlay->addWidget( headerFrame );
-
-    QString directory;
-    KGlobal::dirs()->addResourceType("kipi_banner_left", KGlobal::dirs()->kde_default("data") + "kipi/data");
-    directory = KGlobal::dirs()->findResourceDir("kipi_banner_left", "banner_left.png");
-
-    pixmapLabelLeft->setPaletteBackgroundColor( QColor(201, 208, 255) );
-    pixmapLabelLeft->setPixmap( QPixmap( directory + "banner_left.png" ) );
-    labelTitle->setPaletteBackgroundColor( QColor(201, 208, 255) );
+    KVBox *box = new KVBox( this );
+    setMainWidget( box );
+    QVBoxLayout *dvlay = new QVBoxLayout( box );
 
     //---------------------------------------------
 
     QSplitter* splitter = new QSplitter(box);
 
-    d->_albumList=new KListView(splitter);
+    d->_albumList = new K3ListView(splitter);
     d->_albumList->addColumn(i18n("Album Name"));
     d->_albumList->setMinimumWidth(200);
-    d->_albumList->setResizeMode(QListView::LastColumn);
+    d->_albumList->setResizeMode(Q3ListView::LastColumn);
 
-    d->_imageList=new KListView(splitter);
+    d->_imageList = new K3ListView(splitter);
     d->_imageList->addColumn(i18n("Image Name"));
     d->_imageList->setMinimumWidth(200);
-    d->_imageList->setSelectionMode(singleSelection ? QListView::Single :
-                                    QListView::Extended);
-    d->_imageList->setResizeMode(QListView::LastColumn);
+    d->_imageList->setSelectionMode(singleSelection ? Q3ListView::Single :
+                                    Q3ListView::Extended);
+    d->_imageList->setResizeMode(Q3ListView::LastColumn);
 
-    d->_preview=new QLabel(splitter);
-    d->_preview->setAlignment(AlignHCenter | AlignVCenter | WordBreak);
+    d->_preview = new QLabel(splitter);
+    d->_preview->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     d->_preview->setFixedWidth(PREVIEW_SIZE);
     d->_preview->setText(i18n("No image selected"));
 
     dvlay->addWidget( splitter );
 
-    d->_albums=d->_interface->allAlbums();
-    QValueList<ImageCollection>::ConstIterator it=d->_albums.begin();
+    d->_albums = d->_interface->allAlbums();
+    QList<ImageCollection>::ConstIterator it=d->_albums.begin();
 
     for(; it!=d->_albums.end(); ++it) 
     {
@@ -159,7 +140,7 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
         connect(d->_imageList, SIGNAL(selectionChanged()),
                 this, SLOT(slotImagesSelected()));
 
-    enableButtonOK(false);
+    enableButtonOk(false);
 }
 
 ImageDialog::~ImageDialog() 
@@ -177,7 +158,7 @@ KUrl::List ImageDialog::urls() const
     return d->_urls;
 }
 
-KUrl ImageDialog::getImageURL(QWidget* parent, KIPI::Interface* interface) 
+KUrl ImageDialog::getImageURL(QWidget* parent, Interface* interface) 
 {
     ImageDialog dlg(parent, interface, true);
     if (dlg.exec() == QDialog::Accepted) 
@@ -202,12 +183,12 @@ KUrl::List ImageDialog::getImageURLs(QWidget* parent, Interface* interface)
     }
 }
 
-void ImageDialog::fillImageList(QListViewItem* item) 
+void ImageDialog::fillImageList(Q3ListViewItem* item) 
 {
     d->_imageList->clear();
     if (!item) return;
 
-    const ImageCollection& album=static_cast<AlbumLVI*>(item)->_album;
+    const ImageCollection& album = static_cast<AlbumLVI*>(item)->_album;
     KUrl::List images=album.images();
 
     KUrl::List::ConstIterator it=images.begin();
@@ -217,22 +198,22 @@ void ImageDialog::fillImageList(QListViewItem* item)
     }
 }
 
-void ImageDialog::slotImageSelected(QListViewItem* item) 
+void ImageDialog::slotImageSelected(Q3ListViewItem* item) 
 {
     if (!item) 
     {
-        enableButtonOK(false);
+        enableButtonOk(false);
         d->_preview->setText(i18n("No image selected"));
-        d->_url=KURL();
+        d->_url=KUrl();
         return;
     }
-    enableButtonOK(true);
-    d->_url=static_cast<ImageLVI*>(item)->_url;
+    enableButtonOk(true);
+    d->_url = static_cast<ImageLVI*>(item)->_url;
     d->_preview->clear();
 
     KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
-    connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-             SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
+    connect( thumbJob, SIGNAL(gotPreview(const K3FileItem*, const QPixmap&)),
+             SLOT(slotGotPreview(const K3FileItem* , const QPixmap&)));
 }
 
 void ImageDialog::slotImagesSelected()
@@ -241,8 +222,8 @@ void ImageDialog::slotImagesSelected()
     d->_urls.clear();
     d->_preview->clear();
 
-    QListViewItem* selectedItem = 0;
-    QListViewItem* listItem = d->_imageList->firstChild();
+    Q3ListViewItem* selectedItem = 0;
+    Q3ListViewItem* listItem = d->_imageList->firstChild();
     while (listItem)
     {
         if (listItem->isSelected())
@@ -255,14 +236,14 @@ void ImageDialog::slotImagesSelected()
 
     if (!selectedItem)
     {
-        enableButtonOK(false);
+        enableButtonOk(false);
         d->_preview->setText(i18n("No images selected"));
         d->_url=KUrl();
         d->_urls.clear();
         return;
     }
 
-    enableButtonOK(true);
+    enableButtonOk(true);
 
     if (d->_urls.count() == 1)
     {
@@ -275,11 +256,11 @@ void ImageDialog::slotImagesSelected()
     else
     {
         d->_url = d->_urls.first();
-        d->_preview->setText(i18n("1 image selected", "%n images selected", d->_urls.count()));
+        d->_preview->setText(i18np("1 image selected", "%1 images selected", d->_urls.count()));
     }
 }
 
-void ImageDialog::slotGotPreview(const KFileItem*, const QPixmap& pix) 
+void ImageDialog::slotGotPreview(const K3FileItem*, const QPixmap& pix) 
 {
     d->_preview->setPixmap(pix);
 }
@@ -288,7 +269,7 @@ void ImageDialog::slotInitialShow()
 {
     ImageCollection current = d->_interface->currentAlbum();
 
-    QListViewItemIterator it( d->_albumList );
+    Q3ListViewItemIterator it( d->_albumList );
     while ( it.current() )
     {
         AlbumLVI* lvi = static_cast<AlbumLVI*>( it.current() );
