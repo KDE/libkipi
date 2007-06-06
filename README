@@ -1,1 +1,22 @@
-See the README file on kipi-plugins
+KIPI Library (KDE Image Program Interface)
+
+This library is a part of Kipi-Plugins project (http://www.kipi-plugins.org)
+
+-- AUTHORS -----------------------------------------------------------
+
+See AUTHORS file for details.
+
+-- ABOUT -------------------------------------------------------------
+
+Libkipi is an interface to use kipi-plugins from a KDE image management
+program like digiKam (http://www.digikam.org).
+
+The library documentation is available on header files.
+
+-- DEPENDENCIES -------------------------------------------------------
+
+AutoConf   >= 2.5.x                        http://www.gnu.org/software/autoconf
+AutoMake   >= 1.7.x                        http://www.gnu.org/software/automake
+libqt      >= 3.3.x                        http://www.trolltech.com
+libkde     >= 3.4.x (>=3.5.x recommended)  http://www.kde.org
+
