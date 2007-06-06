@@ -7,7 +7,7 @@ kde4_automoc(${kipi_LIB_SRCS})
 
 kde4_add_library(kipi SHARED ${kipi_LIB_SRCS})
 
-target_link_libraries(kipi ${KDE4_KDEUI_LIBS} ${QT_QTGUI_LIBRARY})
+target_link_libraries(kipi ${KDE4_KDEUI_LIBS} ${KDE4_KPARTS_LIBS} ${KDE4_KFILE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QT3SUPPORT_LIBRARY})
 
 set_target_properties(kipi PROPERTIES VERSION 2.0.0 SOVERSION 2)
 
