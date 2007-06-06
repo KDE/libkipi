@@ -1,7 +1,6 @@
 METASOURCES = AUTO
 INCLUDES = -I.. -I$(srcdir)/.. $(LIBKIPI_CFLAGS) $(all_includes)
 
-
 lib_LTLIBRARIES = libkipi.la
 
 libkipi_la_SOURCES = interface.cpp plugin.cpp pluginloader.cpp KDStream.cpp imageinfo.cpp imagecollection.cpp \
@@ -20,12 +19,5 @@ libkipi_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) \
 libkipi_la_LIBADD = $(LIB_KIO) $(LIB_KDEUI) $(LIB_KDECORE) $(LIB_QT)
 
 libkipiincludedir = $(includedir)/libkipi
-
-KDE_ICON = kipi
-
-picsdir = $(kde_datadir)/kipi/data
-pics_DATA = kipi-plugins_logo.png banner_left.png
-
-EXTRA_DIST = $(pics_DATA)
 
 
