@@ -22,22 +22,18 @@
 
 // Include files for Qt
 
-#include <qvbox.h>
-#include <qlayout.h>
-#include <qdir.h>
-#include <qwidget.h>
-#include <qgroupbox.h>
-#include <qwhatsthis.h>
-#include <qcolor.h>
-#include <qhgroupbox.h>
-#include <qvgroupbox.h>
-#include <qheader.h>
-#include <qlistview.h>
-#include <qframe.h>
-#include <qlabel.h>
-#include <qcolor.h>
-#include <qpixmap.h>
-#include <qpushbutton.h>
+#include <QVbox>
+#include <QLayout>
+#include <QDir>
+#include <QWidget>
+#include <QGroupBox>
+#include <QColor>
+#include <QHeader>
+#include <QListView>
+#include <QFrame>
+#include <QLabel>
+#include <QPixmap>
+#include <QPushButton>
 
 // Include files for KDE
 
@@ -59,7 +55,7 @@
 
 // Include files for libKipi.
 
-#include "libkipi/version.h"
+#include "version.h"
 
 // Local includes
 
@@ -72,13 +68,14 @@ namespace KIPI
 class BatchProgressItem : public KListViewItem
 {
 public:
-   BatchProgressItem(KListView * parent, QListViewItem *after, const QString &message, int messageType)
-                   : KListViewItem( parent, after), m_messagetype(messageType)
-   {
+
+BatchProgressItem(KListView * parent, QListViewItem *after, const QString &message, int messageType)
+                  : KListViewItem( parent, after), m_messagetype(messageType)
+{
    // Set the icon.
 
    switch( m_messagetype )
-     {
+   {
      case KIPI::StartingMessage:
         setPixmap( 0, SmallIcon( "run" ) );
         break;
@@ -96,18 +93,19 @@ public:
         break;
      default:
         setPixmap( 0, SmallIcon( "info" ) );
-     }
+   }
 
    // Set the message text.
 
    setText(1, message);
-   }
+}
 
 private:
+
    int m_messagetype;
 
    void paintCell (QPainter *p, const QColorGroup &cg, int column, int width, int alignment)
-      {
+   {
       QColorGroup _cg( cg );
 
       if ( m_messagetype == KIPI::ErrorMessage )
@@ -125,15 +123,14 @@ private:
           }
 
       KListViewItem::paintCell( p, cg, column, width, alignment );
-      }
+   }
 };
 
+// ----------------------------------------------------------------------
 
-struct BatchProgressDialog::Private {
+struct BatchProgressDialog::Private 
+{
 };
-
-
-/////////////////////////////////// CONSTRUCTOR ////////////////////////////////////////////
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
                    : KDialogBase( parent, "KIPIBatchProgressDialog", true /* modal */,
@@ -174,33 +171,27 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     m_actionsList->setItemMargin(1);
     m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
-    QWhatsThis::add( m_actionsList, i18n("<p>This is the current tasks list released.") );
+    m_actionsList->setWhatsThis( i18n("<p>This is the current tasks list released.") );
 
     //---------------------------------------------
 
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_progress, i18n("<p>This is the list current percent task released.") );
+    m_progress->setWhatsThis( i18n("<p>This is the list current percent task released.") );
     resize( 600, 400 );
 }
-
-
-//////////////////////////////////// DESTRUCTOR /////////////////////////////////////////////
 
 BatchProgressDialog::~BatchProgressDialog()
 {
     delete d;
 }
 
-
-///////////////////////////////////// FONCTIONS /////////////////////////////////////////////
-
 void BatchProgressDialog::addedAction(const QString &text, int type)
 {
-    m_item = new KIPI::BatchProgressItem(m_actionsList,
-                                         m_actionsList->lastItem(),
-                                         text, type);
+    m_item = new BatchProgressItem(m_actionsList,
+                                   m_actionsList->lastItem(),
+                                   text, type);
 
     m_actionsList->ensureItemVisible(m_item);
 }

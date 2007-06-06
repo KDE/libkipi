@@ -66,9 +66,9 @@ Q_OBJECT
    
  protected:
  
-   KIPI::BatchProgressItem *m_item;
-   KListView               *m_actionsList;
-   KProgress               *m_progress;
+   BatchProgressItem *m_item;
+   KListView         *m_actionsList;
+   KProgress         *m_progress;
 
  private:
  
