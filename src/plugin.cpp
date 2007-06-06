@@ -31,7 +31,7 @@
 
 #include <kdebug.h>
 #include <kaction.h>
-#include <kinstance.h>
+#include <kactioncollection.h>
 
 // Local includes.
 
@@ -42,17 +42,18 @@ namespace KIPI
 
 struct Plugin::Private 
 {
-    QMap<QWidget*, KActionCollection*> m_actionCollection;
-    KInstance*                         m_instance;
-    QMap<QWidget*, QList<KAction*>>    m_actions;
-    QWidget*                           m_defaultWidget;
+    QMap< QWidget*, KActionCollection* > m_actionCollection;
+    KComponentData                       m_instance;
+    QMap< QWidget*, QList<KAction*> >    m_actions;
+    QWidget*                             m_defaultWidget;
 };
 
-Plugin::Plugin( KInstance* instance, QObject *parent, const char* name)
-            : QObject( parent, name)
+Plugin::Plugin(const KComponentData& instance, QObject *parent, const char* name)
+      : QObject(parent)
 {
     d=new Private;
-    d->m_instance=instance;
+    d->m_instance = instance;
+    setObjectName(name);
 }
 
 Plugin::~Plugin()
@@ -88,8 +89,7 @@ void Plugin::setup( QWidget* widget )
 {
     d->m_defaultWidget = widget;
     d->m_actions.insert( widget, QList<KAction*>() );
-    QString name = QString( "action collection for %1" ).arg( widget->name() );
-    d->m_actionCollection.insert( widget, new KActionCollection( widget, widget, name.latin1(), d->m_instance ) );
+    d->m_actionCollection.insert( widget, new KActionCollection( widget, d->m_instance ) );
 }
 
 } // namespace KIPI

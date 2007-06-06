@@ -31,6 +31,10 @@
 #include <QObject>
 #include <QList>
 
+// KDE includes.
+
+#include <kcomponentdata.h>
+
 // Local includes.
 
 #include "interface.h"
@@ -38,7 +42,7 @@
 
 class KAction;
 class KActionCollection;
-class KInstance;
+class KComponentData;
 
 /** @namespace KIPI */
 namespace KIPI
@@ -59,7 +63,7 @@ namespace KIPI
     {
     public:
 
-        Plugin( KInstance* instance, QObject *parent, const char* name);
+        Plugin(const KComponentData& instance, QObject *parent, const char* name);
         virtual ~Plugin();
 
         virtual void setup( QWidget* widget ) = 0;
