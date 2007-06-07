@@ -53,7 +53,7 @@ int ImageInfoShared::size()
 {
     if ( ! _url.isLocalFile() ) 
     {
-        kdFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n" << endl;
+        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n" << endl;
         return 0;
     }
     else
@@ -64,7 +64,7 @@ QDateTime ImageInfoShared::time( TimeSpec )
 {
     if ( ! _url.isLocalFile() ) 
     {
-        kdFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n" << endl;
+        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n" << endl;
         return QDateTime();
     }
     else
@@ -105,7 +105,7 @@ void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 
 void ImageInfoShared::setTitle( const QString& )
 {
-    kdWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
+    kWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
         "If the host application do support that, then this function should\n"
         "have been overridden in the host application.\n" << endl;
 }
