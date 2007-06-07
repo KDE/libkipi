@@ -23,4 +23,3 @@ AC_COMPILE_IFELSE(
 )
 CPPFLAGS=$libkipi_kdemacros_cppflags
 AC_LANG_POP(C++)
-AM_CONFIG_HEADER([ libkipi/libkipi/libkipi_export.h ])
