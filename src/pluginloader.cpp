@@ -101,7 +101,7 @@
               }
           }
           else {
-              kdDebug() << "No menu found\n";
+              kDebug() << "No menu found\n";
           }
           plugin->actionCollection()->readShortcutSettings();
       }
@@ -210,7 +210,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
     KSharedConfigPtr config = KGlobal::config();
-    config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
+    KConfigGroup group = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
 
     KService::List::ConstIterator iter;
     for(iter = offers.begin(); iter != offers.end(); ++iter) 
@@ -223,13 +223,13 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 
         if (library.isEmpty() || name.isEmpty() ) 
         {
-            kdWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen." << endl;
+            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen." << endl;
             continue;
         }
 
         if ( d->m_ignores.contains( name ) ) 
         {
-            kdDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application" << endl;
+            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application" << endl;
             continue;
         }
 
@@ -238,14 +238,14 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
         {
             if ( !d->m_interface->hasFeature( *featureIt ) ) 
             {
-                kdDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
+                kDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
                                  << "the feature " << *featureIt << endl;
 				appHasAllReqFeatures=false;
 				break;
             }
         }
 
-        bool load = config->readBoolEntry( name, true );
+        bool load = group.readEntry( name, true );
 
         if (!appHasAllReqFeatures)
             continue;
@@ -280,16 +280,16 @@ void PluginLoader::loadPlugin( Info* info )
                                                           d->m_interface, QStringList(), &error);
 
         if (plugin)
-            kdDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
+            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
         else
         {
-            kdWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
+            kWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
                                << info->name()
                                << " (" << info->library() << ")"
                                << " with error number "
                                << error << endl;
             if (error == KLibLoader::ErrNoLibrary)
-                kdWarning( 51001 ) << "KLibLoader says: "
+                kWarning( 51001 ) << "KLibLoader says: "
                                    << KLibLoader::self()->lastErrorMessage() << endl;
         }
         info->setPlugin(plugin);
@@ -366,7 +366,7 @@ ConfigWidget::~ConfigWidget()
 void ConfigWidget::apply()
 {
     KSharedConfigPtr config = KGlobal::config();
-    config->setGroup( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
+    KConfigGroup group = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
     bool changes = false;
 
     for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) 
@@ -376,7 +376,7 @@ void ConfigWidget::apply()
         if ( orig != load ) 
         {
             changes = true;
-            config->writeEntry( (*it)->info->name(), load );
+            group.writeEntry( (*it)->info->name(), load );
             (*it)->info->setShouldLoad(load);
             if ( load ) 
             {

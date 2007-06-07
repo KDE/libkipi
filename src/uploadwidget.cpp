@@ -92,7 +92,7 @@ UploadWidget::UploadWidget( KIPI::Interface* interface, QWidget* parent, const c
 
     if ( !uploadPath.startsWith( root ) ) 
     {
-        kdWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
+        kWarning(51000) << "Error in Host application: uploadPath() should start with uploadRoot()." << endl
                          << "uploadPath() = " << album.uploadPath().prettyUrl() << endl
                          << "uploadRoot() = " << album.uploadRoot().prettyUrl() << endl;
     }
@@ -124,7 +124,7 @@ KUrl UploadWidget::path() const
 
 void UploadWidget::load( )
 {
-    kdWarning() << "KIPI::UploadWidget::load(): This method is obsolete\n";
+    kWarning() << "KIPI::UploadWidget::load(): This method is obsolete\n";
 }
 
 void UploadWidget::slotPopulateFinished( K3FileTreeViewItem * parentItem )
@@ -151,7 +151,7 @@ void UploadWidget::slotPopulateFinished( K3FileTreeViewItem * parentItem )
 
     if ( !item ) 
     {
-        kdDebug( 51000 ) << "Unable to open " << itemName << endl;
+        kDebug( 51000 ) << "Unable to open " << itemName << endl;
     }
     else
     {
