@@ -34,6 +34,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kio/jobclasses.h>
+#include <kio/jobuidelegate.h>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
 
@@ -184,6 +185,7 @@ void KIPI::UploadWidget::mkdir()
     url.addPath( dir );
 
     KIO::SimpleJob* job = KIO::mkdir(url);
+    job->ui()->setWindow(this);
 
     connect(job, SIGNAL(result(KIO::Job*)), 
             this, SLOT(slotAlbumCreated(KIO::Job*)));
@@ -194,7 +196,7 @@ void UploadWidget::slotAlbumCreated(KIO::Job* job)
     int code = job->error();
 
     if ( code )
-        job->showErrorDialog( this );
+        job->ui()->showErrorMessage();
 }
 
 void UploadWidget::slotFolderSelected()
