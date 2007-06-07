@@ -67,7 +67,7 @@ KActionCollection* Plugin::actionCollection( QWidget* widget )
         widget = d->m_defaultWidget;
 
     if (!d->m_actionCollection.contains( widget ))
-        kdWarning( 51000 ) << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
+        kWarning( 51000 ) << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
                            << "as the very first line when overriding the setup method." << endl;
     return d->m_actionCollection[widget];
 }
