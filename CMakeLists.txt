@@ -1,7 +1,7 @@
 project(libkipi)
 
 subdirs(pics)
-subdirs(src)
+subdirs(libkipi)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
 
