@@ -264,7 +264,7 @@ bool ImageCollection::isValid() const
 
 void ImageCollection::printNullError() const
 {
-    kdWarning( 51000 ) << "Image collection is invalid - this might be the case if you asked for an album, " << endl
+    kWarning( 51000 ) << "Image collection is invalid - this might be the case if you asked for an album, " << endl
                        << "and not album existed. You should check using .isValid() first." << endl
                        << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
                        << "should do that." << endl;
