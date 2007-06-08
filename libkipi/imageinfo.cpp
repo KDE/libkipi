@@ -34,10 +34,10 @@
 namespace KIPI
 {
 
-QString ImageInfo::toString( const QVariant& /*data*/ ) const
+QString ImageInfo::toString( const QVariant& data ) const
 {
-    // TODO: Find here another solution than KDStream...
-    return QString();
+    QString string = data.toString();
+    return string;
 }
 
 /**
