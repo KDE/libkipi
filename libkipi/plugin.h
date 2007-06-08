@@ -34,15 +34,13 @@
 // KDE includes.
 
 #include <kcomponentdata.h>
+#include <kaction.h>
+#include <kactioncollection.h>
 
 // Local includes.
 
 #include "interface.h"
 #include "libkipi_export.h"
-
-class KAction;
-class KActionCollection;
-class KComponentData;
 
 /** @namespace KIPI */
 namespace KIPI

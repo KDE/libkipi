@@ -30,8 +30,6 @@
 // KDE includes.
 
 #include <kdebug.h>
-#include <kaction.h>
-#include <kactioncollection.h>
 
 // Local includes.
 
