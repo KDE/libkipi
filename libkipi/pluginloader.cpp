@@ -121,10 +121,7 @@ namespace KIPI
 {
 
 //---------------------------------------------------------------------
-//
-// PluginLoader::Info
-//
-//---------------------------------------------------------------------
+
 struct PluginLoader::Info::Private 
 {
     QString m_name;
@@ -136,12 +133,12 @@ struct PluginLoader::Info::Private
 
 PluginLoader::Info::Info(const QString& name, const QString& comment, const QString& library, bool shouldLoad)
 {
-    d=new Private;
-    d->m_name=name;
-    d->m_comment=comment;
-    d->m_library=library;
-    d->m_plugin=0;
-    d->m_shouldLoad=shouldLoad;
+    d = new Private;
+    d->m_name       = name;
+    d->m_comment    = comment;
+    d->m_library    = library;
+    d->m_plugin     = 0;
+    d->m_shouldLoad = shouldLoad;
 }
 
 PluginLoader::Info::~Info()
@@ -185,32 +182,28 @@ void PluginLoader::Info::setShouldLoad(bool value)
 }
 
 //---------------------------------------------------------------------
-//
-// PluginLoader
-//
-//---------------------------------------------------------------------
 
-static PluginLoader* s_instance = 0;
+static PluginLoader* s_componentData = 0;
 
 struct PluginLoader::Private
 {
-    PluginList m_pluginList;
-    Interface* m_interface;
+    PluginList  m_pluginList;
+    Interface*  m_interface;
     QStringList m_ignores;
 };
 
 PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 {
-    Q_ASSERT( s_instance == 0 );
-    s_instance = this;
+    Q_ASSERT( s_componentData == 0 );
+    s_componentData = this;
 
-    d=new Private;
+    d = new Private;
     d->m_interface = interface;
-    d->m_ignores = ignores;
+    d->m_ignores   = ignores;
 
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
-    KSharedConfigPtr config = KGlobal::config();
-    KConfigGroup group = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
+    KSharedConfigPtr config     = KGlobal::config();
+    KConfigGroup group          = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
 
     KService::List::ConstIterator iter;
     for(iter = offers.begin(); iter != offers.end(); ++iter) 
@@ -274,13 +267,15 @@ void PluginLoader::loadPlugin( Info* info )
     if ( info->plugin() == 0 && info->shouldLoad() ) 
     {
         Plugin *plugin = 0;
-        int error=0;
+        int error      = 0;
         plugin =  KParts::ComponentFactory
                   ::createPartInstanceFromLibrary<Plugin>(info->library().toLocal8Bit().data(), 0,
                                                           d->m_interface, QStringList(), &error);
 
         if (plugin)
+        {
             kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
+        }
         else
         {
             kWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
@@ -295,7 +290,7 @@ void PluginLoader::loadPlugin( Info* info )
         info->setPlugin(plugin);
     }
     if ( info->plugin() ) // Do not emit if we had trouble loading the plugin.
-        emit PluginLoader::instance()->plug( info );
+        emit PluginLoader::componentData()->plug( info );
 }
 
 const PluginLoader::PluginList& PluginLoader::pluginList()
@@ -303,17 +298,14 @@ const PluginLoader::PluginList& PluginLoader::pluginList()
     return d->m_pluginList;
 }
 
-PluginLoader* PluginLoader::instance()
+PluginLoader* PluginLoader::componentData()
 {
-    Q_ASSERT( s_instance != 0);
-    return s_instance;
+    Q_ASSERT( s_componentData != 0);
+    return s_componentData;
 }
 
 //---------------------------------------------------------------------
-//
-// ConfigWidget
-//
-//---------------------------------------------------------------------
+
 ConfigWidget* PluginLoader::configWidget( QWidget* parent )
 {
     return new ConfigWidget( parent );
@@ -339,7 +331,7 @@ struct ConfigWidget::Private
 ConfigWidget::ConfigWidget(QWidget* parent)
             : QAbstractScrollArea(parent)
 {
-    d=new Private;
+    d = new Private;
     QWidget* top = new QWidget( viewport() );
     setViewport( top );
 
@@ -347,7 +339,7 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     lay->setMargin(KDialog::marginHint());
     lay->setSpacing(KDialog::spacingHint());
 
-    PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
+    PluginLoader::PluginList list = PluginLoader::componentData()->d->m_pluginList;
     for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) 
     {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
@@ -380,16 +372,16 @@ void ConfigWidget::apply()
             (*it)->info->setShouldLoad(load);
             if ( load ) 
             {
-                PluginLoader::instance()->loadPlugin( (*it)->info);
+                PluginLoader::componentData()->loadPlugin( (*it)->info);
             }
             else 
             {
                 if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
-                    emit PluginLoader::instance()->unplug( (*it)->info);
+                    emit PluginLoader::componentData()->unplug( (*it)->info);
             }
         }
     }
-    emit PluginLoader::instance()->replug();
+    emit PluginLoader::componentData()->replug();
 }
 
 } // namespace KIPI

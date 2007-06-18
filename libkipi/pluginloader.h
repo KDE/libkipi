@@ -74,17 +74,19 @@ namespace KIPI
             Private* d;
         };
 
+        typedef QList<Info*> PluginList;
+
         PluginLoader( const QStringList& ignores, Interface* interface );
         virtual ~PluginLoader();
-        void loadPlugins();
-        static PluginLoader* instance();
-        ConfigWidget* configWidget( QWidget* parent );
 
-        typedef QList<Info*> PluginList;
+        ConfigWidget* configWidget( QWidget* parent );
 
         const PluginList& pluginList();
 
-        void loadPlugin( Info* );
+        void loadPlugins();
+        void loadPlugin(Info*);
+
+        static PluginLoader* componentData();
 
     signals:
 
