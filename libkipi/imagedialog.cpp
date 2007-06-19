@@ -93,6 +93,8 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
 
     setCaption(i18n("Select Image From Album"));
     setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
+    setModal(true);
+    setDefaultButton(KDialog::Ok);
 
     KVBox *box = new KVBox( this );
     setMainWidget( box );
