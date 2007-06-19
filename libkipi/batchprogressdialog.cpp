@@ -100,6 +100,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     setCaption(caption);
     setButtons( KDialog::Cancel );
     setDefaultButton(KDialog::Cancel);
+    setModal(true);
 
     KVBox *box = new KVBox( this );
     setMainWidget( box );
