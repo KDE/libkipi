@@ -28,9 +28,9 @@
 
 // Qt includes.
 
-#include <QWidget>
-#include <QList>
-#include <QPixmap>
+#include <QtGui/QWidget>
+#include <QtCore/QList>
+#include <QtGui/QPixmap>
 
 // KIPI includes.
 
@@ -59,11 +59,11 @@ public:
 
     QList<ImageCollection> selectedImageCollections() const;
 
-signals:
+Q_SIGNALS:
 
     void selectionChanged();
 
-private slots:
+private Q_SLOTS:
 
     void slotSelectAll();
     void slotInvertSelection();

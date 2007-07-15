@@ -28,7 +28,7 @@
 
 // Qt includes.
 
-#include <QWidget>
+#include <QtGui/QWidget>
 
 // KDE includes.
 
@@ -53,21 +53,21 @@ namespace KIPI
         ~UploadWidget();
         KUrl path() const;
 
-    public slots:
+    public Q_SLOTS:
 
         void mkdir();
 
-    signals :
+    Q_SIGNALS:
     
         void folderItemSelected(const KUrl&);
 
-    protected slots:
+    protected Q_SLOTS:
 
         void load();
         void slotAlbumCreated(KIO::Job* job);
         void slotFolderSelected();
 
-    private slots:
+    private Q_SLOTS:
 
         void slotPopulateFinished(K3FileTreeViewItem *);
 

@@ -28,8 +28,8 @@
 
 // Qt includes.
 
-#include <QObject>
-#include <QList>
+#include <QtCore/QObject>
+#include <QtCore/QList>
 
 // KDE includes.
 

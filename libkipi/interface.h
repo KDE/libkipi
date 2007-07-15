@@ -29,9 +29,9 @@
 
 // Qt includes.
 
-#include <QString>
-#include <QObject>
-#include <QList>
+#include <QtCore/QString>
+#include <QtCore/QObject>
+#include <QtCore/QList>
 
 // KDE includes.
 
@@ -85,7 +85,7 @@ namespace KIPI
 
         bool hasFeature( KIPI::Features feature );
 
-    signals:
+    Q_SIGNALS:
 
         void selectionChanged( bool hasSelection );
         void currentAlbumChanged( bool anyAlbum );

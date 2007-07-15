@@ -28,8 +28,8 @@
 
 // Qt includes.
 
-#include <QList>
-#include <QWidget>
+#include <QtCore/QList>
+#include <QtGui/QWidget>
 
 // KDE includes.
 
@@ -66,7 +66,7 @@ public:
     static KUrl getImageURL(QWidget*, Interface*);
     static KUrl::List getImageURLs(QWidget*, Interface*);
 
-private slots:
+private Q_SLOTS:
 
     void fillImageList(Q3ListViewItem*);
     void slotImageSelected(Q3ListViewItem*);

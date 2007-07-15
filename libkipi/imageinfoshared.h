@@ -28,10 +28,10 @@
 
 // Qt includes.
 
-#include <QString>
-#include <QMap>
-#include <QDateTime>
-#include <QVariant>
+#include <QtCore/QString>
+#include <QtCore/QMap>
+#include <QtCore/QDateTime>
+#include <QtCore/QVariant>
 
 // KDE includes.
 

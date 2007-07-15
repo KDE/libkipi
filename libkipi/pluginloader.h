@@ -26,9 +26,9 @@
 
 // Qt includes.
 
-#include <QList>
-#include <QWidget>
-#include <QAbstractScrollArea>
+#include <QtCore/QList>
+#include <QtGui/QWidget>
+#include <QtGui/QAbstractScrollArea>
 
 // Local includes.
 
@@ -88,7 +88,7 @@ namespace KIPI
 
         static PluginLoader* componentData();
 
-    signals:
+    Q_SIGNALS:
 
         void plug( KIPI::PluginLoader::Info* );
         void unplug( KIPI::PluginLoader::Info* );
@@ -112,7 +112,7 @@ namespace KIPI
         ConfigWidget( QWidget* parent );
         ~ConfigWidget();
 
-    public slots:
+    public Q_SLOTS:
 
         void apply();
 

@@ -28,8 +28,8 @@
 
 // Qt Includes.
 
-#include <QString>
-#include <QDateTime>
+#include <QtCore/QString>
+#include <QtCore/QDateTime>
 
 // KDE includes.
 
