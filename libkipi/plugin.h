@@ -59,6 +59,8 @@ namespace KIPI
 
     class LIBKIPI_EXPORT Plugin : public QObject
     {
+        Q_OBJECT
+
     public:
 
         Plugin(const KComponentData& instance, QObject *parent, const char* name);

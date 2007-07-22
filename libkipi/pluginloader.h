@@ -30,6 +30,10 @@
 #include <QtGui/QWidget>
 #include <QtGui/QAbstractScrollArea>
 
+// KDE includes
+
+#include <kservice.h>
+
 // Local includes.
 
 #include "interface.h"
@@ -53,8 +57,10 @@ namespace KIPI
 
         public:
 
-            Info( const QString& name, const QString& comment, const QString& library, bool shouldLoad );
+            Info( KService::Ptr service, bool shouldLoad );
             ~Info();
+
+            KService::Ptr service() const;
 
             QString name() const;
 

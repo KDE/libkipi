@@ -124,19 +124,15 @@ namespace KIPI
 
 struct PluginLoader::Info::Private 
 {
-    QString m_name;
-    QString m_comment;
-    QString m_library;
+    KService::Ptr m_service;
     Plugin* m_plugin;
     bool m_shouldLoad;
 };
 
-PluginLoader::Info::Info(const QString& name, const QString& comment, const QString& library, bool shouldLoad)
+PluginLoader::Info::Info(KService::Ptr service, bool shouldLoad)
 {
     d = new Private;
-    d->m_name       = name;
-    d->m_comment    = comment;
-    d->m_library    = library;
+    d->m_service    = service;
     d->m_plugin     = 0;
     d->m_shouldLoad = shouldLoad;
 }
@@ -146,19 +142,24 @@ PluginLoader::Info::~Info()
     delete d;
 }
 
+KService::Ptr PluginLoader::Info::service() const
+{
+    return d->m_service;
+}
+
 QString PluginLoader::Info::name() const
 {
-    return d->m_name;
+    return d->m_service->name();
 }
 
 QString PluginLoader::Info::comment() const
 {
-    return d->m_comment;
+    return d->m_service->comment();
 }
 
 QString PluginLoader::Info::library() const
 {
-    return d->m_library;
+    return d->m_service->library();
 }
 
 Plugin* PluginLoader::Info::plugin() const
@@ -243,7 +244,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
         if (!appHasAllReqFeatures)
             continue;
 
-        Info* info = new Info( name, comment, library, load );
+        Info* info = new Info( service, load );
         d->m_pluginList.append( info );
     }
 }
@@ -264,13 +265,11 @@ void PluginLoader::loadPlugins()
 
 void PluginLoader::loadPlugin( Info* info )
 {
-    if ( info->plugin() == 0 && info->shouldLoad() ) 
+    if ( info->plugin() == 0 && info->shouldLoad() )
     {
         Plugin *plugin = 0;
         int error      = 0;
-        plugin =  KParts::ComponentFactory
-                  ::createPartInstanceFromLibrary<Plugin>(info->library().toLocal8Bit().data(), 0,
-                                                          d->m_interface, QStringList(), &error);
+        plugin = KService::createInstance<Plugin>(info->service(), d->m_interface, QStringList(), &error);
 
         if (plugin)
         {
@@ -278,7 +277,7 @@ void PluginLoader::loadPlugin( Info* info )
         }
         else
         {
-            kWarning( 51001 ) << "KIPI::PluginLoader:: createInstanceFromLibrary returned 0 for "
+            kWarning( 51001 ) << "KIPI::PluginLoader:: createInstance returned 0 for "
                                << info->name()
                                << " (" << info->library() << ")"
                                << " with error number "

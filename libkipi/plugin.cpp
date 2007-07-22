@@ -34,6 +34,7 @@
 // Local includes.
 
 #include "plugin.h"
+#include "plugin.moc"
 
 namespace KIPI
 {
