@@ -61,7 +61,7 @@
    list this:
       &lt;ActionList name="image_actions"/&gt;
 
-   Then plugin plugins into menus could be done with code similar to this from KimDaBa:
+   Then plugin plugins into menus could be done with code similar to this from KPhotoAlbum:
    \code
     void slotReplug() {
       unplugActionList( QString::fromLatin1("file_actions") );

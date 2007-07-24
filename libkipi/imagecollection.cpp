@@ -194,7 +194,7 @@ KURL KIPI::ImageCollection::uploadPath() const
   Here are a couble of possible return value different host applications may choose.
   <ul>
   <li> If all images are stored rooted at some tree (which is the case for
-  KimDaBa), then this function may return this directory unconditionally.
+  KPhotoAlbum), then this function may return this directory unconditionally.
   <li> The root directory returned by uploadPath() (which is the default implementation for this method)
   <li> The directory returned by uploadPath().
   </ul>
@@ -214,7 +214,7 @@ KURL KIPI::ImageCollection::uploadRoot() const
 /*!
   This fonction return the name of the upload root path used by the 
   the KIPI::UploadWidget. This name can be different for each host 
-  app (like "Images" for Kimdaba or "My Albums" for Digikam).
+  app (like "Images" for KPhotoAlbum or "My Albums" for Digikam).
 */
 QString KIPI::ImageCollection::uploadRootName() const
 {
