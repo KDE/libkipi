@@ -150,7 +150,7 @@ bool Interface::hasFeature( const QString& feature )
     else if ( feature == "HostSupportsTags" )
         return hasFeature( HostSupportsTags );
     else {
-        kWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature << endl;
+        kWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature;
         return false;
     }
 }

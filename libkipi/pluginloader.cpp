@@ -217,13 +217,13 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 
         if (library.isEmpty() || name.isEmpty() ) 
         {
-            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen." << endl;
+            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
         if ( d->m_ignores.contains( name ) ) 
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application" << endl;
+            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application";
             continue;
         }
 
@@ -273,7 +273,7 @@ void PluginLoader::loadPlugin( Info* info )
 
         if (plugin)
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
+            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
         }
         else
         {

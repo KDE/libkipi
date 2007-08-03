@@ -152,7 +152,7 @@ void UploadWidget::slotPopulateFinished( K3FileTreeViewItem * parentItem )
 
     if ( !item ) 
     {
-        kDebug( 51000 ) << "Unable to open " << itemName << endl;
+        kDebug( 51000 ) << "Unable to open " << itemName;
     }
     else
     {

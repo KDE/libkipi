@@ -53,7 +53,7 @@ int ImageInfoShared::size()
 {
     if ( ! _url.isLocalFile() ) 
     {
-        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n" << endl;
+        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
         return 0;
     }
     else
@@ -64,7 +64,7 @@ QDateTime ImageInfoShared::time( TimeSpec )
 {
     if ( ! _url.isLocalFile() ) 
     {
-        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n" << endl;
+        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
         return QDateTime();
     }
     else
