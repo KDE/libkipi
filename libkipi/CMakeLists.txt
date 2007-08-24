@@ -1,16 +1,21 @@
-include_directories(${KDE4_INCLUDES} ${QT4_INCLUDES})
+INCLUDE_DIRECTORIES(${KDE4_INCLUDES} ${QT4_INCLUDES})
 
-set(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp imagecollectionshared.cpp imageinfoshared.cpp plugin.cpp imageinfo.cpp 
-                  batchprogressdialog.cpp uploadwidget.cpp imagedialog.cpp imagecollectionselector.cpp)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h)
 
+SET(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp 
+                  imagecollectionshared.cpp imageinfoshared.cpp plugin.cpp 
+                  imageinfo.cpp batchprogressdialog.cpp uploadwidget.cpp 
+                  imagedialog.cpp imagecollectionselector.cpp)
 
-kde4_add_library(kipi SHARED ${kipi_LIB_SRCS})
+KDE4_ADD_LIBRARY(kipi SHARED ${kipi_LIB_SRCS})
 
-target_link_libraries(kipi ${KDE4_KPARTS_LIBS} ${KDE4_KFILE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QT3SUPPORT_LIBRARY})
+TARGET_LINK_LIBRARIES(kipi ${KDE4_KPARTS_LIBS} ${KDE4_KFILE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QT3SUPPORT_LIBRARY})
 
-set_target_properties(kipi PROPERTIES VERSION 2.0.0 SOVERSION 2)
+SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})
 
-install(TARGETS kipi DESTINATION ${LIB_INSTALL_DIR} )
+INSTALL(TARGETS kipi DESTINATION ${LIB_INSTALL_DIR} )
 
-install(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h imageinfoshared.h imagecollectionshared.h imagedialog.h uploadwidget.h batchprogressdialog.h imagecollectionselector.h version.h libkipi_export.h DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi)
-
+INSTALL(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h 
+              imageinfoshared.h imagecollectionshared.h imagedialog.h uploadwidget.h 
+              batchprogressdialog.h imagecollectionselector.h version.h libkipi_export.h 
+        DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi)

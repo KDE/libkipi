@@ -7,6 +7,6 @@ Name: libkipi
 Description: KDE library for shared plugins between graphical photo management applications
 URL: http://www.kipi-plugins.org
 Requires:
-Version: 0.2.0
+Version: ${KIPI_LIB_VERSION_STRING}
 Libs: -L${LIB_INSTALL_DIR} -lkipi
 Cflags: -I${INCLUDE_INSTALL_DIR}
