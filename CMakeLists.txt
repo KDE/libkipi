@@ -4,7 +4,7 @@ PROJECT(libkipi)
 # Informations to update before to release this library.
 
 # Library version history:
-# API      BIN
+# API      ABI
 # 0.1.0 => 0.0.0
 # 0.1.1 => 0.0.0
 # 0.1.2 => 1.0.1
@@ -18,7 +18,7 @@ SET(KIPI_LIB_MAJOR_VERSION "0")
 SET(KIPI_LIB_MINOR_VERSION "2")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
-# Library BIN version used by linker.
+# Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual.html#Updating-version-info
 SET(KIPI_LIB_SO_CUR_VERSION "2")
 SET(KIPI_LIB_SO_REV_VERSION "0")
