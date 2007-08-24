@@ -18,6 +18,15 @@ SET(KIPI_LIB_MAJOR_VERSION "0")
 SET(KIPI_LIB_MINOR_VERSION "2")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
+# Suffix to add at end of version string. Usual values are:
+# "-svn"   : alpha code unstable from svn. Do not use in production
+# "-beta1" : beta1 release.
+# "-beta2" : beta2 release.
+# "-beta3" : beta3 release.
+# "-rc"    : release candidate.
+# ""       : final relase. Can be used in production.
+SET(KIPI_LIB_SUFFIX_VERSION "-svn")
+
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual.html#Updating-version-info
 SET(KIPI_LIB_SO_CUR_VERSION "2")
@@ -27,7 +36,7 @@ SET(KIPI_LIB_SO_AGE_VERSION "0")
 # =======================================================
 # Set env. variables accordinly.
 
-SET(KIPI_LIB_VERSION_STRING "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}")
+SET(KIPI_LIB_VERSION_STRING "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}${KIPI_LIB_SUFFIX_VERSION}")
 SET(KIPI_LIB_VERSION_ID "0x0${KIPI_LIB_MAJOR_VERSION}0${KIPI_LIB_MINOR_VERSION}0${KIPI_LIB_PATCH_VERSION}")
 
 SET(KIPI_LIB_SO_VERSION_STRING "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.${KIPI_LIB_SO_AGE_VERSION}")
