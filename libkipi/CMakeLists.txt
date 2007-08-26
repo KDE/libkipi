@@ -17,5 +17,6 @@ INSTALL(TARGETS kipi DESTINATION ${LIB_INSTALL_DIR} )
 
 INSTALL(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h 
               imageinfoshared.h imagecollectionshared.h imagedialog.h uploadwidget.h 
-              batchprogressdialog.h imagecollectionselector.h version.h libkipi_export.h 
+              batchprogressdialog.h imagecollectionselector.h
+              ${CMAKE_CURRENT_BINARY_DIR}/version.h libkipi_export.h 
         DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi)
