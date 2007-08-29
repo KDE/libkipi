@@ -29,11 +29,11 @@
 #include <QCheckBox>
 #include <QLayout> 
 #include <QList> 
+#include <QVariantList> 
 
 // KDE includes.
 
 #include <kservicetypetrader.h>
-#include <kparts/componentfactory.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <ksharedconfig.h>
@@ -268,8 +268,8 @@ void PluginLoader::loadPlugin( Info* info )
     if ( info->plugin() == 0 && info->shouldLoad() )
     {
         Plugin *plugin = 0;
-        int error      = 0;
-        plugin = KService::createInstance<Plugin>(info->service(), d->m_interface, QStringList(), &error);
+        QString *error = 0;
+        plugin = KService::createInstance<Plugin>(info->service(), d->m_interface, QVariantList(), error);
 
         if (plugin)
         {
@@ -280,11 +280,8 @@ void PluginLoader::loadPlugin( Info* info )
             kWarning( 51001 ) << "KIPI::PluginLoader:: createInstance returned 0 for "
                                << info->name()
                                << " (" << info->library() << ")"
-                               << " with error number "
+                               << " with error: "
                                << error << endl;
-            if (error == KLibLoader::ErrNoLibrary)
-                kWarning( 51001 ) << "KLibLoader says: "
-                                   << KLibLoader::self()->lastErrorMessage() << endl;
         }
         info->setPlugin(plugin);
     }
