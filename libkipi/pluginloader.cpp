@@ -268,8 +268,8 @@ void PluginLoader::loadPlugin( Info* info )
     if ( info->plugin() == 0 && info->shouldLoad() )
     {
         Plugin *plugin = 0;
-        QString *error = 0;
-        plugin = KService::createInstance<Plugin>(info->service(), d->m_interface, QVariantList(), error);
+        QString error;
+        plugin = KService::createInstance<Plugin>(info->service(), d->m_interface, QVariantList(), &error);
 
         if (plugin)
         {
