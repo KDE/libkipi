@@ -184,7 +184,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 
 //---------------------------------------------------------------------
 
-static PluginLoader* s_componentData = 0;
+static PluginLoader* s_instance = 0;
 
 struct PluginLoader::Private
 {
@@ -195,8 +195,8 @@ struct PluginLoader::Private
 
 PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 {
-    Q_ASSERT( s_componentData == 0 );
-    s_componentData = this;
+    Q_ASSERT( s_instance == 0 );
+    s_instance = this;
 
     d = new Private;
     d->m_interface = interface;
@@ -286,7 +286,7 @@ void PluginLoader::loadPlugin( Info* info )
         info->setPlugin(plugin);
     }
     if ( info->plugin() ) // Do not emit if we had trouble loading the plugin.
-        emit PluginLoader::componentData()->plug( info );
+        emit PluginLoader::instance()->plug( info );
 }
 
 const PluginLoader::PluginList& PluginLoader::pluginList()
@@ -294,10 +294,10 @@ const PluginLoader::PluginList& PluginLoader::pluginList()
     return d->m_pluginList;
 }
 
-PluginLoader* PluginLoader::componentData()
+PluginLoader* PluginLoader::instance()
 {
-    Q_ASSERT( s_componentData != 0);
-    return s_componentData;
+    Q_ASSERT( s_instance != 0);
+    return s_instance;
 }
 
 //---------------------------------------------------------------------
@@ -335,7 +335,7 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     lay->setMargin(KDialog::marginHint());
     lay->setSpacing(KDialog::spacingHint());
 
-    PluginLoader::PluginList list = PluginLoader::componentData()->d->m_pluginList;
+    PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
     for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) 
     {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
@@ -368,16 +368,16 @@ void ConfigWidget::apply()
             (*it)->info->setShouldLoad(load);
             if ( load ) 
             {
-                PluginLoader::componentData()->loadPlugin( (*it)->info);
+                PluginLoader::instance()->loadPlugin( (*it)->info);
             }
             else 
             {
                 if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
-                    emit PluginLoader::componentData()->unplug( (*it)->info);
+                    emit PluginLoader::instance()->unplug( (*it)->info);
             }
         }
     }
-    emit PluginLoader::componentData()->replug();
+    emit PluginLoader::instance()->replug();
 }
 
 } // namespace KIPI

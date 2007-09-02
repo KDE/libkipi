@@ -92,7 +92,7 @@ namespace KIPI
         void loadPlugins();
         void loadPlugin(Info*);
 
-        static PluginLoader* componentData();
+        static PluginLoader* instance();
 
     Q_SIGNALS:
 
