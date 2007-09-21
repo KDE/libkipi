@@ -174,14 +174,14 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     m_actionsList->setItemMargin(1);
     m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
-    QWhatsThis::add( m_actionsList, i18n("<p>This is the current tasks list released.") );
+    QWhatsThis::add( m_actionsList, i18n("<p>This is the current processing status.</p>" );
 
     //---------------------------------------------
 
     m_progress = new KProgress( box, "Progress" );
     m_progress->setTotalSteps(100);
     m_progress->setValue(0);
-    QWhatsThis::add( m_progress, i18n("<p>This is the list current percent task released.") );
+    QWhatsThis::add( m_progress, i18n("<p>This is the batch job progress in percentage.</p>") );
     resize( 600, 400 );
 }
 
