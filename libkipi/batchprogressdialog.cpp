@@ -174,7 +174,7 @@ BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &captio
     m_actionsList->setItemMargin(1);
     m_actionsList->header()->hide();
     m_actionsList->setResizeMode(QListView::LastColumn);
-    QWhatsThis::add( m_actionsList, i18n("<p>This is the current processing status.</p>" );
+    QWhatsThis::add( m_actionsList, i18n("<p>This is the current processing status.</p>" ) );
 
     //---------------------------------------------
 
