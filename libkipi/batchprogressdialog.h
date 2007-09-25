@@ -51,29 +51,25 @@ enum ActionMessageType
     ProgressMessage
 };
 
+class BatchProgressDialogPriv;
+
 class LIBKIPI_EXPORT BatchProgressDialog : public KDialog
 {
-Q_OBJECT
 
- public:
+    Q_OBJECT
 
-   BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
-   ~BatchProgressDialog();
+public:
 
-   void addedAction(const QString &text, int type);
-   void reset();
-   void setProgress(int current, int total);
+    BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
+    ~BatchProgressDialog();
+    
+    void addedAction(const QString &text, int type);
+    void reset();
+    void setProgress(int current, int total);
    
- protected:
+private:
  
-   QProgressBar      *m_progress;
-
-   QListWidget       *m_actionsList;
-
- private:
- 
-   struct Private;
-   Private* d;
+    BatchProgressDialogPriv *d;
 };
 
 }  // NameSpace KIPI

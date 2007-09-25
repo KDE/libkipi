@@ -27,6 +27,7 @@
 #include <QColorGroup>
 #include <QListWidget>
 #include <QProgressBar>
+#include <QLayout>
 
 // Include files for KDE
 
@@ -54,70 +55,82 @@ public:
 BatchProgressItem(QListWidget * parent, const QString& message, int messageType)
     : QListWidgetItem(message, parent)
 {
-   // Set the icon.
-
-   switch( messageType )
-   {
-     case StartingMessage:
-        setIcon(SmallIcon( "run" ));
-        break;
-     case SuccessMessage:
-        setIcon(SmallIcon( "ok" ));
-        break;
-     case WarningMessage:
-        setIcon(SmallIcon( "flag" ));
-        setForeground( QBrush(Qt::darkYellow) );
-        break;
-     case ErrorMessage:
-        setIcon(SmallIcon( "stop" ));
-        setForeground( QBrush(Qt::red) );
-        break;
-     case ProgressMessage:
-        setIcon(SmallIcon( "info" ));
-        break;
-     default:
-        setIcon(SmallIcon( "info" ));
-   }
-
-   // Set the message text.
-
-   setText(message);
+    // Set the icon.
+    
+    switch( messageType )
+    {
+        case StartingMessage:
+            setIcon(SmallIcon( "exec" ));
+            break;
+        case SuccessMessage:
+            setIcon(SmallIcon( "ok" ));
+            break;
+        case WarningMessage:
+            setIcon(SmallIcon( "flag-yellow" ));
+            setForeground( QBrush(Qt::darkYellow) );
+            break;
+        case ErrorMessage:
+            setIcon(SmallIcon( "process-stop" ));
+            setForeground( QBrush(Qt::red) );
+            break;
+        case ProgressMessage:
+            setIcon(SmallIcon( "document-properties" ));
+            break;
+        default:
+            setIcon(SmallIcon( "document-properties" ));
+    }
+    
+    // Set the message text.
+    
+        setText(message);
 }
 
 };
 
 // ----------------------------------------------------------------------
 
-struct BatchProgressDialog::Private 
+class BatchProgressDialogPriv 
 {
+public:
+
+    BatchProgressDialogPriv()
+    {
+        progress    = 0;
+        actionsList = 0;
+    }
+   
+    QProgressBar *progress;
+
+    QListWidget  *actionsList;
 };
 
 BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
                    : KDialog( parent )
 {
-    d = new Private;
+    d = new BatchProgressDialogPriv;
 
     setCaption(caption);
-    setButtons( KDialog::Cancel );
-    setDefaultButton(KDialog::Cancel);
+    setButtons(Cancel);
+    setDefaultButton(Cancel);
     setModal(true);
 
-    KVBox *box = new KVBox( this );
-    setMainWidget( box );
+    KVBox *box = new KVBox(this);
+    box->layout()->setSpacing(KDialog::spacingHint());
+    setMainWidget(box);
 
     //---------------------------------------------
 
-    m_actionsList = new QListWidget( box );
-    m_actionsList->setSortingEnabled(false);
-    m_actionsList->setWhatsThis( i18n("<p>This is the current processing status.</p>") );
+    d->actionsList = new QListWidget(box);
+    d->actionsList->setSortingEnabled(false);
+    d->actionsList->setWhatsThis(i18n("<p>This is the current processing status.</p>"));
 
     //---------------------------------------------
 
-    m_progress = new QProgressBar( box );
-    m_progress->setRange(0, 100);
-    m_progress->setValue(0);
-    m_progress->setWhatsThis( i18n("<p>This is the batch job progress in percentage.</p>") );
-    resize( 600, 400 );
+    d->progress = new QProgressBar(box);
+    d->progress->setRange(0, 100);
+    d->progress->setValue(0);
+    d->progress->setWhatsThis(i18n("<p>This is the batch job progress in percentage.</p>"));
+    resize(600, 400);
 }
 
 BatchProgressDialog::~BatchProgressDialog()
@@ -127,20 +140,20 @@ BatchProgressDialog::~BatchProgressDialog()
 
 void BatchProgressDialog::addedAction(const QString &text, int type)
 {
-    BatchProgressItem *item = new BatchProgressItem(m_actionsList, text, type);
-    m_actionsList->setCurrentItem(item);
+    BatchProgressItem *item = new BatchProgressItem(d->actionsList, text, type);
+    d->actionsList->setCurrentItem(item);
 }
 
 void BatchProgressDialog::reset()
 {
-    m_actionsList->clear();
-    m_progress->setValue(0);
+    d->actionsList->clear();
+    d->progress->setValue(0);
 }
 
 void BatchProgressDialog::setProgress(int current, int total)
 {
-    m_progress->setMaximum(total);
-    m_progress->setValue(current);
+    d->progress->setMaximum(total);
+    d->progress->setValue(current);
 }
 
 }  // NameSpace KIPI
