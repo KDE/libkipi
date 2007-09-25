@@ -32,9 +32,6 @@
 // Local includes.
 #include "libkipi_export.h"
 
-class QProgressBar;
-class QListWidget;
-
 /** 
   @namespace KIPI 
   This is the namespace
@@ -60,7 +57,7 @@ class LIBKIPI_EXPORT BatchProgressDialog : public KDialog
 
 public:
 
-    BatchProgressDialog( QWidget *parent=0, const QString &caption=QString::null );
+    BatchProgressDialog(QWidget *parent=0, const QString &caption=QString());
     ~BatchProgressDialog();
     
     void addedAction(const QString &text, int type);

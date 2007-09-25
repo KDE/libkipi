@@ -52,7 +52,7 @@ class BatchProgressItem : public QListWidgetItem
 {
 public:
 
-BatchProgressItem(QListWidget * parent, const QString& message, int messageType)
+BatchProgressItem(QListWidget *parent, const QString& message, int messageType)
     : QListWidgetItem(message, parent)
 {
     // Set the icon.
@@ -104,8 +104,8 @@ public:
     QListWidget  *actionsList;
 };
 
-BatchProgressDialog::BatchProgressDialog( QWidget *parent, const QString &caption )
-                   : KDialog( parent )
+BatchProgressDialog::BatchProgressDialog(QWidget *parent, const QString &caption)
+                   : KDialog(parent)
 {
     d = new BatchProgressDialogPriv;
 
