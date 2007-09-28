@@ -314,7 +314,7 @@ void ImageCollectionSelector::slotSelectionChanged(QListViewItem* listItem)
             comments.append("...");
 	}
 	
-        text += cellBeg + i18n("Comments:") +
+        text += cellBeg + i18n("Caption:") +
                 cellMid + comments +
                 cellEnd;
     }
