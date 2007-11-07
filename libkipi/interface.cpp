@@ -98,6 +98,16 @@
   to lauch a preview of the album.
 */
 
+/*!
+  \enum KIPI::HostSupportsTags
+  This feature specify whether the host application supports keywords for images,
+*/
+
+/*!
+  \enum KIPI::HostSupportsRating
+  This feature specify whether the host application supports rating values for images,
+*/
+
 namespace KIPI
 {
 
@@ -149,7 +159,10 @@ bool Interface::hasFeature( const QString& feature )
         return hasFeature( AlbumsUseFirstImagePreview );
     else if ( feature == "HostSupportsTags" )
         return hasFeature( HostSupportsTags );
-    else {
+    else if ( feature == "HostSupportsRating" )
+        return hasFeature( HostSupportsRating );
+    else 
+    {
         kWarning( 51000 ) << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature;
         return false;
     }
