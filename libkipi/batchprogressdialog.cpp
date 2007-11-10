@@ -60,7 +60,7 @@ BatchProgressItem(QListWidget *parent, const QString& message, int messageType)
     switch(messageType)
     {
         case StartingMessage:
-            setIcon(SmallIcon("exec"));
+            setIcon(SmallIcon("system-run"));
             break;
         case SuccessMessage:
             setIcon(SmallIcon("ok"));
