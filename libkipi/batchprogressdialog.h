@@ -30,6 +30,7 @@
 #include <kdialog.h>
 
 // Local includes.
+
 #include "libkipi_export.h"
 
 /** 
