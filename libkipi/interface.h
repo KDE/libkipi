@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2004-02-01
- * Description : interface for host application.
+ * Description : main kipi host application interface .
  *
  * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
@@ -24,6 +24,7 @@
  * ============================================================ */
 
 /** @file interface.h */
+
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 
@@ -44,62 +45,63 @@
 #include "libkipi_export.h"
 
 /** @namespace KIPI */
+
 namespace KIPI
 {
 
-    enum Features 
-    {
-        AlbumsHaveComments         = 1 << 0,
-        ImagesHasComments          = 1 << 1,
-        ImagesHasTime              = 1 << 2,
-        SupportsDateRanges         = 1 << 3,
-        AcceptNewImages            = 1 << 4,
-        ImageTitlesWritable        = 1 << 5,
-        AlbumsHaveCategory         = 1 << 6,
-        AlbumsHaveCreationDate     = 1 << 7,
-        AlbumsUseFirstImagePreview = 1 << 8,
-        HostSupportsTags           = 1 << 9,
-        HostSupportsRating         = 1 << 10
-    };
+enum Features 
+{
+    AlbumsHaveComments         = 1 << 0,
+    ImagesHasComments          = 1 << 1,
+    ImagesHasTime              = 1 << 2,
+    SupportsDateRanges         = 1 << 3,
+    AcceptNewImages            = 1 << 4,
+    ImageTitlesWritable        = 1 << 5,
+    AlbumsHaveCategory         = 1 << 6,
+    AlbumsHaveCreationDate     = 1 << 7,
+    AlbumsUseFirstImagePreview = 1 << 8,
+    HostSupportsTags           = 1 << 9,
+    HostSupportsRating         = 1 << 10
+};
 
-    /** class Interface */
-    class LIBKIPI_EXPORT Interface : public QObject
-    {
-        Q_OBJECT
+/** class Interface */
+class LIBKIPI_EXPORT Interface : public QObject
+{
+    Q_OBJECT
 
-    public:
+public:
 
-        Interface(QObject *parent, const char *name=0);
-        virtual ~Interface();
+    Interface(QObject *parent, const char *name=0);
+    virtual ~Interface();
 
-        virtual ImageCollection currentAlbum() = 0;
-        virtual ImageCollection currentSelection() = 0;
-        virtual QList<ImageCollection> allAlbums() = 0;
+    virtual ImageCollection currentAlbum() = 0;
+    virtual ImageCollection currentSelection() = 0;
+    virtual QList<ImageCollection> allAlbums() = 0;
 
-        virtual ImageInfo info( const KUrl& ) = 0;
-        virtual bool addImage( const KUrl&, QString& err );
-        virtual void delImage( const KUrl& );
+    virtual ImageInfo info( const KUrl& ) = 0;
+    virtual bool addImage( const KUrl&, QString& err );
+    virtual void delImage( const KUrl& );
 
-        virtual void refreshImages( const KUrl::List& );
+    virtual void refreshImages( const KUrl::List& );
 
-        virtual QString fileExtensions();
+    virtual QString fileExtensions();
 
-        bool hasFeature( KIPI::Features feature );
+    bool hasFeature( KIPI::Features feature );
 
-    Q_SIGNALS:
+Q_SIGNALS:
 
-        void selectionChanged( bool hasSelection );
-        void currentAlbumChanged( bool anyAlbum );
+    void selectionChanged( bool hasSelection );
+    void currentAlbumChanged( bool anyAlbum );
 
-    protected:
+protected:
 
-        virtual int features() const = 0;
+    virtual int features() const = 0;
 
-    private:
+private:
 
-        friend class PluginLoader;
-        bool hasFeature( const QString& feature );
-    };
+    friend class PluginLoader;
+    bool hasFeature( const QString& feature );
+};
 
 }  // namespace KIPI
 

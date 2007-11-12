@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2004-02-01
- * Description : interface for host application.
+ * Description : main kipi host application interface .
  *
  * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
