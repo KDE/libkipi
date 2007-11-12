@@ -30,12 +30,14 @@
 
 // Qt includes.
 
+#include <QPixmap>
 #include <QtCore/QString>
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
 // KDE includes.
 
+#include <kfileitem.h>
 #include <kurl.h>
 
 // Local includes.
@@ -85,6 +87,8 @@ public:
     virtual void refreshImages( const KUrl::List& );
 
     virtual QString fileExtensions();
+    
+    virtual void thumbnail( const KUrl& url, int size );
 
     bool hasFeature( KIPI::Features feature );
 
@@ -92,10 +96,16 @@ Q_SIGNALS:
 
     void selectionChanged( bool hasSelection );
     void currentAlbumChanged( bool anyAlbum );
+    void gotThumbnail( const KUrl&, const QPixmap& );
 
 protected:
 
     virtual int features() const = 0;
+
+private slots:
+
+    void gotKDEPreview(const KFileItem& item, const QPixmap &pix);
+    void failedKDEPreview(const KFileItem&);
 
 private:
 

@@ -29,6 +29,7 @@
 
 #include <kdebug.h>
 #include <kimageio.h>
+#include <kio/previewjob.h>
 
 // Local includes.
  
@@ -216,7 +217,6 @@ QList<ImageCollection> Interface::allAlbums()
     return QList<ImageCollection>();
 }
 
-
 /**
    Return a bitwise or of the KIPI::Features that thus application support.
 */
@@ -236,6 +236,33 @@ QString Interface::fileExtensions()
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
     QString imagesFileFilter = KDEImagetypes.join(" ");
     return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
+}
+
+/*!
+  Tell the host application about to get a thumbnail for an image. I fthis method is not 
+  re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
+*/
+void Interface::thumbnail( const KUrl& url, int size )
+{
+    KUrl::List list;
+    list << url;
+    KIO::PreviewJob *job = KIO::filePreview(list, size);
+
+    connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
+            this, SLOT(gotKDEPreview(const KFileItem &, const QPixmap &)));
+
+    connect(job, SIGNAL(failed(const KFileItem &)),
+            this, SLOT(failedKDEPreview(const KFileItem &)));
+}
+
+void Interface::gotKDEPreview(const KFileItem& item, const QPixmap &pix)
+{
+    emit gotThumbnail(item.url(), pix);
+}
+
+void Interface::failedKDEPreview(const KFileItem& item)
+{
+    emit gotThumbnail(item.url(), QPixmap());
 }
 
 } // namespace KIPI
