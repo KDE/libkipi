@@ -89,6 +89,7 @@ public:
     virtual QString fileExtensions();
     
     virtual void thumbnail( const KUrl& url, int size );
+    virtual void thumbnails( const KUrl::List& list, int size );
 
     bool hasFeature( KIPI::Features feature );
 

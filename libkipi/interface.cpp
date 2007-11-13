@@ -238,14 +238,25 @@ QString Interface::fileExtensions()
     return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
 
-/*!
-  Tell the host application about to get a thumbnail for an image. I fthis method is not 
+/**
+  Ask to Kipi host application to render a thumbnail for an image. If this method is not 
   re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
+  Use gotThumbnail() signal to take thumb.
 */
 void Interface::thumbnail( const KUrl& url, int size )
 {
     KUrl::List list;
     list << url;
+    thumbnails(list, size);
+}
+
+/**
+  Ask to Kipi host application to render thumbnails for a list of images. If this method is not 
+  re-implemented in host, standard KIO::filePreview is used to generated a thumbnail. 
+  Use gotThumbnail() signal to take thumbs.
+*/
+void Interface::thumbnails( const KUrl::List& list, int size )
+{
     KIO::PreviewJob *job = KIO::filePreview(list, size);
 
     connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
