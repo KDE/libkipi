@@ -112,9 +112,9 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
                                        kipi_version,
                                        I18N_NOOP("A Kipi dialog for image selection"),
                                        KAboutData::License_GPL,
-                                       "(c) 2004,2005, Kipi development team", 
+                                       "(c) 2004,2007, Kipi development team", 
                                        0,
-                                       "http://extragear.kde.org/apps/kipi");
+                                       "http://www.kipi-plugins.org");
 
     QPushButton *helpButton = actionButton( Help );
     KHelpMenu* helpMenu = new KHelpMenu(this, about, false);
