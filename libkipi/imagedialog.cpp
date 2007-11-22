@@ -7,9 +7,6 @@
  * Description : an image files selector dialog.
  *
  * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
- * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
- * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,126 +20,86 @@
  * 
  * ============================================================ */
 
-// Qt includes.
- 
-#include <QPointer>
-#include <QLabel>
-#include <QSplitter>
-#include <QLayout>
-#include <QFrame>
-#include <QPushButton>
-#include <QTimer>
-
 // KDE includes.
 
-#include <kvbox.h>
 #include <kdebug.h>
-#include <k3listview.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kio/previewjob.h>
-#include <kiconloader.h>
+#include <kfiledialog.h>
+#include <kimageio.h>
+
+// LibKDcraw includes.
+
+#include <libkdcraw/rawfiles.h>
+#include <libkdcraw/dcrawbinary.h>
 
 // Local includes.
 
 #include "version.h"
+#include "interface.h"
+#include "imagecollection.h"
 #include "imagedialog.h"
-#include "imagedialog.moc"
-
-const int PREVIEW_SIZE = 128;
 
 namespace KIPI
 {
 
-struct AlbumLVI : public K3ListViewItem 
+class ImageDialogPrivate 
 {
-    AlbumLVI(K3ListView* parent, const ImageCollection& album)
-        : K3ListViewItem(parent, album.name()), _album(album) {}
+public:
 
-    const ImageCollection& _album;
-};
-
-
-struct ImageLVI : public K3ListViewItem 
-{
-    ImageLVI(K3ListView* parent, const KUrl& url)
-        : K3ListViewItem(parent, url.fileName()), _url(url) {}
-
-    KUrl _url;
-};
-
-struct ImageDialog::Private 
-{
-    KUrl                   _url;
-    KUrl::List             _urls;
-    KIPI::Interface*       _interface;
-    K3ListView*            _albumList;
-    K3ListView*            _imageList;
-    QLabel*                _preview;
-    QList<ImageCollection> _albums;
-    bool                   _singleSelection;
-};
-
-ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* interface,
-                         bool singleSelection)
-           : KDialog(parent)
-{
-    d = new Private;
-    d->_interface       = interface;
-    d->_singleSelection = singleSelection;
-
-    setCaption(i18n("Select Image From Album"));
-    setButtons(KDialog::Help | KDialog::Ok | KDialog::Cancel);
-    setModal(true);
-    setDefaultButton(KDialog::Ok);
-
-    KVBox *box = new KVBox( this );
-    setMainWidget( box );
-    QVBoxLayout *dvlay = new QVBoxLayout( box );
-
-    //---------------------------------------------
-
-    QSplitter* splitter = new QSplitter(box);
-
-    d->_albumList = new K3ListView(splitter);
-    d->_albumList->addColumn(i18n("Album Name"));
-    d->_albumList->setMinimumWidth(200);
-    d->_albumList->setResizeMode(Q3ListView::LastColumn);
-
-    d->_imageList = new K3ListView(splitter);
-    d->_imageList->addColumn(i18n("Image Name"));
-    d->_imageList->setMinimumWidth(200);
-    d->_imageList->setSelectionMode(singleSelection ? Q3ListView::Single :
-                                    Q3ListView::Extended);
-    d->_imageList->setResizeMode(Q3ListView::LastColumn);
-
-    d->_preview = new QLabel(splitter);
-    d->_preview->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    d->_preview->setFixedWidth(PREVIEW_SIZE);
-    d->_preview->setText(i18n("No image selected"));
-
-    dvlay->addWidget( splitter );
-
-    d->_albums = d->_interface->allAlbums();
-    QList<ImageCollection>::ConstIterator it=d->_albums.begin();
-
-    for(; it!=d->_albums.end(); ++it) 
+    ImageDialogPrivate()
     {
-        new AlbumLVI(d->_albumList, *it);
+        singleSelect = false;
+        iface        = 0;
     }
-    QTimer::singleShot(0, this, SLOT(slotInitialShow()));
 
-    connect(d->_albumList, SIGNAL(selectionChanged(QListViewItem*)),
-            this, SLOT(fillImageList(QListViewItem*)) );
+    bool             singleSelect;
 
-    if (singleSelection)
-        connect(d->_imageList, SIGNAL(selectionChanged(QListViewItem*)),
-                this, SLOT(slotImageSelected(QListViewItem*)) );
+    QString          fileformats;
+
+    KUrl             url;
+    KUrl::List       urls;
+
+    KIPI::Interface *iface;
+};
+
+ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect)
+{
+    d = new ImageDialogPrivate;
+    d->iface        = iface;
+    d->singleSelect = singleSelect;
+ 
+    QStringList patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
+    
+    // All Images from list must been always the first entry given by KDE API
+    QString allPictures = patternList[0];
+    
+    // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
+    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+    {
+        allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
+        patternList.removeAll(patternList[0]);
+        patternList.prepend(allPictures);
+    }
+    
+    // Added RAW file formats supported by dcraw program like a type mime. 
+    // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete 
+    // or unavailable(see file #121242 in B.K.O).
+    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        patternList.append(i18n("\n%1|Camera RAW files",QString(raw_file_extentions)));
+    
+    d->fileformats = patternList.join("\n");
+
+    if (singleSelect)
+    {
+        d->url = KFileDialog::getOpenUrl(d->iface->currentAlbum().path(), 
+                                         d->fileformats, parent, i18n("Select an Image"));
+    }
     else
-        connect(d->_imageList, SIGNAL(selectionChanged()),
-                this, SLOT(slotImagesSelected()));
-
-    enableButtonOk(false);
+    {
+        d->urls = KFileDialog::getOpenUrls(d->iface->currentAlbum().path(), 
+                                           d->fileformats, parent, i18n("Select Images"));
+    }
 }
 
 ImageDialog::~ImageDialog() 
@@ -152,18 +109,19 @@ ImageDialog::~ImageDialog()
 
 KUrl ImageDialog::url() const 
 {
-    return d->_url;
+    return d->url;
 }
 
 KUrl::List ImageDialog::urls() const
 {
-    return d->_urls;
+    return d->urls;
 }
 
-KUrl ImageDialog::getImageURL(QWidget* parent, Interface* interface) 
+KUrl ImageDialog::getImageURL(QWidget* parent, Interface* iface) 
 {
-    ImageDialog dlg(parent, interface, true);
-    if (dlg.exec() == QDialog::Accepted) 
+    ImageDialog dlg(parent, iface, true);
+
+    if (dlg.url().isValid())
     {
         return dlg.url();
     }
@@ -173,117 +131,17 @@ KUrl ImageDialog::getImageURL(QWidget* parent, Interface* interface)
     }
 }
 
-KUrl::List ImageDialog::getImageURLs(QWidget* parent, Interface* interface)
+KUrl::List ImageDialog::getImageURLs(QWidget* parent, Interface* iface)
 {
-    ImageDialog dlg(parent, interface, false);
-    if (dlg.exec() == QDialog::Accepted)
+    ImageDialog dlg(parent, iface, false);
+    if (!dlg.urls().isEmpty())
+    {
         return dlg.urls();
-    else
-    {
-        KUrl::List urls;
-        return urls;
-    }
-}
-
-void ImageDialog::fillImageList(Q3ListViewItem* item) 
-{
-    d->_imageList->clear();
-    if (!item) return;
-
-    const ImageCollection& album = static_cast<AlbumLVI*>(item)->_album;
-    KUrl::List images=album.images();
-
-    KUrl::List::ConstIterator it=images.begin();
-    for (;it!=images.end(); ++it) 
-    {
-        new ImageLVI(d->_imageList, *it);
-    }
-}
-
-void ImageDialog::slotImageSelected(Q3ListViewItem* item) 
-{
-    if (!item) 
-    {
-        enableButtonOk(false);
-        d->_preview->setText(i18n("No image selected"));
-        d->_url=KUrl();
-        return;
-    }
-    enableButtonOk(true);
-    d->_url = static_cast<ImageLVI*>(item)->_url;
-    d->_preview->clear();
-
-    KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
-    connect( thumbJob, SIGNAL(gotPreview(const K3FileItem*, const QPixmap&)),
-             SLOT(slotGotPreview(const K3FileItem* , const QPixmap&)));
-}
-
-void ImageDialog::slotImagesSelected()
-{
-    d->_url = KUrl();
-    d->_urls.clear();
-    d->_preview->clear();
-
-    Q3ListViewItem* selectedItem = 0;
-    Q3ListViewItem* listItem = d->_imageList->firstChild();
-    while (listItem)
-    {
-        if (listItem->isSelected())
-        {
-            selectedItem = listItem;
-            d->_urls.append(static_cast<ImageLVI*>(listItem)->_url);
-        }
-        listItem = listItem->nextSibling();
-    }
-
-    if (!selectedItem)
-    {
-        enableButtonOk(false);
-        d->_preview->setText(i18n("No images selected"));
-        d->_url=KUrl();
-        d->_urls.clear();
-        return;
-    }
-
-    enableButtonOk(true);
-
-    if (d->_urls.count() == 1)
-    {
-        d->_url = d->_urls.first();
-
-        KIO::PreviewJob* thumbJob = KIO::filePreview(d->_url, PREVIEW_SIZE);
-        connect( thumbJob, SIGNAL(gotPreview(const KFileItem*, const QPixmap&)),
-                 SLOT(slotGotPreview(const KFileItem* , const QPixmap&)));
     }
     else
     {
-        d->_url = d->_urls.first();
-        d->_preview->setText(i18np("1 image selected", "%1 images selected", d->_urls.count()));
-    }
-}
-
-void ImageDialog::slotGotPreview(const K3FileItem*, const QPixmap& pix) 
-{
-    d->_preview->setPixmap(pix);
-}
-
-void ImageDialog::slotInitialShow()
-{
-    ImageCollection current = d->_interface->currentAlbum();
-
-    Q3ListViewItemIterator it( d->_albumList );
-    while ( it.current() )
-    {
-        AlbumLVI* lvi = static_cast<AlbumLVI*>( it.current() );
-        if ( lvi->_album == current )
-        {
-            d->_albumList->ensureItemVisible( lvi );
-            d->_albumList->setSelected( lvi, true );
-            break;
-        }
-        ++it;
+        return KUrl::List();
     }
 }
 
 } // namespace KIPI
-

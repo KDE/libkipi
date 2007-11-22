@@ -9,7 +9,13 @@ SET(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp
 
 KDE4_ADD_LIBRARY(kipi SHARED ${kipi_LIB_SRCS})
 
-TARGET_LINK_LIBRARIES(kipi ${KDE4_KPARTS_LIBS} ${KDE4_KFILE_LIBS} ${QT_QTGUI_LIBRARY} ${QT_QT3SUPPORT_LIBRARY})
+TARGET_LINK_LIBRARIES(kipi 
+                      ${KDCRAW_LIBRARIES} 
+                      ${KDE4_KPARTS_LIBS} 
+                      ${KDE4_KFILE_LIBS} 
+                      ${QT_QTGUI_LIBRARY} 
+                      ${QT_QT3SUPPORT_LIBRARY}
+                     )
 
 SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})
 

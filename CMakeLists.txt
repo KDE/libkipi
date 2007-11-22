@@ -43,6 +43,8 @@ SET(KIPI_LIB_SO_VERSION_STRING "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VER
 
 # =======================================================
 
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+FIND_PACKAGE(Kdcraw REQUIRED)
 
 SUBDIRS(pics)
 SUBDIRS(libkipi)
