@@ -27,26 +27,57 @@
 
 #include <QtCore/QList>
 #include <QtGui/QWidget>
+#include <QStringList>
 
 // KDE includes.
 
 #include <kurl.h>
+#include <kpreviewwidgetbase.h>
 
 // LibKipi includes.
 
+#include "interface.h"
 #include "libkipi_export.h"
 
 namespace KIPI
 {
 
 class ImageDialogPrivate;
+class ImageDialogPreviewPrivate;
+
+class LIBKIPI_EXPORT ImageDialogPreview : public KPreviewWidgetBase
+{
+    Q_OBJECT
+
+public:
+
+    ImageDialogPreview(Interface *iface, QWidget *parent=0);
+    ~ImageDialogPreview();
+
+    QSize sizeHint() const;
+
+private slots:
+
+    void showPreview();
+    void showPreview(const KUrl &url);
+    void slotThumbnail(const KUrl& url, const QPixmap& pix);
+    void clearPreview();
+
+private:
+
+    void resizeEvent(QResizeEvent *e);
+
+private:
+
+    class ImageDialogPreviewPrivate *d;
+};
 
 class LIBKIPI_EXPORT ImageDialog
 {
 
 public:
 
-    ImageDialog(QWidget*, Interface*, bool singleSelection=false);
+    ImageDialog(QWidget* parent, Interface* iface, bool singleSelection=false);
     ~ImageDialog();
 
     KUrl       url() const;

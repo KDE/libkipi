@@ -20,6 +20,11 @@
  * 
  * ============================================================ */
 
+// Qt includes.
+
+#include <QLabel>
+#include <QLayout>
+
 // KDE includes.
 
 #include <kdebug.h>
@@ -36,15 +41,118 @@
 // Local includes.
 
 #include "version.h"
-#include "interface.h"
 #include "imagecollection.h"
 #include "imagedialog.h"
+#include "imagedialog.moc"
 
 namespace KIPI
 {
 
+class ImageDialogPreviewPrivate 
+{
+
+public:
+
+    ImageDialogPreviewPrivate()
+    {
+        imageLabel = 0;
+        iface      = 0;
+    }
+
+    QLabel          *imageLabel;
+
+    KUrl             currentURL;
+
+    KIPI::Interface *iface;
+};
+
+ImageDialogPreview::ImageDialogPreview(KIPI::Interface *iface, QWidget *parent)
+                  : KPreviewWidgetBase(parent)
+{
+    d = new ImageDialogPreviewPrivate;
+    d->iface = iface;
+
+    QVBoxLayout *vlay = new QVBoxLayout(this);
+    d->imageLabel     = new QLabel(this);
+    d->imageLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    d->imageLabel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+
+    vlay->setMargin(0);
+    vlay->setSpacing(KDialog::spacingHint());
+    vlay->addWidget(d->imageLabel);
+
+    setSupportedMimeTypes(KImageIO::mimeTypes());
+    setMinimumWidth(64);
+
+    connect(d->iface, SIGNAL(gotThumbnail( const KUrl&, const QPixmap& )),
+            this, SLOT(slotThumbnail(const KUrl&, const QPixmap&)));
+}
+
+ImageDialogPreview::~ImageDialogPreview() 
+{
+    delete d;
+}
+
+QSize ImageDialogPreview::sizeHint() const
+{
+    return QSize(100, 200);
+}
+
+void ImageDialogPreview::resizeEvent(QResizeEvent *)
+{
+    QMetaObject::invokeMethod(this, "showPreview", Qt::QueuedConnection);
+}
+
+void ImageDialogPreview::showPreview()
+{
+    KUrl url(d->currentURL);
+    clearPreview();
+    showPreview(url);
+}
+
+void ImageDialogPreview::showPreview(const KUrl& url)
+{
+    if (!url.isValid()) 
+    {
+        clearPreview();
+        return;
+    }
+    
+    if (url != d->currentURL) 
+    {
+        clearPreview();
+        d->currentURL = url;
+        d->iface->thumbnail(d->currentURL, 256);
+    }
+}
+
+void ImageDialogPreview::slotThumbnail(const KUrl& url, const QPixmap& pix)
+{
+    if (url == d->currentURL)
+    {
+        QPixmap pixmap;
+        QSize s = d->imageLabel->contentsRect().size();
+
+        if (s.width() < pix.width() || s.height() < pix.height())
+            pixmap = pix.scaled(s, Qt::KeepAspectRatio);
+        else 
+            pixmap = pix;
+
+        d->imageLabel->setPixmap(pixmap);
+    }
+}
+
+void ImageDialogPreview::clearPreview()
+{
+    d->imageLabel->clear();
+    d->currentURL = KUrl();
+}
+
+// ------------------------------------------------------------------------
+
 class ImageDialogPrivate 
 {
+
 public:
 
     ImageDialogPrivate()
@@ -53,17 +161,17 @@ public:
         iface        = 0;
     }
 
-    bool             singleSelect;
+    bool                singleSelect;
 
-    QString          fileformats;
+    QString             fileformats;
 
-    KUrl             url;
-    KUrl::List       urls;
+    KUrl                url;
+    KUrl::List          urls;
 
-    KIPI::Interface *iface;
+    KIPI::Interface    *iface;
 };
 
-ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSelect)
+ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect)
 {
     d = new ImageDialogPrivate;
     d->iface        = iface;
@@ -90,15 +198,25 @@ ImageDialog::ImageDialog(QWidget* parent, KIPI::Interface* iface, bool singleSel
     
     d->fileformats = patternList.join("\n");
 
+    KFileDialog dlg(d->iface->currentAlbum().path(), d->fileformats, parent);
+    ImageDialogPreview *preview = new ImageDialogPreview(d->iface, &dlg);
+    dlg.setPreviewWidget(preview);
+    dlg.setOperationMode( KFileDialog::Opening );
+
     if (singleSelect)
     {
-        d->url = KFileDialog::getOpenUrl(d->iface->currentAlbum().path(), 
-                                         d->fileformats, parent, i18n("Select an Image"));
+        dlg.setMode( KFile::File );
+        dlg.setWindowTitle(i18n("Select an Image"));
+        dlg.exec();
+        d->url = dlg.selectedUrl();
+    
     }
     else
     {
-        d->urls = KFileDialog::getOpenUrls(d->iface->currentAlbum().path(), 
-                                           d->fileformats, parent, i18n("Select Images"));
+        dlg.setMode( KFile::Files );
+        dlg.setWindowTitle(i18n("Select Images"));
+        dlg.exec();
+        d->urls = dlg.selectedUrls();
     }
 }
 
