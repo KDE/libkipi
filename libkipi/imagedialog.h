@@ -72,6 +72,8 @@ private:
     class ImageDialogPreviewPrivate *d;
 };
 
+// ------------------------------------------------------------------------
+
 class LIBKIPI_EXPORT ImageDialog
 {
 
