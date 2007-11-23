@@ -110,8 +110,8 @@
 */
 
 /*!
-  \enum KIPI::ImagesHasThumbnails
-  This feature specifies that images in the host application has thumbnails associated to them.
+  \enum KIPI::HostSupportsThumbnails
+  This feature specifies that host application can provide image thumbnails.
  */
 
 namespace KIPI
@@ -151,8 +151,8 @@ bool Interface::hasFeature( const QString& feature )
         return hasFeature( ImagesHasComments );
     else if ( feature == "ImagesHasTime" )
         return hasFeature( ImagesHasTime );
-    else if ( feature == "ImagesHasThumbnails" )
-        return hasFeature( ImagesHasThumbnails );
+    else if ( feature == "HostSupportsThumbnails" )
+        return hasFeature( HostSupportsThumbnails );
     else if ( feature == "HostSupportsDateRanges" )
         return hasFeature( HostSupportsDateRanges );
     else if ( feature == "HostAcceptNewImages" )

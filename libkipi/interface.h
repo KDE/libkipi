@@ -64,7 +64,7 @@ enum Features
     AlbumsUseFirstImagePreview = 1 << 8,
     HostSupportsTags           = 1 << 9,
     HostSupportsRating         = 1 << 10,
-    ImagesHasThumbnails        = 1 << 11
+    HostSupportsThumbnails     = 1 << 11
 };
 
 /** class Interface */
