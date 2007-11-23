@@ -65,20 +65,20 @@
 */
 
 /*!
-  \enum KIPI::SupportsDateRanges
+  \enum KIPI::HostSupportsDateRanges
   This feature specify whether the host application supports that the user can specify a date range for images,
   like 1998-2000.
 */
 
 /*!
-  \enum KIPI::AcceptNewImages
+  \enum KIPI::HostAcceptNewImages
   This feature specifies that the host application do accept new images.
   Use \ref ImageCollection::uploadPath to find the location to place the image, and
   \ref KIPI::Interface::addImage() to tell the host application about the new image.
 */
 
 /*!
-  \enum KIPI::ImageTitlesWritable
+  \enum KIPI::ImagesHasTitlesWritable
   This features specifies whether the plugin can change the title for images
 */
 
@@ -108,6 +108,11 @@
   \enum KIPI::HostSupportsRating
   This feature specify whether the host application supports rating values for images,
 */
+
+/*!
+  \enum KIPI::ImagesHasThumbnails
+  This feature specifies that images in the host application has thumbnails associated to them.
+ */
 
 namespace KIPI
 {
@@ -146,12 +151,14 @@ bool Interface::hasFeature( const QString& feature )
         return hasFeature( ImagesHasComments );
     else if ( feature == "ImagesHasTime" )
         return hasFeature( ImagesHasTime );
-    else if ( feature == "SupportsDateRanges" )
-        return hasFeature( SupportsDateRanges );
-    else if ( feature == "AcceptNewImages" )
-        return hasFeature( AcceptNewImages );
-    else if ( feature == "ImageTitlesWritable" )
-        return hasFeature( ImageTitlesWritable );
+    else if ( feature == "ImagesHasThumbnails" )
+        return hasFeature( ImagesHasThumbnails );
+    else if ( feature == "HostSupportsDateRanges" )
+        return hasFeature( HostSupportsDateRanges );
+    else if ( feature == "HostAcceptNewImages" )
+        return hasFeature( HostAcceptNewImages );
+    else if ( feature == "ImagesHasTitlesWritable" )
+        return hasFeature( ImagesHasTitlesWritable );
     else if ( feature == "AlbumsHaveCategory" )
         return hasFeature( AlbumsHaveCategory );
     else if ( feature == "AlbumsHaveCreationDate" )

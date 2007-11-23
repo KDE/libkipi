@@ -105,14 +105,16 @@ void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 
 void ImageInfoShared::setTitle( const QString& )
 {
-    kWarning(51000) << "This method should only be invoked if the host application supports the KIPI::ImageTitlesWritable\n"
-        "If the host application do support that, then this function should\n"
-        "have been overridden in the host application.\n" << endl;
+    kWarning(51000) << "This method should only be invoked if the host application "
+                       "supports the KIPI::ImagesHasTitlesWritable\n"
+                       "If the host application do support that, then this function should\n"
+                       "have been overridden in the host application.\n" 
+                    << endl;
 }
 
 void ImageInfoShared::cloneData( ImageInfoShared* other )
 {
-    if ( _interface->hasFeature( ImageTitlesWritable ) )
+    if ( _interface->hasFeature( ImagesHasTitlesWritable ) )
         setTitle( other->title() );
 
     if ( _interface->hasFeature( ImagesHasComments ) )
@@ -122,7 +124,7 @@ void ImageInfoShared::cloneData( ImageInfoShared* other )
     addAttributes( other->attributes() );
 
     setTime( other->time( FromInfo ), FromInfo );
-    if ( _interface->hasFeature( SupportsDateRanges ) )
+    if ( _interface->hasFeature( HostSupportsDateRanges ) )
         setTime( other->time( ToInfo ), ToInfo );
 
     setAngle( other->angle() );
