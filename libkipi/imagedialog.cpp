@@ -178,20 +178,33 @@ ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect, b
     d = new ImageDialogPrivate;
     d->iface        = iface;
     d->singleSelect = singleSelect;
+    d->onlyRaw      = onlyRaw;
 
     QStringList patternList;
-    if (!onlyRaw)
+    QString     allPictures;
+
+    if (!d->onlyRaw)
+    {
         patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
     
-    // All Images from list must been always the first entry given by KDE API
-    QString allPictures = patternList[0];
-    
-    // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
-    if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        // All Images from list must been always the first entry given by KDE API
+        allPictures = patternList[0];
+
+        // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
+        if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        {
+            allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
+            patternList.removeAll(patternList[0]);
+            patternList.prepend(allPictures);
+        }
+    }
+    else
     {
-        allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
-        patternList.removeAll(patternList[0]);
-        patternList.prepend(allPictures);
+        if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
+        {
+            allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
+            patternList.prepend(allPictures);
+        }
     }
     
     // Added RAW file formats supported by dcraw program like a type mime. 
