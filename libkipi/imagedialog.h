@@ -79,14 +79,18 @@ class LIBKIPI_EXPORT ImageDialog
 
 public:
 
-    ImageDialog(QWidget* parent, Interface* iface, bool singleSelection=false);
+    ImageDialog(QWidget* parent, Interface* iface, bool singleSelection=false, bool onlyRaw=false);
     ~ImageDialog();
 
     KUrl       url() const;
     KUrl::List urls() const;
 
-    static KUrl getImageURL(QWidget*, Interface*);
-    static KUrl::List getImageURLs(QWidget*, Interface*);
+    bool    onlyRaw() const;
+    bool    singleSelect() const;
+    QString fileformats() const;
+
+    static KUrl getImageURL(QWidget* parent, Interface* iface, bool onlyRaw=false);
+    static KUrl::List getImageURLs(QWidget* parent, Interface* iface, bool onlyRaw=false);
 
 private:
 

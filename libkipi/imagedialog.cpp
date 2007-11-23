@@ -157,27 +157,31 @@ public:
 
     ImageDialogPrivate()
     {
+        onlyRaw      = false;
         singleSelect = false;
         iface        = 0;
     }
 
-    bool                singleSelect;
+    bool             onlyRaw;
+    bool             singleSelect;
 
-    QString             fileformats;
+    QString          fileformats;
 
-    KUrl                url;
-    KUrl::List          urls;
+    KUrl             url;
+    KUrl::List       urls;
 
-    KIPI::Interface    *iface;
+    KIPI::Interface *iface;
 };
 
-ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect)
+ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect, bool onlyRaw)
 {
     d = new ImageDialogPrivate;
     d->iface        = iface;
     d->singleSelect = singleSelect;
- 
-    QStringList patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
+
+    QStringList patternList;
+    if (!onlyRaw)
+        patternList = KImageIO::pattern(KImageIO::Reading).split('\n', QString::SkipEmptyParts);
     
     // All Images from list must been always the first entry given by KDE API
     QString allPictures = patternList[0];
@@ -201,7 +205,7 @@ ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect)
     KFileDialog dlg(d->iface->currentAlbum().path(), d->fileformats, parent);
     ImageDialogPreview *preview = new ImageDialogPreview(d->iface, &dlg);
     dlg.setPreviewWidget(preview);
-    dlg.setOperationMode( KFileDialog::Opening );
+    dlg.setOperationMode(KFileDialog::Opening);
 
     if (singleSelect)
     {
@@ -225,6 +229,21 @@ ImageDialog::~ImageDialog()
     delete d;
 }
 
+bool ImageDialog::onlyRaw() const 
+{
+    return d->onlyRaw;
+}
+
+bool ImageDialog::singleSelect() const 
+{
+    return d->singleSelect;
+}
+
+QString ImageDialog::fileformats() const 
+{
+    return d->fileformats;
+}
+
 KUrl ImageDialog::url() const 
 {
     return d->url;
@@ -235,9 +254,9 @@ KUrl::List ImageDialog::urls() const
     return d->urls;
 }
 
-KUrl ImageDialog::getImageURL(QWidget* parent, Interface* iface) 
+KUrl ImageDialog::getImageURL(QWidget* parent, Interface* iface, bool onlyRaw) 
 {
-    ImageDialog dlg(parent, iface, true);
+    ImageDialog dlg(parent, iface, true, onlyRaw);
 
     if (dlg.url().isValid())
     {
@@ -249,9 +268,9 @@ KUrl ImageDialog::getImageURL(QWidget* parent, Interface* iface)
     }
 }
 
-KUrl::List ImageDialog::getImageURLs(QWidget* parent, Interface* iface)
+KUrl::List ImageDialog::getImageURLs(QWidget* parent, Interface* iface, bool onlyRaw)
 {
-    ImageDialog dlg(parent, iface, false);
+    ImageDialog dlg(parent, iface, false, onlyRaw);
     if (!dlg.urls().isEmpty())
     {
         return dlg.urls();
