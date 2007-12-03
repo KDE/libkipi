@@ -63,21 +63,21 @@ BatchProgressItem(QListWidget *parent, const QString& message, int messageType)
             setIcon(SmallIcon("system-run"));
             break;
         case SuccessMessage:
-            setIcon(SmallIcon("ok"));
+            setIcon(SmallIcon("dialog-ok"));
             break;
         case WarningMessage:
-            setIcon(SmallIcon("flag-yellow"));
+            setIcon(SmallIcon("dialog-warning"));
             setForeground(QBrush(Qt::darkYellow));
             break;
         case ErrorMessage:
-            setIcon(SmallIcon("process-stop"));
+            setIcon(SmallIcon("dialog-error"));
             setForeground(QBrush(Qt::red));
             break;
         case ProgressMessage:
-            setIcon(SmallIcon("document-properties"));
+            setIcon(SmallIcon("dialog-information"));
             break;
         default:
-            setIcon(SmallIcon("document-properties"));
+            setIcon(SmallIcon("dialog-information"));
     }
     
     // Set the message text.
