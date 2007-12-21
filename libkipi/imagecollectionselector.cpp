@@ -25,13 +25,14 @@
 
 // Qt includes.
 
-#include <Q3Header>
-#include <QLayout>
 #include <QPushButton>
 #include <QList>
 #include <QLabel>
 #include <Q3VGroupBox>
 #include <QTimer>
+#include <QHBoxLayout>
+#include <Q3Header>
+#include <QLayout>
 
 // KDE includes.
 

@@ -25,10 +25,9 @@
 
 // Qt includes. 
 
-#include <QLayout>
-#include <Q3Header>
 #include <QDir>
-
+#include <QVBoxLayout>
+#include <Q3Header>
 // KDE includes
 
 #include <kdebug.h>

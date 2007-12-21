@@ -24,7 +24,6 @@
 
 #include <QBrush>
 #include <QWidget>
-#include <QColorGroup>
 #include <QListWidget>
 #include <QProgressBar>
 #include <QLayout>

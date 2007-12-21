@@ -23,7 +23,7 @@
 // Qt includes.
 
 #include <QLabel>
-#include <QLayout>
+#include <QVBoxLayout>
 
 // KDE includes.
 
