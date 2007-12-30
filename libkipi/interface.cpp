@@ -31,7 +31,8 @@
 #include <kimageio.h>
 
 // Local includes.
- 
+
+#include "version.h"
 #include "pluginloader.h"
 #include "interface.h"
 #include "interface.moc"
@@ -106,6 +107,12 @@ KIPI::Interface::Interface(QObject *parent, const char *name )
 
 KIPI::Interface::~Interface()
 {
+}
+
+/** Returns a string version of libkipi release */
+QString KIPI::Interface::version()
+{
+  return QString(kipi_version);
 }
 
 /**

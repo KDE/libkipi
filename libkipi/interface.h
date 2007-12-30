@@ -83,6 +83,9 @@ namespace KIPI
 
         bool hasFeature( KIPI::Features feature );
 
+        /** Return a string version of libkipi release */
+        static QString version();
+
     signals:
 
         void selectionChanged( bool hasSelection );
