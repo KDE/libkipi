@@ -76,7 +76,7 @@ public:
 
     Interface(QObject *parent, const char *name=0);
     virtual ~Interface();
-
+        
     virtual ImageCollection currentAlbum() = 0;
     virtual ImageCollection currentSelection() = 0;
     virtual QList<ImageCollection> allAlbums() = 0;
@@ -93,6 +93,8 @@ public:
     virtual void thumbnails( const KUrl::List& list, int size );
 
     bool hasFeature( KIPI::Features feature );
+
+    static QString version();
 
 Q_SIGNALS:
 

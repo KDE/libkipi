@@ -11,7 +11,9 @@ PROJECT(libkipi)
 # 0.1.3 => 1.0.1
 # 0.1.4 => 1.0.1
 # 0.1.5 => 1.1.1
-# 0.2.0 => 2.0.0
+# 0.1.6 => 2.0.0
+# ... here we can have new releases from KDE3 branch
+# 0.2.0 => 5.0.0
 
 # Library API version
 SET(KIPI_LIB_MAJOR_VERSION "0")
@@ -29,7 +31,7 @@ SET(KIPI_LIB_SUFFIX_VERSION "-svn")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "2")
+SET(KIPI_LIB_SO_CUR_VERSION "5")
 SET(KIPI_LIB_SO_REV_VERSION "0")
 SET(KIPI_LIB_SO_AGE_VERSION "0")
 

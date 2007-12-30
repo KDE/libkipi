@@ -33,6 +33,7 @@
 
 // Local includes.
  
+#include "version.h"
 #include "pluginloader.h"
 #include "interface.h"
 #include "interface.moc"
@@ -125,6 +126,12 @@ Interface::Interface(QObject *parent, const char *name )
 
 Interface::~Interface()
 {
+}
+
+/** Returns a string version of libkipi release */
+QString KIPI::Interface::version()
+{
+    return QString(kipi_version);
 }
 
 /**
