@@ -193,7 +193,7 @@ ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect, b
         // Add other files format witch are missing to All Images" type mime provided by KDE and remplace current.
         if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
         {
-            allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
+            allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
             patternList.removeAll(patternList[0]);
             patternList.prepend(allPictures);
         }
@@ -202,7 +202,7 @@ ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect, b
     {
         if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
         {
-            allPictures.insert(allPictures.indexOf("|"), QString(raw_file_extentions) + QString(" *.JPE *.TIF"));
+            allPictures.insert(allPictures.indexOf("|"), QString(KDcrawIface::DcrawBinary::instance()->rawFiles()) + QString(" *.JPE *.TIF"));
             patternList.prepend(allPictures);
         }
     }
@@ -211,7 +211,7 @@ ImageDialog::ImageDialog(QWidget* parent, Interface* iface, bool singleSelect, b
     // Nota: we cannot use here "image/x-raw" type mime from KDE because it uncomplete 
     // or unavailable(see file #121242 in B.K.O).
     if (KDcrawIface::DcrawBinary::instance()->versionIsRight())
-        patternList.append(i18n("\n%1|Camera RAW files",QString(raw_file_extentions)));
+        patternList.append(i18n("\n%1|Camera RAW files",QString(KDcrawIface::DcrawBinary::instance()->rawFiles())));
     
     d->fileformats = patternList.join("\n");
 
