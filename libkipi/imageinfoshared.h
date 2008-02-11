@@ -62,7 +62,7 @@ namespace KIPI
         virtual QMap<QString,QVariant> attributes() = 0;
         virtual void clearAttributes() = 0;
         virtual void addAttributes( const QMap<QString,QVariant>& ) = 0;
-        virtual void delAttributes( const QMap<QString,QVariant>& ) = 0;
+        virtual void delAttributes( const QStringList& ) = 0;
 
         virtual KUrl path();
         virtual QDateTime time( KIPI::TimeSpec spec );

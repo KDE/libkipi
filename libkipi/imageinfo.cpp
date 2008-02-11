@@ -6,7 +6,7 @@
  * Date        : 2004-07-22
  * Description : image info.
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -129,6 +129,11 @@ void ImageInfo::clearAttributes()
 void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 {
     _data->addAttributes( attributes );
+}
+
+void ImageInfo::delAttributes( const QStringList& attributes )
+{
+    _data->delAttributes( attributes );
 }
 
 /**
