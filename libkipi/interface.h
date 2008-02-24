@@ -94,7 +94,7 @@ public:
     virtual void thumbnail( const KUrl& url, int size );
     virtual void thumbnails( const KUrl::List& list, int size );
 
-    virtual ImageCollectionSelector* selector(QWidget *parent)=0;
+    virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
 
     bool hasFeature( KIPI::Features feature );
 
