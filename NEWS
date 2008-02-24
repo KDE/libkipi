@@ -7,6 +7,11 @@
 API changes:
 
 	o new virtual method ImageInfoShared::delAttributes()
+	o new virtual method Interface::imagecollectionselector()
+
+Bugs fixed:
+
+001 ==> 117073 : album export dialog would benefit from a treeview widget.
 
 0.1.6-svn
 ------------------------------------------------------------------------
