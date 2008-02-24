@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : main kipi host application interface .
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -31,6 +31,7 @@
 // Qt includes.
 
 #include <QPixmap>
+#include <QtGui/QWidget>
 #include <QtCore/QString>
 #include <QtCore/QObject>
 #include <QtCore/QList>
@@ -43,6 +44,7 @@
 // Local includes.
 
 #include "imagecollection.h"
+#include "imagecollectionselector.h"
 #include "imageinfo.h"
 #include "libkipi_export.h"
 
@@ -91,6 +93,8 @@ public:
     
     virtual void thumbnail( const KUrl& url, int size );
     virtual void thumbnails( const KUrl::List& list, int size );
+
+    virtual ImageCollectionSelector* selector(QWidget *parent)=0;
 
     bool hasFeature( KIPI::Features feature );
 
