@@ -14,8 +14,6 @@ TARGET_LINK_LIBRARIES(kipi
                       ${KDE4_KPARTS_LIBS} 
                       ${KDE4_KFILE_LIBS} 
                       ${QT_QTGUI_LIBRARY} 
-                      ${QT_QT3SUPPORT_LIBRARY}
-                      ${KDE4_KDE3SUPPORT_LIBS}
                      )
 
 SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})

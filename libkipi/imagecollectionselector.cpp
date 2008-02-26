@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-02-22
- * Description : image collection selector
+ * Description : image collection selector template
  *
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -41,5 +41,5 @@ QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const
 {
     return QList<ImageCollection>(); 
 }
-    
+
 } // namespace KIPI

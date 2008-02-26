@@ -45,6 +45,7 @@
 
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
+#include "uploadwidget.h"
 #include "imageinfo.h"
 #include "libkipi_export.h"
 
@@ -72,13 +73,14 @@ enum Features
 /** class Interface */
 class LIBKIPI_EXPORT Interface : public QObject
 {
-    Q_OBJECT
+
+Q_OBJECT
 
 public:
 
     Interface(QObject *parent, const char *name=0);
     virtual ~Interface();
-        
+
     virtual ImageCollection currentAlbum() = 0;
     virtual ImageCollection currentSelection() = 0;
     virtual QList<ImageCollection> allAlbums() = 0;
@@ -90,11 +92,12 @@ public:
     virtual void refreshImages( const KUrl::List& );
 
     virtual QString fileExtensions();
-    
+
     virtual void thumbnail( const KUrl& url, int size );
     virtual void thumbnails( const KUrl::List& list, int size );
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
+    virtual UploadWidget* uploadWidget(QWidget *parent)=0;
 
     bool hasFeature( KIPI::Features feature );
 

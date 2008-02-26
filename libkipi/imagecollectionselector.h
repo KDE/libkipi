@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2008-02-22
- * Description : image collection selector
+ * Description : image collection selector template
  *
  * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -36,6 +36,8 @@
 namespace KIPI 
 {
 
+/** Re-implement this widget in your kipi host application to use your dedicaced model/view */
+
 class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget 
 {
 
@@ -48,7 +50,7 @@ public:
 
     virtual QList<ImageCollection> selectedImageCollections() const;
 
-signals:
+Q_SIGNALS:
 
     void selectionChanged();
 };
