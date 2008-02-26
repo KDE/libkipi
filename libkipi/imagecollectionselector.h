@@ -47,6 +47,10 @@ public:
     virtual ~ImageCollectionSelector();
 
     virtual QList<ImageCollection> selectedImageCollections() const;
+
+signals:
+
+    void selectionChanged();
 };
 
 } // namespace KIPI
