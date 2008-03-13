@@ -2,13 +2,13 @@
 ------------------------------------------------------------------------
 
 	o Port to CMake/KDE4/QT4
-	o new depency to libKDcraw
 
 API changes:
 
 	o new virtual method ImageInfoShared::delAttributes()
 	o new virtual method Interface::imagecollectionselector()
 	o BatchProcessDialog moved to KIPIPlugins common library.
+        o ImageDialog moved to KIPIPlugins common library.
 
 Bugs fixed:
 
