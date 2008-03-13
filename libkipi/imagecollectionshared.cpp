@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : image collection shared
  *
- * Copyright (C) 2004-2007 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -25,7 +25,6 @@
 
 // KDE Includes.
 
-#include <klocale.h>
 #include <kdebug.h>
 
 // Local Includes.
@@ -85,7 +84,7 @@ KUrl ImageCollectionShared::uploadRoot()
 
 QString ImageCollectionShared::uploadRootName()
 {
-   return (i18n("Images"));
+   return (QString("Images"));   // No i18n here. THis must be done on KIPI host interface.
 }
 
 bool ImageCollectionShared::isDirectory()
