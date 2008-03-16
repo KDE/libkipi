@@ -14,6 +14,10 @@ API changes:
 Bugs fixed:
 
 001 ==> 117073 : album export dialog would benefit from a treeview widget.
+002 ==> 147865 : Image>email image>add image dialog does not show most thumbnails - but does show some.
+003 ==> 131429 : Selection of target album is "batch resize" has strange behavior.
+004 ==> 088118 : Target image options should select new folder when created.
+005 ==> 
 
 0.1.6-svn
 ------------------------------------------------------------------------
