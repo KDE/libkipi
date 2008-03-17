@@ -62,13 +62,12 @@
 
 /*!
   \enum KIPI::ImagesHasTime
-  This feature specifies that images has a date associated with it, which the host application can display and set
+  This feature specifies that images has a date associated with it, which the host application can display and set.
 */
 
 /*!
   \enum KIPI::HostSupportsDateRanges
-  This feature specify whether the host application supports that the user can specify a date range for images,
-  like 1998-2000.
+  This feature specify whether the host application supports that the user can specify a date range for images, like 1998-2000.
 */
 
 /*!
@@ -80,34 +79,32 @@
 
 /*!
   \enum KIPI::ImagesHasTitlesWritable
-  This features specifies whether the plugin can change the title for images
+  This features specifies whether the plugin can change the title for images.
 */
 
 /*!
-  \enum KIPI::AlbumsHaveCategory
-  This feature specify that albums are category associated to them ('travels', 'friends', 'monuments', etc.).
+  \enum KIPI::CollectionHaveCategory
+  This feature specify that collections are category associated to them ('travels', 'friends', 'monuments', etc.).
 */
 
 /*!
-  \enum KIPI::AlbumsHaveCreationDate
-  This feature specify that albums are a creation date associated to them.
+  \enum KIPI::CollectionsHaveCreationDate
+  This feature specify that collections are a creation date associated to them.
 */
 
 /*!
-  \enum KIPI::AlbumsUseFirstImagePreview
-  This feature specify that albums use the first image of the collection like preview.
-  This flag is used in ImageGallery, CDArchiving, and FinDuplicateImages dialog for 
-  to lauch a preview of the album.
+  \enum KIPI::HostSupportsProgressBar
+  This feature specify whether the host application has a progress bar available for batch operations.
 */
 
 /*!
   \enum KIPI::HostSupportsTags
-  This feature specify whether the host application supports keywords for images,
+  This feature specify whether the host application supports keywords for images.
 */
 
 /*!
   \enum KIPI::HostSupportsRating
-  This feature specify whether the host application supports rating values for images,
+  This feature specify whether the host application supports rating values for images.
 */
 
 /*!
@@ -152,26 +149,26 @@ bool Interface::hasFeature( KIPI::Features feature )
 
 bool Interface::hasFeature( const QString& feature )
 {
-    if ( feature == "AlbumsHaveComments" )
-        return hasFeature( AlbumsHaveComments );
+    if ( feature == "CollectionsHaveComments" )
+        return hasFeature( CollectionsHaveComments );
+    else if ( feature == "CollectionsHaveCategory" )
+        return hasFeature( CollectionsHaveCategory );
+    else if ( feature == "CollectionsHaveCreationDate" )
+        return hasFeature( CollectionsHaveCreationDate );
     else if ( feature == "ImagesHasComments" )
         return hasFeature( ImagesHasComments );
     else if ( feature == "ImagesHasTime" )
         return hasFeature( ImagesHasTime );
+    else if ( feature == "ImagesHasTitlesWritable" )
+        return hasFeature( ImagesHasTitlesWritable );
     else if ( feature == "HostSupportsThumbnails" )
         return hasFeature( HostSupportsThumbnails );
     else if ( feature == "HostSupportsDateRanges" )
         return hasFeature( HostSupportsDateRanges );
     else if ( feature == "HostAcceptNewImages" )
         return hasFeature( HostAcceptNewImages );
-    else if ( feature == "ImagesHasTitlesWritable" )
-        return hasFeature( ImagesHasTitlesWritable );
-    else if ( feature == "AlbumsHaveCategory" )
-        return hasFeature( AlbumsHaveCategory );
-    else if ( feature == "AlbumsHaveCreationDate" )
-        return hasFeature( AlbumsHaveCreationDate );
-    else if ( feature == "AlbumsUseFirstImagePreview" )
-        return hasFeature( AlbumsUseFirstImagePreview );
+    else if ( feature == "HostSupportsProgressBar" )
+        return hasFeature( HostSupportsProgressBar );
     else if ( feature == "HostSupportsTags" )
         return hasFeature( HostSupportsTags );
     else if ( feature == "HostSupportsRating" )

@@ -56,18 +56,18 @@ namespace KIPI
 
 enum Features 
 {
-    AlbumsHaveComments         = 1 << 0,
-    ImagesHasComments          = 1 << 1,
-    ImagesHasTime              = 1 << 2,
-    HostSupportsDateRanges     = 1 << 3,
-    HostAcceptNewImages        = 1 << 4,
-    ImagesHasTitlesWritable    = 1 << 5,
-    AlbumsHaveCategory         = 1 << 6,
-    AlbumsHaveCreationDate     = 1 << 7,
-    AlbumsUseFirstImagePreview = 1 << 8,
-    HostSupportsTags           = 1 << 9,
-    HostSupportsRating         = 1 << 10,
-    HostSupportsThumbnails     = 1 << 11
+    CollectionsHaveComments     = 1 << 0,
+    ImagesHasComments           = 1 << 1,
+    ImagesHasTime               = 1 << 2,
+    HostSupportsDateRanges      = 1 << 3,
+    HostAcceptNewImages         = 1 << 4,
+    ImagesHasTitlesWritable     = 1 << 5,
+    CollectionsHaveCategory     = 1 << 6,
+    CollectionsHaveCreationDate = 1 << 7,
+    HostSupportsProgressBar     = 1 << 8,
+    HostSupportsTags            = 1 << 9,
+    HostSupportsRating          = 1 << 10,
+    HostSupportsThumbnails      = 1 << 11
 };
 
 /** class Interface */
