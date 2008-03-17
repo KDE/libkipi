@@ -44,14 +44,14 @@
   allows access to. As an example <a
   href="http://ktown.kde.org/kimdaba/">KimDaBa</a> do not support comments
   for albums. Thus before a plugin expect a decant value for the comment,
-  it should check whether KIPI::AlbumsHaveComments are set. It does so
+  it should check whether KIPI::CollectionsHaveComments are set. It does so
   using KIPI::Interface::hasFeature()
   When adding new items, remember to update "hasFeature( const QString& feature )"
   and the hello world plugin.
   */
 
 /*!
-  \enum KIPI::AlbumsHaveComments
+  \enum KIPI::CollectionsHaveComments
   This feature specify that albums have descriptions associated to them.
  */
 
