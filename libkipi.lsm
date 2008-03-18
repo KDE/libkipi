@@ -2,16 +2,15 @@ Begin4
 Title: libkipi
 Version: 0.1.6
 Entered-date: 2006-11-29
-Description: KDE Image Plugin Interface, a library to share plugins among
- graphic applications
-Keywords: kde image plugins
+Description: KDE Image Plugin Interface, a C++ library to share plugins among graphic applications.
+Keywords: kde image plugins digiKam
 Author: renchi at pooh.tam.uiuc.edu (Renchi Raju)
  caulier dot gilles at free.fr (Gilles Caulier)
  blackie at kde.org (Jesper K. Pedersen)
  aurelien dot gateau at free.fr (Aurelien Gateau)
 Maintained-by:
 Primary-site: http://www.kipi-plugins.org
-Alternate-site:
+Alternate-site: http://www.digikam.org
 Original-site:
 Platforms:
 Copying-policy: LGPL
