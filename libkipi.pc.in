@@ -5,6 +5,7 @@ includedir=@includedir@
 
 Name: libkipi
 Description: KDE Image Plugin Interface, a C++ library to share plugins among graphic applications.
+URL: http://www.kipi-plugins.org
 Requires:
 Version: 0.1.6
 Libs: -L${libdir} -lkipi
