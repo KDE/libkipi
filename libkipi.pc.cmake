@@ -4,7 +4,7 @@ libdir=${LIB_INSTALL_DIR}
 includedir=${INCLUDE_INSTALL_DIR}
 
 Name: libkipi
-Description: KDE library for shared plugins between graphical photo management applications
+Description: KDE Image Plugin Interface, a C++ library to share plugins among graphic applications.
 URL: http://www.kipi-plugins.org
 Requires:
 Version: ${KIPI_LIB_VERSION_STRING}
