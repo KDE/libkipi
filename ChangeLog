@@ -1,3 +1,132 @@
+v 0.1.6 - 2008-03-24
+----------------------------------------------------------------------------
+
+2008-03-18 18:46 +0000 [r787190]  cgilles
+
+	* libkipi/libkipi.pc.in: update
+
+2008-03-18 18:41 +0000 [r787186]  cgilles
+
+	* libkipi/libkipi.pc.in, libkipi/libkipi.lsm: update
+
+2007-12-30 22:09 +0000 [r754879]  anaselli
+
+	* libkipi/libkipi/interface.h, libkipi/libkipi/Makefile.am,
+	  libkipi/libkipi/interface.cpp: Breakage of the year, new static
+	  method version() has been added CCMAIL: kde-imaging@kde.org
+
+2007-12-14 14:12 +0000 [r748439]  cgilles
+
+	* libkipi/libkipi.pc.in, libkipi/libkipi.lsm,
+	  libkipi/libkipi/version.h: new version
+
+2007-11-21 15:13 +0000 [r739684-739685]  cgilles
+
+	* libkipi/libkipi/imagedialog.cpp: fix url
+
+	* libkipi/pics/Makefile.am, libkipi/pics/banner_left.png (removed):
+	  rm header
+
+2007-11-21 15:04 +0000 [r739678]  cgilles
+
+	* libkipi/libkipi/imagedialog.cpp: rm header
+
+2007-11-21 15:00 +0000 [r739675]  cgilles
+
+	* libkipi/libkipi/batchprogressdialog.cpp: rm header
+
+2007-09-28 14:27 +0000 [r718359]  gkulzer
+
+	* kipi-plugins/metadataedit/commenteditdialog.cpp,
+	  kipi-plugins/sendimages/sendimages.cpp,
+	  kipi-plugins/sendimages/sendimagesdialog.cpp,
+	  kipi-plugins/slideshow/slideshowconfigbase.ui,
+	  kipi-plugins/metadataedit/exifcaption.cpp,
+	  kipi-plugins/findimages/displaycompare.cpp,
+	  kipi-plugins/metadataedit/iptccaption.cpp,
+	  kipi-plugins/metadataedit/commentremovedialog.cpp,
+	  kipi-plugins/imagesgallery/imgallerydialog.cpp,
+	  kipi-plugins/metadataedit/plugin_metadataedit.cpp,
+	  kipi-plugins/simpleviewerexport/svedialog.cpp,
+	  libkipi/libkipi/imagecollectionselector.cpp,
+	  kipi-plugins/metadataedit/iptceditdialog.cpp: comment->caption =
+	  better English
+
+2007-09-22 19:02 +0000 [r715648]  cgilles
+
+	* libkipi/libkipi/batchprogressdialog.cpp: compile
+
+2007-09-21 05:31 +0000 [r714965]  gkulzer
+
+	* libkipi/libkipi/batchprogressdialog.cpp: i18n string polish
+
+2007-07-24 15:01 +0000 [r691894]  gkulzer
+
+	* libkipi/libkipi/pluginloader.cpp,
+	  libkipi/libkipi/imagecollection.cpp: replace Kimdada with
+	  KPhotoAlbum CCMAIL:oliver@doerr-privat.de
+
+2007-06-07 14:43 +0000 [r672565]  cgilles
+
+	* libkipi/configure.in.in: compile
+
+2007-06-07 07:22 +0000 [r672450]  cgilles
+
+	* libkipi/libkipi/libkipi_export.h (added),
+	  libkipi/libkipi/libkipi_export.h.in (removed): no need to control
+	  export header file by automake/autoconf. It can be done as well
+	  like others part of kipi shared lib
+
+2007-06-06 15:26 +0000 [r672266]  cgilles
+
+	* libkipi/pics/Makefile.am (added): add missing file
+
+2007-06-06 09:49 +0000 [r672182]  cgilles
+
+	* libkipi/libkipi/Makefile.am: polish
+
+2007-06-06 09:45 +0000 [r672181]  cgilles
+
+	* libkipi/libkipi/hi48-app-kipi.png (removed),
+	  libkipi/libkipi/Makefile.am, libkipi/pics/hi22-app-kipi.png
+	  (added), libkipi/pics/hi32-app-kipi.png (added),
+	  libkipi/pics/banner_left.png (added),
+	  libkipi/pics/hi16-app-kipi.png (added),
+	  libkipi/libkipi/kipi-plugins_logo.png (removed),
+	  libkipi/pics/hi48-app-kipi.png (added),
+	  libkipi/libkipi/hi128-app-kipi.png (removed),
+	  libkipi/Makefile.am, libkipi/pics/kipi-plugins_logo.png (added),
+	  libkipi/libkipi/hi22-app-kipi.png (removed),
+	  libkipi/libkipi/hi32-app-kipi.png (removed),
+	  libkipi/pics/hi128-app-kipi.png (added),
+	  libkipi/libkipi/banner_left.png (removed),
+	  libkipi/libkipi/hi16-app-kipi.png (removed): move pictures file
+	  in pics dir
+
+2007-06-06 09:42 +0000 [r672171-672180]  cgilles
+
+	* libkipi/Makefile.am, libkipi/libkipi/Makefile.am,
+	  libkipi/kipiplugin.desktop (added),
+	  libkipi/libkipi/kipiplugin.desktop (removed): desktop file on top
+	  dir
+
+	* libkipi/README: update
+
+	* libkipi/libkipi/KDTools-License-US (removed), libkipi/DESIGN
+	  (added), libkipi/KDTools-License-non-US (added),
+	  libkipi/libkipi/DESIGN (removed),
+	  libkipi/libkipi/KDTools-License-non-US (removed),
+	  libkipi/KDTools-License-US (added): non source code file on top
+	  dir
+
+	* libkipi/libkipi/DESIGN (added), libkipi/libkipi/design (removed):
+	  rename
+
+	* libkipi/libkipi/LICENSE.GPL (removed): GPL is already in top dir
+	  on file COPYING. no need to duplicate
+
+	* libkipi/COPYING: update GPL
+
 v 0.1.5 - 2006-11-29
 ----------------------------------------------------------------------------
 
