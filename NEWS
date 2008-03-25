@@ -1,7 +1,7 @@
 0.1.6
 ------------------------------------------------------------------------
 API changes:
-	o Added a version to get runtime library version.
+	o Added a version method to get runtime library version.
 
 -------------------------------------------------------------------------
 0.1.5
