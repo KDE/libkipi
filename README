@@ -18,7 +18,6 @@ The library documentation is available on header files.
 CMake      >= 2.4.x                     http://www.cmake.org
 libqt      >= 4.2.x                     http://www.trolltech.com
 libkde     >= 4.0.x                     http://www.kde.org
-libkdcraw  >= 0.2                       http://www.kipi-plugins.org
 
 
 -- INSTALL ------------------------------------------------------------
