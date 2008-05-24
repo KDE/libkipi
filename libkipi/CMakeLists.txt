@@ -17,7 +17,7 @@ TARGET_LINK_LIBRARIES(kipi
 
 SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})
 
-INSTALL(TARGETS kipi DESTINATION ${LIB_INSTALL_DIR} )
+INSTALL(TARGETS kipi ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 INSTALL(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h 
               imageinfoshared.h imagecollectionshared.h uploadwidget.h 
