@@ -35,7 +35,7 @@
 namespace KIPI
 {
 
-/** Re-implement this widget in your kipi host application to use your dedicaced model/view */
+/** Re-implement this widget in your KIPI host application to use your dedicated model/view */
 
 class LIBKIPI_EXPORT UploadWidget : public QWidget 
 {
