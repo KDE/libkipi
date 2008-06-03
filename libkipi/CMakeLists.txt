@@ -1,5 +1,3 @@
-INCLUDE_DIRECTORIES(${KDE4_INCLUDES} ${QT4_INCLUDES})
-
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h)
 
 SET(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp 
