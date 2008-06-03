@@ -100,7 +100,7 @@ public:
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
     virtual UploadWidget* uploadWidget(QWidget *parent)=0;
 
-    bool hasFeature( KIPI::Features feature );
+    bool hasFeature( KIPI::Features feature ) const;
 
     static QString version();
 
@@ -122,7 +122,7 @@ private Q_SLOTS:
 private:
 
     friend class PluginLoader;
-    bool hasFeature( const QString& feature );
+    bool hasFeature( const QString& feature ) const;
 };
 
 }  // namespace KIPI

@@ -150,12 +150,12 @@ void Interface::refreshImages( const KUrl::List& )
    Tells whether the host application under which the plugin currently executes a given feature.
    See KIPI::Features for details on the individual features.
 */
-bool Interface::hasFeature( KIPI::Features feature )
+bool Interface::hasFeature( KIPI::Features feature ) const
 {
     return ( features() & feature ) != 0;
 }
 
-bool Interface::hasFeature( const QString& feature )
+bool Interface::hasFeature( const QString& feature ) const
 {
     if ( feature == "CollectionsHaveComments" )
         return hasFeature( CollectionsHaveComments );
