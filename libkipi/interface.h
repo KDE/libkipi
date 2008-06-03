@@ -30,29 +30,30 @@
 
 // Qt includes.
 
-#include <QPixmap>
-#include <QtGui/QWidget>
-#include <QtCore/QString>
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
 // KDE includes.
 
-#include <kfileitem.h>
 #include <kurl.h>
 
 // Local includes.
 
 #include "imagecollection.h"
-#include "imagecollectionselector.h"
-#include "uploadwidget.h"
 #include "imageinfo.h"
 #include "libkipi_export.h"
+
+class QPixmap;
+class QWidget;
+class KFileItem;
 
 /** @namespace KIPI */
 
 namespace KIPI
 {
+
+class ImageCollectionSelector;
+class UploadWidget;
 
 enum Features 
 {
@@ -113,7 +114,7 @@ protected:
 
     virtual int features() const = 0;
 
-private slots:
+private Q_SLOTS:
 
     void gotKDEPreview(const KFileItem& item, const QPixmap &pix);
     void failedKDEPreview(const KFileItem&);

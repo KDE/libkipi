@@ -27,7 +27,6 @@
 // Qt includes.
 
 #include <QtCore/QList>
-#include <QtGui/QWidget>
 #include <QtGui/QAbstractScrollArea>
 
 // KDE includes
@@ -36,7 +35,6 @@
 
 // Local includes.
 
-#include "interface.h"
 #include "libkipi_export.h"
 
 namespace KIPI

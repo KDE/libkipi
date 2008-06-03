@@ -25,9 +25,15 @@
 
 /** @file interface.cpp */
 
+// Qt includes.
+
+#include <QPixmap>
+#include <QWidget>
+
 // KDE includes.
 
 #include <kdebug.h>
+#include <kfileitem.h>
 #include <kimageio.h>
 #include <kio/previewjob.h>
 
@@ -36,6 +42,8 @@
 #include "version.h"
 #include "pluginloader.h"
 #include "interface.h"
+#include "imagecollectionselector.h"
+#include "uploadwidget.h"
 #include "interface.moc"
 
 /*!
