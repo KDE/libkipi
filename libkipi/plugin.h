@@ -45,13 +45,13 @@ namespace KIPI
 
     enum Category 
     {
-       IMAGESPLUGIN = 0,
-       EFFECTSPLUGIN,
-       TOOLSPLUGIN,
-       IMPORTPLUGIN,
-       EXPORTPLUGIN,
-       BATCHPLUGIN,
-       COLLECTIONSPLUGIN
+       ImagesPlugin = 0,
+       EffectsPlugin,
+       ToolsPlugin,
+       ImportPlugin,
+       ExportPlugin,
+       BatchPlugin,
+       CollectionsPlugin
     };
 
     class LIBKIPI_EXPORT Plugin : public QObject
