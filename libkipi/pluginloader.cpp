@@ -129,7 +129,7 @@ struct PluginLoader::Info::Private
     bool m_shouldLoad;
 };
 
-PluginLoader::Info::Info(KService::Ptr service, bool shouldLoad)
+PluginLoader::Info::Info(const KService::Ptr& service, bool shouldLoad)
 {
     d = new Private;
     d->m_service    = service;

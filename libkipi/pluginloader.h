@@ -55,7 +55,7 @@ namespace KIPI
 
         public:
 
-            Info( KService::Ptr service, bool shouldLoad );
+            Info( const KService::Ptr& service, bool shouldLoad );
             ~Info();
 
             KService::Ptr service() const;
