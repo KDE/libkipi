@@ -4,7 +4,18 @@ Type=ServiceType
 X-KDE-ServiceType=KIPI/Plugin
 X-KDE-DerivedName=KIPI Plugin
 Name=KIPIPlugin
+Name[nds]=KIPI-Moduul
+Name[zh_TW]=KIPI 外掛程式
 Comment=A KIPI Plugin
+Comment[ca]=Un connector KIPI
+Comment[ga]=Breiseán KIPI
+Comment[gl]=Unha extension de KIPI
+Comment[ko]=KIPI 플러그인
+Comment[nds]=En KIPI-Moduul
+Comment[pt]=Um 'Plugin' do KIPI
+Comment[pt_BR]=Um Plug-in do KIPI
+Comment[uk]=Додаток KIPI
+Comment[zh_TW]=KIPI 外掛程式
 
 [PropertyDef::X-KIPI-Id]
 Type=QString
