@@ -21,4 +21,4 @@ INSTALL(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h
               imageinfoshared.h imagecollectionshared.h uploadwidget.h 
               imagecollectionselector.h 
               ${CMAKE_CURRENT_BINARY_DIR}/version.h libkipi_export.h 
-        DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi)
+        DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi COMPONENT Devel)
