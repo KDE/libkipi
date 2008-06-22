@@ -31,6 +31,7 @@ Comment[pt]=Um 'Plugin' do KIPI
 Comment[pt_BR]=Um Plug-in do KIPI
 Comment[uk]=Додаток KIPI
 Comment[x-test]=xxA KIPI Pluginxx
+Comment[zh_CN]=一个 KIPI 插件
 Comment[zh_TW]=KIPI 外掛程式
 
 [PropertyDef::X-KIPI-Id]
