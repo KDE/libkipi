@@ -75,12 +75,16 @@ QDateTime ImageInfo::time( TimeSpec spec ) const
 }
 
 /**
-   Returns a Map of attributes of the image
-   In case the host application supports some special attributes of the image
-   this function can be used to return them.
-   Tags are supported by this feature: "tags" key contains QStringList() 
-   encapsulated in a QVariant
-   
+    Returns a Map of attributes of the image
+    In case the host application supports some special attributes of the image
+    this function can be used to return them. following attribes are supported by this feature: 
+     
+    QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
+    QString("tags")      :: QStringList() with tags name list.
+    QString("rating")    :: integer value (ususally 0 <= rate <= 5).
+    QString("latitude")  :: double value in degrees (-90.0 >= lat <=90.0).
+    QString("longitude") :: double value in degrees (-180.0 >= lat <=180.0).
+    QString("altitude")  :: double value in meters.
 */
 QMap<QString,QVariant> ImageInfo::attributes() const
 {
@@ -121,16 +125,30 @@ void ImageInfo::setDescription( const QString& description )
     _data->setDescription( description );
 }
 
+/** Remove all attribute from the image. See delAttributes() for list of all attributes removed.
+*/
 void ImageInfo::clearAttributes()
 {
     _data->clearAttributes();
 }
 
+/** Set the attributes defined from the map to the image. Following keys/values can be used:
+    QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
+    QString("rating")    :: integer value (ususally 0 <= rate <= 5).
+    QString("latitude")  :: double value in degrees (-90.0 >= lat <=90.0).
+    QString("longitude") :: double value in degrees (-180.0 >= lat <=180.0).
+    QString("altitude")  :: double value in meters.
+*/
 void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 {
     _data->addAttributes( attributes );
 }
 
+/** Remove attributes listed from the image. Following values can be used:
+    "tags"        : remove all tags.
+    "rating"      : remove rating.
+    "gpslocation" : remove latitude, longitude, and altitude values.
+*/
 void ImageInfo::delAttributes( const QStringList& attributes )
 {
     _data->delAttributes( attributes );
