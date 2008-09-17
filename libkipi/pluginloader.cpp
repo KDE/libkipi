@@ -228,7 +228,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
         }
 
         bool appHasAllReqFeatures=true;
-        for( QStringList::Iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) 
+        for( QStringList::const_iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) 
         {
             if ( !d->m_interface->hasFeature( *featureIt ) ) 
             {
