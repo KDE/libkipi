@@ -333,8 +333,8 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     lay->setMargin(KDialog::marginHint());
     lay->setSpacing(KDialog::spacingHint());
 
-    PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
-    for( PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) 
+    const PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
+    for( PluginLoader::PluginList::ConstIterator it = list.begin(); it != list.end(); ++it ) 
     {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
         lay->addWidget( cb );
