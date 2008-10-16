@@ -242,7 +242,7 @@ v0.1.2                                                            2005-09-04
 	  trunk/extragear/libs/libkipi/libkipi/plugin.h,
 	  trunk/extragear/libs/libkipi/libkipi/pluginloader.cpp: Made some
 	  minor changes to generate the Dox for some classes. It is
-	  documented better then I thought.
+	  documented better than I thought.
 
 2005-06-22 13:34  lunakl
 
