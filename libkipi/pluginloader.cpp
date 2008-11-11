@@ -228,7 +228,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
         }
 
         bool appHasAllReqFeatures=true;
-        for( QStringList::const_iterator featureIt = reqFeatures.begin(); featureIt != reqFeatures.end(); ++featureIt ) 
+        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); featureIt != reqFeatures.constEnd(); ++featureIt ) 
         {
             if ( !d->m_interface->hasFeature( *featureIt ) ) 
             {
@@ -334,7 +334,7 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     lay->setSpacing(KDialog::spacingHint());
 
     const PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
-    for( PluginLoader::PluginList::ConstIterator it = list.begin(); it != list.end(); ++it ) 
+    for( PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) 
     {
         PluginCheckBox* cb = new PluginCheckBox( *it, top );
         lay->addWidget( cb );
