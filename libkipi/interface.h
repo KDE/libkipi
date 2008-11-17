@@ -176,25 +176,26 @@ public:
     */
     virtual QList<ImageCollection> allAlbums() = 0;
 
-    virtual ImageInfo info( const KUrl& ) = 0;
+    virtual ImageInfo info(const KUrl&) = 0;
 
     /**
       Tell the host application that a new image has been made available to it.
       Returns true if the host application did accept the new image, otherwise err will be filled with
       an error description.
     */
-    virtual bool addImage( const KUrl&, QString& err );
-    virtual void delImage( const KUrl& );
+    virtual bool addImage(const KUrl&, QString& err);
+    virtual void delImage(const KUrl&);
 
     /**
       Tells the host app that the following images has changed on disk
     */
-    virtual void refreshImages( const KUrl::List& );
+    virtual void refreshImages(const KUrl::List&);
 
     /**
       Return a list of images file extension will be used in the plugins 
       to sort the files list before treatement. The default implementation return,
       the supported images formats by KDE.
+      TODO: remove this method is favour of hostSetting().
     */
     virtual QString fileExtensions();
 
@@ -203,21 +204,23 @@ public:
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
       Use gotThumbnail() signal to take thumb.
     */
-    virtual void thumbnail( const KUrl& url, int size );
+    virtual void thumbnail(const KUrl& url, int size);
     /**
       Ask to Kipi host application to render thumbnails for a list of images. If this method is not 
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail. 
       Use gotThumbnail() signal to take thumbs.
     */
-    virtual void thumbnails( const KUrl::List& list, int size );
+    virtual void thumbnails(const KUrl::List& list, int size);
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
     virtual UploadWidget* uploadWidget(QWidget *parent)=0;
 
     /**
-      Ask to Kipi host application to return a setting to share with plugins (for example to write metadata on files).
+      Ask to Kipi host application to return a setting to share with plugins, for example to write 
+      metadata on RAW files.
       Current setting names are:
-         "WriteMetadataToRAW" (bool)
+         "WriteMetadataToRAW" (bool)       is true if RAW files metadata can be changed.
+         "FileExtensions"     (QString)    same than fileExtensions().
     */
     virtual QVariant hostSetting(const QString& settingName);
 
@@ -225,7 +228,7 @@ public:
       Tells whether the host application under which the plugin currently executes a given feature.
       See KIPI::Features for details on the individual features.
     */
-    bool hasFeature( KIPI::Features feature ) const;
+    bool hasFeature(KIPI::Features feature) const;
 
     /**
       Returns a string version of libkipi release
@@ -234,9 +237,9 @@ public:
 
 Q_SIGNALS:
 
-    void selectionChanged( bool hasSelection );
-    void currentAlbumChanged( bool anyAlbum );
-    void gotThumbnail( const KUrl&, const QPixmap& );
+    void selectionChanged(bool hasSelection);
+    void currentAlbumChanged(bool anyAlbum);
+    void gotThumbnail(const KUrl&, const QPixmap&);
 
 protected:
 
@@ -253,7 +256,7 @@ private Q_SLOTS:
 private:
 
     friend class PluginLoader;
-    bool hasFeature( const QString& feature ) const;
+    bool hasFeature(const QString& feature) const;
 };
 
 }  // namespace KIPI
