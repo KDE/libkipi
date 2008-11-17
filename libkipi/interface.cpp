@@ -4,7 +4,7 @@
  * http://www.kipi-plugins.org
  *
  * Date        : 2004-02-01
- * Description : main kipi host application interface .
+ * Description : main kipi host application interface.
  *
  * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
@@ -15,12 +15,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 /** @file interface.cpp */
@@ -38,87 +38,13 @@
 #include <kio/previewjob.h>
 
 // Local includes.
- 
+
 #include "version.h"
 #include "pluginloader.h"
-#include "interface.h"
 #include "imagecollectionselector.h"
 #include "uploadwidget.h"
+#include "interface.h"
 #include "interface.moc"
-
-/*!
-  @enum KIPI::Features
-  Not all host applications support the full subset of features that KIPI
-  allows access to. As an example <a
-  href="http://ktown.kde.org/kimdaba/">KimDaBa</a> do not support comments
-  for albums. Thus before a plugin expect a decant value for the comment,
-  it should check whether KIPI::CollectionsHaveComments are set. It does so
-  using KIPI::Interface::hasFeature()
-  When adding new items, remember to update "hasFeature( const QString& feature )"
-  and the hello world plugin.
-  */
-
-/*!
-  \enum KIPI::CollectionsHaveComments
-  This feature specify that albums have descriptions associated to them.
- */
-
-/*!
-  \enum KIPI::ImagesHasComments
-  This feature specifies that images in the host application has descriptions associated to them.
- */
-
-/*!
-  \enum KIPI::ImagesHasTime
-  This feature specifies that images has a date associated with it, which the host application can display and set.
-*/
-
-/*!
-  \enum KIPI::HostSupportsDateRanges
-  This feature specify whether the host application supports that the user can specify a date range for images, like 1998-2000.
-*/
-
-/*!
-  \enum KIPI::HostAcceptNewImages
-  This feature specifies that the host application do accept new images.
-  Use \ref ImageCollection::uploadPath to find the location to place the image, and
-  \ref KIPI::Interface::addImage() to tell the host application about the new image.
-*/
-
-/*!
-  \enum KIPI::ImagesHasTitlesWritable
-  This features specifies whether the plugin can change the title for images.
-*/
-
-/*!
-  \enum KIPI::CollectionHaveCategory
-  This feature specify that collections are category associated to them ('travels', 'friends', 'monuments', etc.).
-*/
-
-/*!
-  \enum KIPI::CollectionsHaveCreationDate
-  This feature specify that collections are a creation date associated to them.
-*/
-
-/*!
-  \enum KIPI::HostSupportsProgressBar
-  This feature specify whether the host application has a progress bar available for batch operations.
-*/
-
-/*!
-  \enum KIPI::HostSupportsTags
-  This feature specify whether the host application supports keywords for images.
-*/
-
-/*!
-  \enum KIPI::HostSupportsRating
-  This feature specify whether the host application supports rating values for images.
-*/
-
-/*!
-  \enum KIPI::HostSupportsThumbnails
-  This feature specifies that host application can provide image thumbnails.
- */
 
 namespace KIPI
 {
@@ -133,23 +59,15 @@ Interface::~Interface()
 {
 }
 
-/** Returns a string version of libkipi release */
 QString KIPI::Interface::version()
 {
     return QString(kipi_version);
 }
 
-/**
-   Tells the host app that the following images has changed on disk
-*/
 void Interface::refreshImages( const KUrl::List& )
 {
 }
 
-/**
-   Tells whether the host application under which the plugin currently executes a given feature.
-   See KIPI::Features for details on the individual features.
-*/
 bool Interface::hasFeature( KIPI::Features feature ) const
 {
     return ( features() & feature ) != 0;
@@ -188,11 +106,6 @@ bool Interface::hasFeature( const QString& feature ) const
     }
 }
 
-/*!
-  Tell the host application that a new image has been made available to it.
-  Returns true if the host application did accept the new image, otherwise err will be filled with
-  an error description.
-*/
 bool Interface::addImage( const KUrl&, QString& /*err*/ )
 {
     kWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
@@ -205,51 +118,30 @@ void Interface::delImage( const KUrl& )
 {
 }
 
-/**
-   Returns list of all images in current album.
-   If there are no current album, the returned
-   KIPI::ImageCollection::isValid() will return false.
-*/
 KIPI::ImageCollection KIPI::Interface::currentAlbum()
 {
     // This implementation is just to be able to write documentation above.
     return ImageCollection();
 }
 
-/**
-   Current selection in a thumbnail view for example.
-   If there are no current selection, the returned
-   KIPI::ImageCollection::isValid() will return false.
-*/
 ImageCollection Interface::currentSelection()
 {
     // This implementation is just to be able to write documentation above.
     return KIPI::ImageCollection();
 }
 
-/**
-   Returns a list of albums.
-*/
 QList<ImageCollection> Interface::allAlbums()
 {
     // This implementation is just to be able to write documentation above.
     return QList<ImageCollection>();
 }
 
-/**
-   Return a bitwise or of the KIPI::Features that thus application support.
-*/
 int Interface::features() const
 {
     // This implementation is just to be able to write documentation above.
     return 0;
 }
 
-/**
-   Return a list of images file extension will be used in the plugins for 
-   to sort the files list before a treatment. The default implementation return,
-   the supported images formats by KDE.
-*/
 QString Interface::fileExtensions()
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
@@ -257,11 +149,6 @@ QString Interface::fileExtensions()
     return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
 
-/**
-  Ask to Kipi host application to render a thumbnail for an image. If this method is not 
-  re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
-  Use gotThumbnail() signal to take thumb.
-*/
 void Interface::thumbnail( const KUrl& url, int size )
 {
     KUrl::List list;
@@ -269,11 +156,6 @@ void Interface::thumbnail( const KUrl& url, int size )
     thumbnails(list, size);
 }
 
-/**
-  Ask to Kipi host application to render thumbnails for a list of images. If this method is not 
-  re-implemented in host, standard KIO::filePreview is used to generated a thumbnail. 
-  Use gotThumbnail() signal to take thumbs.
-*/
 void Interface::thumbnails( const KUrl::List& list, int size )
 {
     KIO::PreviewJob *job = KIO::filePreview(list, size);
@@ -293,6 +175,11 @@ void Interface::gotKDEPreview(const KFileItem& item, const QPixmap &pix)
 void Interface::failedKDEPreview(const KFileItem& item)
 {
     emit gotThumbnail(item.url(), QPixmap());
+}
+
+QVariant Interface::hostSetting(const QString& /*settingName*/)
+{
+    return QVariant();
 }
 
 } // namespace KIPI
