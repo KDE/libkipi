@@ -192,8 +192,8 @@ public:
     virtual void refreshImages(const KUrl::List&);
 
     /**
-      Return a list of images file extension will be used in the plugins 
-      to sort the files list before treatement. The default implementation return,
+      Return a list of images file extensions which will be used in the plugins 
+      to sort the files list before treatements. The default implementation return,
       the supported images formats by KDE.
       Use hostSetting("FileExtensions") instead.
     */
@@ -256,7 +256,13 @@ private Q_SLOTS:
 private:
 
     friend class PluginLoader;
+    
     bool hasFeature(const QString& feature) const;
+    
+    /**
+      Return a list of images file extensions supported by KDE
+    */
+    QString KDEfileExtensions() const;
 };
 
 }  // namespace KIPI

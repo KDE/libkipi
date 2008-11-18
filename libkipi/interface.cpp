@@ -172,9 +172,7 @@ void Interface::failedKDEPreview(const KFileItem& item)
 
 QString Interface::fileExtensions()
 {
-    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
-    QString imagesFileFilter = KDEImagetypes.join(" ");
-    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
+    return (KDEfileExtensions());
 }
 
 QVariant Interface::hostSetting(const QString& settingName)
@@ -185,10 +183,17 @@ QVariant Interface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("FileExtensions"))
     {
-        return fileExtensions();
+        return KDEfileExtensions();
     }
 
     return QVariant();
+}
+
+QString Interface::KDEfileExtensions() const
+{
+    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
+    QString imagesFileFilter = KDEImagetypes.join(" ");
+    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
 
 } // namespace KIPI
