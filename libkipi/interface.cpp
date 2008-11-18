@@ -142,13 +142,6 @@ int Interface::features() const
     return 0;
 }
 
-QString Interface::fileExtensions()
-{
-    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
-    QString imagesFileFilter = KDEImagetypes.join(" ");
-    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
-}
-
 void Interface::thumbnail( const KUrl& url, int size )
 {
     KUrl::List list;
@@ -177,8 +170,24 @@ void Interface::failedKDEPreview(const KFileItem& item)
     emit gotThumbnail(item.url(), QPixmap());
 }
 
-QVariant Interface::hostSetting(const QString& /*settingName*/)
+QString Interface::fileExtensions()
 {
+    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
+    QString imagesFileFilter = KDEImagetypes.join(" ");
+    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
+}
+
+QVariant Interface::hostSetting(const QString& settingName)
+{
+    if (settingName == QString("WriteMetadataToRAW"))
+    {
+        return false;
+    }
+    else if (settingName == QString("FileExtensions"))
+    {
+        return fileExtensions();
+    }
+
     return QVariant();
 }
 

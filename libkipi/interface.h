@@ -195,9 +195,9 @@ public:
       Return a list of images file extension will be used in the plugins 
       to sort the files list before treatement. The default implementation return,
       the supported images formats by KDE.
-      TODO: remove this method is favour of hostSetting().
+      Use hostSetting("FileExtensions") instead.
     */
-    virtual QString fileExtensions();
+    KDE_DEPRECATED virtual QString fileExtensions();
 
     /**
       Ask to Kipi host application to render a thumbnail for an image. If this method is not 
