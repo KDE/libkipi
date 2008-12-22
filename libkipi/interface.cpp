@@ -28,7 +28,6 @@
 // Qt includes.
 
 #include <QPixmap>
-#include <QWidget>
 
 // KDE includes.
 
