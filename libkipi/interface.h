@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : main kipi host application interface .
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -219,8 +219,12 @@ public:
       Ask to Kipi host application to return a setting to share with plugins, for example to write 
       metadata on RAW files.
       Current setting names are:
-         "WriteMetadataToRAW" (bool)       is true if RAW files metadata can be changed.
-         "FileExtensions"     (QString)    same than fileExtensions().
+         "WriteMetadataUpdateFiletimeStamp" (bool)       is true if file timestamp are updated when metadata are saved.
+         "WriteMetadataToRAW"               (bool)       is true if RAW files metadata can be changed.
+         "FileExtensions"                   (QString)    same than fileExtensions().
+
+      This method return the default settings. Re-implement this method in your dedicated kipi interface 
+      to control kipi-plugins rules with your kipi host application settings.
     */
     virtual QVariant hostSetting(const QString& settingName);
 
