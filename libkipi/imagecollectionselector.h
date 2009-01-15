@@ -6,18 +6,18 @@
  * Date        : 2008-02-22
  * Description : image collection selector template
  *
- * Copyright (C) 2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2008-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 #ifndef IMAGECOLLECTIONSELECTOR_H
@@ -33,12 +33,12 @@
 #include "imagecollection.h"
 #include "libkipi_export.h"
 
-namespace KIPI 
+namespace KIPI
 {
 
 /** Re-implement this widget in your KIPI host application to use your dedicated model/view */
 
-class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget 
+class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget
 {
 
 Q_OBJECT

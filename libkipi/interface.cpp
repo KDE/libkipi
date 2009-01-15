@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : main kipi host application interface.
  *
- * Copyright (C) 2004-20098 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -108,8 +108,8 @@ bool Interface::hasFeature( const QString& feature ) const
 bool Interface::addImage( const KUrl&, QString& /*err*/ )
 {
     kWarning(51000) << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
-            "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overridden in the host application.\n" << endl;
+                       "AcceptNewImages - if the host application do support that, then this function should\n"
+                       "have been overridden in the host application.\n" << endl;
     return false;
 }
 

@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : image collection shared
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -57,16 +57,16 @@ void ImageCollectionShared::removeRef()
 KUrl ImageCollectionShared::path()
 {
     kWarning(51000) << "This method should only be invoked if this imagecollection is a directory.\n"
-                     <<  "See KIPI::ImageCollectionShared::isDirectory()"
-                     << endl;
+                    <<  "See KIPI::ImageCollectionShared::isDirectory()"
+                    << endl;
     return KUrl();
 }
 
 KUrl ImageCollectionShared::uploadPath()
 {
     kWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
-            "AcceptNewImages - if the host application do support that, then this function should\n"
-            "have been overridden in the host application.\n" << endl;
+                       "AcceptNewImages - if the host application do support that, then this function should\n"
+                       "have been overridden in the host application.\n" << endl;
     return KUrl();
 }
 
@@ -95,8 +95,8 @@ bool ImageCollectionShared::isDirectory()
 QString ImageCollectionShared::comment()
 {
     kWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
-        "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
-        "have been overridden in the host application.\n" << endl;
+                       "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
+                       "have been overridden in the host application.\n" << endl;
     return QString();
 }
 
@@ -111,12 +111,12 @@ QString ImageCollectionShared::category()
 QDate ImageCollectionShared::date()
 {
     kWarning(51000) << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
-        "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
-        "have been overridden in the host application.\n" << endl;
+                       "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
+                       "have been overridden in the host application.\n" << endl;
     return QDate();
 }
 
-bool ImageCollectionShared::operator==(ImageCollectionShared& ics) 
+bool ImageCollectionShared::operator==(ImageCollectionShared& ics)
 {
     return images()==ics.images();
 }

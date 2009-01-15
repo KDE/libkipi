@@ -6,7 +6,7 @@
  * Date        : 2004-07-22
  * Description : image info.
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -15,12 +15,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 /** @file imageinfo.h */
@@ -45,54 +45,56 @@
 
 namespace KIPI
 {
-    class ImageInfoShared;
-    enum TimeSpec { FromInfo, ToInfo };
+class ImageInfoShared;
 
-    /** @class ImageInfo 
-        Holds info about an image 
-      */
-    class LIBKIPI_EXPORT ImageInfo
-    {
+enum TimeSpec { FromInfo, ToInfo };
 
-    public:
+/** @class ImageInfo
+    Holds info about an image
+ */
+class LIBKIPI_EXPORT ImageInfo
+{
 
-        QString title() const;
-        void setTitle( const QString& name );
+public:
 
-        QString description() const;
-        void setDescription( const QString& description);
+    QString title() const;
+    void setTitle( const QString& name );
 
-        QMap<QString,QVariant> attributes() const;
-        void clearAttributes();
-        void addAttributes( const QMap<QString,QVariant>& );
-        void delAttributes( const QStringList& );
+    QString description() const;
+    void setDescription( const QString& description);
 
-        KUrl path() const;
-        QDateTime time( TimeSpec spec = FromInfo ) const;
-        void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
-        bool isTimeExact() const;
-        int size() const;
+    QMap<QString,QVariant> attributes() const;
+    void clearAttributes();
+    void addAttributes( const QMap<QString,QVariant>& );
+    void delAttributes( const QStringList& );
 
-        int angle() const;
-        void setAngle( int );
+    KUrl path() const;
+    QDateTime time( TimeSpec spec = FromInfo ) const;
+    void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+    bool isTimeExact() const;
+    int size() const;
 
-        QString toString( const QVariant& ) const;
+    int angle() const;
+    void setAngle( int );
 
-        void cloneData( const ImageInfo& other );
+    QString toString( const QVariant& ) const;
 
-        /** constructor
-            Interface for host application + general stuff
-          */
-        ImageInfo( ImageInfoShared* );
-        ImageInfo( const ImageInfo& );
-        ~ImageInfo();
+    void cloneData( const ImageInfo& other );
 
-    private:
+    /** constructor
+        Interface for host application + general stuff
+        */
+    ImageInfo( ImageInfoShared* );
+    ImageInfo( const ImageInfo& );
+    ~ImageInfo();
 
-        ImageInfo() {} // Disabled
-        ImageInfo& operator=( const ImageInfo& ) { return *this; } // Disabled
-        mutable KIPI::ImageInfoShared* _data;
-    };
+private:
+
+    ImageInfo() {} // Disabled
+    ImageInfo& operator=( const ImageInfo& ) { return *this; } // Disabled
+    mutable KIPI::ImageInfoShared* _data;
+};
+
 }
 
 #endif /* KIPI_IMAGEINFO_H */

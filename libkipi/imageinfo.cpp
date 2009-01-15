@@ -6,7 +6,7 @@
  * Date        : 2004-07-22
  * Description : image info.
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -15,12 +15,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Local includes.
@@ -78,7 +78,7 @@ QDateTime ImageInfo::time( TimeSpec spec ) const
     Returns a Map of attributes of the image
     In case the host application supports some special attributes of the image
     this function can be used to return them. following attribes are supported by this feature: 
-     
+
     QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
     QString("tags")      :: QStringList() with tags name list.
     QString("rating")    :: integer value (ususally 0 <= rate <= 5).

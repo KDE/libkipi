@@ -260,9 +260,9 @@ private Q_SLOTS:
 private:
 
     friend class PluginLoader;
-    
+
     bool hasFeature(const QString& feature) const;
-    
+
     /**
       Return a list of images file extensions supported by KDE
     */

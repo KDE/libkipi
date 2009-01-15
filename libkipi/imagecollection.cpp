@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : image collection
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -15,12 +15,12 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // KDE includes.
@@ -28,7 +28,7 @@
 #include <kdebug.h>
 
 // Local includes.
-  
+
 #include "imagecollection.h"
 #include "imagecollectionshared.h"
 
@@ -44,7 +44,7 @@ QString ImageCollection::comment() const
 {
     if ( _data )
         return _data->comment();
-    else 
+    else
     {
         printNullError();
         return QString::null;
@@ -58,7 +58,7 @@ QString ImageCollection::name() const
 {
     if ( _data )
         return _data->name();
-    else 
+    else
     {
         printNullError();
         return QString();
@@ -73,7 +73,7 @@ QString ImageCollection::category() const
 {
     if ( _data )
         return _data->category();
-    else 
+    else
     {
         printNullError();
         return QString::null;
@@ -88,7 +88,7 @@ QDate ImageCollection::date() const
 {
     if ( _data )
         return _data->date();
-    else 
+    else
     {
         printNullError();
         return QDate();
@@ -116,7 +116,7 @@ ImageCollection::ImageCollection( ImageCollectionShared* data )
 
 ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
-    if ( rhs._data ) 
+    if ( rhs._data )
     {
         _data = rhs._data;
         _data->addRef();
@@ -143,12 +143,13 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 
     if ( _data )
         _data->removeRef();
+
     if ( !rhs._data ) 
     {
         printNullError();
         _data = 0;
     }
-    else 
+    else
     {
         _data = rhs._data;
         _data->addRef();
@@ -168,7 +169,7 @@ KUrl ImageCollection::path() const
 {
     if ( _data )
         return _data->path();
-    else 
+    else
     {
         printNullError();
         return KUrl();
@@ -191,7 +192,7 @@ KUrl ImageCollection::uploadPath() const
 {
     if ( _data )
         return _data->uploadPath();
-    else 
+    else
     {
         printNullError();
         return KUrl();
@@ -217,7 +218,7 @@ KUrl ImageCollection::uploadRoot() const
 {
     if ( _data )
         return _data->uploadRoot();
-    else 
+    else
     {
         printNullError();
         return KUrl();
@@ -233,7 +234,7 @@ QString ImageCollection::uploadRootName() const
 {
     if ( _data )
         return _data->uploadRootName();
-    else 
+    else
     {
         printNullError();
         return QString();
@@ -249,7 +250,7 @@ bool ImageCollection::isDirectory() const
 {
     if ( _data )
         return _data->isDirectory();
-    else 
+    else
     {
         printNullError();
         return false;
@@ -264,12 +265,12 @@ bool ImageCollection::isValid() const
 void ImageCollection::printNullError() const
 {
     kWarning( 51000 ) << "Image collection is invalid - this might be the case if you asked for an album, " << endl
-                       << "and not album existed. You should check using .isValid() first." << endl
-                       << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
-                       << "should do that." << endl;
+                      << "and not album existed. You should check using .isValid() first." << endl
+                      << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
+                      << "should do that." << endl;
 }
 
-bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const 
+bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const
 {
     if (!_data || !(ic._data))
     {

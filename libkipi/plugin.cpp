@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : plugin interface
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
  * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
@@ -15,16 +15,16 @@
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 // Qt includes.
- 
+
 #include <QWidget>
 
 // KDE includes.
@@ -42,18 +42,24 @@
 namespace KIPI
 {
 
-struct Plugin::Private 
+class PluginPrivate
 {
-    QMap< QWidget*, KActionCollection* > m_actionCollection;
-    KComponentData                       m_instance;
-    QMap< QWidget*, QList<KAction*> >    m_actions;
-    QWidget*                             m_defaultWidget;
+public:
+
+    PluginPrivate()
+    {
+        m_defaultWidget = 0;
+    };
+
+    QMap<QWidget*, KActionCollection*> m_actionCollection;
+    KComponentData                     m_instance;
+    QMap< QWidget*, QList<KAction*> >  m_actions;
+    QWidget*                           m_defaultWidget;
 };
 
 Plugin::Plugin(const KComponentData& instance, QObject *parent, const char* name)
-      : QObject(parent)
+      : QObject(parent), d(new PluginPrivate)
 {
-    d=new Private;
     d->m_instance = instance;
     setObjectName(name);
 }
@@ -70,7 +76,7 @@ KActionCollection* Plugin::actionCollection( QWidget* widget )
 
     if (!d->m_actionCollection.contains( widget ))
         kWarning( 51000 ) << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
-                           << "as the very first line when overriding the setup method." << endl;
+                          << "as the very first line when overriding the setup method." << endl;
     return d->m_actionCollection[widget];
 }
 

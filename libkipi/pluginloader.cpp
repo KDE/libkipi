@@ -6,19 +6,19 @@
  * Date        : 2004-02-01
  * Description : plugin loader
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * ============================================================ */
 
 /** @file pluginloader.cpp */
@@ -27,9 +27,9 @@
 
 #include <QStringList>
 #include <QCheckBox>
-#include <QLayout> 
-#include <QList> 
-#include <QVariantList> 
+#include <QLayout>
+#include <QList>
+#include <QVariantList>
 
 // KDE includes.
 
@@ -186,22 +186,27 @@ void PluginLoader::Info::setShouldLoad(bool value)
 
 static PluginLoader* s_instance = 0;
 
-struct PluginLoader::Private
+class PluginLoaderPrivate
 {
-    PluginList  m_pluginList;
+public:
+
+    PluginLoaderPrivate()
+    {
+        m_interface = 0;
+    };
+
+    PluginLoader::PluginList  m_pluginList;
     Interface*  m_interface;
     QStringList m_ignores;
 };
 
 PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
+            : d(new PluginLoaderPrivate)
 {
     Q_ASSERT( s_instance == 0 );
-    s_instance = this;
-
-    d = new Private;
-    d->m_interface = interface;
-    d->m_ignores   = ignores;
-
+    s_instance                  = this;
+    d->m_interface              = interface;
+    d->m_ignores                = ignores;
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
@@ -209,10 +214,10 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
     KService::List::ConstIterator iter;
     for(iter = offers.begin(); iter != offers.end(); ++iter) 
     {
-        KService::Ptr service = *iter;
-        QString name    = service->name();
-        QString comment = service->comment();
-        QString library = service->library();
+        KService::Ptr service   = *iter;
+        QString name            = service->name();
+        QString comment         = service->comment();
+        QString library         = service->library();
         QStringList reqFeatures = service->property( QString::fromLatin1( "X-KIPI-ReqFeatures" ) ).toStringList();
 
         if (library.isEmpty() || name.isEmpty() ) 
@@ -227,15 +232,15 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
             continue;
         }
 
-        bool appHasAllReqFeatures=true;
+        bool appHasAllReqFeatures = true;
         for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); featureIt != reqFeatures.constEnd(); ++featureIt ) 
         {
             if ( !d->m_interface->hasFeature( *featureIt ) ) 
             {
                 kDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
-                                 << "the feature " << *featureIt << endl;
-				appHasAllReqFeatures=false;
-				break;
+                                << "the feature " << *featureIt << endl;
+                appHasAllReqFeatures=false;
+                break;
             }
         }
 
@@ -276,10 +281,10 @@ void PluginLoader::loadPlugin( Info* info )
         else
         {
             kWarning( 51001 ) << "KIPI::PluginLoader:: createInstance returned 0 for "
-                               << info->name()
-                               << " (" << info->library() << ")"
-                               << " with error: "
-                               << error << endl;
+                              << info->name()
+                              << " (" << info->library() << ")"
+                              << " with error: "
+                              << error << endl;
         }
         info->setPlugin(plugin);
     }
@@ -300,32 +305,35 @@ PluginLoader* PluginLoader::instance()
 
 //---------------------------------------------------------------------
 
-ConfigWidget* PluginLoader::configWidget( QWidget* parent )
+ConfigWidget* PluginLoader::configWidget(QWidget* parent)
 {
-    return new ConfigWidget( parent );
+    return new ConfigWidget(parent);
 }
 
 class PluginCheckBox : public QCheckBox
 {
 public:
 
-    PluginCheckBox( PluginLoader::Info* info, QWidget* parent )
-        : QCheckBox( info->comment(), parent ), info( info )
+    PluginCheckBox(PluginLoader::Info* info, QWidget* parent)
+        : QCheckBox(info->comment(), parent), info(info)
         {
-            setChecked( info->shouldLoad() );
+            setChecked(info->shouldLoad());
         }
     PluginLoader::Info* info;
 };
 
-struct ConfigWidget::Private
+class ConfigWidgetPrivate
 {
+public:
+
+    ConfigWidgetPrivate(){};
+
     QList< PluginCheckBox* > _boxes;
 };
 
 ConfigWidget::ConfigWidget(QWidget* parent)
-            : QAbstractScrollArea(parent)
+            : QAbstractScrollArea(parent), d(new ConfigWidgetPrivate)
 {
-    d = new Private;
     QWidget* top = new QWidget( viewport() );
     setViewport( top );
 
@@ -359,16 +367,16 @@ void ConfigWidget::apply()
     {
         bool orig = (*it)->info->shouldLoad();
         bool load = (*it)->isChecked();
-        if ( orig != load ) 
+        if ( orig != load )
         {
             changes = true;
             group.writeEntry( (*it)->info->name(), load );
             (*it)->info->setShouldLoad(load);
-            if ( load ) 
+            if ( load )
             {
                 PluginLoader::instance()->loadPlugin( (*it)->info);
             }
-            else 
+            else
             {
                 if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
                     emit PluginLoader::instance()->unplug( (*it)->info);
