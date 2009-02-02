@@ -332,19 +332,22 @@ public:
 };
 
 ConfigWidget::ConfigWidget(QWidget* parent)
-            : QAbstractScrollArea(parent), d(new ConfigWidgetPrivate)
+            : QScrollArea(parent), d(new ConfigWidgetPrivate)
 {
-    QWidget* top = new QWidget( viewport() );
-    setViewport( top );
+    QWidget *panel = new QWidget(viewport());
+    panel->setAutoFillBackground(false);
+    setWidget(panel);
+    setWidgetResizable(true);
+    viewport()->setAutoFillBackground(false);
 
-    QVBoxLayout* lay = new QVBoxLayout(top);
+    QVBoxLayout* lay = new QVBoxLayout(panel);
     lay->setMargin(KDialog::marginHint());
     lay->setSpacing(KDialog::spacingHint());
 
     const PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
     for( PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) 
     {
-        PluginCheckBox* cb = new PluginCheckBox( *it, top );
+        PluginCheckBox* cb = new PluginCheckBox( *it, panel );
         lay->addWidget( cb );
         d->_boxes.append( cb );
     }
@@ -360,8 +363,8 @@ ConfigWidget::~ConfigWidget()
 void ConfigWidget::apply()
 {
     KSharedConfigPtr config = KGlobal::config();
-    KConfigGroup group = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
-    bool changes = false;
+    KConfigGroup group      = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
+    bool changes            = false;
 
     for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) 
     {

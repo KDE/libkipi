@@ -27,7 +27,7 @@
 // Qt includes.
 
 #include <QtCore/QList>
-#include <QtGui/QAbstractScrollArea>
+#include <QtGui/QScrollArea>
 
 // KDE includes
 
@@ -112,7 +112,7 @@ private:
 
 // ----------------------------------------------------------------------
 
-class LIBKIPI_EXPORT ConfigWidget : public QAbstractScrollArea
+class LIBKIPI_EXPORT ConfigWidget : public QScrollArea
 {
     Q_OBJECT
 
