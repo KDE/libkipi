@@ -124,9 +124,9 @@ namespace KIPI
 
 struct PluginLoader::Info::Private 
 {
+    bool          m_shouldLoad;
     KService::Ptr m_service;
-    Plugin* m_plugin;
-    bool m_shouldLoad;
+    Plugin*       m_plugin;
 };
 
 PluginLoader::Info::Info(const KService::Ptr& service, bool shouldLoad)
@@ -195,9 +195,9 @@ public:
         m_interface = 0;
     };
 
+    QStringList               m_ignores;
     PluginLoader::PluginList  m_pluginList;
-    Interface*  m_interface;
-    QStringList m_ignores;
+    Interface*                m_interface;
 };
 
 PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
@@ -239,7 +239,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
             {
                 kDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
                                 << "the feature " << *featureIt << endl;
-                appHasAllReqFeatures=false;
+                appHasAllReqFeatures = false;
                 break;
             }
         }
