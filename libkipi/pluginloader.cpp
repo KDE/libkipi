@@ -7,6 +7,7 @@
  * Description : plugin loader
  *
  * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  *
  * This program is free software; you can redistribute it
@@ -26,7 +27,6 @@
 // Qt include.
 
 #include <QStringList>
-#include <QCheckBox>
 #include <QLayout>
 #include <QList>
 #include <QVariantList>
@@ -310,16 +310,17 @@ ConfigWidget* PluginLoader::configWidget(QWidget* parent)
     return new ConfigWidget(parent);
 }
 
-class PluginCheckBox : public QCheckBox
+class PluginCheckBox : public QListWidgetItem
 {
 public:
 
-    PluginCheckBox(PluginLoader::Info* info, QWidget* parent)
-        : QCheckBox(QString("%1  (%2)").arg(info->name(), info->comment()), parent),
-          info(info)
-        {
-            setChecked(info->shouldLoad());
-        }
+    PluginCheckBox(PluginLoader::Info* info, QListWidget* parent)
+                               : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
+    {
+        setText(QString("%1  (%2)").arg(info->name(), info->comment()));
+        setFlags(Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
+        setCheckState(info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
+    }
     PluginLoader::Info* info;
 };
 
@@ -333,26 +334,17 @@ public:
 };
 
 ConfigWidget::ConfigWidget(QWidget* parent)
-            : QScrollArea(parent), d(new ConfigWidgetPrivate)
+            : QListWidget(parent), d(new ConfigWidgetPrivate)
 {
-    QWidget *panel = new QWidget(viewport());
-    panel->setAutoFillBackground(false);
-    setWidget(panel);
-    setWidgetResizable(true);
+    setAutoFillBackground(false);
+    setSortingEnabled(true);
     viewport()->setAutoFillBackground(false);
-
-    QVBoxLayout* lay = new QVBoxLayout(panel);
-    lay->setMargin(KDialog::marginHint());
-    lay->setSpacing(KDialog::spacingHint());
 
     foreach(PluginLoader::Info *info, PluginLoader::instance()->pluginList())
     {
-        PluginCheckBox* cb = new PluginCheckBox(info, panel);
-        lay->addWidget( cb );
-        d->_boxes.append( cb );
+        PluginCheckBox* cb = new PluginCheckBox(info, this);
+        d->_boxes.append(cb);
     }
-
-    lay->addStretch(10);
 }
 
 ConfigWidget::~ConfigWidget()
@@ -369,7 +361,7 @@ void ConfigWidget::apply()
     for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it )
     {
         bool orig = (*it)->info->shouldLoad();
-        bool load = (*it)->isChecked();
+        bool load = ((*it)->checkState() == Qt::Checked) ? true : false;
         if ( orig != load )
         {
             changes = true;
