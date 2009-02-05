@@ -117,12 +117,12 @@
   PluginLoader::configWidget(), and insert the widget into your normal
   configuration dialog.
 */
-namespace KIPI 
+namespace KIPI
 {
 
 //---------------------------------------------------------------------
 
-struct PluginLoader::Info::Private 
+struct PluginLoader::Info::Private
 {
     bool          m_shouldLoad;
     KService::Ptr m_service;
@@ -212,7 +212,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
     KConfigGroup group          = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
 
     KService::List::ConstIterator iter;
-    for(iter = offers.begin(); iter != offers.end(); ++iter) 
+    for(iter = offers.begin(); iter != offers.end(); ++iter)
     {
         KService::Ptr service   = *iter;
         QString name            = service->name();
@@ -220,22 +220,22 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
         QString library         = service->library();
         QStringList reqFeatures = service->property( QString::fromLatin1( "X-KIPI-ReqFeatures" ) ).toStringList();
 
-        if (library.isEmpty() || name.isEmpty() ) 
+        if (library.isEmpty() || name.isEmpty() )
         {
             kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
-        if ( d->m_ignores.contains( name ) ) 
+        if ( d->m_ignores.contains( name ) )
         {
             kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application";
             continue;
         }
 
         bool appHasAllReqFeatures = true;
-        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); featureIt != reqFeatures.constEnd(); ++featureIt ) 
+        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); featureIt != reqFeatures.constEnd(); ++featureIt )
         {
-            if ( !d->m_interface->hasFeature( *featureIt ) ) 
+            if ( !d->m_interface->hasFeature( *featureIt ) )
             {
                 kDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
                                 << "the feature " << *featureIt << endl;
@@ -261,7 +261,7 @@ PluginLoader::~PluginLoader()
 
 void PluginLoader::loadPlugins()
 {
-    for( PluginList::Iterator it = d->m_pluginList.begin(); it != d->m_pluginList.end(); ++it ) 
+    for( PluginList::Iterator it = d->m_pluginList.begin(); it != d->m_pluginList.end(); ++it )
     {
         loadPlugin( *it );
     }
@@ -315,7 +315,8 @@ class PluginCheckBox : public QCheckBox
 public:
 
     PluginCheckBox(PluginLoader::Info* info, QWidget* parent)
-        : QCheckBox(info->comment(), parent), info(info)
+        : QCheckBox(QString("%1  (%2)").arg(info->name(), info->comment()), parent),
+          info(info)
         {
             setChecked(info->shouldLoad());
         }
@@ -344,10 +345,9 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     lay->setMargin(KDialog::marginHint());
     lay->setSpacing(KDialog::spacingHint());
 
-    const PluginLoader::PluginList list = PluginLoader::instance()->d->m_pluginList;
-    for( PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it ) 
+    foreach(PluginLoader::Info *info, PluginLoader::instance()->pluginList())
     {
-        PluginCheckBox* cb = new PluginCheckBox( *it, panel );
+        PluginCheckBox* cb = new PluginCheckBox(info, panel);
         lay->addWidget( cb );
         d->_boxes.append( cb );
     }
@@ -366,7 +366,7 @@ void ConfigWidget::apply()
     KConfigGroup group      = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
     bool changes            = false;
 
-    for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it ) 
+    for( QList<PluginCheckBox*>::Iterator it = d->_boxes.begin(); it != d->_boxes.end(); ++it )
     {
         bool orig = (*it)->info->shouldLoad();
         bool load = (*it)->isChecked();
