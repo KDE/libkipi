@@ -243,8 +243,8 @@ QString ImageCollection::uploadRootName() const
 
 /*!
   Returns whether an imagecollection is a physical folder on the filesystem
-  or not. Its important to check this, if your plugin needs to do folder
-  based operations for an imagecollection
+  or not. It is important to check this, if your plugin needs to do folder
+  based operations for an image collection.
 */
 bool ImageCollection::isDirectory() const
 {
