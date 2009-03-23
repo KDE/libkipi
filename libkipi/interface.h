@@ -195,7 +195,7 @@ public:
       Return a list of images file extensions which will be used in the plugins 
       to sort the files list before treatements. The default implementation return,
       the supported images formats by KDE.
-      Use hostSetting("FileExtensions") instead.
+      Use hostSetting("FileExtensions").toString() instead.
     */
     KDE_DEPRECATED virtual QString fileExtensions();
 
@@ -207,7 +207,7 @@ public:
     virtual void thumbnail(const KUrl& url, int size);
     /**
       Ask to Kipi host application to render thumbnails for a list of images. If this method is not 
-      re-implemented in host, standard KIO::filePreview is used to generated a thumbnail. 
+      re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
       Use gotThumbnail() signal to take thumbs.
     */
     virtual void thumbnails(const KUrl::List& list, int size);
