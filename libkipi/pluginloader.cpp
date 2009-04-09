@@ -6,7 +6,7 @@
  * Date        : 2004-02-01
  * Description : plugin loader
  *
- * Copyright (C) 2004-2008 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
  *
  * This program is free software; you can redistribute it
@@ -294,7 +294,8 @@ const PluginLoader::PluginList& PluginLoader::pluginList()
 
 PluginLoader* PluginLoader::instance()
 {
-    Q_ASSERT( s_instance != 0);
+    if(!s_instance)
+       kDebug( 51001 ) << "KIPI::PluginLoader::instance is null..." << endl;
     return s_instance;
 }
 
