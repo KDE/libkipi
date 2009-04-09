@@ -222,18 +222,20 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
 
         if (library.isEmpty() || name.isEmpty() )
         {
-            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen.";
+            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen." << endl;
             continue;
         }
 
         if ( d->m_ignores.contains( name ) )
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name << " is in the ignore list for host application";
+            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name 
+                            << " is in the ignore list for host application" << endl;
             continue;
         }
 
         bool appHasAllReqFeatures = true;
-        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); featureIt != reqFeatures.constEnd(); ++featureIt )
+        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); 
+             featureIt != reqFeatures.constEnd(); ++featureIt )
         {
             if ( !d->m_interface->hasFeature( *featureIt ) )
             {
@@ -276,7 +278,7 @@ void PluginLoader::loadPlugin( Info* info )
         Plugin *plugin = info->service()->createInstance<Plugin>(d->m_interface, QVariantList(), &error);
         if (plugin)
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
+            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
         }
         else
         {
@@ -299,7 +301,9 @@ const PluginLoader::PluginList& PluginLoader::pluginList()
 
 PluginLoader* PluginLoader::instance()
 {
-    Q_ASSERT( s_instance != 0);
+    if(!s_instance)
+        kDebug( 51001 ) << "KIPI::PluginLoader::instance is null..." << endl;
+
     return s_instance;
 }
 
