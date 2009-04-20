@@ -23,13 +23,13 @@
  *
  * ============================================================ */
 
+/** @file imageinfo.cpp
+*/
+
 // Local includes.
 
 #include "imageinfo.h"
 #include "imageinfoshared.h"
-
-/** @file imageinfo.cpp
-*/
 
 namespace KIPI
 {

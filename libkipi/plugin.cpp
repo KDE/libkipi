@@ -23,6 +23,9 @@
  *
  * ============================================================ */
 
+#include "plugin.h"
+#include "plugin.moc"
+
 // Qt includes.
 
 #include <QWidget>
@@ -33,11 +36,6 @@
 #include <kactioncollection.h>
 #include <kcomponentdata.h>
 #include <kdebug.h>
-
-// Local includes.
-
-#include "plugin.h"
-#include "plugin.moc"
 
 namespace KIPI
 {

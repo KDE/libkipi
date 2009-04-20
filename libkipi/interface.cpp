@@ -25,6 +25,9 @@
 
 /** @file interface.cpp */
 
+#include "interface.h"
+#include "interface.moc"
+
 // Qt includes.
 
 #include <QPixmap>
@@ -42,8 +45,6 @@
 #include "pluginloader.h"
 #include "imagecollectionselector.h"
 #include "uploadwidget.h"
-#include "interface.h"
-#include "interface.moc"
 
 namespace KIPI
 {

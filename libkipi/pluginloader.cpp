@@ -24,6 +24,9 @@
 
 /** @file pluginloader.cpp */
 
+#include "pluginloader.h"
+#include "pluginloader.moc"
+
 // Qt include.
 
 #include <QStringList>
@@ -45,8 +48,6 @@
 
 #include "plugin.h"
 #include "interface.h"
-#include "pluginloader.h"
-#include "pluginloader.moc"
 
 /**
    \author Renchi Raju
