@@ -12,14 +12,14 @@ PROJECT(libkipi)
 # 0.1.4 => 1.0.1
 # 0.1.5 => 1.1.1
 # 0.1.6 => 2.0.0
-# ... here we can have new releases from KDE3 branch
 # 0.2.0 => 5.0.0  (released with KDE 4.1.0)
 # 0.3.0 => 6.0.0  (released with KDE 4.2.0)
 # 0.4.0 => 6.1.0  (released with KDE 4.3.0)
+# 1.0.0 => 7.0.0  (released with KDE 4.4.0)
 
 # Library API version
-SET(KIPI_LIB_MAJOR_VERSION "0")
-SET(KIPI_LIB_MINOR_VERSION "4")
+SET(KIPI_LIB_MAJOR_VERSION "1")
+SET(KIPI_LIB_MINOR_VERSION "0")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
@@ -33,8 +33,8 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "6")
-SET(KIPI_LIB_SO_REV_VERSION "1")
+SET(KIPI_LIB_SO_CUR_VERSION "7")
+SET(KIPI_LIB_SO_REV_VERSION "0")
 SET(KIPI_LIB_SO_AGE_VERSION "0")
 
 # =======================================================
