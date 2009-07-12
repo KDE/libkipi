@@ -192,14 +192,6 @@ public:
     virtual void refreshImages(const KUrl::List&);
 
     /**
-      Return a list of images file extensions which will be used in the plugins 
-      to sort the files list before treatements. The default implementation return,
-      the supported images formats by KDE.
-      Use hostSetting("FileExtensions").toString() instead.
-    */
-    KDE_DEPRECATED virtual QString fileExtensions();
-
-    /**
       Ask to Kipi host application to render a thumbnail for an image. If this method is not 
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
       Use gotThumbnail() signal to take thumb.

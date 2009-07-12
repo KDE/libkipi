@@ -170,11 +170,6 @@ void Interface::failedKDEPreview(const KFileItem& item)
     emit gotThumbnail(item.url(), QPixmap());
 }
 
-QString Interface::fileExtensions()
-{
-    return (KDEfileExtensions());
-}
-
 QVariant Interface::hostSetting(const QString& settingName)
 {
     if (settingName == QString("WriteMetadataUpdateFiletimeStamp"))
