@@ -22,6 +22,7 @@ Name[x-test]=xxKIPIPluginxx
 Name[zh_TW]=KIPI 外掛程式
 Comment=A KIPI Plugin
 Comment[ar]=ملحق كايْبي
+Comment[bg]=Приставка KIPI
 Comment[ca]=Un connector KIPI
 Comment[cs]=KIPI modul
 Comment[da]=Et KIPI-plugin
