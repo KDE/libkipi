@@ -163,6 +163,11 @@ QString PluginLoader::Info::library() const
     return d->m_service->library();
 }
 
+QIcon PluginLoader::Info::icon() const
+{
+    return KIcon(d->m_service->icon());
+}
+
 Plugin* PluginLoader::Info::plugin() const
 {
     return d->m_plugin;
@@ -217,7 +222,6 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
     {
         KService::Ptr service   = *iter;
         QString name            = service->name();
-        QString comment         = service->comment();
         QString library         = service->library();
         QStringList reqFeatures = service->property( QString::fromLatin1( "X-KIPI-ReqFeatures" ) ).toStringList();
 

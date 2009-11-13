@@ -68,6 +68,8 @@ public:
         QString comment() const;
 
         QString library() const;
+        
+        QIcon icon() const;
 
         Plugin* plugin() const;
         void setPlugin(Plugin*);
