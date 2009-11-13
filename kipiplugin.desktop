@@ -99,3 +99,12 @@ Type=QString
 [PropertyDef::X-KIPI-ReqFeatures]
 Type=QStringList
 
+#Lists the supported mimetypes
+[PropertyDef::X-KIPI-Mimetypes]
+Type=QStringList
+
+#Lists the defined interfaces, by now just ExportInterface
+[PropertyDef::X-KIPI-Interfaces]
+Type=QStringList
+
+

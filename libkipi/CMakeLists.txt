@@ -3,7 +3,7 @@ CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake ${CMAKE_CURRENT_BINAR
 SET(kipi_LIB_SRCS pluginloader.cpp interface.cpp imagecollection.cpp 
                   imagecollectionshared.cpp imageinfoshared.cpp plugin.cpp 
                   imageinfo.cpp uploadwidget.cpp 
-                  imagecollectionselector.cpp)
+                  imagecollectionselector.cpp exportinterface.cpp)
 
 KDE4_ADD_LIBRARY(kipi SHARED ${kipi_LIB_SRCS})
 
@@ -19,6 +19,6 @@ INSTALL(TARGETS kipi ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
 INSTALL(FILES interface.h plugin.h pluginloader.h imageinfo.h imagecollection.h 
               imageinfoshared.h imagecollectionshared.h uploadwidget.h 
-              imagecollectionselector.h 
+              imagecollectionselector.h exportinterface.h extension.h
               ${CMAKE_CURRENT_BINARY_DIR}/version.h libkipi_export.h 
         DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi COMPONENT Devel)
