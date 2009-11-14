@@ -73,7 +73,11 @@ public:
         QIcon icon() const;
 
         Plugin* plugin() const;
-        void setPlugin(Plugin*);
+        
+        void reload();
+        
+        /** @p deprecated. You do not want to change the plugin instance. */
+        void KDE_DEPRECATED setPlugin(Plugin*);
 
         bool shouldLoad() const;
         void setShouldLoad(bool);
@@ -97,10 +101,10 @@ public:
     const PluginList& pluginList();
 
     /** @p deprecated now plugins will be loaded when requested to the Info item */
-    void loadPlugins();
+    void KDE_DEPRECATED loadPlugins();
     
     /** @p deprecated now plugins will be loaded when requested to the Info item */
-    void loadPlugin(Info*);
+    void KDE_DEPRECATED loadPlugin(Info*);
 
     static PluginLoader* instance();
     void construct(const QStringList& ignores, KIPI::Interface* interface, const QString& constraint);

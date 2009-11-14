@@ -196,8 +196,15 @@ Plugin* PluginLoader::Info::plugin() const
     return d->m_plugin;
 }
 
+void PluginLoader::Info::reload()
+{
+    delete d->m_plugin;
+    d->m_plugin=0;
+}
+
 void PluginLoader::Info::setPlugin(Plugin* plugin)
 {
+    delete d->m_plugin;
     d->m_plugin=plugin;
 }
 
@@ -393,13 +400,10 @@ void ConfigWidget::apply()
             (*it)->info->setShouldLoad(load);
             if ( load )
             {
-                PluginLoader::instance()->loadPlugin( (*it)->info);
+                (*it)->info->reload();
             }
-            else
-            {
-                if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
-                    emit PluginLoader::instance()->unplug( (*it)->info);
-            }
+            else if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
+                emit PluginLoader::instance()->unplug( (*it)->info); 
         }
     }
     emit PluginLoader::instance()->replug();
