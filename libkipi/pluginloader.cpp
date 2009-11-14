@@ -141,6 +141,7 @@ PluginLoader::Info::Info(const KService::Ptr& service, bool shouldLoad)
 
 PluginLoader::Info::~Info()
 {
+    delete d->m_plugin;
     delete d;
 }
 
@@ -302,6 +303,7 @@ void PluginLoader::construct( const QStringList& ignores, Interface* interface, 
 
 PluginLoader::~PluginLoader()
 {
+    qDeleteAll(d->m_pluginList);
     delete d;
 }
 
