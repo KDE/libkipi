@@ -9,6 +9,7 @@
  * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
+ * Copyright (C) 2009 by Aleix Pol Gonzalez <aleixpol at kde dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -95,16 +96,22 @@ public:
 
     const PluginList& pluginList();
 
+    /** @p deprecated now plugins will be loaded when requested to the Info item */
     void loadPlugins();
+    
+    /** @p deprecated now plugins will be loaded when requested to the Info item */
     void loadPlugin(Info*);
 
     static PluginLoader* instance();
     void construct(const QStringList& ignores, KIPI::Interface* interface, const QString& constraint);
+    KIPI::Interface* interface() const;
 
 Q_SIGNALS:
 
     void plug( KIPI::PluginLoader::Info* );
     void unplug( KIPI::PluginLoader::Info* );
+    
+    /** @deprecated */
     void replug();
 
 private:

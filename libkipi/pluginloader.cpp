@@ -9,6 +9,7 @@
  * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
  * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
+ * Copyright (C) 2009 by Aleix Pol Gonzalez <aleixpol at kde dot org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -170,6 +171,28 @@ QIcon PluginLoader::Info::icon() const
 
 Plugin* PluginLoader::Info::plugin() const
 {
+    if ( !d->m_plugin && shouldLoad() )
+    {
+        QString error;
+        Plugin *plugin = d->m_service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
+        if (plugin)
+        {
+            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
+        }
+        else
+        {
+            kWarning( 51001 ) << "KIPI::PluginLoader:: createInstance returned 0 for "
+                              << name()
+                              << " (" << library() << ")"
+                              << " with error: "
+                              << error;
+        }
+        d->m_plugin=plugin;
+        
+        if ( d->m_plugin ) // Do not emit if we had trouble loading the plugin.
+            emit PluginLoader::instance()->plug( const_cast<Info*>(this) );
+    }
+    
     return d->m_plugin;
 }
 
@@ -275,38 +298,15 @@ PluginLoader::~PluginLoader()
     delete d;
 }
 
+///deprecated
 void PluginLoader::loadPlugins()
 {
-    for( PluginList::Iterator it = d->m_pluginList.begin(); it != d->m_pluginList.end(); ++it )
-    {
-        loadPlugin( *it );
-    }
-    emit replug();
+    emit replug(); //added for convenience, now they will be loaded on demand
 }
 
-void PluginLoader::loadPlugin( Info* info )
-{
-    if ( info->plugin() == 0 && info->shouldLoad() )
-    {
-        QString error;
-        Plugin *plugin = info->service()->createInstance<Plugin>(d->m_interface, QVariantList(), &error);
-        if (plugin)
-        {
-            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
-        }
-        else
-        {
-            kWarning( 51001 ) << "KIPI::PluginLoader:: createInstance returned 0 for "
-                              << info->name()
-                              << " (" << info->library() << ")"
-                              << " with error: "
-                              << error << endl;
-        }
-        info->setPlugin(plugin);
-    }
-    if ( info->plugin() ) // Do not emit if we had trouble loading the plugin.
-        emit PluginLoader::instance()->plug( info );
-}
+///deprecated
+void PluginLoader::loadPlugin( Info* )
+{}
 
 const PluginLoader::PluginList& PluginLoader::pluginList()
 {
@@ -320,6 +320,12 @@ PluginLoader* PluginLoader::instance()
 
     return s_instance;
 }
+
+Interface* PluginLoader::interface() const
+{
+    return d->m_interface;
+}
+
 
 //---------------------------------------------------------------------
 
