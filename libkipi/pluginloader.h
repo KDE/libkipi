@@ -87,7 +87,8 @@ public:
 
     typedef QList<Info*> PluginList;
 
-    PluginLoader( const QStringList& ignores, Interface* interface );
+    PluginLoader( const QStringList& ignores, KIPI::Interface* interface );
+    PluginLoader( const QStringList& ignores, KIPI::Interface* interface, const QString& constraint );
     virtual ~PluginLoader();
 
     ConfigWidget* configWidget( QWidget* parent );
@@ -98,6 +99,7 @@ public:
     void loadPlugin(Info*);
 
     static PluginLoader* instance();
+    void construct(const QStringList& ignores, KIPI::Interface* interface, const QString& constraint);
 
 Q_SIGNALS:
 

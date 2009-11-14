@@ -201,19 +201,28 @@ public:
         m_interface = 0;
     };
 
-    QStringList               m_ignores;
     PluginLoader::PluginList  m_pluginList;
     Interface*                m_interface;
 };
 
-PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
+PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface)
             : d(new PluginLoaderPrivate)
+{
+    construct(ignores, interface, QString());
+}
+
+PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface, const QString& constraint )
+            : d(new PluginLoaderPrivate)
+{
+    construct(ignores, interface, constraint);
+}
+
+void PluginLoader::construct( const QStringList& ignores, Interface* interface, const QString& constraint )
 {
     Q_ASSERT( s_instance == 0 );
     s_instance                  = this;
     d->m_interface              = interface;
-    d->m_ignores                = ignores;
-    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
+    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin", constraint);
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
 
@@ -231,7 +240,7 @@ PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface )
             continue;
         }
 
-        if ( d->m_ignores.contains( name ) )
+        if ( ignores.contains( name ) )
         {
             kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name 
                             << " is in the ignore list for host application" << endl;
