@@ -44,6 +44,7 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klibloader.h>
+#include <kaction.h>
 
 // Local includes.
 
@@ -167,7 +168,7 @@ QString PluginLoader::Info::library() const
 
 QIcon PluginLoader::Info::icon() const
 {
-    return KIcon(d->m_service->icon());
+    return QIcon(d->m_plugin->actions()[0]->icon());
 }
 
 Plugin* PluginLoader::Info::plugin() const
@@ -351,6 +352,7 @@ public:
                                : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
     {
         setText(QString("%1  (%2)").arg(info->name(), info->comment()));
+        setIcon(info->icon());
         setFlags(Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
         setCheckState(info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
     }

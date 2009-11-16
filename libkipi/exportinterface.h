@@ -6,7 +6,7 @@
  * Date        : 2009-11-13
  * Description : export plugin
  *
- * Copyright (C) 2004-2009 by Aleix Pol Gonzalez <aleixpol@kde.org>
+ * Copyright (C) 2009 by Aleix Pol Gonzalez <aleixpol@kde.org>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -23,14 +23,18 @@
 #ifndef EXPORTINTERFACE_H
 #define EXPORTINTERFACE_H
 
+// Qt includes
+
 #include <QtPlugin>
+
+// KDE includes
+
 #include <KUrl>
 
 // Local includes.
 
 #include "libkipi_export.h"
 #include "extension.h"
-
 
 class KJob;
 
@@ -40,15 +44,15 @@ namespace KIPI
 class LIBKIPI_EXPORT ExportInterface
 {
 public:
-    virtual ~ExportInterface();
-    
-    virtual KJob* exportFiles(const QString& albumname)=0;
 
+    virtual ~ExportInterface();
+
+    virtual KJob* exportFiles(const QString& albumname)=0;
 };
 
-}
+} // namespace KIPI
 
 KIPI_DECLARE_EXTENSION_INTERFACE_NS(KIPI, ExportInterface, "org.kde.kipi.ExportPlugin")
 Q_DECLARE_INTERFACE( KIPI::ExportInterface, "org.kde.kipi.ExportPlugin" )
 
-#endif
+#endif // EXPORTINTERFACE_H
