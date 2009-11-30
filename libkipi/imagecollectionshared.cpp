@@ -23,13 +23,11 @@
  *
  * ============================================================ */
 
+#include "imagecollectionshared.h"
+
 // KDE Includes.
 
 #include <kdebug.h>
-
-// Local Includes.
-
-#include "imagecollectionshared.h"
 
 namespace KIPI
 {

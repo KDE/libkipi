@@ -20,7 +20,6 @@
  *
  * ============================================================ */
 
-#include "uploadwidget.h"
 #include "uploadwidget.moc"
 
 namespace KIPI

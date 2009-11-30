@@ -25,7 +25,6 @@
 
 /** @file pluginloader.cpp */
 
-#include "pluginloader.h"
 #include "pluginloader.moc"
 
 // Qt include.
@@ -168,7 +167,8 @@ QString PluginLoader::Info::library() const
 
 QIcon PluginLoader::Info::icon() const
 {
-    return QIcon(d->m_plugin->actions()[0]->icon());
+    if (d->m_plugin) return QIcon(d->m_plugin->actions()[0]->icon());
+    else return KIcon(d->m_service->icon());
 }
 
 Plugin* PluginLoader::Info::plugin() const

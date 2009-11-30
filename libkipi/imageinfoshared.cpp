@@ -23,6 +23,8 @@
  *
  * ============================================================ */
 
+#include "imageinfoshared.h"
+
 // Qt includes.
 
 #include <QFileInfo>
@@ -33,7 +35,6 @@
 
 // Local includes.
 
-#include "imageinfoshared.h"
 #include "interface.h"
 
 namespace KIPI

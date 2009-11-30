@@ -23,7 +23,6 @@
  *
  * ============================================================ */
 
-#include "plugin.h"
 #include "plugin.moc"
 
 // Qt includes.

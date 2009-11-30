@@ -25,7 +25,6 @@
 
 /** @file interface.cpp */
 
-#include "interface.h"
 #include "interface.moc"
 
 // Qt includes.
