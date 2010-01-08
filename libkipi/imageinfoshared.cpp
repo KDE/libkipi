@@ -58,7 +58,7 @@ int ImageInfoShared::size()
         return 0;
     }
     else
-        return QFileInfo( _url.path() ).size();
+        return QFileInfo( _url.toLocalFile() ).size();
 }
 
 QDateTime ImageInfoShared::time( TimeSpec )
@@ -69,7 +69,7 @@ QDateTime ImageInfoShared::time( TimeSpec )
         return QDateTime();
     }
     else
-        return QFileInfo( _url.path() ).lastModified();
+        return QFileInfo( _url.toLocalFile() ).lastModified();
 }
 
 void ImageInfoShared::addRef()
