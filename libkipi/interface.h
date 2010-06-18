@@ -33,7 +33,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
-#include <QAbstractItemModel>
 
 // KDE includes.
 
@@ -48,6 +47,7 @@
 class QPixmap;
 class QWidget;
 class KFileItem;
+class QAbstractItemModel;
 
 /** @namespace KIPI */
 

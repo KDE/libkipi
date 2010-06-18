@@ -189,9 +189,7 @@ QVariant Interface::hostSetting(const QString& settingName)
 
 QAbstractItemModel* Interface::getTagTree(QWidget* parent)
 {
-
     return NULL;
-    //return QAbstractItemModel();
 }
 
 QString Interface::KDEfileExtensions() const
