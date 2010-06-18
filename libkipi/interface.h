@@ -33,6 +33,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
+#include <QAbstractItemModel>
 
 // KDE includes.
 
@@ -206,6 +207,8 @@ public:
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
     virtual UploadWidget* uploadWidget(QWidget *parent)=0;
+    virtual QAbstractItemModel* getTagTree(QWidget *parent);
+
 
     /**
       Ask to Kipi host application to return a setting to share with plugins, for example to write 

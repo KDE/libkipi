@@ -187,6 +187,13 @@ QVariant Interface::hostSetting(const QString& settingName)
     return QVariant();
 }
 
+QAbstractItemModel* Interface::getTagTree(QWidget* parent)
+{
+
+    return NULL;
+    //return QAbstractItemModel();
+}
+
 QString Interface::KDEfileExtensions() const
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
