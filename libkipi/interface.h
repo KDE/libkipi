@@ -207,7 +207,7 @@ public:
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget *parent)=0;
     virtual UploadWidget* uploadWidget(QWidget *parent)=0;
-    virtual QAbstractItemModel* getTagTree(QWidget *parent);
+    virtual QAbstractItemModel* getTagTree();
 
 
     /**

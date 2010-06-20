@@ -187,7 +187,7 @@ QVariant Interface::hostSetting(const QString& settingName)
     return QVariant();
 }
 
-QAbstractItemModel* Interface::getTagTree(QWidget* parent)
+QAbstractItemModel* Interface::getTagTree()
 {
     return NULL;
 }
