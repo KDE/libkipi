@@ -21,7 +21,7 @@ PROJECT(libkipi)
 # Library API version
 SET(KIPI_LIB_MAJOR_VERSION "1")
 SET(KIPI_LIB_MINOR_VERSION "1")
-SET(KIPI_LIB_PATCH_VERSION "0")
+SET(KIPI_LIB_PATCH_VERSION "9")
 
 # Suffix to add at end of version string. Usual values are:
 # "-svn"   : alpha code unstable from svn. Do not use in production
@@ -36,7 +36,7 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
 SET(KIPI_LIB_SO_CUR_VERSION "7")
 SET(KIPI_LIB_SO_REV_VERSION "1")
-SET(KIPI_LIB_SO_AGE_VERSION "0")
+SET(KIPI_LIB_SO_AGE_VERSION "9")
 
 # =======================================================
 # Set env. variables accordinly.
