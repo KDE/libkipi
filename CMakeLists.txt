@@ -1,4 +1,39 @@
+# ===========================================================
+#
+# This file is a part of digiKam project
+# <a href="http://www.digikam.org">http://www.digikam.org</a>
+#
+# @date   2004-02-01
+# @brief  KDE Image Plugin Interface
+#
+# @author Copyright (C) 2004-2010 by Gilles Caulier
+#         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+#
+# This program is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General
+# Public License as published by the Free Software Foundation;
+# either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# ============================================================
+
 PROJECT(libkipi)
+
+FIND_PACKAGE(KDE4 REQUIRED)
+
+INCLUDE(KDE4Defaults)
+INCLUDE(MacroLibrary)
+INCLUDE(MacroOptionalAddSubdirectory)
+INCLUDE(MacroOptionalFindPackage)
+INCLUDE(FindPackageHandleStandardArgs)
+
+ADD_DEFINITIONS (${QT_DEFINITIONS} ${QT_QTDBUS_DEFINITIONS} ${KDE4_DEFINITIONS})
+INCLUDE_DIRECTORIES (${QDBUS_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
 
 # =======================================================
 # Information to update before to release this library.
@@ -59,4 +94,5 @@ IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 ENDIF(NOT WIN32)
+
 INSTALL(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
