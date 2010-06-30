@@ -1,24 +1,29 @@
-/* ============================================================
+/** ===========================================================
  *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * This file is a part of digiKam project
+ * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
- * Date        : 2004-02-01
- * Description : plugin loader
+ * @date   2004-02-01
+ * @brief  plugin loader
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2009 by Andi Clemens <andi dot clemens at gmx dot net>
- * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
- * Copyright (C) 2009 by Aleix Pol Gonzalez <aleixpol at kde dot org>
+ * @author Copyright (C) 2004-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2004-2005 by Renchi Raju
+ *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
+ * @author Copyright (C) 2009 by Andi Clemens
+ *         <a href="mailto:andi dot clemens at gmx dot net">andi dot clemens at gmx dot net</a>
+ * @author Copyright (C) 2009 by Aleix Pol Gonzalez
+ *         <a href="mailto:aleixpol at kde dot org">aleixpol at kde dot org</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
+ * either version 2, or (at your option)
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -181,7 +186,7 @@ Plugin* PluginLoader::Info::plugin() const
         Plugin *plugin = d->m_service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
         if (plugin)
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName() << endl;
+            kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
         }
         else
         {
@@ -192,11 +197,11 @@ Plugin* PluginLoader::Info::plugin() const
                               << error;
         }
         d->m_plugin=plugin;
-        
+
         if ( d->m_plugin ) // Do not emit if we had trouble loading the plugin.
             emit PluginLoader::instance()->plug( const_cast<Info*>(this) );
     }
-    
+
     return d->m_plugin;
 }
 
@@ -270,14 +275,14 @@ void PluginLoader::construct( const QStringList& ignores, Interface* interface, 
 
         if (library.isEmpty() || name.isEmpty() )
         {
-            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen." << endl;
+            kWarning( 51001 ) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
         if ( ignores.contains( name ) )
         {
             kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name 
-                            << " is in the ignore list for host application" << endl;
+                            << " is in the ignore list for host application";
             continue;
         }
 
@@ -288,7 +293,7 @@ void PluginLoader::construct( const QStringList& ignores, Interface* interface, 
             if ( !d->m_interface->hasFeature( *featureIt ) )
             {
                 kDebug( 51001 ) << "Plugin " << name << " was not loaded because the host application is missing\n"
-                                << "the feature " << *featureIt << endl;
+                                << "the feature " << *featureIt;
                 appHasAllReqFeatures = false;
                 break;
             }
@@ -328,7 +333,7 @@ const PluginLoader::PluginList& PluginLoader::pluginList()
 PluginLoader* PluginLoader::instance()
 {
     if(!s_instance)
-        kDebug( 51001 ) << "KIPI::PluginLoader::instance is null..." << endl;
+        kDebug( 51001 ) << "KIPI::PluginLoader::instance is null...";
 
     return s_instance;
 }

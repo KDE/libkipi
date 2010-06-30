@@ -1,24 +1,29 @@
-/* ============================================================
+/** ===========================================================
  *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * This file is a part of digiKam project
+ * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
- * Date        : 2004-02-01
- * Description : main kipi host application interface.
+ * @date   2004-02-01
+ * @brief  main kipi host application interface
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
- * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
- * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
+ * @author Copyright (C) 2004-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2004-2005 by Renchi Raju
+ *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
+ * @author Copyright (C) 2004-2005 by Jesper K. Pedersen
+ *         <a href="mailto:blackie at kde dot org">blackie at kde dot org</a>
+ * @author Copyright (C) 2004-2005 by Aurelien Gateau
+ *         <a href="mailto:aurelien dot gateau at free dot fr">aurelien dot gateau at free dot fr</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
+ * either version 2, or (at your option)
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -48,7 +53,7 @@
 namespace KIPI
 {
 
-Interface::Interface(QObject *parent, const char *name )
+Interface::Interface(QObject* parent, const char* name )
          : QObject(parent)
 {
     setObjectName(name);
@@ -195,7 +200,7 @@ QAbstractItemModel* Interface::getTagTree()
 QString Interface::KDEfileExtensions() const
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
-    QString imagesFileFilter = KDEImagetypes.join(" ");
+    QString imagesFileFilter  = KDEImagetypes.join(" ");
     return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
 }
 
