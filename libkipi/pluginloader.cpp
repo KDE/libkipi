@@ -183,7 +183,7 @@ Plugin* PluginLoader::Info::plugin() const
     if ( !d->m_plugin && shouldLoad() )
     {
         QString error;
-        Plugin *plugin = d->m_service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
+        Plugin* plugin = d->m_service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
         if (plugin)
         {
             kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
@@ -196,7 +196,7 @@ Plugin* PluginLoader::Info::plugin() const
                               << " with error: "
                               << error;
         }
-        d->m_plugin=plugin;
+        d->m_plugin = plugin;
 
         if ( d->m_plugin ) // Do not emit if we had trouble loading the plugin.
             emit PluginLoader::instance()->plug( const_cast<Info*>(this) );
@@ -208,13 +208,13 @@ Plugin* PluginLoader::Info::plugin() const
 void PluginLoader::Info::reload()
 {
     delete d->m_plugin;
-    d->m_plugin=0;
+    d->m_plugin = 0;
 }
 
 void PluginLoader::Info::setPlugin(Plugin* plugin)
 {
     delete d->m_plugin;
-    d->m_plugin=plugin;
+    d->m_plugin = plugin;
 }
 
 bool PluginLoader::Info::shouldLoad() const
@@ -224,7 +224,7 @@ bool PluginLoader::Info::shouldLoad() const
 
 void PluginLoader::Info::setShouldLoad(bool value)
 {
-    d->m_shouldLoad=value;
+    d->m_shouldLoad = value;
 }
 
 //---------------------------------------------------------------------
