@@ -50,33 +50,32 @@ void ImageCollectionShared::addRef()
 void ImageCollectionShared::removeRef()
 {
     _count--;
-    if ( _count == 0 ) 
+    if ( _count == 0 )
     {
-        // kDebug(51000) << "Deleting!" << endl;
+        // kDebug() << "Deleting!" << endl;
         delete this;
     }
 }
 
 KUrl ImageCollectionShared::path()
 {
-    kWarning(51000) << "This method should only be invoked if this imagecollection is a directory.\n"
-                    <<  "See KIPI::ImageCollectionShared::isDirectory()"
-                    << endl;
+    kWarning() << "This method should only be invoked if this imagecollection is a directory.\n"
+               << "See KIPI::ImageCollectionShared::isDirectory()";
     return KUrl();
 }
 
 KUrl ImageCollectionShared::uploadPath()
 {
-    kWarning(51000) << "This method should only be invoked if the host application supports the KIPI::Features\n"
-                       "AcceptNewImages - if the host application do support that, then this function should\n"
-                       "have been overridden in the host application.\n" << endl;
+    kWarning() << "This method should only be invoked if the host application supports the KIPI::Features\n"
+                  "AcceptNewImages - if the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
     return KUrl();
 }
 
 KUrl ImageCollectionShared::uploadRoot()
 {
     KUrl path = uploadPath();
-    if ( path.isValid() ) 
+    if ( path.isValid() )
     {
         path.setPath("/");
         return path;
@@ -97,31 +96,31 @@ bool ImageCollectionShared::isDirectory()
 
 QString ImageCollectionShared::comment()
 {
-    kWarning(51000) << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
-                       "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
-                       "have been overridden in the host application.\n" << endl;
+    kWarning() << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
+                  "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
     return QString();
 }
 
 QString ImageCollectionShared::category()
 {
-    kWarning(51000) << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
-        "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
-        "have been overridden in the host application.\n" << endl;
+    kWarning() << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
+                  "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
     return QString();
 }
 
 QDate ImageCollectionShared::date()
 {
-    kWarning(51000) << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
-                       "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
-                       "have been overridden in the host application.\n" << endl;
+    kWarning() << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
+                  "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
     return QDate();
 }
 
 bool ImageCollectionShared::operator==(ImageCollectionShared& ics)
 {
-    return images()==ics.images();
+    return images() == ics.images();
 }
 
 } // namespace KIPI

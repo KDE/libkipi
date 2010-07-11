@@ -52,7 +52,7 @@ KUrl ImageInfoShared::path()
 
 int ImageInfoShared::size()
 {
-    if ( ! _url.isLocalFile() ) 
+    if ( ! _url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
         return 0;
@@ -63,7 +63,7 @@ int ImageInfoShared::size()
 
 QDateTime ImageInfoShared::time( TimeSpec )
 {
-    if ( ! _url.isLocalFile() ) 
+    if ( ! _url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
         return QDateTime();
@@ -80,7 +80,7 @@ void ImageInfoShared::addRef()
 void ImageInfoShared::removeRef()
 {
     _count--;
-    if ( _count == 0 ) 
+    if ( _count == 0 )
     {
         delete this;
     }
@@ -106,11 +106,10 @@ void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 
 void ImageInfoShared::setTitle( const QString& )
 {
-    kWarning(51000) << "This method should only be invoked if the host application "
-                       "supports the KIPI::ImagesHasTitlesWritable\n"
-                       "If the host application do support that, then this function should\n"
-                       "have been overridden in the host application.\n" 
-                    << endl;
+    kWarning() << "This method should only be invoked if the host application "
+                  "supports the KIPI::ImagesHasTitlesWritable\n"
+                  "If the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
 }
 
 void ImageInfoShared::cloneData( ImageInfoShared* other )

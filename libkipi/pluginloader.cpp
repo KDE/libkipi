@@ -74,51 +74,56 @@
 
    Then plugin plugins into menus could be done with code similar to this from KimDaBa:
    \code
-    void slotReplug() {
-      unplugActionList( QString::fromLatin1("file_actions") );
-      unplugActionList( QString::fromLatin1("image_actions") );
-      unplugActionList( QString::fromLatin1("tool_actions") );
+    void slotReplug()
+    {
+        unplugActionList( QString::fromLatin1("file_actions") );
+        unplugActionList( QString::fromLatin1("image_actions") );
+        unplugActionList( QString::fromLatin1("tool_actions") );
 
-      QPtrList<KAction> fileActions;
-      QPtrList<KAction> imageActions;
-      QPtrList<KAction> toolsActions;
+        QPtrList<KAction> fileActions;
+        QPtrList<KAction> imageActions;
+        QPtrList<KAction> toolsActions;
 
-      KIPI::PluginLoader::PluginList list = _pluginLoader->pluginList();
-      for( KIPI::PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it ) {
-          KIPI::Plugin* plugin = (*it)->plugin;
-          if ( !plugin || !(*it)->shouldLoad )
-              continue;
+        KIPI::PluginLoader::PluginList list = _pluginLoader->pluginList();
+        for( KIPI::PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it )
+        {
+            KIPI::Plugin* plugin = (*it)->plugin;
+            if ( !plugin || !(*it)->shouldLoad )
+                continue;
 
-          plugin->setup( this );
-          QPtrList<KAction>* popup = 0;
-          if ( plugin->category() == KIPI::IMAGESPLUGIN )
-              popup = &imageActions;
+            plugin->setup( this );
+            QPtrList<KAction>* popup = 0;
+            if ( plugin->category() == KIPI::IMAGESPLUGIN )
+                popup = &imageActions;
 
-          else if ( plugin->category() == KIPI::EXPORTPLUGIN  ||
-                    plugin->category() == KIPI::IMPORTPLUGIN )
-              popup = &fileActions;
+            else if ( plugin->category() == KIPI::EXPORTPLUGIN  ||
+                        plugin->category() == KIPI::IMPORTPLUGIN )
+                popup = &fileActions;
 
-          else if ( plugin->category() == KIPI::TOOLSPLUGIN )
-              popup = &toolsActions;
+            else if ( plugin->category() == KIPI::TOOLSPLUGIN )
+                popup = &toolsActions;
 
-          if ( popup ) {
-              KActionPtrList actions = plugin->actions();
-              for( KActionPtrList::Iterator it = actions.begin(); it != actions.end(); ++it ) {
-                  popup->append( *it );
-              }
-          }
-          else {
-              kDebug() << "No menu found\n";
-          }
-          plugin->actionCollection()->readShortcutSettings();
-      }
+            if ( popup )
+            {
+                KActionPtrList actions = plugin->actions();
+                for( KActionPtrList::Iterator it = actions.begin(); it != actions.end(); ++it )
+                {
+                    popup->append( *it );
+                }
+            }
+            else
+            {
+                kDebug(51001) << "No menu found\n";
+            }
+            plugin->actionCollection()->readShortcutSettings();
+        }
 
-      // For this to work I need to pass false as second arg for createGUI
-      plugActionList( QString::fromLatin1("file_actions"), fileActions );
-      plugActionList( QString::fromLatin1("image_actions"), imageActions );
-      plugActionList( QString::fromLatin1("tool_actions"), toolsActions );
-  }
-  \endcode
+        // For this to work I need to pass false as second arg for createGUI
+        plugActionList( QString::fromLatin1("file_actions"), fileActions );
+        plugActionList( QString::fromLatin1("image_actions"), imageActions );
+        plugActionList( QString::fromLatin1("tool_actions"), toolsActions );
+    }
+    \endcode
 
   To configure which plugins should be loaded, simply call
   PluginLoader::configWidget(), and insert the widget into your normal
@@ -288,13 +293,13 @@ void PluginLoader::construct( const QStringList& ignores, Interface* interface, 
 
         if ( ignores.contains( name ) )
         {
-            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name 
+            kDebug( 51001 ) << "KIPI::PluginLoader: plugin " << name
                             << " is in the ignore list for host application";
             continue;
         }
 
         bool appHasAllReqFeatures = true;
-        for( QStringList::const_iterator featureIt = reqFeatures.constBegin(); 
+        for( QStringList::const_iterator featureIt = reqFeatures.constBegin();
              featureIt != reqFeatures.constEnd(); ++featureIt )
         {
             if ( !d->m_interface->hasFeature( *featureIt ) )
@@ -330,7 +335,8 @@ void PluginLoader::loadPlugins()
 
 ///deprecated
 void PluginLoader::loadPlugin( Info* )
-{}
+{
+}
 
 const PluginLoader::PluginList& PluginLoader::pluginList()
 {
@@ -377,7 +383,9 @@ class ConfigWidgetPrivate
 {
 public:
 
-    ConfigWidgetPrivate(){};
+    ConfigWidgetPrivate()
+    {
+    };
 
     QList< PluginCheckBox* > _boxes;
 };
@@ -421,7 +429,7 @@ void ConfigWidget::apply()
                 (*it)->info->reload();
             }
             else if ( (*it)->info->plugin() ) // Do not emit if we had trouble loading plugin.
-                emit PluginLoader::instance()->unplug( (*it)->info); 
+                emit PluginLoader::instance()->unplug( (*it)->info);
         }
     }
     emit PluginLoader::instance()->replug();

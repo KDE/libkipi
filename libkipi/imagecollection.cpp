@@ -72,7 +72,7 @@ QString ImageCollection::name() const
 }
 
 /**
-   Return the category of the image collection. For example in Digikam, 
+   Return the category of the image collection. For example in Digikam,
    a category is a sorting class like 'travels', 'friends', 'monuments', etc.
 */
 QString ImageCollection::category() const
@@ -87,7 +87,7 @@ QString ImageCollection::category() const
 }
 
 /**
-   Return the Creation date of the image collection. The default implementation 
+   Return the Creation date of the image collection. The default implementation
    return a null date.
 */
 QDate ImageCollection::date() const
@@ -108,7 +108,7 @@ KUrl::List ImageCollection::images() const
 {
     if ( _data )
         return _data->images();
-    else 
+    else
     {
         printNullError();
         return KUrl::List();
@@ -150,7 +150,7 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
     if ( _data )
         _data->removeRef();
 
-    if ( !rhs._data ) 
+    if ( !rhs._data )
     {
         printNullError();
         _data = 0;
@@ -232,8 +232,8 @@ KUrl ImageCollection::uploadRoot() const
 }
 
 /*!
-  This fonction return the name of the upload root path used by the 
-  the KIPI::UploadWidget. This name can be different for each host 
+  This fonction return the name of the upload root path used by the
+  the KIPI::UploadWidget. This name can be different for each host
   app (like "Images" for Kimdaba or "My Albums" for Digikam).
 */
 QString ImageCollection::uploadRootName() const
@@ -270,10 +270,10 @@ bool ImageCollection::isValid() const
 
 void ImageCollection::printNullError() const
 {
-    kWarning( 51000 ) << "Image collection is invalid - this might be the case if you asked for an album, " << endl
-                      << "and not album existed. You should check using .isValid() first." << endl
-                      << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
-                      << "should do that." << endl;
+    kWarning() << "Image collection is invalid - this might be the case if you asked for an album, " << endl
+               << "and not album existed. You should check using .isValid() first." << endl
+               << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
+               << "should do that.";
 }
 
 bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const
