@@ -49,9 +49,7 @@ namespace KIPI
 
 class Plugin;
 class Interface;
-class PluginLoaderPrivate;
 class ConfigWidget;
-class ConfigWidgetPrivate;
 
 class LIBKIPI_EXPORT PluginLoader : public QObject
 {
@@ -89,8 +87,8 @@ public:
 
     private:
 
-        struct Private;
-        Private* const d;
+        class InfoPrivate;
+        InfoPrivate* const d;
     };
 
 public:
@@ -128,6 +126,7 @@ private:
     friend class ConfigWidget;
     friend class PluginCheckBox;
 
+    class PluginLoaderPrivate;
     PluginLoaderPrivate* const d;
 };
 
@@ -148,6 +147,7 @@ public Q_SLOTS:
 
 private:
 
+    class ConfigWidgetPrivate;
     ConfigWidgetPrivate* const d;
 };
 

@@ -134,18 +134,24 @@ namespace KIPI
 
 //---------------------------------------------------------------------
 
-struct PluginLoader::Info::Private
+class PluginLoader::Info::InfoPrivate
 {
+public:
+
+    InfoPrivate()
+    {
+        m_plugin = 0;
+    };
+
     bool          m_shouldLoad;
     KService::Ptr m_service;
     Plugin*       m_plugin;
 };
 
 PluginLoader::Info::Info(const KService::Ptr& service, bool shouldLoad)
-                  : d(new Private)
+                  : d(new InfoPrivate)
 {
     d->m_service    = service;
-    d->m_plugin     = 0;
     d->m_shouldLoad = shouldLoad;
 }
 
@@ -243,7 +249,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 
 static PluginLoader* s_instance = 0;
 
-class PluginLoaderPrivate
+class PluginLoader::PluginLoaderPrivate
 {
 public:
 
@@ -379,7 +385,7 @@ public:
     PluginLoader::Info* info;
 };
 
-class ConfigWidgetPrivate
+class ConfigWidget::ConfigWidgetPrivate
 {
 public:
 
