@@ -106,7 +106,7 @@ public:
     const PluginList& pluginList();
 
     /** @p deprecated now plugins will be loaded when requested to the Info item */
-    void KDE_DEPRECATED loadPlugins();
+    void loadPlugins();
 
     /** @p deprecated now plugins will be loaded when requested to the Info item */
     void KDE_DEPRECATED loadPlugin(Info*);
