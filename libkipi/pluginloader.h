@@ -99,7 +99,7 @@ public:
     PluginLoader( const QStringList& ignores, KIPI::Interface* interface, const QString& constraint );
     virtual ~PluginLoader();
 
-    ConfigWidget* configWidget( QWidget* parent );
+    ConfigWidget* configWidget( QWidget* parent ) const;
 
     const PluginList& pluginList();
 
