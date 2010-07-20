@@ -90,7 +90,7 @@ public:
     private:
 
         struct Private;
-        Private* d;
+        Private* const d;
     };
 
 public:
