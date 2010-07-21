@@ -95,8 +95,8 @@ public:
 
     typedef QList<Info*> PluginList;
 
-    PluginLoader( const QStringList& ignores, KIPI::Interface* interface );
-    PluginLoader( const QStringList& ignores, KIPI::Interface* interface, const QString& constraint );
+    PluginLoader( const QStringList& ignores, KIPI::Interface* const interface );
+    PluginLoader( const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint );
     virtual ~PluginLoader();
 
     ConfigWidget* configWidget( QWidget* parent ) const;
@@ -107,11 +107,12 @@ public:
     void loadPlugins();
 
     /** @p deprecated now plugins will be loaded when requested to the Info item */
-    void KDE_DEPRECATED loadPlugin(Info*);
+    void KDE_DEPRECATED loadPlugin(Info* const);
+
+    void construct(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
+    KIPI::Interface* interface() const;
 
     static PluginLoader* instance();
-    void construct(const QStringList& ignores, KIPI::Interface* interface, const QString& constraint);
-    KIPI::Interface* interface() const;
 
 Q_SIGNALS:
 
@@ -123,11 +124,13 @@ Q_SIGNALS:
 
 private:
 
-    friend class ConfigWidget;
-    friend class PluginCheckBox;
-
     class PluginLoaderPrivate;
     PluginLoaderPrivate* const d;
+
+private:
+
+    friend class ConfigWidget;
+    friend class PluginCheckBox;
 };
 
 // ----------------------------------------------------------------------

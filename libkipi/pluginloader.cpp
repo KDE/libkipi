@@ -230,7 +230,7 @@ void PluginLoader::Info::reload()
     d->plugin = 0;
 }
 
-void PluginLoader::Info::setPlugin(Plugin* plugin)
+void PluginLoader::Info::setPlugin(Plugin* const plugin)
 {
     delete d->plugin;
     d->plugin = plugin;
@@ -263,19 +263,19 @@ public:
     Interface*               interface;
 };
 
-PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface)
+PluginLoader::PluginLoader( const QStringList& ignores, Interface* const interface)
             : d(new PluginLoaderPrivate)
 {
     construct(ignores, interface, QString());
 }
 
-PluginLoader::PluginLoader( const QStringList& ignores, Interface* interface, const QString& constraint )
+PluginLoader::PluginLoader( const QStringList& ignores, Interface* const interface, const QString& constraint )
             : d(new PluginLoaderPrivate)
 {
     construct(ignores, interface, constraint);
 }
 
-void PluginLoader::construct( const QStringList& ignores, Interface* interface, const QString& constraint )
+void PluginLoader::construct( const QStringList& ignores, Interface* const interface, const QString& constraint )
 {
     Q_ASSERT( s_instance == 0 );
     s_instance                  = this;
@@ -340,7 +340,7 @@ void PluginLoader::loadPlugins()
 }
 
 ///deprecated
-void PluginLoader::loadPlugin( Info* )
+void PluginLoader::loadPlugin( Info* const )
 {
 }
 
@@ -373,7 +373,7 @@ class PluginCheckBox : public QListWidgetItem
 {
 public:
 
-    PluginCheckBox(PluginLoader::Info* info, QListWidget* parent)
+    PluginCheckBox(PluginLoader::Info* const info, QListWidget* parent)
                                : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
     {
         setText(QString("%1  (%2)").arg(info->name(), info->comment()));
