@@ -53,7 +53,11 @@ namespace KIPI
 
 class ImageInfoShared;
 
-enum TimeSpec { FromInfo, ToInfo };
+enum TimeSpec
+{
+    FromInfo,
+    ToInfo
+};
 
 /** @class ImageInfo
     Holds info about an image
@@ -90,7 +94,7 @@ public:
     /** constructor
         Interface for host application + general stuff
         */
-    ImageInfo( ImageInfoShared* );
+    ImageInfo( ImageInfoShared* const );
     ImageInfo( const ImageInfo& );
     ~ImageInfo();
 
@@ -98,7 +102,10 @@ private:
 
     ImageInfo() {} // Disabled
     ImageInfo& operator=( const ImageInfo& ) { return *this; } // Disabled
-    mutable KIPI::ImageInfoShared* _data;
+
+private:
+
+    mutable KIPI::ImageInfoShared* d;
 };
 
 } // namespace KIPI

@@ -50,7 +50,7 @@ QString ImageInfo::toString( const QVariant& data ) const
 */
 QString ImageInfo::title() const
 {
-    return _data->title();
+    return d->title();
 }
 
 /**
@@ -58,7 +58,7 @@ QString ImageInfo::title() const
 */
 KUrl ImageInfo::path() const
 {
-    return _data->path();
+    return d->path();
 }
 
 /**
@@ -66,7 +66,7 @@ KUrl ImageInfo::path() const
 */
 QString ImageInfo::description() const
 {
-    return _data->description();
+    return d->description();
 }
 
 /**
@@ -76,13 +76,13 @@ QString ImageInfo::description() const
 */
 QDateTime ImageInfo::time( TimeSpec spec ) const
 {
-    return _data->time( spec );
+    return d->time( spec );
 }
 
 /**
     Returns a Map of attributes of the image
     In case the host application supports some special attributes of the image
-    this function can be used to return them. following attribes are supported by this feature: 
+    this function can be used to return them. following attribes are supported by this feature:
 
     QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
     QString("tags")      :: QStringList() with tags name list.
@@ -93,7 +93,7 @@ QDateTime ImageInfo::time( TimeSpec spec ) const
 */
 QMap<QString,QVariant> ImageInfo::attributes() const
 {
-    return _data->attributes();
+    return d->attributes();
 }
 
 /**
@@ -101,40 +101,40 @@ QMap<QString,QVariant> ImageInfo::attributes() const
 */
 int ImageInfo::size() const
 {
-    return _data->size();
+    return d->size();
 }
 
-ImageInfo::ImageInfo( ImageInfoShared* shared )
-         : _data( shared )
+ImageInfo::ImageInfo( ImageInfoShared* const shared )
+         : d( shared )
 {
 }
 
 ImageInfo::ImageInfo( const ImageInfo& rhs )
 {
-    _data = rhs._data;
-    _data->addRef();
+    d = rhs.d;
+    d->addRef();
 }
 
 ImageInfo::~ImageInfo()
 {
-    _data->removeRef();
+    d->removeRef();
 }
 
 void ImageInfo::setTitle( const QString& name )
 {
-    _data->setTitle( name );
+    d->setTitle( name );
 }
 
 void ImageInfo::setDescription( const QString& description )
 {
-    _data->setDescription( description );
+    d->setDescription( description );
 }
 
 /** Remove all attribute from the image. See delAttributes() for list of all attributes removed.
 */
 void ImageInfo::clearAttributes()
 {
-    _data->clearAttributes();
+    d->clearAttributes();
 }
 
 /** Set the attributes defined from the map to the image. Following keys/values can be used:
@@ -146,7 +146,7 @@ void ImageInfo::clearAttributes()
 */
 void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 {
-    _data->addAttributes( attributes );
+    d->addAttributes( attributes );
 }
 
 /** Remove attributes listed from the image. Following values can be used:
@@ -156,7 +156,7 @@ void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
 */
 void ImageInfo::delAttributes( const QStringList& attributes )
 {
-    _data->delAttributes( attributes );
+    d->delAttributes( attributes );
 }
 
 /**
@@ -167,7 +167,7 @@ void ImageInfo::delAttributes( const QStringList& attributes )
 */
 int ImageInfo::angle() const
 {
-    return _data->angle();
+    return d->angle();
 }
 
 /**
@@ -175,7 +175,7 @@ int ImageInfo::angle() const
 */
 void ImageInfo::setAngle( int angle )
 {
-    _data->setAngle( angle );
+    d->setAngle( angle );
 }
 
 /**
@@ -185,12 +185,12 @@ void ImageInfo::setAngle( int angle )
 */
 bool ImageInfo::isTimeExact() const
 {
-    return _data->isTimeExact();
+    return d->isTimeExact();
 }
 
 void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 {
-    _data->setTime( time, spec );
+    d->setTime( time, spec );
 }
 
 /**
@@ -198,7 +198,7 @@ void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 */
 void ImageInfo::cloneData( const ImageInfo& other )
 {
-    _data->cloneData( other._data );
+    d->cloneData( other.d );
 }
 
 } // namespace KIPI

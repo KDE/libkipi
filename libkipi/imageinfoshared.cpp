@@ -1,24 +1,29 @@
-/* ============================================================
+/** ===========================================================
  *
- * This file is a part of kipi-plugins project
- * http://www.kipi-plugins.org
+ * This file is a part of digiKam project
+ * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
- * Date        : 2004-02-19
- * Description : image info shared.
+ * @date   2004-02-19
+ * @brief  image info shared
  *
- * Copyright (C) 2004-2009 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2004-2005 by Renchi Raju <renchi.raju at kdemail.net>
- * Copyright (C) 2004-2005 by Jesper K. Pedersen <blackie at kde.org>
- * Copyright (C) 2004-2005 by Aurelien Gateau <aurelien dot gateau at free.fr>
+ * @author Copyright (C) 2004-2010 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2004-2005 by Renchi Raju
+ *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
+ * @author Copyright (C) 2004-2005 by Jesper K. Pedersen
+ *         <a href="mailto:blackie at kde dot org">blackie at kde dot org</a>
+ * @author Copyright (C) 2004-2005 by Aurelien Gateau
+ *         <a href="mailto:aurelien dot gateau at free dot fr">aurelien dot gateau at free dot fr</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option) any later version.
+ * either version 2, or (at your option)
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * ============================================================ */
@@ -40,47 +45,51 @@
 namespace KIPI
 {
 
-ImageInfoShared::ImageInfoShared( Interface* interface, const KUrl& url )
-               : _url( url ), _count(1), _interface( interface )
+ImageInfoShared::ImageInfoShared( Interface* const interface, const KUrl& url )
+               : m_url( url ), m_count(1), m_interface( interface )
 {
 }
 
 KUrl ImageInfoShared::path()
 {
-    return _url;
+    return m_url;
 }
 
 int ImageInfoShared::size()
 {
-    if ( ! _url.isLocalFile() )
+    if ( ! m_url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
         return 0;
     }
     else
-        return QFileInfo( _url.toLocalFile() ).size();
+    {
+        return QFileInfo( m_url.toLocalFile() ).size();
+    }
 }
 
 QDateTime ImageInfoShared::time( TimeSpec )
 {
-    if ( ! _url.isLocalFile() )
+    if ( ! m_url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
         return QDateTime();
     }
     else
-        return QFileInfo( _url.toLocalFile() ).lastModified();
+    {
+        return QFileInfo( m_url.toLocalFile() ).lastModified();
+    }
 }
 
 void ImageInfoShared::addRef()
 {
-    _count++;
+    m_count++;
 }
 
 void ImageInfoShared::removeRef()
 {
-    _count--;
-    if ( _count == 0 )
+    m_count--;
+    if ( m_count == 0 )
     {
         delete this;
     }
@@ -112,19 +121,19 @@ void ImageInfoShared::setTitle( const QString& )
                   "have been overridden in the host application.";
 }
 
-void ImageInfoShared::cloneData( ImageInfoShared* other )
+void ImageInfoShared::cloneData( ImageInfoShared* const other )
 {
-    if ( _interface->hasFeature( ImagesHasTitlesWritable ) )
+    if ( m_interface->hasFeature( ImagesHasTitlesWritable ) )
         setTitle( other->title() );
 
-    if ( _interface->hasFeature( ImagesHasComments ) )
+    if ( m_interface->hasFeature( ImagesHasComments ) )
         setDescription( other->description() );
 
     clearAttributes();
     addAttributes( other->attributes() );
 
     setTime( other->time( FromInfo ), FromInfo );
-    if ( _interface->hasFeature( HostSupportsDateRanges ) )
+    if ( m_interface->hasFeature( HostSupportsDateRanges ) )
         setTime( other->time( ToInfo ), ToInfo );
 
     setAngle( other->angle() );
