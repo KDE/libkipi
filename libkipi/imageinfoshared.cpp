@@ -46,38 +46,38 @@ namespace KIPI
 {
 
 ImageInfoShared::ImageInfoShared( Interface* const interface, const KUrl& url )
-               : m_url( url ), m_count(1), m_interface( interface )
+               : _url( url ), m_count(1), m_interface( interface )
 {
 }
 
 KUrl ImageInfoShared::path()
 {
-    return m_url;
+    return _url;
 }
 
 int ImageInfoShared::size()
 {
-    if ( ! m_url.isLocalFile() )
+    if ( ! _url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
         return 0;
     }
     else
     {
-        return QFileInfo( m_url.toLocalFile() ).size();
+        return QFileInfo( _url.toLocalFile() ).size();
     }
 }
 
 QDateTime ImageInfoShared::time( TimeSpec )
 {
-    if ( ! m_url.isLocalFile() )
+    if ( ! _url.isLocalFile() )
     {
         kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
         return QDateTime();
     }
     else
     {
-        return QFileInfo( m_url.toLocalFile() ).lastModified();
+        return QFileInfo( _url.toLocalFile() ).lastModified();
     }
 }
 

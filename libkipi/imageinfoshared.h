@@ -87,7 +87,7 @@ public:
 
 protected:
 
-    KUrl m_url;
+    KUrl _url;
 
 private:
 
