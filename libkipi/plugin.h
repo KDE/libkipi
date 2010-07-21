@@ -48,8 +48,6 @@ class KComponentData;
 namespace KIPI
 {
 
-class PluginPrivate;
-
 enum Category
 {
     ImagesPlugin = 0,
@@ -72,7 +70,7 @@ public:
 
     virtual void setup( QWidget* widget ) = 0;
     QList<KAction*> actions( QWidget* parent = 0 );
-    KActionCollection* actionCollection( QWidget* parent = 0 );
+    KActionCollection* actionCollection( QWidget* parent = 0 ) const;
     virtual Category category( KAction* action ) const = 0;
 
 protected:
@@ -81,9 +79,10 @@ protected:
 
 private:
 
+    class PluginPrivate;
     PluginPrivate* const d;
 };
 
 } // namespace KIPI
 
-#endif  // KIPI_PLUGIN_H 
+#endif  // KIPI_PLUGIN_H

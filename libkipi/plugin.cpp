@@ -44,7 +44,7 @@
 namespace KIPI
 {
 
-class PluginPrivate
+class Plugin::PluginPrivate
 {
 public:
 
@@ -71,7 +71,7 @@ Plugin::~Plugin()
     delete d;
 }
 
-KActionCollection* Plugin::actionCollection( QWidget* widget )
+KActionCollection* Plugin::actionCollection( QWidget* widget ) const
 {
     if ( widget == 0 )
         widget = d->m_defaultWidget;
@@ -79,10 +79,11 @@ KActionCollection* Plugin::actionCollection( QWidget* widget )
     if (!d->m_actionCollection.contains( widget ))
         kWarning() << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
                    << "as the very first line when overriding the setup method.";
+
     return d->m_actionCollection[widget];
 }
 
-void Plugin::addAction( KAction* action )
+void Plugin::addAction( KAction* const action )
 {
     d->m_actions[d->m_defaultWidget].append( action );
 }
