@@ -38,19 +38,19 @@ namespace KIPI
 {
 
 ImageCollectionShared::ImageCollectionShared()
-                     : _count(1)
+                     : m_count(1)
 {
 }
 
 void ImageCollectionShared::addRef()
 {
-    _count++;
+    m_count++;
 }
 
 void ImageCollectionShared::removeRef()
 {
-    _count--;
-    if ( _count == 0 )
+    m_count--;
+    if ( m_count == 0 )
     {
         // kDebug() << "Deleting!" << endl;
         delete this;

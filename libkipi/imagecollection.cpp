@@ -48,8 +48,8 @@ namespace KIPI
 */
 QString ImageCollection::comment() const
 {
-    if ( _data )
-        return _data->comment();
+    if ( d )
+        return d->comment();
     else
     {
         printNullError();
@@ -62,8 +62,8 @@ QString ImageCollection::comment() const
 */
 QString ImageCollection::name() const
 {
-    if ( _data )
-        return _data->name();
+    if ( d )
+        return d->name();
     else
     {
         printNullError();
@@ -77,8 +77,8 @@ QString ImageCollection::name() const
 */
 QString ImageCollection::category() const
 {
-    if ( _data )
-        return _data->category();
+    if ( d )
+        return d->category();
     else
     {
         printNullError();
@@ -92,8 +92,8 @@ QString ImageCollection::category() const
 */
 QDate ImageCollection::date() const
 {
-    if ( _data )
-        return _data->date();
+    if ( d )
+        return d->date();
     else
     {
         printNullError();
@@ -106,8 +106,8 @@ QDate ImageCollection::date() const
 */
 KUrl::List ImageCollection::images() const
 {
-    if ( _data )
-        return _data->images();
+    if ( d )
+        return d->images();
     else
     {
         printNullError();
@@ -116,49 +116,51 @@ KUrl::List ImageCollection::images() const
 }
 
 ImageCollection::ImageCollection( ImageCollectionShared* data )
-               : _data( data )
+               : d( data )
 {
 }
 
 ImageCollection::ImageCollection( const ImageCollection& rhs )
 {
-    if ( rhs._data )
+    if ( rhs.d )
     {
-        _data = rhs._data;
-        _data->addRef();
+        d = rhs.d;
+        d->addRef();
     }
     else
-        _data = 0;
+    {
+        d = 0;
+    }
 }
 
 ImageCollection::ImageCollection()
 {
-    _data = 0;
+    d = 0;
 }
 
 ImageCollection::~ImageCollection()
 {
-    if ( _data )
-        _data->removeRef();
+    if ( d )
+        d->removeRef();
 }
 
 ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 {
-    if ( rhs._data == _data )
+    if ( rhs.d == d )
         return *this;
 
-    if ( _data )
-        _data->removeRef();
+    if ( d )
+        d->removeRef();
 
-    if ( !rhs._data )
+    if ( !rhs.d )
     {
         printNullError();
-        _data = 0;
+        d = 0;
     }
     else
     {
-        _data = rhs._data;
-        _data->addRef();
+        d = rhs.d;
+        d->addRef();
     }
     return *this;
 }
@@ -173,8 +175,8 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 */
 KUrl ImageCollection::path() const
 {
-    if ( _data )
-        return _data->path();
+    if ( d )
+        return d->path();
     else
     {
         printNullError();
@@ -196,8 +198,8 @@ KUrl ImageCollection::path() const
 */
 KUrl ImageCollection::uploadPath() const
 {
-    if ( _data )
-        return _data->uploadPath();
+    if ( d )
+        return d->uploadPath();
     else
     {
         printNullError();
@@ -222,8 +224,8 @@ KUrl ImageCollection::uploadPath() const
 */
 KUrl ImageCollection::uploadRoot() const
 {
-    if ( _data )
-        return _data->uploadRoot();
+    if ( d )
+        return d->uploadRoot();
     else
     {
         printNullError();
@@ -238,8 +240,8 @@ KUrl ImageCollection::uploadRoot() const
 */
 QString ImageCollection::uploadRootName() const
 {
-    if ( _data )
-        return _data->uploadRootName();
+    if ( d )
+        return d->uploadRootName();
     else
     {
         printNullError();
@@ -254,8 +256,8 @@ QString ImageCollection::uploadRootName() const
 */
 bool ImageCollection::isDirectory() const
 {
-    if ( _data )
-        return _data->isDirectory();
+    if ( d )
+        return d->isDirectory();
     else
     {
         printNullError();
@@ -265,7 +267,7 @@ bool ImageCollection::isDirectory() const
 
 bool ImageCollection::isValid() const
 {
-    return (_data != 0);
+    return (d != 0);
 }
 
 void ImageCollection::printNullError() const
@@ -278,12 +280,12 @@ void ImageCollection::printNullError() const
 
 bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const
 {
-    if (!_data || !(ic._data))
+    if (!d || !(ic.d))
     {
         printNullError();
         return false;
     }
-    return *_data == *(ic._data);
+    return *d == *(ic.d);
 }
 
 } // namespace KIPI

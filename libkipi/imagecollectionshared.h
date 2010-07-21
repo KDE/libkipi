@@ -77,7 +77,7 @@ private:
 
 private:
 
-    int _count;
+    int m_count;
 
 private:
 

@@ -83,8 +83,11 @@ public:
 
 private:
 
-    mutable ImageCollectionShared* _data;
     void printNullError() const;
+
+private:
+
+    mutable ImageCollectionShared* d;
 };
 
 } // namespace KIPI
