@@ -53,7 +53,7 @@
 namespace KIPI
 {
 
-Interface::Interface(QObject* parent, const char* name )
+Interface::Interface(QObject* parent, const char* name)
          : QObject(parent)
 {
     setObjectName(name);
@@ -155,7 +155,7 @@ void Interface::thumbnail( const KUrl& url, int size )
 
 void Interface::thumbnails( const KUrl::List& list, int size )
 {
-    KIO::PreviewJob *job = KIO::filePreview(list, size);
+    KIO::PreviewJob* job = KIO::filePreview(list, size);
 
     connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
             this, SLOT(gotKDEPreview(const KFileItem &, const QPixmap &)));
@@ -164,7 +164,7 @@ void Interface::thumbnails( const KUrl::List& list, int size )
             this, SLOT(failedKDEPreview(const KFileItem &)));
 }
 
-void Interface::gotKDEPreview(const KFileItem& item, const QPixmap &pix)
+void Interface::gotKDEPreview(const KFileItem& item, const QPixmap& pix)
 {
     emit gotThumbnail(item.url(), pix);
 }
@@ -192,7 +192,7 @@ QVariant Interface::hostSetting(const QString& settingName)
     return QVariant();
 }
 
-QAbstractItemModel* Interface::getTagTree()
+QAbstractItemModel* Interface::getTagTree() const
 {
     return NULL;
 }

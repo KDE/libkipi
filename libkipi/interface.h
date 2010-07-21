@@ -155,8 +155,7 @@ enum Features
 /** class Interface */
 class LIBKIPI_EXPORT Interface : public QObject
 {
-
-Q_OBJECT
+    Q_OBJECT
 
 public:
 
@@ -198,31 +197,31 @@ public:
     virtual void refreshImages(const KUrl::List&);
 
     /**
-      Ask to Kipi host application to render a thumbnail for an image. If this method is not 
+      Ask to Kipi host application to render a thumbnail for an image. If this method is not
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
       Use gotThumbnail() signal to take thumb.
     */
     virtual void thumbnail(const KUrl& url, int size);
     /**
-      Ask to Kipi host application to render thumbnails for a list of images. If this method is not 
+      Ask to Kipi host application to render thumbnails for a list of images. If this method is not
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
       Use gotThumbnail() signal to take thumbs.
     */
     virtual void thumbnails(const KUrl::List& list, int size);
 
-    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
-    virtual UploadWidget* uploadWidget(QWidget* parent)=0;
-    virtual QAbstractItemModel* getTagTree();
+    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent) const=0;
+    virtual UploadWidget* uploadWidget(QWidget* parent) const=0;
+    virtual QAbstractItemModel* getTagTree() const;
 
     /**
-      Ask to Kipi host application to return a setting to share with plugins, for example to write 
+      Ask to Kipi host application to return a setting to share with plugins, for example to write
       metadata on RAW files.
       Current setting names are:
          "WriteMetadataUpdateFiletimeStamp" (bool)       is true if file timestamp are updated when metadata are saved.
          "WriteMetadataToRAW"               (bool)       is true if RAW files metadata can be changed.
          "FileExtensions"                   (QString)    same than fileExtensions().
 
-      This method return the default settings. Re-implement this method in your dedicated kipi interface 
+      This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
     */
     virtual QVariant hostSetting(const QString& settingName);
@@ -258,14 +257,16 @@ private Q_SLOTS:
 
 private:
 
-    friend class PluginLoader;
-
     bool hasFeature(const QString& feature) const;
 
     /**
       Return a list of images file extensions supported by KDE
     */
     QString KDEfileExtensions() const;
+
+private:
+
+    friend class PluginLoader;
 };
 
 }  // namespace KIPI
