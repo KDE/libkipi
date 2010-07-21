@@ -73,7 +73,7 @@ public:
     bool isValid() const;
 
     // Interface for host application + general stuff
-    ImageCollection( ImageCollectionShared* );
+    ImageCollection( ImageCollectionShared* const );
     ImageCollection( const ImageCollection& other );
     ~ImageCollection();
     ImageCollection();

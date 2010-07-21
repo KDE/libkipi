@@ -81,7 +81,9 @@ KUrl ImageCollectionShared::uploadRoot()
         return path;
     }
     else
+    {
         return KUrl( "file:/" );
+    }
 }
 
 QString ImageCollectionShared::uploadRootName()

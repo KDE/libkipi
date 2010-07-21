@@ -49,7 +49,9 @@ namespace KIPI
 QString ImageCollection::comment() const
 {
     if ( d )
+    {
         return d->comment();
+    }
     else
     {
         printNullError();
@@ -63,7 +65,9 @@ QString ImageCollection::comment() const
 QString ImageCollection::name() const
 {
     if ( d )
+    {
         return d->name();
+    }
     else
     {
         printNullError();
@@ -78,7 +82,9 @@ QString ImageCollection::name() const
 QString ImageCollection::category() const
 {
     if ( d )
+    {
         return d->category();
+    }
     else
     {
         printNullError();
@@ -93,7 +99,9 @@ QString ImageCollection::category() const
 QDate ImageCollection::date() const
 {
     if ( d )
+    {
         return d->date();
+    }
     else
     {
         printNullError();
@@ -107,7 +115,9 @@ QDate ImageCollection::date() const
 KUrl::List ImageCollection::images() const
 {
     if ( d )
+    {
         return d->images();
+    }
     else
     {
         printNullError();
@@ -115,7 +125,7 @@ KUrl::List ImageCollection::images() const
     }
 }
 
-ImageCollection::ImageCollection( ImageCollectionShared* data )
+ImageCollection::ImageCollection( ImageCollectionShared* const data )
                : d( data )
 {
 }
@@ -176,7 +186,9 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 KUrl ImageCollection::path() const
 {
     if ( d )
+    {
         return d->path();
+    }
     else
     {
         printNullError();
@@ -199,7 +211,9 @@ KUrl ImageCollection::path() const
 KUrl ImageCollection::uploadPath() const
 {
     if ( d )
+    {
         return d->uploadPath();
+    }
     else
     {
         printNullError();
@@ -225,7 +239,9 @@ KUrl ImageCollection::uploadPath() const
 KUrl ImageCollection::uploadRoot() const
 {
     if ( d )
+    {
         return d->uploadRoot();
+    }
     else
     {
         printNullError();
@@ -241,7 +257,9 @@ KUrl ImageCollection::uploadRoot() const
 QString ImageCollection::uploadRootName() const
 {
     if ( d )
+    {
         return d->uploadRootName();
+    }
     else
     {
         printNullError();
@@ -257,7 +275,9 @@ QString ImageCollection::uploadRootName() const
 bool ImageCollection::isDirectory() const
 {
     if ( d )
+    {
         return d->isDirectory();
+    }
     else
     {
         printNullError();
