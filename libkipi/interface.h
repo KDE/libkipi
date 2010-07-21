@@ -209,8 +209,8 @@ public:
     */
     virtual void thumbnails(const KUrl::List& list, int size);
 
-    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent) const=0;
-    virtual UploadWidget* uploadWidget(QWidget* parent) const=0;
+    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
+    virtual UploadWidget* uploadWidget(QWidget* parent)=0;
     virtual QAbstractItemModel* getTagTree() const;
 
     /**
