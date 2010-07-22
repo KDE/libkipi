@@ -28,9 +28,3 @@ INSTALL(FILES kipi-plugins_logo.png
               kipi-logo.svg 
         DESTINATION ${DATA_INSTALL_DIR}/kipi/data)
 
-INSTALL(FILES button-approve-normal.png
-              button-approve-pressed.png
-              button-reject-normal.png
-              button-reject-pressed.png
-        DESTINATION ${DATA_INSTALL_DIR}/kipi/data)
-
