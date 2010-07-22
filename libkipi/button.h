@@ -30,10 +30,10 @@
 
 // Qt includes
 
-#include <QGraphicsItem>
-#include <QObject>
-#include <QPainter>
-#include <QGraphicsSceneMouseEvent>
+#include <QtCore/QObject>
+#include <QtGui/QGraphicsItem>
+#include <QtGui/QPainter>
+#include <QtGui/QGraphicsSceneMouseEvent>
 
 // Local includes
 
@@ -42,8 +42,6 @@
 namespace KIPI
 {
 
-class ButtonPriv;
-    
 class LIBKIPI_EXPORT Button : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -71,6 +69,7 @@ protected:
 
 private:
 
+    class ButtonPriv;
     ButtonPriv* const d;
 };
 

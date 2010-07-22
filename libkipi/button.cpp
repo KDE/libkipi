@@ -30,7 +30,7 @@
 namespace KIPI
 {
 
-class ButtonPriv
+class Button::ButtonPriv
 {
 public:
 
