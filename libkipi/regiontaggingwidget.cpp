@@ -135,11 +135,11 @@ RegionTaggingWidget::RegionTaggingWidget(QGraphicsItem* parent, QGraphicsScene* 
 
     //---------------------
 
-    d->approveButton = new Button( KStandardDirs::locate("data", "regiontaggingwidget/icons/button-approve-normal.png"),
-                                KStandardDirs::locate("data", "regiontaggingwidget/icons/button-approve-pressed.png") );
+    d->approveButton = new Button( KStandardDirs::locate("data", "kipi/data/button-approve-normal.png"),
+                                KStandardDirs::locate("data", "kipi/data/button-approve-pressed.png") );
 
-    d->rejectButton  = new Button( KStandardDirs::locate("data", "regiontaggingwidget/icons/button-reject-normal.png"),
-                                KStandardDirs::locate("data", "regiontaggingwidget/icons/button-reject-pressed.png") );
+    d->rejectButton  = new Button( KStandardDirs::locate("data", "kipi/data/button-reject-normal.png"),
+                                KStandardDirs::locate("data", "kipi/data/button-reject-pressed.png") );
 
     d->approveButton->hide();
     d->rejectButton->hide();
