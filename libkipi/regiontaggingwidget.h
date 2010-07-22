@@ -31,12 +31,12 @@
 
 // Qt includes
 
-#include <QtGlobal>
-#include <QGraphicsObject>
-#include <QObject>
-#include <QGraphicsRectItem>
-#include <QBrush>
-#include <QFont>
+#include <QtCore/QtGlobal>
+#include <QtCore/QObject>
+#include <QtGui/QGraphicsRectItem>
+#include <QtGui/QGraphicsObject>
+#include <QtGui/QBrush>
+#include <QtGui/QFont>
 
 // Local includes
 
@@ -46,8 +46,6 @@
 namespace KIPI
 {
 
-class RegionTaggingWidgetPriv;
-
 class LIBKIPI_EXPORT RegionTaggingWidget : public QGraphicsObject
 {
     Q_OBJECT
@@ -55,7 +53,7 @@ class LIBKIPI_EXPORT RegionTaggingWidget : public QGraphicsObject
 public:
 
     RegionTaggingWidget(QGraphicsItem* parent = 0, QGraphicsScene* scene = 0, const QRect& rect = QRect(0, 0, 0, 0),
-             double scale = 1, const QString& name = QString());
+                        double scale = 1, const QString& name = QString());
     ~RegionTaggingWidget();
 
     QRectF boundingRect() const;
@@ -73,7 +71,8 @@ public Q_SLOTS:
     void clearText();
 
 private:
-    
+
+    class RegionTaggingWidgetPriv;
     RegionTaggingWidgetPriv* const d;
 };
 

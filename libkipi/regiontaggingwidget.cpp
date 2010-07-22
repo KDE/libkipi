@@ -48,7 +48,7 @@
 namespace KIPI
 {
 
-class RegionTaggingWidgetPriv
+class RegionTaggingWidget::RegionTaggingWidgetPriv
 {
 public:
 
@@ -71,7 +71,7 @@ public:
 };
 
 RegionTaggingWidget::RegionTaggingWidget(QGraphicsItem* parent, QGraphicsScene* scene, const QRect& rect, double scale, const QString& name)
-        : QGraphicsObject(parent), d(new RegionTaggingWidgetPriv)
+                   : QGraphicsObject(parent), d(new RegionTaggingWidgetPriv)
 {
     setAcceptHoverEvents(true);
 
@@ -106,8 +106,7 @@ RegionTaggingWidget::RegionTaggingWidget(QGraphicsItem* parent, QGraphicsScene* 
     d->faceName = new QGraphicsTextItem (name, 0, scene);
 
     // Make the bounding box for the name update itself to cover all the text whenever contents are changed
-    QTextDocument* doc;
-    doc = d->faceName->document();
+    QTextDocument* doc = d->faceName->document();
     QTextOption o;
     o.setAlignment(Qt::AlignCenter);
     doc->setDefaultTextOption(o);
@@ -136,10 +135,10 @@ RegionTaggingWidget::RegionTaggingWidget(QGraphicsItem* parent, QGraphicsScene* 
     //---------------------
 
     d->approveButton = new Button( KStandardDirs::locate("data", "kipi/data/button-approve-normal.png"),
-                                KStandardDirs::locate("data", "kipi/data/button-approve-pressed.png") );
+                                   KStandardDirs::locate("data", "kipi/data/button-approve-pressed.png") );
 
     d->rejectButton  = new Button( KStandardDirs::locate("data", "kipi/data/button-reject-normal.png"),
-                                KStandardDirs::locate("data", "kipi/data/button-reject-pressed.png") );
+                                   KStandardDirs::locate("data", "kipi/data/button-reject-pressed.png") );
 
     d->approveButton->hide();
     d->rejectButton->hide();
@@ -149,7 +148,6 @@ RegionTaggingWidget::RegionTaggingWidget(QGraphicsItem* parent, QGraphicsScene* 
 
     d->approveButton->setPos(x-40, y);
     d->rejectButton->setPos(x-20, y);
-
 
     connect(d->rejectButton, SIGNAL(clicked()),
             this, SLOT(clearText()) );
