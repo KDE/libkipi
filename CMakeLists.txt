@@ -55,7 +55,7 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 0.4.0 => 6.1.0  (released with KDE 4.3.0)
 # 1.0.0 => 7.0.0  (released with KDE 4.4.0)
 # 1.1.0 => 7.1.0  (released with KDE 4.5.0)
-# 1.2.0 => 7.2.0  (released with KDE 4.6.0)
+# 1.2.0 => 8.0.0  (released with KDE 4.6.0)
 
 # Library API version
 SET(KIPI_LIB_MAJOR_VERSION "1")
@@ -73,8 +73,8 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "7")
-SET(KIPI_LIB_SO_REV_VERSION "2")
+SET(KIPI_LIB_SO_CUR_VERSION "8")
+SET(KIPI_LIB_SO_REV_VERSION "0")
 SET(KIPI_LIB_SO_AGE_VERSION "0")
 
 # =======================================================
