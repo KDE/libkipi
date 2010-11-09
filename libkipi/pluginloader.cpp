@@ -194,7 +194,7 @@ QIcon PluginLoader::Info::icon() const
     }
     else
     {
-        return QIcon(d->service->icon());
+        return KIcon(d->service->icon());
     }
 }
 
