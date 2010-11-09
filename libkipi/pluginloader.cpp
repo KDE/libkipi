@@ -168,9 +168,16 @@ QString PluginLoader::Info::library() const
 QIcon PluginLoader::Info::icon() const
 {
     if(d->m_service->icon().isEmpty() && d->m_plugin)
-        return QIcon(d->m_plugin->actions()[0]->icon());
+    {
+        if (d->m_plugin->actions()[0])
+            return d->m_plugin->actions()[0]->icon();
+        else
+            return QIcon();
+    }
     else
+    {
         return KIcon(d->m_service->icon());
+    }
 }
 
 Plugin* PluginLoader::Info::plugin() const
