@@ -169,8 +169,8 @@ QIcon PluginLoader::Info::icon() const
 {
     if(d->m_service->icon().isEmpty() && d->m_plugin)
     {
-        if (d->m_plugin->actions()[0])
-            return d->m_plugin->actions()[0]->icon();
+        if (d->m_plugin->actions().isEmpty() && d->m_plugin->actions().first())
+            return d->m_plugin->actions().first()->icon();
         else
             return QIcon();
     }
