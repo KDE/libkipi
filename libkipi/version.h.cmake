@@ -25,8 +25,8 @@
 #ifndef KIPI_VERSION_H
 #define KIPI_VERSION_H
 
-static const char kipi_version[] = "${KIPI_LIB_VERSION_STRING}";
-
+static const char kipi_version[]     = "${KIPI_LIB_VERSION_STRING}";
+static const int kipi_binary_version =  ${KIPI_LIB_SO_CUR_VERSION};
 #define KIPI_VERSION ${KIPI_LIB_VERSION_ID}
 
 #endif // KIPI_VERSION_H

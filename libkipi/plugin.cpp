@@ -42,6 +42,10 @@
 #include <kcomponentdata.h>
 #include <kdebug.h>
 
+// Local includes
+
+#include "version.h"
+
 namespace KIPI
 {
 
@@ -65,6 +69,8 @@ Plugin::Plugin(const KComponentData& instance, QObject* parent, const char* name
 {
     d->m_instance = instance;
     setObjectName(name);
+
+    setProperty("KipiBinaryVersion", kipi_binary_version);
 }
 
 Plugin::~Plugin()

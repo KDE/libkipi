@@ -55,6 +55,7 @@
 
 #include "plugin.h"
 #include "interface.h"
+#include "version.h"
 
 /**
    \author Renchi Raju
@@ -207,6 +208,16 @@ Plugin* PluginLoader::Info::plugin() const
         if (plugin)
         {
             kDebug( 51001 ) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
+
+            QVariant binaryVersion = plugin->property("KipiBinaryVersion");
+            if (!binaryVersion.isValid() || binaryVersion.toInt() != kipi_binary_version)
+            {
+                kDebug( 51001 ) << "KIPI::PluginLoader: Plugin " << plugin->objectName()
+                                << "is compiled for a different libkipi ABI version."
+                                << "Refusing to load.";
+                delete plugin;
+                plugin = 0;
+            }
         }
         else
         {
@@ -216,6 +227,7 @@ Plugin* PluginLoader::Info::plugin() const
                               << " with error: "
                               << error;
         }
+
         d->plugin = plugin;
 
         if ( d->plugin ) // Do not emit if we had trouble loading the plugin.
