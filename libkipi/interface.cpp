@@ -158,11 +158,11 @@ void Interface::thumbnails( const KUrl::List& list, int size )
 {
     KIO::PreviewJob* job = KIO::filePreview(list, size);
 
-    connect(job, SIGNAL(gotPreview(const KFileItem &, const QPixmap &)),
-            this, SLOT(gotKDEPreview(const KFileItem &, const QPixmap &)));
+    connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+            this, SLOT(gotKDEPreview(KFileItem,QPixmap)));
 
-    connect(job, SIGNAL(failed(const KFileItem &)),
-            this, SLOT(failedKDEPreview(const KFileItem &)));
+    connect(job, SIGNAL(failed(KFileItem)),
+            this, SLOT(failedKDEPreview(KFileItem)));
 }
 
 void Interface::gotKDEPreview(const KFileItem& item, const QPixmap& pix)
