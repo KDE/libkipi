@@ -7,7 +7,7 @@
  * @date   2004-02-19
  * @brief  image info shared
  *
- * @author Copyright (C) 2004-2010 by Gilles Caulier
+ * @author Copyright (C) 2004-2011 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -47,7 +47,7 @@ namespace KIPI
 {
 
 ImageInfoShared::ImageInfoShared( Interface* const interface, const KUrl& url )
-               : _url( url ), m_count(1), m_interface( interface )
+    : _url( url ), m_count(1), m_interface( interface )
 {
 }
 
@@ -114,7 +114,7 @@ void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 {
 }
 
-void ImageInfoShared::setTitle( const QString& )
+void ImageInfoShared::setName( const QString& )
 {
     kWarning() << "This method should only be invoked if the host application "
                   "supports the KIPI::ImagesHasTitlesWritable\n"
@@ -125,7 +125,7 @@ void ImageInfoShared::setTitle( const QString& )
 void ImageInfoShared::cloneData( ImageInfoShared* const other )
 {
     if ( m_interface->hasFeature( ImagesHasTitlesWritable ) )
-        setTitle( other->title() );
+        setName( other->name() );
 
     if ( m_interface->hasFeature( ImagesHasComments ) )
         setDescription( other->description() );
@@ -138,6 +138,13 @@ void ImageInfoShared::cloneData( ImageInfoShared* const other )
         setTime( other->time( ToInfo ), ToInfo );
 
     setAngle( other->angle() );
+}
+
+// Deprecated methods
+
+void ImageInfoShared::setTitle( const QString& )
+{
+    setName(QString());
 }
 
 } // namespace KIPI

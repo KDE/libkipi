@@ -7,7 +7,7 @@
  * @date   2004-02-19
  * @brief  image info shared
  *
- * @author Copyright (C) 2004-2010 by Gilles Caulier
+ * @author Copyright (C) 2004-2011 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -60,31 +60,36 @@ public:
 
     ImageInfoShared( KIPI::Interface* const interface, const KUrl& url );
     virtual ~ImageInfoShared() {}
-    virtual QString title() {return QString::null;}
-    virtual void setTitle( const QString& );
+
+    /** Use name() instead */
+    KDE_DEPRECATED virtual QString title() { return QString::null; }
+    /** Use setName() instead */
+    KDE_DEPRECATED virtual void    setTitle(const QString&);
+
+    virtual QString name() { return QString::null; }
+    virtual void    setName(const QString&);
 
     virtual QString description() = 0;
-    virtual void setDescription( const QString& ) = 0;
+    virtual void    setDescription(const QString&) = 0;
 
-    virtual QMap<QString,QVariant> attributes() = 0;
+    virtual QMap<QString, QVariant> attributes() = 0;
     virtual void clearAttributes() = 0;
-    virtual void addAttributes( const QMap<QString,QVariant>& ) = 0;
-    virtual void delAttributes( const QStringList& ) = 0;
+    virtual void addAttributes(const QMap<QString, QVariant>&) = 0;
+    virtual void delAttributes(const QStringList& ) = 0;
 
-    virtual KUrl path();
-    virtual QDateTime time( KIPI::TimeSpec spec );
-    virtual void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+    virtual QDateTime time(KIPI::TimeSpec spec);
+    virtual void setTime(const QDateTime& time, TimeSpec spec = FromInfo);
+
+    virtual int  angle();
+    virtual void setAngle(int);
 
     virtual bool isTimeExact();
+    virtual int  size();
+    virtual KUrl path();
 
-    virtual int size();
+    QString toString(const QVariant&);
 
-    virtual int angle();
-    virtual void setAngle( int );
-
-    QString toString( const QVariant& );
-
-    virtual void cloneData( ImageInfoShared* const other );
+    virtual void cloneData(ImageInfoShared* const other);
 
 protected:
 
