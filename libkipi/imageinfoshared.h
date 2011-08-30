@@ -62,9 +62,9 @@ public:
     virtual ~ImageInfoShared() {}
 
     /** Use name() instead */
-    KDE_DEPRECATED virtual QString title() { return QString::null; }
+    virtual KDE_DEPRECATED QString title() { return QString::null; }
     /** Use setName() instead */
-    KDE_DEPRECATED virtual void    setTitle(const QString&);
+    virtual KDE_DEPRECATED void    setTitle(const QString&);
 
     virtual QString name() { return QString::null; }
     virtual void    setName(const QString&);
