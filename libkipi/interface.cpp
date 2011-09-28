@@ -202,7 +202,7 @@ QString Interface::KDEfileExtensions() const
 {
     QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
     QString imagesFileFilter  = KDEImagetypes.join(" ");
-    return ( imagesFileFilter.toLower() + " " + imagesFileFilter.toUpper() );
+    return ( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
 }
 
 } // namespace KIPI

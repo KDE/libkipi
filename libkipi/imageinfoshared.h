@@ -60,14 +60,14 @@ class LIBKIPI_EXPORT ImageInfoShared
 public:
 
     ImageInfoShared( KIPI::Interface* const interface, const KUrl& url );
-    virtual ~ImageInfoShared() {}
+    virtual ~ImageInfoShared();
 
     /** Use name() instead */
     virtual KDE_DEPRECATED QString title() { return QString::null; }
     /** Use setName() instead */
     virtual KDE_DEPRECATED void    setTitle(const QString&);
 
-    virtual QString name() { return QString::null; }
+    virtual QString name();
     virtual void    setName(const QString&);
 
     virtual QString description() = 0;

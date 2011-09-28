@@ -43,6 +43,10 @@ ImageCollectionShared::ImageCollectionShared()
 {
 }
 
+ImageCollectionShared::~ImageCollectionShared()
+{
+}
+
 void ImageCollectionShared::addRef()
 {
     m_count++;

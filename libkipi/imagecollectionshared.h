@@ -55,7 +55,7 @@ class LIBKIPI_EXPORT ImageCollectionShared
 public:
 
     ImageCollectionShared();
-    virtual ~ImageCollectionShared() {}
+    virtual ~ImageCollectionShared();
 
     virtual QString comment();
     virtual QString category();

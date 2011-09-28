@@ -51,6 +51,10 @@ ImageInfoShared::ImageInfoShared( Interface* const interface, const KUrl& url )
 {
 }
 
+ImageInfoShared::~ImageInfoShared()
+{
+}
+
 KUrl ImageInfoShared::path()
 {
     return _url;
@@ -120,6 +124,11 @@ void ImageInfoShared::setName( const QString& )
                   "supports the KIPI::ImagesHasTitlesWritable\n"
                   "If the host application do support that, then this function should\n"
                   "have been overridden in the host application.";
+}
+
+QString ImageInfoShared::name()
+{
+    return QString::null;
 }
 
 void ImageInfoShared::cloneData( ImageInfoShared* const other )

@@ -28,7 +28,7 @@
 
 // Qt includes
 
-#include <QtPlugin>
+#include <QtCore/QtPlugin>
 
 // KDE includes
 
