@@ -432,7 +432,7 @@ void ConfigWidget::apply()
 {
     KSharedConfigPtr config = KGlobal::config();
     KConfigGroup group      = config->group( QString::fromLatin1( "KIPI/EnabledPlugin" ) );
-    bool changes            = false;
+//    bool changes            = false;
 
     for( QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it )
     {
@@ -441,7 +441,7 @@ void ConfigWidget::apply()
 
         if ( orig != load )
         {
-            changes = true;
+//            changes = true;
             group.writeEntry( (*it)->info->name(), load );
             (*it)->info->setShouldLoad(load);
 
