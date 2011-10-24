@@ -12,7 +12,7 @@
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
  * @author Copyright (C) 2009 by Andi Clemens
- *         <a href="mailto:andi dot clemens at gmx dot net">andi dot clemens at gmx dot net</a>
+ *         <a href="mailto:andi dot clemens at googlemail dot com">andi dot clemens at googlemail dot com</a>
  * @author Copyright (C) 2009 by Aleix Pol Gonzalez
  *         <a href="mailto:aleixpol at kde dot org">aleixpol at kde dot org</a>
  *
