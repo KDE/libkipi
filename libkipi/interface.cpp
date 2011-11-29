@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  main kipi host application interface
  *
- * @author Copyright (C) 2004-2010 by Gilles Caulier
+ * @author Copyright (C) 2004-2011 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -39,6 +39,7 @@
 
 // KDE includes.
 
+#include <kdeversion.h>
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kimageio.h>
@@ -156,7 +157,17 @@ void Interface::thumbnail( const KUrl& url, int size )
 
 void Interface::thumbnails( const KUrl::List& list, int size )
 {
-    KIO::PreviewJob* job = KIO::filePreview(list, size);
+#if KDE_IS_VERSION(4,7,0)
+    KFileItemList items;
+    for (KUrl::List::ConstIterator it = items.begin() ; it != items.end() ; ++it)
+    {
+        if ((*it).isValid())
+            items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
+    }
+    KIO::PreviewJob* job = KIO::filePreview(items, QSize(size, size));
+#else
+    KIO::PreviewJob *job = KIO::filePreview(list, size);
+#endif
 
     connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
             this, SLOT(gotKDEPreview(KFileItem,QPixmap)));
