@@ -159,7 +159,7 @@ void Interface::thumbnails( const KUrl::List& list, int size )
 {
 #if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
-    for (KUrl::List::ConstIterator it = items.begin() ; it != items.end() ; ++it)
+    for (KUrl::List::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
