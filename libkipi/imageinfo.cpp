@@ -32,7 +32,7 @@
 /** @file imageinfo.cpp
 */
 
-// Local includes.
+// Local includes
 
 #include "imageinfo.h"
 #include "imageinfoshared.h"

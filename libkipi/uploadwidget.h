@@ -26,11 +26,11 @@
 #ifndef KIPI_UPLOADWIDGET_H
 #define KIPI_UPLOADWIDGET_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtGui/QWidget>
 
-// Local includes.
+// Local includes
 
 #include "imagecollection.h"
 #include "libkipi_export.h"

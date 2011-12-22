@@ -31,11 +31,11 @@
 
 #include "plugin.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QWidget>
 
-// KDE includes.
+// KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>

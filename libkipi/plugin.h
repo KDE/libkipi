@@ -32,12 +32,12 @@
 #ifndef KIPI_PLUGIN_H
 #define KIPI_PLUGIN_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
-// Local includes.
+// Local includes
 
 #include "libkipi_export.h"
 

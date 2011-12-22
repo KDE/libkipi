@@ -34,7 +34,7 @@
 
 #include <KUrl>
 
-// Local includes.
+// Local includes
 
 #include "libkipi_export.h"
 #include "extension.h"

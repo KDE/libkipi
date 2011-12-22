@@ -40,7 +40,7 @@
 #include <QList>
 #include <QVariantList>
 
-// KDE includes.
+// KDE includes
 
 #include <kservicetypetrader.h>
 #include <kdebug.h>
@@ -51,7 +51,7 @@
 #include <klibloader.h>
 #include <kaction.h>
 
-// Local includes.
+// Local includes
 
 #include "plugin.h"
 #include "interface.h"

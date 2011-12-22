@@ -26,12 +26,12 @@
 #ifndef IMAGECOLLECTIONSELECTOR_H
 #define IMAGECOLLECTIONSELECTOR_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtGui/QWidget>
 #include <QtCore/QList>
 
-// KIPI includes.
+// KIPI includes
 
 #include "imagecollection.h"
 #include "libkipi_export.h"

@@ -32,7 +32,7 @@
 #ifndef KIPI_PLUGINLOADER_H
 #define KIPI_PLUGINLOADER_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtCore/QList>
 #include <QtGui/QListWidget>
@@ -41,7 +41,7 @@
 
 #include <kservice.h>
 
-// Local includes.
+// Local includes
 
 #include "libkipi_export.h"
 

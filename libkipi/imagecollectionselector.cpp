@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-// Local includes.
+// Local includes
 
 #include "imagecollectionselector.moc"
 

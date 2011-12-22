@@ -31,15 +31,15 @@
 
 #include "imageinfoshared.h"
 
-// Qt includes.
+// Qt includes
 
 #include <QFileInfo>
 
-// KDE includes.
+// KDE includes
 
 #include <kdebug.h>
 
-// Local includes.
+// Local includes
 
 #include "interface.h"
 

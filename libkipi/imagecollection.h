@@ -39,11 +39,11 @@
 #include <QtCore/QString>
 #include <QtCore/QDateTime>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "libkipi_export.h"
 

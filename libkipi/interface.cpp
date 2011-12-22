@@ -33,11 +33,11 @@
 
 #include "interface.moc"
 
-// Qt includes.
+// Qt includes
 
 #include <QPixmap>
 
-// KDE includes.
+// KDE includes
 
 #include <kdeversion.h>
 #include <kdebug.h>
@@ -45,7 +45,7 @@
 #include <kimageio.h>
 #include <kio/previewjob.h>
 
-// Local includes.
+// Local includes
 
 #include "version.h"
 #include "pluginloader.h"

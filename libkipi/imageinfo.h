@@ -34,19 +34,19 @@
 #ifndef KIPI_IMAGEINFO_H
 #define KIPI_IMAGEINFO_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtCore/QString>
 #include <QtCore/QDateTime>
 #include <QtCore/QMap>
 #include <QtCore/QVariant>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 #include <kdemacros.h>
 
-// Local includes.
+// Local includes
 
 #include "libkipi_export.h"
 

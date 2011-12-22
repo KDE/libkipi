@@ -34,17 +34,17 @@
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 
-// Qt includes.
+// Qt includes
 
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
 
-// KDE includes.
+// KDE includes
 
 #include <kurl.h>
 
-// Local includes.
+// Local includes
 
 #include "imagecollection.h"
 #include "imageinfo.h"
