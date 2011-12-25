@@ -451,7 +451,7 @@ void ConfigWidget::apply()
     for (QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it)
     {
         bool orig = (*it)->info->shouldLoad();
-        bool load = ((*it)->checkState() == Qt::Checked) ? true : false;
+        bool load = ((*it)->checkState() == Qt::Checked);
 
         if (orig != load)
         {
