@@ -459,14 +459,18 @@ void ConfigWidget::apply()
             group.writeEntry((*it)->info->name(), load);
             (*it)->info->setShouldLoad(load);
 
-            if (load)
-            {
-                (*it)->info->reload();
-            }
-            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
-            {
-                emit PluginLoader::instance()->unplug((*it)->info);
-            }
+            // Bugfix #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
+            // to reload plugins properly when the replug() signal is send.
+            (*it)->info->reload();
+
+//            if (load)
+//            {
+//                (*it)->info->reload();
+//            }
+//            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
+//            {
+//                emit PluginLoader::instance()->unplug((*it)->info);
+//            }
         }
     }
 
