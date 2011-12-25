@@ -149,6 +149,9 @@ public Q_SLOTS:
 
     void apply();
 
+    void slotCheckAll();
+    void slotClear();
+
 private:
 
     class ConfigWidgetPrivate;

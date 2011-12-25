@@ -477,4 +477,20 @@ void ConfigWidget::apply()
     emit PluginLoader::instance()->replug();
 }
 
+void ConfigWidget::slotCheckAll()
+{
+    for (int i = 0; i < count(); ++i)
+    {
+        item(i)->setCheckState(Qt::Checked);
+    }
+}
+
+void ConfigWidget::slotClear()
+{
+    for (int i = 0; i < count(); ++i)
+    {
+        item(i)->setCheckState(Qt::Unchecked);
+    }
+}
+
 } // namespace KIPI
