@@ -238,7 +238,7 @@ Plugin* PluginLoader::Info::plugin() const
 
         if (d->plugin)   // Do not emit if we had trouble loading the plugin.
         {
-            emit PluginLoader::instance()->plug(const_cast<Info*>(this));
+            emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
     }
 
