@@ -430,7 +430,7 @@ ConfigWidget::ConfigWidget(QWidget* parent)
     setSortingEnabled(true);
     viewport()->setAutoFillBackground(false);
 
-    foreach(PluginLoader::Info * info, PluginLoader::instance()->pluginList())
+    foreach(PluginLoader::Info* info, PluginLoader::instance()->pluginList())
     {
         PluginCheckBox* cb = new PluginCheckBox(info, this);
         d->boxes.append(cb);
