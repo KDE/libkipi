@@ -10,7 +10,7 @@ Author:         caulier dot gilles at gmail dot com (Gilles Caulier)
                 blackie at kde dot org (Jesper K. Pedersen)
                 aurelien dot gateau at free dot fr (Aurelien Gateau)
 Maintained-by:
-Primary-site:   http://www.kipi-plugins.org
+Primary-site:   http://www.digikam.org
 Alternate-site: http://www.digikam.org
 Original-site:
 Platforms:      Linux and other Unices, MacOs-X, Win32. Needs KDE 4.x
