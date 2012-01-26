@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  image collection
  *
- * @author Copyright (C) 2004-2010 by Gilles Caulier
+ * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -61,17 +61,17 @@ class LIBKIPI_EXPORT ImageCollection
 
 public:
 
-    QString name() const;
-    QString comment() const;
-    QString category() const;
-    QDate date() const;
+    QString    name() const;
+    QString    comment() const;
+    QString    category() const;
+    QDate      date() const;
     KUrl::List images() const;
-    KUrl path() const;
-    KUrl uploadPath() const;
-    KUrl uploadRoot() const;
-    QString uploadRootName() const;
-    bool isDirectory() const;
-    bool isValid() const;
+    KUrl       path() const;
+    KUrl       uploadPath() const;
+    KUrl       uploadRoot() const;
+    QString    uploadRootName() const;
+    bool       isDirectory() const;
+    bool       isValid() const;
 
     // Interface for host application + general stuff
     ImageCollection( ImageCollectionShared* const );

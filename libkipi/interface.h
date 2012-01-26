@@ -119,7 +119,7 @@ class UploadWidget;
 
 /*!
   \enum KIPI::HostSupportsProgressBar
-  This feature specify whether the host application has a progress bar available for batch operations.
+  This feature specify whether the host application has a progress manager available to report progress information from plugins.
 */
 
 /*!
@@ -164,6 +164,12 @@ public:
     virtual ~Interface();
 
     /**
+      Tells whether the host application under which the plugin currently executes a given feature.
+      See KIPI::Features for details on the individual features.
+    */
+    bool hasFeature(KIPI::Features feature) const;
+
+    /**
       Returns list of all images in current album.
       If there are no current album, the returned
       KIPI::ImageCollection::isValid() will return false.
@@ -203,6 +209,7 @@ public:
       Use gotThumbnail() signal to take thumb.
     */
     virtual void thumbnail(const KUrl& url, int size);
+
     /**
       Ask to Kipi host application to render thumbnails for a list of images. If this method is not
       re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
@@ -210,10 +217,29 @@ public:
     */
     virtual void thumbnails(const KUrl::List& list, int size);
 
-    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
-    virtual UploadWidget* uploadWidget(QWidget* parent)=0;
-    virtual QAbstractItemModel* getTagTree() const;
+    /**
+      Ask to Kipi host application to prepare progress manager for a new entry. This method must return from host 
+      a string identification about progress item created. This id will be used later to change in host progress item
+      value and text. Title is text used to name progress item in host application.
+      Set canBeCanceled to true if you want that progress item provide a cancel button to close process from kipi host.
+      Use progressCanceled() signal to manage feedback from kipi host when cancel button is pressed.
+      Set hasThumb to true if you want that progress item support small thumbnail near progress bar.
+      Use progresssThumbnailChanged() to change thumbnail in kipi host and progressValueChanged() to advance progress
+      bar in percent. Use progressStatusChanged() to change description string of progress item.
+      To close progress item in kipi host, for example when all is done in plugin, use progressCompleted() method.
+      If you Host do not re-implement this method, value returned is a null string.
+      You must re-implement this method if your host support HostSupportsProgressBar feature.
+    */
+    virtual QString progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const;
 
+    /** To manage progress state from plugin to host application. id is identification string of process item
+     *  returned from host by progressScheduled() method.
+     */
+    virtual void progressValueChanged(const QString& id, float percent);
+    virtual void progressStatusChanged(const QString& id, const QString& status);
+    virtual void progresssThumbnailChanged(const QString& id, const QPixmap& thumb);
+    virtual void progressCompleted(const QString& id);
+    
     /**
       Ask to Kipi host application to return a setting to share with plugins, for example to write
       metadata on RAW files.
@@ -221,18 +247,15 @@ public:
          "WriteMetadataUpdateFiletimeStamp" (bool)       is true if file timestamp are updated when metadata are saved.
          "WriteMetadataToRAW"               (bool)       is true if RAW files metadata can be changed.
          "FileExtensions"                   (QString)    same than fileExtensions().
-
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
     */
     virtual QVariant hostSetting(const QString& settingName);
 
-    /**
-      Tells whether the host application under which the plugin currently executes a given feature.
-      See KIPI::Features for details on the individual features.
-    */
-    bool hasFeature(KIPI::Features feature) const;
-
+    virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
+    virtual UploadWidget* uploadWidget(QWidget* parent)=0;
+    virtual QAbstractItemModel* getTagTree() const;
+    
     /**
       Returns a string version of libkipi release
     */
@@ -243,6 +266,11 @@ Q_SIGNALS:
     void selectionChanged(bool hasSelection);
     void currentAlbumChanged(bool anyAlbum);
     void gotThumbnail(const KUrl&, const QPixmap&);
+
+    /**
+     * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.
+     */
+    void progressCanceled(const QString& id);
 
 protected:
 

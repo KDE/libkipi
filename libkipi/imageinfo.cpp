@@ -7,7 +7,7 @@
  * @date   2004-07-22
  * @brief  image info
  *
- * @author Copyright (C) 2004-2011 by Gilles Caulier
+ * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -140,18 +140,6 @@ void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
 void ImageInfo::cloneData( const ImageInfo& other )
 {
     d->cloneData( other.d );
-}
-
-// Deprecated methods.
-
-QString ImageInfo::title() const
-{
-    return d->name();
-}
-
-void ImageInfo::setTitle( const QString& name )
-{
-    d->setName( name );
 }
 
 } // namespace KIPI

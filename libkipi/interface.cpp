@@ -216,4 +216,35 @@ QString Interface::KDEfileExtensions() const
     return ( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
 }
 
+QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
+{
+    Q_UNUSED(title);
+    Q_UNUSED(canBeCanceled);
+    Q_UNUSED(hasThumb);
+    return QString();
+}
+
+void Interface::progressValueChanged(const QString& id, float percent)
+{
+    Q_UNUSED(id);
+    Q_UNUSED(percent);
+}
+
+void Interface::progressStatusChanged(const QString& id, const QString& status)
+{
+    Q_UNUSED(id);
+    Q_UNUSED(status);
+}
+
+void Interface::progresssThumbnailChanged(const QString& id, const QPixmap& thumb)
+{
+    Q_UNUSED(id);
+    Q_UNUSED(thumb);
+}
+
+void Interface::progressCompleted(const QString& id)
+{
+    Q_UNUSED(id);
+}
+
 } // namespace KIPI

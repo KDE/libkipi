@@ -62,10 +62,11 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 1.2.0 => 8.0.0  (released with KDE 4.6.0)
 # 1.3.0 => 8.0.1  (released with KDE 4.7.1 - Set deprecated ImageInfo::title() and ImageInfo::setTitle(). Add ImageInfo::name() and ImageInfo::setName().
 # 1.4.0 => 8.0.2  (released with KDE 4.8.0 - Add 2 new slots in ConfigWidget class).
+# 1.5.0 => 9.0.0  (released with KDE 4.8.1 - Add Progress Manager feature support from Host application. Remove deprecated methods.
 
 # Library API version
 SET(KIPI_LIB_MAJOR_VERSION "1")
-SET(KIPI_LIB_MINOR_VERSION "4")
+SET(KIPI_LIB_MINOR_VERSION "5")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
@@ -79,9 +80,9 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "8")
+SET(KIPI_LIB_SO_CUR_VERSION "9")
 SET(KIPI_LIB_SO_REV_VERSION "0")
-SET(KIPI_LIB_SO_AGE_VERSION "2")
+SET(KIPI_LIB_SO_AGE_VERSION "0")
 
 # =======================================================
 # Set env. variables accordinly.

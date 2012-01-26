@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  plugin interface
  *
- * @author Copyright (C) 2004-2010 by Gilles Caulier
+ * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -69,14 +69,14 @@ public:
     Plugin(const KComponentData& instance, QObject* parent, const char* name);
     virtual ~Plugin();
 
-    virtual void setup( QWidget* widget ) = 0;
-    QList<KAction*> actions( QWidget* parent = 0 );
+    virtual void       setup( QWidget* widget ) = 0;
+    QList<KAction*>    actions( QWidget* parent = 0 );
     KActionCollection* actionCollection( QWidget* parent = 0 ) const;
-    virtual Category category( KAction* action ) const = 0;
+    virtual Category   category( KAction* action ) const = 0;
 
 protected:
 
-    void addAction( KAction* action );
+    void addAction(KAction* const action);
 
 private:
 
