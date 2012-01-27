@@ -237,9 +237,9 @@ public:
      */
     virtual void progressValueChanged(const QString& id, float percent);
     virtual void progressStatusChanged(const QString& id, const QString& status);
-    virtual void progresssThumbnailChanged(const QString& id, const QPixmap& thumb);
+    virtual void progressThumbnailChanged(const QString& id, const QPixmap& thumb);
     virtual void progressCompleted(const QString& id);
-    
+
     /**
       Ask to Kipi host application to return a setting to share with plugins, for example to write
       metadata on RAW files.
@@ -253,9 +253,9 @@ public:
     virtual QVariant hostSetting(const QString& settingName);
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
-    virtual UploadWidget* uploadWidget(QWidget* parent)=0;
-    virtual QAbstractItemModel* getTagTree() const;
-    
+    virtual UploadWidget*            uploadWidget(QWidget* parent)=0;
+    virtual QAbstractItemModel*      getTagTree() const;
+
     /**
       Returns a string version of libkipi release
     */

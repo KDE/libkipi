@@ -56,7 +56,7 @@ namespace KIPI
 {
 
 Interface::Interface(QObject* parent, const char* name)
-         : QObject(parent)
+    : QObject(parent)
 {
     setObjectName(name);
 }
@@ -236,7 +236,7 @@ void Interface::progressStatusChanged(const QString& id, const QString& status)
     Q_UNUSED(status);
 }
 
-void Interface::progresssThumbnailChanged(const QString& id, const QPixmap& thumb)
+void Interface::progressThumbnailChanged(const QString& id, const QPixmap& thumb)
 {
     Q_UNUSED(id);
     Q_UNUSED(thumb);
