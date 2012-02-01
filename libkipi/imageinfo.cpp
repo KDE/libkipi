@@ -40,10 +40,20 @@
 namespace KIPI
 {
 
-QString ImageInfo::toString( const QVariant& data ) const
+ImageInfo::ImageInfo( ImageInfoShared* const shared )
+    : d( shared )
 {
-    QString string = data.toString();
-    return string;
+}
+
+ImageInfo::ImageInfo( const ImageInfo& rhs )
+{
+    d = rhs.d;
+    d->addRef();
+}
+
+ImageInfo::~ImageInfo()
+{
+    d->removeRef();
 }
 
 QString ImageInfo::name() const
@@ -61,40 +71,9 @@ KUrl ImageInfo::path() const
     return d->path();
 }
 
-QString ImageInfo::description() const
-{
-    return d->description();
-}
-
-QDateTime ImageInfo::time( TimeSpec spec ) const
-{
-    return d->time( spec );
-}
-
 int ImageInfo::size() const
 {
     return d->size();
-}
-
-ImageInfo::ImageInfo( ImageInfoShared* const shared )
-         : d( shared )
-{
-}
-
-ImageInfo::ImageInfo( const ImageInfo& rhs )
-{
-    d = rhs.d;
-    d->addRef();
-}
-
-ImageInfo::~ImageInfo()
-{
-    d->removeRef();
-}
-
-void ImageInfo::setDescription( const QString& description )
-{
-    d->setDescription( description );
 }
 
 QMap<QString,QVariant> ImageInfo::attributes() const
@@ -117,6 +96,44 @@ void ImageInfo::clearAttributes()
     d->clearAttributes();
 }
 
+void ImageInfo::cloneData( const ImageInfo& other )
+{
+    d->cloneData( other.d );
+}
+
+QDateTime ImageInfo::time( TimeSpec spec ) const
+{
+    return d->time( spec );
+}
+
+void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
+{
+    d->setTime( time, spec );
+}
+
+bool ImageInfo::isTimeExact() const
+{
+    return d->isTimeExact();
+}
+
+QString ImageInfo::toString( const QVariant& data ) const
+{
+    QString string = data.toString();
+    return string;
+}
+
+// Deprecated methods --------------------------------------------------------------
+
+QString ImageInfo::description() const
+{
+    return d->description();
+}
+
+void ImageInfo::setDescription( const QString& description )
+{
+    d->setDescription( description );
+}
+
 int ImageInfo::angle() const
 {
     return d->angle();
@@ -125,21 +142,6 @@ int ImageInfo::angle() const
 void ImageInfo::setAngle( int angle )
 {
     d->setAngle( angle );
-}
-
-bool ImageInfo::isTimeExact() const
-{
-    return d->isTimeExact();
-}
-
-void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
-{
-    d->setTime( time, spec );
-}
-
-void ImageInfo::cloneData( const ImageInfo& other )
-{
-    d->cloneData( other.d );
 }
 
 } // namespace KIPI

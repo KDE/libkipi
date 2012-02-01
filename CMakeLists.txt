@@ -63,6 +63,8 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 1.3.0 => 8.0.1  (released with KDE 4.7.1 - Set deprecated ImageInfo::title() and ImageInfo::setTitle(). Add ImageInfo::name() and ImageInfo::setName().
 # 1.4.0 => 8.0.2  (released with KDE 4.8.0 - Add 2 new slots in ConfigWidget class).
 # 1.5.0 => 9.0.0  (released with KDE 4.8.1 - Add Progress Manager feature support from Host application. Remove deprecated methods.
+#                                            Add new deprecated methods in ImageInfo class: description(), setDescription(), 
+#                                            angle(), and setAngle().
 
 # Library API version
 SET(KIPI_LIB_MAJOR_VERSION "1")

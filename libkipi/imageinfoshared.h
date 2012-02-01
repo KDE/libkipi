@@ -62,11 +62,10 @@ public:
     ImageInfoShared( KIPI::Interface* const interface, const KUrl& url );
     virtual ~ImageInfoShared();
 
+    QString toString(const QVariant&);
+
     virtual QString name();
     virtual void    setName(const QString&);
-
-    virtual QString description() = 0;
-    virtual void    setDescription(const QString&) = 0;
 
     virtual QMap<QString, QVariant> attributes() = 0;
     virtual void clearAttributes() = 0;
@@ -74,18 +73,19 @@ public:
     virtual void delAttributes(const QStringList& ) = 0;
 
     virtual QDateTime time(KIPI::TimeSpec spec);
-    virtual void setTime(const QDateTime& time, TimeSpec spec = FromInfo);
+    virtual void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
+    virtual bool      isTimeExact();
 
-    virtual int  angle();
-    virtual void setAngle(int);
-
-    virtual bool isTimeExact();
     virtual int  size();
     virtual KUrl path();
 
-    QString toString(const QVariant&);
-
     virtual void cloneData(ImageInfoShared* const other);
+
+    KDE_DEPRECATED virtual QString description() = 0;
+    KDE_DEPRECATED virtual void    setDescription(const QString&) = 0;
+
+    KDE_DEPRECATED virtual int  angle();
+    KDE_DEPRECATED virtual void setAngle(int);
 
 protected:
 

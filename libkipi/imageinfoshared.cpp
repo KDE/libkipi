@@ -55,6 +55,20 @@ ImageInfoShared::~ImageInfoShared()
 {
 }
 
+void ImageInfoShared::addRef()
+{
+    m_count++;
+}
+
+void ImageInfoShared::removeRef()
+{
+    m_count--;
+    if ( m_count == 0 )
+    {
+        delete this;
+    }
+}
+
 KUrl ImageInfoShared::path()
 {
     return _url;
@@ -86,36 +100,13 @@ QDateTime ImageInfoShared::time( TimeSpec )
     }
 }
 
-void ImageInfoShared::addRef()
-{
-    m_count++;
-}
-
-void ImageInfoShared::removeRef()
-{
-    m_count--;
-    if ( m_count == 0 )
-    {
-        delete this;
-    }
-}
-
-int ImageInfoShared::angle()
-{
-    return 0;
-}
-
-void ImageInfoShared::setAngle( int )
+void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 {
 }
 
 bool ImageInfoShared::isTimeExact()
 {
     return true;
-}
-
-void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
-{
 }
 
 void ImageInfoShared::setName( const QString& )
@@ -147,6 +138,15 @@ void ImageInfoShared::cloneData( ImageInfoShared* const other )
         setTime( other->time( ToInfo ), ToInfo );
 
     setAngle( other->angle() );
+}
+
+int ImageInfoShared::angle()
+{
+    return 0;
+}
+
+void ImageInfoShared::setAngle( int )
+{
 }
 
 } // namespace KIPI

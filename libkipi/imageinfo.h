@@ -69,11 +69,38 @@ class LIBKIPI_EXPORT ImageInfo
 
 public:
 
+    /** constructor
+        Interface for host application + general stuff
+     */
+    ImageInfo( ImageInfoShared* const );
+    ImageInfo( const ImageInfo& );
+    ~ImageInfo();
+
     QString name() const;
     void setName( const QString& name );
 
-    QString description() const;
-    void setDescription( const QString& description);
+    /** replaced by attributes(QString("comment"))
+     */
+    KDE_DEPRECATED QString description() const;
+
+    /** replaced by addAttributes(QMap < QString("comment"), QString("...") >)
+     */
+    KDE_DEPRECATED void setDescription( const QString& description);
+
+    /**
+        Returns the angle the application rotates the image with when displaying it.
+        Certain host applications may choose to rotate the image on disk, and will always return 0,
+        while other host application will rotate the image when displaying it, and will thus not rotate
+        the image on disk.
+        replaced by attributes(QString("angle"))
+    */
+    KDE_DEPRECATED int angle() const;
+
+    /**
+        See \ref angle
+        replaced by addAttributes(QMap < QString("angle"), int >)
+    */
+    KDE_DEPRECATED void setAngle(int);
 
     /**
         Returns a Map of attributes of the image
@@ -127,8 +154,6 @@ public:
      */
     void clearAttributes();
 
-    KUrl path() const;
-
     /**
         Returns the time of the image.
         In case the host application supports time range, the spec argument
@@ -148,34 +173,15 @@ public:
     */
     bool isTimeExact() const;
 
-    int size() const;
 
     /**
-        Returns the angle the application rotates the image with when displaying it.
-        Certain host applications may choose to rotate the image on disk, and will always return 0,
-        while other host application will rotate the image when displaying it, and will thus not rotate
-        the image on disk.
-    */
-    int angle() const;
-
-    /**
-        See \ref angle
-    */
-    void setAngle(int);
-
-    QString toString( const QVariant& ) const;
-
-    /**
-        Copies all the attibutes, description etc from the other imageinfo
+        Copies all the attributes from the other imageinfo
     */
     void cloneData( const ImageInfo& other );
 
-    /** constructor
-        Interface for host application + general stuff
-     */
-    ImageInfo( ImageInfoShared* const );
-    ImageInfo( const ImageInfo& );
-    ~ImageInfo();
+    int  size() const;
+    KUrl path() const;
+    QString toString( const QVariant& ) const;
 
 private:
 
