@@ -81,8 +81,8 @@ public:
 
     virtual void cloneData(ImageInfoShared* const other);
 
-    KDE_DEPRECATED virtual QString description() = 0;
-    KDE_DEPRECATED virtual void    setDescription(const QString&) = 0;
+    KDE_DEPRECATED virtual QString description();
+    KDE_DEPRECATED virtual void    setDescription(const QString&);
 
     KDE_DEPRECATED virtual int  angle();
     KDE_DEPRECATED virtual void setAngle(int);

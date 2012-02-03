@@ -87,28 +87,6 @@ int ImageInfoShared::size()
     }
 }
 
-QDateTime ImageInfoShared::time( TimeSpec )
-{
-    if ( ! _url.isLocalFile() )
-    {
-        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
-        return QDateTime();
-    }
-    else
-    {
-        return QFileInfo( _url.toLocalFile() ).lastModified();
-    }
-}
-
-void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
-{
-}
-
-bool ImageInfoShared::isTimeExact()
-{
-    return true;
-}
-
 void ImageInfoShared::setName( const QString& )
 {
     kWarning() << "This method should only be invoked if the host application "
@@ -140,6 +118,15 @@ void ImageInfoShared::cloneData( ImageInfoShared* const other )
     setAngle( other->angle() );
 }
 
+QString ImageInfoShared::description()
+{
+    return QString();
+}
+
+void ImageInfoShared::setDescription(const QString&)
+{
+}
+
 int ImageInfoShared::angle()
 {
     return 0;
@@ -147,6 +134,28 @@ int ImageInfoShared::angle()
 
 void ImageInfoShared::setAngle( int )
 {
+}
+
+QDateTime ImageInfoShared::time( TimeSpec )
+{
+    if ( ! _url.isLocalFile() )
+    {
+        kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
+        return QDateTime();
+    }
+    else
+    {
+        return QFileInfo( _url.toLocalFile() ).lastModified();
+    }
+}
+
+void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
+{
+}
+
+bool ImageInfoShared::isTimeExact()
+{
+    return true;
 }
 
 } // namespace KIPI
