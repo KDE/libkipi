@@ -118,6 +118,8 @@ void ImageInfoShared::cloneData( ImageInfoShared* const other )
     setAngle( other->angle() );
 }
 
+// Deprecated methods --------------------------------------------------------------------
+
 QString ImageInfoShared::description()
 {
     return QString();
