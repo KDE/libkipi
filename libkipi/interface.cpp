@@ -49,6 +49,8 @@
 
 #include "version.h"
 #include "pluginloader.h"
+#include "imageinfo.h"
+#include "imagecollection.h"
 #include "imagecollectionselector.h"
 #include "uploadwidget.h"
 

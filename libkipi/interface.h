@@ -46,22 +46,23 @@
 
 // Local includes
 
-#include "imagecollection.h"
-#include "imageinfo.h"
 #include "libkipi_export.h"
 
 class QPixmap;
 class QWidget;
-class KFileItem;
 class QAbstractItemModel;
+
+class KFileItem;
 
 /** @namespace KIPI */
 
 namespace KIPI
 {
 
+class ImageCollection;
 class ImageCollectionSelector;
 class UploadWidget;
+class ImageInfo;
 
 /*!
   @enum KIPI::Features
