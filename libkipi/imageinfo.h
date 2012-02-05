@@ -55,11 +55,6 @@ namespace KIPI
 
 class ImageInfoShared;
 
-enum TimeSpec
-{
-    FromInfo,
-    ToInfo
-};
 
 /** @class ImageInfo
     Holds info about an image
@@ -140,33 +135,49 @@ public:
     KUrl path() const;
     QString toString( const QVariant& ) const;
 
+    // -------------------------------------------------------------------------------------------------------
+    // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
+    //
+    // More universal methods based on attributes must be used instead to extend more easily data exange between 
+    // kipi-plugins and kipi host without to break binary compatibility.
+
+    // Deprecated data used by time() and setTime()
+    enum TimeSpec
+    {
+        FromInfo,
+        ToInfo
+    };
+
     /**
         Returns the time of the image.
         In case the host application supports time range, the spec argument
         specifies if it is the start or end time that should be returned.
-    */
-    QDateTime time( TimeSpec spec = FromInfo ) const;
+
+        Replaced by attributes(QString("date"))
+     */
+    KDE_DEPRECATED QDateTime time( TimeSpec spec = FromInfo ) const;
 
     /**
         See \ref time
-    */
-    void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+
+        Replaced by addAttributes(QMap < QString("date"), QDateTime(...) >)
+     */
+    KDE_DEPRECATED void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
 
     /**
         In the case the application supports time ranges (like this image is
         from 1998-2000), this method will return true if the time is an exact
         specification, and thus not a range.
-    */
-    bool isTimeExact() const;
 
-    // -------------------------------------------------------------------------------------------------------
-    // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
+        This method is deprecated because it have never used by kipi-plugins.
+     */
+    KDE_DEPRECATED bool isTimeExact() const;
 
     /** replaced by attributes(QString("comment"))
      */
     KDE_DEPRECATED QString description() const;
 
-    /** replaced by addAttributes(QMap < QString("comment"), QString("...") >)
+    /** replaced by addAttributes(QMap < QString("comment"), QString(...) >)
      */
     KDE_DEPRECATED void setDescription( const QString& description);
 

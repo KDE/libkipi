@@ -62,8 +62,6 @@ public:
     ImageInfoShared( KIPI::Interface* const interface, const KUrl& url );
     virtual ~ImageInfoShared();
 
-    QString toString(const QVariant&);
-
     virtual QString name();
     virtual void    setName(const QString&);
 
@@ -72,17 +70,17 @@ public:
     virtual void addAttributes(const QMap<QString, QVariant>&) = 0;
     virtual void delAttributes(const QStringList& ) = 0;
 
+    virtual void cloneData(ImageInfoShared* const other);
+
     virtual int  size();
     virtual KUrl path();
 
-    virtual void cloneData(ImageInfoShared* const other);
-
-    virtual QDateTime time(KIPI::TimeSpec spec);
-    virtual void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
-    virtual bool      isTimeExact();
-
     // ---------------------------------------------------------------------------------------
     // Deprecated methods. Do not use it. See Imageinfo for details.
+
+    KDE_DEPRECATED virtual QDateTime time(KIPI::TimeSpec spec);
+    KDE_DEPRECATED virtual void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
+    KDE_DEPRECATED virtual bool      isTimeExact();
 
     KDE_DEPRECATED virtual QString description();
     KDE_DEPRECATED virtual void    setDescription(const QString&);
