@@ -79,29 +79,6 @@ public:
     QString name() const;
     void setName( const QString& name );
 
-    /** replaced by attributes(QString("comment"))
-     */
-    KDE_DEPRECATED QString description() const;
-
-    /** replaced by addAttributes(QMap < QString("comment"), QString("...") >)
-     */
-    KDE_DEPRECATED void setDescription( const QString& description);
-
-    /**
-        Returns the angle the application rotates the image with when displaying it.
-        Certain host applications may choose to rotate the image on disk, and will always return 0,
-        while other host application will rotate the image when displaying it, and will thus not rotate
-        the image on disk.
-        replaced by attributes(QString("angle"))
-    */
-    KDE_DEPRECATED int angle() const;
-
-    /**
-        See \ref angle
-        replaced by addAttributes(QMap < QString("angle"), int >)
-    */
-    KDE_DEPRECATED void setAngle(int);
-
     /**
         Returns a Map of attributes of the image
         In case the host application supports some special attributes of the image
@@ -155,6 +132,15 @@ public:
     void clearAttributes();
 
     /**
+        Copies all the attributes from the other imageinfo
+    */
+    void cloneData( const ImageInfo& other );
+
+    int  size() const;
+    KUrl path() const;
+    QString toString( const QVariant& ) const;
+
+    /**
         Returns the time of the image.
         In case the host application supports time range, the spec argument
         specifies if it is the start or end time that should be returned.
@@ -164,7 +150,7 @@ public:
     /**
         See \ref time
     */
-    void      setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+    void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
 
     /**
         In the case the application supports time ranges (like this image is
@@ -174,14 +160,31 @@ public:
     bool isTimeExact() const;
 
 
-    /**
-        Copies all the attributes from the other imageinfo
-    */
-    void cloneData( const ImageInfo& other );
+    // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
 
-    int  size() const;
-    KUrl path() const;
-    QString toString( const QVariant& ) const;
+    /** replaced by attributes(QString("comment"))
+     */
+    KDE_DEPRECATED QString description() const;
+
+    /** replaced by addAttributes(QMap < QString("comment"), QString("...") >)
+     */
+    KDE_DEPRECATED void setDescription( const QString& description);
+
+    /**
+        Returns the angle the application rotates the image with when displaying it.
+        Certain host applications may choose to rotate the image on disk, and will always return 0,
+        while other host application will rotate the image when displaying it, and will thus not rotate
+        the image on disk.
+        replaced by attributes(QString("angle"))
+    */
+    KDE_DEPRECATED int angle() const;
+
+    /**
+        See \ref angle
+        replaced by addAttributes(QMap < QString("angle"), int >)
+    */
+    KDE_DEPRECATED void setAngle(int);
+
 
 private:
 
