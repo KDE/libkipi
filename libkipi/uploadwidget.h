@@ -32,11 +32,12 @@
 
 // Local includes
 
-#include "imagecollection.h"
 #include "libkipi_export.h"
 
 namespace KIPI
 {
+
+class ImageCollection;
 
 /** Re-implement this widget in your KIPI host application to use your dedicated model/view */
 

@@ -25,6 +25,10 @@
 
 #include "uploadwidget.moc"
 
+// Local includes
+
+#include "imagecollection.h"
+
 namespace KIPI
 {
 

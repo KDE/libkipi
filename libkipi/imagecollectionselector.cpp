@@ -23,9 +23,11 @@
  *
  * ============================================================ */
 
+#include "imagecollectionselector.moc"
+
 // Local includes
 
-#include "imagecollectionselector.moc"
+#include "imagecollection.h"
 
 namespace KIPI 
 {
