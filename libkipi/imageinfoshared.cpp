@@ -97,6 +97,10 @@ void ImageInfoShared::setName( const QString& )
 
 QString ImageInfoShared::name()
 {
+    kWarning() << "This method should only be invoked if the host application "
+                  "supports the KIPI::ImagesHasTitlesWritable\n"
+                  "If the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
     return QString::null;
 }
 

@@ -65,10 +65,12 @@ public:
     virtual QString name();
     virtual void    setName(const QString&);
 
+    /** These method must be re-implemented in your KIPI host application to manage image attributes with plugins
+     */
     virtual QMap<QString, QVariant> attributes() = 0;
-    virtual void clearAttributes() = 0;
-    virtual void addAttributes(const QMap<QString, QVariant>&) = 0;
-    virtual void delAttributes(const QStringList& ) = 0;
+    virtual void                    clearAttributes() = 0;
+    virtual void                    addAttributes(const QMap<QString, QVariant>&) = 0;
+    virtual void                    delAttributes(const QStringList& ) = 0;
 
     virtual void cloneData(ImageInfoShared* const other);
 
