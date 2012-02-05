@@ -56,7 +56,7 @@ namespace KIPI
 class ImageInfoShared;
 
 // Deprecated data used by time() and setTime()
-enum TimeSpec
+enum KDE_DEPRECATED TimeSpec
 {
     FromInfo,
     ToInfo
