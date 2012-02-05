@@ -55,6 +55,12 @@ namespace KIPI
 
 class ImageInfoShared;
 
+// Deprecated data used by time() and setTime()
+enum TimeSpec
+{
+    FromInfo,
+    ToInfo
+};
 
 /** @class ImageInfo
     Holds info about an image
@@ -141,12 +147,6 @@ public:
     // More universal methods based on attributes must be used instead to extend more easily data exange between 
     // kipi-plugins and kipi host without to break binary compatibility.
 
-    // Deprecated data used by time() and setTime()
-    enum TimeSpec
-    {
-        FromInfo,
-        ToInfo
-    };
 
     /**
         Returns the time of the image.
