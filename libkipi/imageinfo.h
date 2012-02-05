@@ -159,7 +159,7 @@ public:
     */
     bool isTimeExact() const;
 
-
+    // -------------------------------------------------------------------------------------------------------
     // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
 
     /** replaced by attributes(QString("comment"))
