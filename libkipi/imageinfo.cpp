@@ -101,6 +101,8 @@ void ImageInfo::cloneData( const ImageInfo& other )
     d->cloneData( other.d );
 }
 
+// Deprecated methods --------------------------------------------------------------
+
 QDateTime ImageInfo::time( TimeSpec spec ) const
 {
     return d->time( spec );
@@ -115,14 +117,6 @@ bool ImageInfo::isTimeExact() const
 {
     return d->isTimeExact();
 }
-
-/*QString ImageInfo::toString( const QVariant& data ) const
-{
-    QString string = data.toString();
-    return string;
-}
-*/
-// Deprecated methods --------------------------------------------------------------
 
 QString ImageInfo::description() const
 {

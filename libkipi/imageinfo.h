@@ -128,7 +128,6 @@ public:
 
     int  size() const;
     KUrl path() const;
-//    QString toString( const QVariant& ) const;
 
     // -------------------------------------------------------------------------------------------------------
     // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
