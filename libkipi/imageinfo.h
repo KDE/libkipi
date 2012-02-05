@@ -100,18 +100,7 @@ public:
     */
     QMap<QString, QVariant> attributes() const;
 
-    /** Set the attributes defined from the map to the image. Following keys/values can be used:
-        QString("comment")   :: QString() with default comment [same than setDescription()].
-        QString("date")      :: QDateTime() with date [same than setTime()].
-        QString("angle")     :: integer value [same than setAngle()].
-        QString("title")     :: QString() with default title.
-        QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
-        QString("rating")    :: integer value (ususally 0 <= rate <= 5).
-        QString("colorlabel"):: integer value (ususally 0 <= colorlabel <= 9).
-        QString("picklabel") :: integer value (ususally 0 <= picklabel <= 4).
-        QString("latitude")  :: double value in degrees (-90.0 >= lat <=90.0).
-        QString("longitude") :: double value in degrees (-180.0 >= long <=180.0).
-        QString("altitude")  :: double value in meters.
+    /** Set the attributes defined from the map to the image. Following keys/values are the same the attributes()
     */
     void addAttributes(const QMap<QString, QVariant>&);
 
