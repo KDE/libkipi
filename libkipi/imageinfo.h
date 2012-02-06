@@ -64,6 +64,7 @@ enum KDE_DEPRECATED TimeSpec
 
 /** @class ImageInfo
     Holds info about an image
+    NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo
  */
 class LIBKIPI_EXPORT ImageInfo
 {
@@ -76,6 +77,8 @@ public:
     ImageInfo( ImageInfoShared* const );
     ImageInfo( const ImageInfo& );
     ~ImageInfo();
+
+    ImageInfo& operator=( const ImageInfo& ) { return *this; }
 
     QString name() const;
     void setName( const QString& name );
@@ -184,11 +187,9 @@ public:
     */
     KDE_DEPRECATED void setAngle(int);
 
-
 private:
 
-    ImageInfo() {} // Disabled
-    ImageInfo& operator=( const ImageInfo& ) { return *this; } // Disabled
+    ImageInfo() {}
 
 private:
 
