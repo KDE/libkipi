@@ -90,7 +90,7 @@ public:
 
         QString("comment")   :: QString() with default comment [same than description()].
         QString("date")      :: QDateTime() with date  [same than time()].
-        QString("angle")     :: integer value [same than angle()].
+        QString("angle")     :: integer value (orientation informatio. see KEXiv2::ImageOrientation for details).
         QString("title")     :: QString() with default title.
         QString("rating")    :: integer value (ususally 0 <= rate <= 5).
         QString("colorlabel"):: integer value (ususally 0 <= colorlabel <= 9).
@@ -111,7 +111,7 @@ public:
     /** Remove attributes listed from the image. Following values can be used:
         QString("comment")    :: Remove all comments.
         QString("date")       :: Remove date info.
-        QString("angle")      :: Remove angle info.
+        QString("angle")      :: Remove orientation info.
         QString("title")      :: Remove all titles.
         QString("tags")       :: Remove all tags.
         QString("rating")     :: Remove rating info.
@@ -141,26 +141,16 @@ public:
 
 
     /**
-        Returns the time of the image.
-        In case the host application supports time range, the spec argument
-        specifies if it is the start or end time that should be returned.
-
         Replaced by attributes(QString("date"))
      */
     KDE_DEPRECATED QDateTime time( TimeSpec spec = FromInfo ) const;
 
     /**
-        See \ref time
-
         Replaced by addAttributes(QMap < QString("date"), QDateTime(...) >)
      */
     KDE_DEPRECATED void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
 
     /**
-        In the case the application supports time ranges (like this image is
-        from 1998-2000), this method will return true if the time is an exact
-        specification, and thus not a range.
-
         This method is deprecated because it have never used by kipi-plugins.
      */
     KDE_DEPRECATED bool isTimeExact() const;
@@ -174,16 +164,11 @@ public:
     KDE_DEPRECATED void setDescription( const QString& description);
 
     /**
-        Returns the angle the application rotates the image with when displaying it.
-        Certain host applications may choose to rotate the image on disk, and will always return 0,
-        while other host application will rotate the image when displaying it, and will thus not rotate
-        the image on disk.
         replaced by attributes(QString("angle"))
     */
     KDE_DEPRECATED int angle() const;
 
     /**
-        See \ref angle
         replaced by addAttributes(QMap < QString("angle"), int >)
     */
     KDE_DEPRECATED void setAngle(int);
