@@ -86,7 +86,7 @@ public:
     /**
         Returns a Map of attributes of the image
         In case the host application supports some special attributes of the image
-        this function can be used to return them. following attribes are supported by this feature:
+        this function can be used to return them. Following attributes are supported by these features:
 
         QString("comment")   :: QString() with default comment [same than description()].
         QString("date")      :: QDateTime() with date  [same than time()].
@@ -104,7 +104,7 @@ public:
     QMap<QString, QVariant> attributes() const;
 
     /** Set the attributes defined from the map to the image. Following keys/values are the same the attributes(),
-     *  excepted "tags" propertie which is read-only.
+     *  excepted "tags" property which is read-only.
     */
     void addAttributes(const QMap<QString, QVariant>&);
 
