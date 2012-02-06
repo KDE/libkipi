@@ -92,18 +92,19 @@ public:
         QString("date")      :: QDateTime() with date  [same than time()].
         QString("angle")     :: integer value [same than angle()].
         QString("title")     :: QString() with default title.
-        QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
-        QString("tags")      :: QStringList() with tags name list.
         QString("rating")    :: integer value (ususally 0 <= rate <= 5).
         QString("colorlabel"):: integer value (ususally 0 <= colorlabel <= 9).
         QString("picklabel") :: integer value (ususally 0 <= picklabel <= 4).
         QString("latitude")  :: double value in degrees (-90.0 >= lat <=90.0).
         QString("longitude") :: double value in degrees (-180.0 >= long <=180.0).
         QString("altitude")  :: double value in meters.
+        QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
+        QString("tags")      :: QStringList() with tags name list (keywords).
     */
     QMap<QString, QVariant> attributes() const;
 
-    /** Set the attributes defined from the map to the image. Following keys/values are the same the attributes()
+    /** Set the attributes defined from the map to the image. Following keys/values are the same the attributes(),
+     *  excepted "tags" propertie which is read-only.
     */
     void addAttributes(const QMap<QString, QVariant>&);
 
