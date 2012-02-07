@@ -89,12 +89,12 @@ public:
 
         QString("comment")     :: QString         :: default item comment.
         QString("date")        :: QDateTime       :: date of item (usually the creation date).
-                                                     In the case the application supports time ranges (like this image is from 1998-2000),
+                                                     In the case the application supports date ranges (like this image is from 1998-2000),
                                                      this attribute always return the start of date range.
-        QString("dateto")      :: QDateTime       :: in the case the application supports time ranges (like this image is from 1998-2000),
+        QString("dateto")      :: QDateTime       :: in the case the application supports date ranges (like this image is from 1998-2000),
                                                      this attribute return the end of date range.
-        QString("isexactdate") :: bool value      :: in the case the application supports time ranges (like this image is from 1998-2000),
-                                                     this attribute will be true if the time is an exact specification, and thus not a range.
+        QString("isexactdate") :: bool value      :: in the case the application supports date ranges (like this image is from 1998-2000),
+                                                     this attribute will be true if the date is an exact specification, and thus not a range.
         QString("orientation") :: integer value   :: Orientation information. See KExiv2::ImageOrientation value for details).
         QString("title")       :: QString         :: default item title.
         QString("rating")      :: integer value   :: item starts 0 <= rate <= 5).
