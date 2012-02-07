@@ -66,10 +66,6 @@ void ImageInfo::setName( const QString& name )
     d->setName( name );
 }
 
-KUrl ImageInfo::path() const
-{
-    return d->path();
-}
 
 int ImageInfo::size() const
 {
@@ -102,6 +98,11 @@ void ImageInfo::cloneData( const ImageInfo& other )
 }
 
 // Deprecated methods --------------------------------------------------------------
+
+KUrl ImageInfo::path() const
+{
+    return d->path();
+}
 
 QDateTime ImageInfo::time( TimeSpec spec ) const
 {

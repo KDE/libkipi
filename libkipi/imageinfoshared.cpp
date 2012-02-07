@@ -69,22 +69,16 @@ void ImageInfoShared::removeRef()
     }
 }
 
-KUrl ImageInfoShared::path()
+void ImageInfoShared::cloneData( ImageInfoShared* const other )
 {
-    return _url;
-}
+    if ( m_interface->hasFeature( ImagesHasTitlesWritable ) )
+        setName( other->name() );
 
-int ImageInfoShared::size()
-{
-    if ( ! _url.isLocalFile() )
-    {
-        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
-        return 0;
-    }
-    else
-    {
-        return QFileInfo( _url.toLocalFile() ).size();
-    }
+    clearAttributes();
+    addAttributes( other->attributes() );
+
+    if ( m_interface->hasFeature( HostSupportsDateRanges ) )
+        setTime( other->time( ToInfo ), ToInfo );
 }
 
 void ImageInfoShared::setName( const QString& )
@@ -104,22 +98,17 @@ QString ImageInfoShared::name()
     return QString::null;
 }
 
-void ImageInfoShared::cloneData( ImageInfoShared* const other )
+int ImageInfoShared::size()
 {
-    if ( m_interface->hasFeature( ImagesHasTitlesWritable ) )
-        setName( other->name() );
-
-    if ( m_interface->hasFeature( ImagesHasComments ) )
-        setDescription( other->description() );
-
-    clearAttributes();
-    addAttributes( other->attributes() );
-
-    setTime( other->time( FromInfo ), FromInfo );
-    if ( m_interface->hasFeature( HostSupportsDateRanges ) )
-        setTime( other->time( ToInfo ), ToInfo );
-
-    setAngle( other->angle() );
+    if ( ! _url.isLocalFile() )
+    {
+        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
+        return 0;
+    }
+    else
+    {
+        return QFileInfo( _url.toLocalFile() ).size();
+    }
 }
 
 // Deprecated methods --------------------------------------------------------------------
@@ -162,6 +151,11 @@ void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
 bool ImageInfoShared::isTimeExact()
 {
     return true;
+}
+
+KUrl ImageInfoShared::path()
+{
+    return _url;
 }
 
 } // namespace KIPI

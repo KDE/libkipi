@@ -75,7 +75,6 @@ public:
     virtual void cloneData(ImageInfoShared* const other);
 
     virtual int  size();
-    virtual KUrl path();
 
     // ---------------------------------------------------------------------------------------
     // Deprecated methods. Do not use it. See Imageinfo for details.
@@ -89,6 +88,8 @@ public:
 
     KDE_DEPRECATED virtual int  angle();
     KDE_DEPRECATED virtual void setAngle(int);
+
+    KDE_DEPRECATED virtual KUrl path();
 
 protected:
 
