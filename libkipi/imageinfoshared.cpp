@@ -98,19 +98,6 @@ QString ImageInfoShared::name()
     return QString::null;
 }
 
-int ImageInfoShared::size()
-{
-    if ( ! _url.isLocalFile() )
-    {
-        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
-        return 0;
-    }
-    else
-    {
-        return QFileInfo( _url.toLocalFile() ).size();
-    }
-}
-
 // Deprecated methods --------------------------------------------------------------------
 
 QString ImageInfoShared::description()
@@ -156,6 +143,19 @@ bool ImageInfoShared::isTimeExact()
 KUrl ImageInfoShared::path()
 {
     return _url;
+}
+
+int ImageInfoShared::size()
+{
+    if ( ! _url.isLocalFile() )
+    {
+        kFatal() << "KIPI::ImageInfoShared::size does not yet support non local files, please fix\n";
+        return 0;
+    }
+    else
+    {
+        return QFileInfo( _url.toLocalFile() ).size();
+    }
 }
 
 } // namespace KIPI

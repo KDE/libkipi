@@ -87,18 +87,22 @@ public:
         In case the host application supports some special attributes of the image
         this function can be used to return them. Following attributes are supported by these features:
 
-        QString("comment")   :: QString() with default comment [same than description()].
-        QString("date")      :: QDateTime() with date  [same than time()].
-        QString("angle")     :: integer value (orientation information. See KExiv2::ImageOrientation value for details).
-        QString("title")     :: QString() with default title.
-        QString("rating")    :: integer value (ususally 0 <= rate <= 5).
-        QString("colorlabel"):: integer value (ususally 0 <= colorlabel <= 9).
-        QString("picklabel") :: integer value (ususally 0 <= picklabel <= 4).
-        QString("latitude")  :: double value in degrees (-90.0 >= lat <=90.0).
-        QString("longitude") :: double value in degrees (-180.0 >= long <=180.0).
-        QString("altitude")  :: double value in meters.
-        QString("tagspath")  :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
-        QString("tags")      :: QStringList() with tags name list (keywords).
+        QString("comment")     :: QString() with default comment [same than description()].
+        QString("date")        :: QDateTime() with date  [same than time()].
+        QString("orientation") :: integer value (orientation information. See KExiv2::ImageOrientation value for details).
+        QString("title")       :: QString() with default title.
+        QString("rating")      :: integer value (ususally 0 <= rate <= 5).
+        QString("colorlabel")  :: integer value (ususally 0 <= colorlabel <= 9).
+        QString("picklabel")   :: integer value (ususally 0 <= picklabel <= 4).
+        QString("latitude")    :: double value in degrees (-90.0 >= lat <=90.0).
+        QString("longitude")   :: double value in degrees (-180.0 >= long <=180.0).
+        QString("altitude")    :: double value in meters.
+        QString("tagspath")    :: QStringList() with tags path list formated as "Country/France/City/Paris" for ex.
+        QString("keywords")    :: QStringList() with tags name list.
+        QString("filesize")    :: qlonglong value in bytes.
+
+        QString("tags")        :: DEPRECATED: for compatibility. Deprecated and replaced by "keywords" attribute.
+        QString("angle")       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
     */
     QMap<QString, QVariant> attributes() const;
 
@@ -108,15 +112,18 @@ public:
     void addAttributes(const QMap<QString, QVariant>&);
 
     /** Remove attributes listed from the image. Following values can be used:
-        QString("comment")    :: Remove all comments.
-        QString("date")       :: Remove date info.
-        QString("angle")      :: Remove orientation info.
-        QString("title")      :: Remove all titles.
-        QString("tags")       :: Remove all tags.
-        QString("rating")     :: Remove rating info.
-        QString("colorlabel") :: Remove color labels info.
-        QString("picklabel")  :: Remove pick labels info.
-        QString("gpslocation"):: Remove latitude, longitude, and altitude values.
+        QString("comment")     :: Remove all comments.
+        QString("date")        :: Remove date info.
+        QString("orientation") :: Remove orientation info.
+        QString("title")       :: Remove all titles.
+        QString("tagspath")    :: Remove all tags path.
+        QString("rating")      :: Remove rating info.
+        QString("colorlabel")  :: Remove color labels info.
+        QString("picklabel")   :: Remove pick labels info.
+        QString("gpslocation") :: Remove latitude, longitude, and altitude values.
+
+        QString("tags")        :: DEPRECATED: for compatibility. Deprecated and replaced by "tagspath" attribute.
+        QString("angle")       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
     */
     void delAttributes( const QStringList& );
 
@@ -129,14 +136,11 @@ public:
     */
     void cloneData( const ImageInfo& other );
 
-    int  size() const;
-
     // -------------------------------------------------------------------------------------------------------
     // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
     //
     // More universal methods based on attributes must be used instead to extend more easily data exange between 
     // kipi-plugins and kipi host without to break binary compatibility.
-
 
     /**
         Replaced by attributes(QString("date"))
@@ -174,6 +178,11 @@ public:
     /** In plugins use KIPIPlugins::KPImageInfo::url() instead.
      */
     KDE_DEPRECATED KUrl path() const;
+
+    /**
+        replaced by attributes(QString("filesize"))
+    */
+    KDE_DEPRECATED int size() const;
 
 private:
 
