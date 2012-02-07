@@ -64,7 +64,8 @@ enum KDE_DEPRECATED TimeSpec
 
 /** @class ImageInfo
     Holds info about an image
-    NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo
+    NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
+    not this class directly.
  */
 class LIBKIPI_EXPORT ImageInfo
 {
@@ -78,8 +79,6 @@ public:
     ImageInfo( const ImageInfo& );
     ~ImageInfo();
 
-    ImageInfo& operator=( const ImageInfo& ) { return *this; }
-
     QString name() const;
     void setName( const QString& name );
 
@@ -90,7 +89,7 @@ public:
 
         QString("comment")   :: QString() with default comment [same than description()].
         QString("date")      :: QDateTime() with date  [same than time()].
-        QString("angle")     :: integer value (orientation informatio. see KEXiv2::ImageOrientation for details).
+        QString("angle")     :: integer value (orientation information. See KExiv2::ImageOrientation value for details).
         QString("title")     :: QString() with default title.
         QString("rating")    :: integer value (ususally 0 <= rate <= 5).
         QString("colorlabel"):: integer value (ususally 0 <= colorlabel <= 9).
@@ -175,7 +174,9 @@ public:
 
 private:
 
+    // Disabled operator and constructor.
     ImageInfo() {}
+    ImageInfo& operator=( const ImageInfo& ) { return *this; }
 
 private:
 
