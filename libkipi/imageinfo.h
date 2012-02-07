@@ -130,7 +130,6 @@ public:
     void cloneData( const ImageInfo& other );
 
     int  size() const;
-    KUrl path() const;
 
     // -------------------------------------------------------------------------------------------------------
     // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
@@ -171,6 +170,10 @@ public:
         replaced by addAttributes(QMap < QString("angle"), int >)
     */
     KDE_DEPRECATED void setAngle(int);
+
+    /** In plugins use KIPIPlugins::KPImageInfo::url() instead.
+     */
+    KDE_DEPRECATED KUrl path() const;
 
 private:
 
