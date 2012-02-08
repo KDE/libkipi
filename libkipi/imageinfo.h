@@ -178,9 +178,8 @@ public:
 
 private:
 
-    // Disabled operator and constructor.
-    ImageInfo() {}
-    ImageInfo& operator=( const ImageInfo& ) { return *this; }
+    ImageInfo() {}                                              // Disable
+    ImageInfo& operator=( const ImageInfo& ) { return *this; }  // Disable
 
 private:
 

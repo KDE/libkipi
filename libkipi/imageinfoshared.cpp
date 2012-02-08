@@ -46,42 +46,64 @@
 namespace KIPI
 {
 
-ImageInfoShared::ImageInfoShared( Interface* const interface, const KUrl& url )
-    : _url( url ), m_count(1), m_interface( interface )
+class ImageInfoShared::ImageInfoSharedPrivate
 {
+public:
+
+    ImageInfoSharedPrivate()
+    {
+        count     = 1;
+        interface = 0;
+    }
+
+    int        count;
+    Interface* interface;
+};
+
+ImageInfoShared::ImageInfoShared()
+    : d(new ImageInfoSharedPrivate)
+{
+}
+
+ImageInfoShared::ImageInfoShared(Interface* const interface, const KUrl& url)
+    : d(new ImageInfoSharedPrivate)
+{
+    d->interface = interface;
+    _url         = url;
 }
 
 ImageInfoShared::~ImageInfoShared()
 {
+    delete d;
 }
 
 void ImageInfoShared::addRef()
 {
-    m_count++;
+    d->count++;
 }
 
 void ImageInfoShared::removeRef()
 {
-    m_count--;
-    if ( m_count == 0 )
+    d->count--;
+    if ( d->count == 0 )
     {
         delete this;
     }
 }
 
-void ImageInfoShared::cloneData( ImageInfoShared* const other )
+void ImageInfoShared::cloneData(ImageInfoShared* const other)
 {
-    if ( m_interface->hasFeature( ImagesHasTitlesWritable ) )
-        setName( other->name() );
+    if ( d->interface->hasFeature(ImagesHasTitlesWritable))
+        setName(other->name());
 
     clearAttributes();
-    addAttributes( other->attributes() );
+    addAttributes(other->attributes());
 
-    if ( m_interface->hasFeature( HostSupportsDateRanges ) )
-        setTime( other->time( ToInfo ), ToInfo );
+    if ( d->interface->hasFeature(HostSupportsDateRanges))
+        setTime(other->time(ToInfo), ToInfo);
 }
 
-void ImageInfoShared::setName( const QString& )
+void ImageInfoShared::setName(const QString&)
 {
     kWarning() << "This method should only be invoked if the host application "
                   "supports the KIPI::ImagesHasTitlesWritable\n"
@@ -114,11 +136,11 @@ int ImageInfoShared::angle()
     return 0;
 }
 
-void ImageInfoShared::setAngle( int )
+void ImageInfoShared::setAngle(int)
 {
 }
 
-QDateTime ImageInfoShared::time( TimeSpec )
+QDateTime ImageInfoShared::time(TimeSpec)
 {
     if ( ! _url.isLocalFile() )
     {
@@ -131,7 +153,7 @@ QDateTime ImageInfoShared::time( TimeSpec )
     }
 }
 
-void ImageInfoShared::setTime( const QDateTime& /*time*/, TimeSpec /*spec*/ )
+void ImageInfoShared::setTime(const QDateTime&, TimeSpec)
 {
 }
 
@@ -154,7 +176,7 @@ int ImageInfoShared::size()
     }
     else
     {
-        return QFileInfo( _url.toLocalFile() ).size();
+        return QFileInfo(_url.toLocalFile() ).size();
     }
 }
 

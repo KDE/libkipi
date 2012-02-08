@@ -59,7 +59,7 @@ class LIBKIPI_EXPORT ImageInfoShared
 
 public:
 
-    ImageInfoShared( KIPI::Interface* const interface, const KUrl& url );
+    ImageInfoShared(KIPI::Interface* const interface, const KUrl& url);
     virtual ~ImageInfoShared();
 
     virtual QString name();
@@ -70,7 +70,7 @@ public:
     virtual QMap<QString, QVariant> attributes() = 0;
     virtual void                    clearAttributes() = 0;
     virtual void                    addAttributes(const QMap<QString, QVariant>&) = 0;
-    virtual void                    delAttributes(const QStringList& ) = 0;
+    virtual void                    delAttributes(const QStringList&) = 0;
 
     virtual void cloneData(ImageInfoShared* const other);
 
@@ -96,17 +96,15 @@ protected:
 
 private:
 
-    ImageInfoShared() {} // Disable
+    ImageInfoShared();    // Disable
 
     void addRef();
     void removeRef();
 
 private:
 
-    int        m_count;
-    Interface* m_interface;
-
-private:
+    class ImageInfoSharedPrivate;
+    ImageInfoSharedPrivate* const d;
 
     friend class ImageInfo;
 };
