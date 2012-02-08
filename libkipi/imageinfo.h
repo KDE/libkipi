@@ -75,63 +75,63 @@ public:
     /** constructor
         Interface for host application + general stuff
      */
-    ImageInfo( ImageInfoShared* const );
-    ImageInfo( const ImageInfo& );
+    ImageInfo(ImageInfoShared* const);
+    ImageInfo(const ImageInfo&);
     ~ImageInfo();
-
-    QString name() const;
-    void setName( const QString& name );
 
     /**
         Returns a Map of attributes of the image
         In case the host application supports some special attributes of the image
         this function can be used to return them. Following attributes are supported by these features:
 
-        QString("comment")     :: QString         :: default item comment.
-        QString("date")        :: QDateTime       :: date of item (usually the creation date).
-                                                     In the case the application supports date ranges (like this image is from 1998-2000),
-                                                     this attribute always return the start of date range.
-        QString("dateto")      :: QDateTime       :: in the case the application supports date ranges (like this image is from 1998-2000),
-                                                     this attribute return the end of date range.
-        QString("isexactdate") :: bool value      :: in the case the application supports date ranges (like this image is from 1998-2000),
-                                                     this attribute will be true if the date is an exact specification, and thus not a range.
-        QString("orientation") :: integer value   :: Orientation information. See KExiv2::ImageOrientation value for details).
-        QString("title")       :: QString         :: default item title.
-        QString("rating")      :: integer value   :: item starts 0 <= rate <= 5).
-        QString("colorlabel")  :: integer value   :: item color flag 0 <= colorlabel <= 10.
-        QString("picklabel")   :: integer value   :: item workflow flag 0 <= picklabel <= 4.
-        QString("latitude")    :: double value    :: latitude in degrees (-90.0 >= lat <=90.0).
-        QString("longitude")   :: double value    :: longitude in degrees (-180.0 >= long <=180.0).
-        QString("altitude")    :: double value    :: altitude in meters.
-        QString("tagspath")    :: QStringList     :: all tags path list formated as "Country/France/City/Paris" for ex.
-        QString("keywords")    :: QStringList     :: all tags name list (without path).
-        QString("filesize")    :: qlonglong value :: file size in bytes.
+        ATTRIBUTES    :: VALUE RETURNED  :: COMMENTS
+        ----------------------------------------------------------------------------------------------------------------------------
+        "name"        :: QString         :: name of item (usually file name).
+        "comment"     :: QString         :: default item comment.
+        "date"        :: QDateTime       :: date of item (usually the creation date).
+                                            In the case the application supports date ranges (like this image is from 1998-2000),
+                                            this attribute always return the start of date range.
+        "dateto"      :: QDateTime       :: in the case the application supports date ranges (like this image is from 1998-2000),
+                                            this attribute return the end of date range.
+        "isexactdate" :: bool value      :: in the case the application supports date ranges (like this image is from 1998-2000),
+                                            this attribute will be true if the date is an exact specification, and thus not a range.
+        "orientation" :: integer value   :: Orientation information. See KExiv2::ImageOrientation value for details).
+        "title"       :: QString         :: default item title.
+        "rating"      :: integer value   :: item starts 0 <= rate <= 5).
+        "colorlabel"  :: integer value   :: item color flag 0 <= colorlabel <= 10.
+        "picklabel"   :: integer value   :: item workflow flag 0 <= picklabel <= 4.
+        "latitude"    :: double value    :: latitude in degrees (-90.0 >= lat <=90.0).
+        "longitude"   :: double value    :: longitude in degrees (-180.0 >= long <=180.0).
+        "altitude"    :: double value    :: altitude in meters.
+        "tagspath"    :: QStringList     :: all tags path list formated as "Country/France/City/Paris" for ex.
+        "keywords"    :: QStringList     :: all tags name list (without path).
+        "filesize"    :: qlonglong value :: file size in bytes.
 
-        QString("tags")        :: DEPRECATED: for compatibility. Deprecated and replaced by "keywords" attribute.
-        QString("angle")       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
+        "tags"        :: QStringList     :: DEPRECATED: for compatibility. Deprecated and replaced by "keywords" attribute.
+        "angle"       :: integer value   :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
     */
     QMap<QString, QVariant> attributes() const;
 
     /** Set the attributes defined from the map to the image. Following keys/values are the same the attributes(),
-     *  excepted "tags" property which is read-only.
+     *  excepted "keywords", "filesize", and "isexactdate" properties which are read-only values.
     */
     void addAttributes(const QMap<QString, QVariant>&);
 
     /** Remove attributes listed from the image. Following values can be used:
-        QString("comment")     :: Remove all comments.
-        QString("date")        :: Remove date info.
-        QString("orientation") :: Remove orientation info.
-        QString("title")       :: Remove all titles.
-        QString("tagspath")    :: Remove all tags path.
-        QString("rating")      :: Remove rating info.
-        QString("colorlabel")  :: Remove color labels info.
-        QString("picklabel")   :: Remove pick labels info.
-        QString("gpslocation") :: Remove latitude, longitude, and altitude values.
+        "comment"     :: Remove all comments.
+        "date"        :: Remove date info.
+        "orientation" :: Remove orientation info.
+        "title"       :: Remove all titles.
+        "tagspath"    :: Remove all tags path.
+        "rating"      :: Remove rating info.
+        "colorlabel"  :: Remove color labels info.
+        "picklabel"   :: Remove pick labels info.
+        "gpslocation" :: Remove latitude, longitude, and altitude values.
 
-        QString("tags")        :: DEPRECATED: for compatibility. Deprecated and replaced by "tagspath" attribute.
-        QString("angle")       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
+        "tags"        :: DEPRECATED: for compatibility. Deprecated and replaced by "tagspath" attribute.
+        "angle"       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
     */
-    void delAttributes( const QStringList& );
+    void delAttributes(const QStringList&);
 
     /** Remove all attribute from the image. See delAttributes() for list of all attributes removed.
      */
@@ -140,19 +140,23 @@ public:
     /**
         Copies all the attributes from the other imageinfo
     */
-    void cloneData( const ImageInfo& other );
+    void cloneData(const ImageInfo& other);
 
     // -------------------------------------------------------------------------------------------------------
-    // NOTE: Deprecated Methods. Do not use it, they will be removed in the future...
+    // DEPRECATED METHODS. Do not use it, they will be removed in the future...
     //
     // More universal methods based on attributes must be used instead to extend more easily data exange between 
     // kipi-plugins and kipi host without to break binary compatibility.
 
-    /**
-        Managed by attribute "date" and "dateto".
+    /** Managed by attribute "name".
      */
-    KDE_DEPRECATED QDateTime time( TimeSpec spec = FromInfo ) const;
-    KDE_DEPRECATED void setTime( const QDateTime& time, TimeSpec spec = FromInfo );
+    KDE_DEPRECATED QString name() const;
+    KDE_DEPRECATED void    setName(const QString& name);
+
+    /** Managed by attribute "date" and "dateto".
+     */
+    KDE_DEPRECATED QDateTime time(TimeSpec spec = FromInfo) const;
+    KDE_DEPRECATED void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
 
     /** Managed by attribute "isexactdate".
      */
@@ -161,11 +165,11 @@ public:
     /** Managed by attributes "comment"
      */
     KDE_DEPRECATED QString description() const;
-    KDE_DEPRECATED void setDescription( const QString& description);
+    KDE_DEPRECATED void    setDescription(const QString& description);
 
     /** Managed by attribute "angle"
     */
-    KDE_DEPRECATED int angle() const;
+    KDE_DEPRECATED int  angle() const;
     KDE_DEPRECATED void setAngle(int);
 
     /** In plugins use KIPIPlugins::KPImageInfo::url() instead.

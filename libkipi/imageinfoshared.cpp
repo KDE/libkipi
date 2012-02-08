@@ -93,34 +93,20 @@ void ImageInfoShared::removeRef()
 
 void ImageInfoShared::cloneData(ImageInfoShared* const other)
 {
-    if ( d->interface->hasFeature(ImagesHasTitlesWritable))
-        setName(other->name());
-
     clearAttributes();
     addAttributes(other->attributes());
-
-    if ( d->interface->hasFeature(HostSupportsDateRanges))
-        setTime(other->time(ToInfo), ToInfo);
 }
+
+// DEPRECATED METHODS --------------------------------------------------------------------
 
 void ImageInfoShared::setName(const QString&)
 {
-    kWarning() << "This method should only be invoked if the host application "
-                  "supports the KIPI::ImagesHasTitlesWritable\n"
-                  "If the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
 }
 
 QString ImageInfoShared::name()
 {
-    kWarning() << "This method should only be invoked if the host application "
-                  "supports the KIPI::ImagesHasTitlesWritable\n"
-                  "If the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
-    return QString::null;
+    return QString();
 }
-
-// Deprecated methods --------------------------------------------------------------------
 
 QString ImageInfoShared::description()
 {

@@ -62,9 +62,6 @@ public:
     ImageInfoShared(KIPI::Interface* const interface, const KUrl& url);
     virtual ~ImageInfoShared();
 
-    virtual QString name();
-    virtual void    setName(const QString&);
-
     /** These methods must be re-implemented in your KIPI host application to manage image attributes with plugins
      */
     virtual QMap<QString, QVariant> attributes() = 0;
@@ -75,7 +72,10 @@ public:
     virtual void cloneData(ImageInfoShared* const other);
 
     // ---------------------------------------------------------------------------------------
-    // Deprecated methods. Do not use it. See Imageinfo for details.
+    // DEPRECATED METHODS. Do not use it. See Imageinfo for details.
+
+    KDE_DEPRECATED virtual QString name();
+    KDE_DEPRECATED virtual void    setName(const QString&);
 
     KDE_DEPRECATED virtual QDateTime time(KIPI::TimeSpec spec);
     KDE_DEPRECATED virtual void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);

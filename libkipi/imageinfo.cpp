@@ -40,12 +40,12 @@
 namespace KIPI
 {
 
-ImageInfo::ImageInfo( ImageInfoShared* const shared )
-    : d( shared )
+ImageInfo::ImageInfo(ImageInfoShared* const shared)
+    : d(shared)
 {
 }
 
-ImageInfo::ImageInfo( const ImageInfo& rhs )
+ImageInfo::ImageInfo(const ImageInfo& rhs)
 {
     d = rhs.d;
     d->addRef();
@@ -55,17 +55,6 @@ ImageInfo::~ImageInfo()
 {
     d->removeRef();
 }
-
-QString ImageInfo::name() const
-{
-    return d->name();
-}
-
-void ImageInfo::setName( const QString& name )
-{
-    d->setName( name );
-}
-
 
 int ImageInfo::size() const
 {
@@ -77,14 +66,14 @@ QMap<QString,QVariant> ImageInfo::attributes() const
     return d->attributes();
 }
 
-void ImageInfo::addAttributes( const QMap<QString,QVariant>& attributes )
+void ImageInfo::addAttributes(const QMap<QString,QVariant>& attributes)
 {
     d->addAttributes( attributes );
 }
 
-void ImageInfo::delAttributes( const QStringList& attributes )
+void ImageInfo::delAttributes(const QStringList& attributes)
 {
-    d->delAttributes( attributes );
+    d->delAttributes(attributes);
 }
 
 void ImageInfo::clearAttributes()
@@ -92,26 +81,26 @@ void ImageInfo::clearAttributes()
     d->clearAttributes();
 }
 
-void ImageInfo::cloneData( const ImageInfo& other )
+void ImageInfo::cloneData(const ImageInfo& other)
 {
-    d->cloneData( other.d );
+    d->cloneData(other.d);
 }
 
-// Deprecated methods --------------------------------------------------------------
+// DEPRECATED METHODS --------------------------------------------------------------
 
 KUrl ImageInfo::path() const
 {
     return d->path();
 }
 
-QDateTime ImageInfo::time( TimeSpec spec ) const
+QDateTime ImageInfo::time(TimeSpec spec) const
 {
-    return d->time( spec );
+    return d->time(spec);
 }
 
-void ImageInfo::setTime( const QDateTime& time, TimeSpec spec )
+void ImageInfo::setTime(const QDateTime& time, TimeSpec spec)
 {
-    d->setTime( time, spec );
+    d->setTime(time, spec);
 }
 
 bool ImageInfo::isTimeExact() const
@@ -126,7 +115,7 @@ QString ImageInfo::description() const
 
 void ImageInfo::setDescription( const QString& description )
 {
-    d->setDescription( description );
+    d->setDescription(description);
 }
 
 int ImageInfo::angle() const
@@ -136,7 +125,17 @@ int ImageInfo::angle() const
 
 void ImageInfo::setAngle( int angle )
 {
-    d->setAngle( angle );
+    d->setAngle(angle);
+}
+
+QString ImageInfo::name() const
+{
+    return d->name();
+}
+
+void ImageInfo::setName( const QString& name )
+{
+    d->setName(name);
 }
 
 } // namespace KIPI
