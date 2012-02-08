@@ -97,6 +97,19 @@ void ImageInfoShared::cloneData(ImageInfoShared* const other)
     addAttributes(other->attributes());
 }
 
+void ImageInfoShared::lock()
+{
+}
+
+void ImageInfoShared::unlock()
+{
+}
+
+bool ImageInfoShared::isLocked()
+{
+    return false;
+}
+
 // DEPRECATED METHODS --------------------------------------------------------------------
 
 void ImageInfoShared::setName(const QString&)

@@ -137,10 +137,16 @@ public:
      */
     void clearAttributes();
 
-    /**
-        Copies all the attributes from the other imageinfo
+    /** Copies all the attributes from the other imageinfo
     */
     void cloneData(const ImageInfo& other);
+
+    /** Lock item for processing, to prevent parallel operations from KIPI host and plugins.
+     *  Default implementation do nothing.
+     */
+    void lock();
+    void unlock();
+    bool isLocked();
 
     // -------------------------------------------------------------------------------------------------------
     // DEPRECATED METHODS. Do not use it, they will be removed in the future...
