@@ -245,9 +245,13 @@ public:
       Ask to Kipi host application to return a setting to share with plugins, for example to write
       metadata on RAW files.
       Current setting names are:
+
          "WriteMetadataUpdateFiletimeStamp" (bool)       is true if file timestamp are updated when metadata are saved.
          "WriteMetadataToRAW"               (bool)       is true if RAW files metadata can be changed.
+         "UseXMPSidecar4Reading"            (bool)       is true use XMP sidecar to read metadata from item.
+         "MetadataWritingMode"              (int)        mode to write metadata to item. See KExiv2::MetadataWritingMode for details.
          "FileExtensions"                   (QString)    same than fileExtensions().
+
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
     */
