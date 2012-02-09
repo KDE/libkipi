@@ -62,6 +62,8 @@ public:
     ImageInfoShared(KIPI::Interface* const interface, const KUrl& url);
     virtual ~ImageInfoShared();
 
+    KUrl url() const;
+
     /** These methods must be re-implemented in your KIPI host application to manage image attributes with plugins
      */
     virtual QMap<QString, QVariant> attributes() = 0;

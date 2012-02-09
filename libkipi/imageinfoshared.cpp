@@ -91,6 +91,11 @@ void ImageInfoShared::removeRef()
     }
 }
 
+KUrl ImageInfoShared::url() const
+{
+    return _url;
+}
+
 void ImageInfoShared::cloneData(ImageInfoShared* const other)
 {
     clearAttributes();
