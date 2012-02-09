@@ -73,10 +73,6 @@ public:
 
     virtual void cloneData(ImageInfoShared* const other);
 
-    virtual void lock();
-    virtual void unlock();
-    virtual bool isLocked();
-
     // ---------------------------------------------------------------------------------------
     // DEPRECATED METHODS. Do not use it. See Imageinfo for details.
 

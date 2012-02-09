@@ -249,4 +249,20 @@ void Interface::progressCompleted(const QString& id)
     Q_UNUSED(id);
 }
 
+void Interface::lockItem(const KUrl& url)
+{
+    Q_UNUSED(url);
+}
+
+void Interface::unlockItem(const KUrl& url)
+{
+    Q_UNUSED(url);
+}
+
+bool Interface::itemIsLocked(const KUrl& url) const
+{
+    Q_UNUSED(url);
+    return false;
+}
+
 } // namespace KIPI

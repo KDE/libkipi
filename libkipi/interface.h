@@ -138,6 +138,11 @@ class ImageInfo;
   This feature specifies that host application can provide image thumbnails.
  */
 
+/*!
+  \enum KIPI::HostSupportsItemLock
+  This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.
+ */
+
 enum Features
 {
     CollectionsHaveComments     = 1 << 0,
@@ -151,7 +156,8 @@ enum Features
     HostSupportsProgressBar     = 1 << 8,
     HostSupportsTags            = 1 << 9,
     HostSupportsRating          = 1 << 10,
-    HostSupportsThumbnails      = 1 << 11
+    HostSupportsThumbnails      = 1 << 11,
+    HostSupportsItemLock        = 1 << 12
 };
 
 /** class Interface */
@@ -165,57 +171,57 @@ public:
     virtual ~Interface();
 
     /**
-      Tells whether the host application under which the plugin currently executes a given feature.
-      See KIPI::Features for details on the individual features.
-    */
+     * Tells whether the host application under which the plugin currently executes a given feature.
+     * See KIPI::Features for details on the individual features.
+     */
     bool hasFeature(KIPI::Features feature) const;
 
     /**
-      Returns list of all images in current album.
-      If there are no current album, the returned
-      KIPI::ImageCollection::isValid() will return false.
-    */
+     * Returns list of all images in current album.
+     * If there are no current album, the returned
+     * KIPI::ImageCollection::isValid() will return false.
+     */
     virtual ImageCollection currentAlbum() = 0;
 
     /**
-      Current selection in a thumbnail view for example.
-      If there are no current selection, the returned
-      KIPI::ImageCollection::isValid() will return false.
-    */
+     * Current selection in a thumbnail view for example.
+     * If there are no current selection, the returned
+     * KIPI::ImageCollection::isValid() will return false.
+     */
     virtual ImageCollection currentSelection() = 0;
 
     /**
-      Returns a list of albums.
-    */
+     * Returns a list of albums.
+     */
     virtual QList<ImageCollection> allAlbums() = 0;
 
     virtual ImageInfo info(const KUrl&) = 0;
 
     /**
-      Tell the host application that a new image has been made available to it.
-      Returns true if the host application did accept the new image, otherwise err will be filled with
-      an error description.
-    */
+     * Tells to host application that a new image has been made available to it.
+     * Returns true if the host application did accept the new image, otherwise err will be filled with
+     * an error description.
+     */
     virtual bool addImage(const KUrl&, QString& err);
     virtual void delImage(const KUrl&);
 
     /**
-      Tells the host app that the following images has changed on disk
-    */
+     * Tells to host application that the following images has changed on disk
+     */
     virtual void refreshImages(const KUrl::List&);
 
     /**
-      Ask to Kipi host application to render a thumbnail for an image. If this method is not
-      re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
-      Use gotThumbnail() signal to take thumb.
-    */
+     * Tells to host application to render a thumbnail for an image. If this method is not
+     * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
+     * Use gotThumbnail() signal to take thumb.
+     */
     virtual void thumbnail(const KUrl& url, int size);
 
     /**
-      Ask to Kipi host application to render thumbnails for a list of images. If this method is not
-      re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
-      Use gotThumbnail() signal to take thumbs.
-    */
+     * Ask to Kipi host application to render thumbnails for a list of images. If this method is not
+     * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
+     * Use gotThumbnail() signal to take thumbs.
+     */
     virtual void thumbnails(const KUrl::List& list, int size);
 
     /**
@@ -242,7 +248,7 @@ public:
     virtual void progressCompleted(const QString& id);
 
     /**
-      Ask to Kipi host application to return a setting to share with plugins, for example to write
+      Tells to host application to return a setting to share with plugins, for example to write
       metadata on RAW files.
       Current setting names are:
 
@@ -262,8 +268,16 @@ public:
     virtual QAbstractItemModel*      getTagTree() const;
 
     /**
-      Returns a string version of libkipi release
-    */
+     * Lock/unlock items mechanism to prevent concurent operations. See feature "HostSupportsItemLock" and signals
+     * itemLocked() and itemUnlocked(). Default implementation do nothing.
+     */
+    virtual void lockItem(const KUrl& url);
+    virtual void unlockItem(const KUrl& url);
+    virtual bool itemIsLocked(const KUrl& url) const;
+
+    /**
+     * Returns a string version of libkipi release
+     */
     static QString version();
 
 Q_SIGNALS:
@@ -277,11 +291,18 @@ Q_SIGNALS:
      */
     void progressCanceled(const QString& id);
 
+    /**
+     * This signals are emit from host application when item lock/unlock operations are done. Bool value is sent to indicate if
+     * operation fail or not. See lockItem() and unlockItem() for details.
+     */
+    void itemLocked(const KUrl& url, bool b);
+    void itemUnlocked(const KUrl& url, bool b);
+
 protected:
 
     /**
-      Return a bitwise or of the KIPI::Features that thus application support.
-    */
+     * Return a bitwise or of the KIPI::Features that thus application support.
+     */
     virtual int features() const = 0;
 
 private Q_SLOTS:
@@ -294,8 +315,8 @@ private:
     bool hasFeature(const QString& feature) const;
 
     /**
-      Return a list of images file extensions supported by KDE
-    */
+     * Return a list of images file extensions supported by KDE
+     */
     QString KDEfileExtensions() const;
 
 private:

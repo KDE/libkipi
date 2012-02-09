@@ -86,21 +86,6 @@ void ImageInfo::cloneData(const ImageInfo& other)
     d->cloneData(other.d);
 }
 
-void ImageInfo::lock()
-{
-    d->lock();
-}
-
-void ImageInfo::unlock()
-{
-    d->unlock();
-}
-
-bool ImageInfo::isLocked()
-{
-    return d->isLocked();
-}
-
 // DEPRECATED METHODS --------------------------------------------------------------
 
 KUrl ImageInfo::path() const
