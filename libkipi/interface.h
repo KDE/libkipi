@@ -268,11 +268,31 @@ public:
     virtual QAbstractItemModel*      getTagTree() const;
 
     /**
-     * Lock/unlock items mechanism to prevent concurent operations. See feature "HostSupportsItemLock" and signals
-     * itemLocked() and itemUnlocked(). Default implementation do nothing.
+     * Lock item to prevent concurent operations from host application and plugins. 
+     * See feature "HostSupportsItemLock". Return true if item is scheduled
+     * by host application to be locked. If item is already locked, this method return false.
+     * Use itemIsLocked() to check if item is already locked by host application before to call this method.
+     * When item is locked by host application, signal itemLocked() is fired.
+     * Default implementation do nothing.
      */
-    virtual void lockItem(const KUrl& url);
-    virtual void unlockItem(const KUrl& url);
+    virtual bool lockItem(const KUrl& url) const;
+
+    /**
+     * Unlock item in host application. This method must be called after than plugin call lockItem(),
+     * when all operations to perform on item are done.
+     * See feature "HostSupportsItemLock". Return true if item is scheduled
+     * by host application to be unlocked. If item is already unlocked, this method return false.
+     * When item is unlocked by host application, signal itemUnlocked() is fired.
+     * Default implementation do nothing.
+     */
+    virtual bool unlockItem(const KUrl& url) const;
+
+    /**
+     * Check if item is locked by host application to prevent concurents operations. This method must be called after than plugin call lockItem(), when all operations
+     * to perform on item are done. 
+     * See feature "HostSupportsItemLock". Return true if item is already locked, else false.
+     * Default implementation do nothing.
+     */
     virtual bool itemIsLocked(const KUrl& url) const;
 
     /**

@@ -249,14 +249,16 @@ void Interface::progressCompleted(const QString& id)
     Q_UNUSED(id);
 }
 
-void Interface::lockItem(const KUrl& url)
+bool Interface::lockItem(const KUrl& url) const
 {
     Q_UNUSED(url);
+    return false;
 }
 
-void Interface::unlockItem(const KUrl& url)
+bool Interface::unlockItem(const KUrl& url) const
 {
     Q_UNUSED(url);
+    return false;
 }
 
 bool Interface::itemIsLocked(const KUrl& url) const
