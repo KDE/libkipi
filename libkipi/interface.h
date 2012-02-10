@@ -248,15 +248,17 @@ public:
     virtual void progressCompleted(const QString& id);
 
     /**
-      Tells to host application to return a setting to share with plugins, for example to write
-      metadata on RAW files.
-      Current setting names are:
+      Tells to host application to return a setting to share with plugins. Current setting are:
 
-         "WriteMetadataUpdateFiletimeStamp" (bool)       is true if file timestamp are updated when metadata are saved.
-         "WriteMetadataToRAW"               (bool)       is true if RAW files metadata can be changed.
-         "UseXMPSidecar4Reading"            (bool)       is true use XMP sidecar to read metadata from item.
-         "MetadataWritingMode"              (int)        mode to write metadata to item. See KExiv2::MetadataWritingMode for details.
-         "FileExtensions"                   (QString)    same than fileExtensions().
+         SETTING NAME                       :: VALUE RETURNED :: COMMENTS
+         --------------------------------------------------------------------------------------------------------------------------
+         "WriteMetadataUpdateFiletimeStamp" :: bool value     :: True if file timestamp are updated when metadata are saved.
+         "WriteMetadataToRAW"               :: bool value     :: True if RAW files metadata can be writted to image.
+         "UseXMPSidecar4Reading"            :: bool value     :: True if XMP sidecar is used to read metadata from item.
+         "MetadataWritingMode"              :: integer        :: Mode to write metadata to item. See KExiv2::MetadataWritingMode
+                                                                 for details.
+         "FileExtensions"                   :: QString        :: Return file extensions managed by host application, separated by
+                                                                 blank spaces (ex: "JPG PNG TIF NEF AVI").
 
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
