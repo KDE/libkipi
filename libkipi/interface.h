@@ -288,8 +288,8 @@ public:
     virtual bool unlockItem(const KUrl& url) const;
 
     /**
-     * Check if item is locked by host application to prevent concurents operations. This method must be called after than plugin call lockItem(), when all operations
-     * to perform on item are done. 
+     * Check if item is locked by host application to prevent concurents operations. This method must be called after
+     * than plugin call lockItem(), when all operations to perform on item are done.
      * See feature "HostSupportsItemLock". Return true if item is already locked, else false.
      * Default implementation do nothing.
      */
@@ -312,8 +312,9 @@ Q_SIGNALS:
     void progressCanceled(const QString& id);
 
     /**
-     * This signals are emit from host application when item lock/unlock operations are done. Bool value is sent to indicate if
-     * operation fail or not. See lockItem() and unlockItem() for details.
+     * These signals are emited from host application when item lock/unlock operations are done by host application lock manager.
+     * Bool value is sent to indicate if operation fail or not. See feature "HostSupportsItemLock", 
+     * and lockItem() / unlockItem() methods for details.
      */
     void itemLocked(const KUrl& url, bool b);
     void itemUnlocked(const KUrl& url, bool b);
