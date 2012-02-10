@@ -137,10 +137,12 @@ public:
      */
     void clearAttributes();
 
-    /** Copies all the attributes from the other imageinfo
+    /** Copies all the attributes from the other imageinfo.
     */
     void cloneData(const ImageInfo& other);
 
+    /** Return item url.
+    */
     KUrl url() const;
 
     // -------------------------------------------------------------------------------------------------------
