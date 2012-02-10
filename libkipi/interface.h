@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  main kipi host application interface
  *
- * @author Copyright (C) 2004-2011 by Gilles Caulier
+ * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -67,14 +67,11 @@ class ImageInfo;
 /*!
   @enum KIPI::Features
   Not all host applications support the full subset of features that KIPI
-  allows access to. As an example <a
-  href="http://www.digikam.org">digiKam</a> support comments
+  allows access to. As an example <a href="http://www.digikam.org">digiKam</a> support comments
   for albums. Thus before a plugin expect a decant value for the comment,
   it should check whether KIPI::CollectionsHaveComments are set. It does so
-  using KIPI::Interface::hasFeature()
-  When adding new items, remember to update "hasFeature( const QString& feature )"
-  and the hello world plugin.
-  */
+  using KIPI::Interface::hasFeature().
+*/
 
 /*!
   \enum KIPI::CollectionsHaveComments
@@ -195,6 +192,9 @@ public:
      */
     virtual QList<ImageCollection> allAlbums() = 0;
 
+    /**
+     * Returns the image info container for item pointed by url.
+     */
     virtual ImageInfo info(const KUrl&) = 0;
 
     /**
@@ -203,6 +203,10 @@ public:
      * an error description.
      */
     virtual bool addImage(const KUrl&, QString& err);
+
+    /**
+     * Tells to host application that a new image has been removed.
+     */
     virtual void delImage(const KUrl&);
 
     /**
@@ -304,8 +308,21 @@ public:
 
 Q_SIGNALS:
 
+    /**
+     * Emit when item selection has changed from host application user interface.
+     * Boolean argument is true if items are select or not in collection.
+     */
     void selectionChanged(bool hasSelection);
-    void currentAlbumChanged(bool anyAlbum);
+
+    /**
+     * Emit when current album selection as changed from host application user interface. 
+     * Boolean argument is true if album are select or not in collection.
+     */
+    void currentAlbumChanged(bool hasSelection);
+
+    /** Emit when host application has redered item thumbnail. See thumbnail() and thumbnails() 
+     * methods for details.
+     */
     void gotThumbnail(const KUrl&, const QPixmap&);
 
     /**
@@ -318,8 +335,8 @@ Q_SIGNALS:
      * Bool value is sent to indicate if operation fail or not. See feature "HostSupportsItemLock", 
      * and lockItem() / unlockItem() methods for details.
      */
-    void itemLocked(const KUrl& url, bool b);
-    void itemUnlocked(const KUrl& url, bool b);
+    void itemLocked(const KUrl& url, bool locked);
+    void itemUnlocked(const KUrl& url, bool unlocked);
 
 protected:
 
@@ -336,11 +353,6 @@ private Q_SLOTS:
 private:
 
     bool hasFeature(const QString& feature) const;
-
-    /**
-     * Return a list of images file extensions supported by KDE
-     */
-    QString KDEfileExtensions() const;
 
 private:
 

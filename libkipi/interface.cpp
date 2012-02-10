@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  main kipi host application interface
  *
- * @author Copyright (C) 2004-2011 by Gilles Caulier
+ * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -198,9 +198,20 @@ QVariant Interface::hostSetting(const QString& settingName)
     {
         return false;
     }
+    if (settingName == QString("UseXMPSidecar4Reading"))
+    {
+        return false;
+    }
+    if (settingName == QString("MetadataWritingMode"))
+    {
+        return 0;
+    }
     else if (settingName == QString("FileExtensions"))
     {
-        return KDEfileExtensions();
+        // Return a list of images file extensions supported by KDE.
+        QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
+        QString imagesFileFilter  = KDEImagetypes.join(" ");
+        return QString( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
     }
 
     return QVariant();
@@ -209,13 +220,6 @@ QVariant Interface::hostSetting(const QString& settingName)
 QAbstractItemModel* Interface::getTagTree() const
 {
     return NULL;
-}
-
-QString Interface::KDEfileExtensions() const
-{
-    QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
-    QString imagesFileFilter  = KDEImagetypes.join(" ");
-    return ( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
 }
 
 QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
