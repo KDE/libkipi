@@ -401,7 +401,7 @@ class PluginCheckBox : public QListWidgetItem
 public:
 
     PluginCheckBox(PluginLoader::Info* const info, QListWidget* parent)
-    : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
+        : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
     {
         setText(QString("%1  (%2)").arg(info->name(), info->comment()));
         setIcon(info->icon());
@@ -411,6 +411,8 @@ public:
 
     PluginLoader::Info* info;
 };
+
+// ---------------------------------------------------------------------
 
 class ConfigWidget::ConfigWidgetPrivate
 {

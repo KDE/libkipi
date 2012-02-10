@@ -81,7 +81,7 @@ public:
         void reload();
 
         /** @p deprecated. You do not want to change the plugin instance. */
-        void KDE_DEPRECATED setPlugin(Plugin*);
+        KDE_DEPRECATED void setPlugin(Plugin*);
 
         bool shouldLoad() const;
         void setShouldLoad(bool);
@@ -96,6 +96,8 @@ public:
 
     typedef QList<Info*> PluginList;
 
+public:
+
     PluginLoader( const QStringList& ignores, KIPI::Interface* const interface );
     PluginLoader( const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint );
     virtual ~PluginLoader();
@@ -108,7 +110,7 @@ public:
     void loadPlugins();
 
     /** @p deprecated now plugins will be loaded when requested to the Info item */
-    void KDE_DEPRECATED loadPlugin(Info* const);
+    KDE_DEPRECATED void loadPlugin(Info* const);
 
     void construct(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
     KIPI::Interface* interface() const;
