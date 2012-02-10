@@ -141,6 +141,8 @@ public:
     */
     void cloneData(const ImageInfo& other);
 
+    KUrl url() const;
+
     // -------------------------------------------------------------------------------------------------------
     // DEPRECATED METHODS. Do not use it, they will be removed in the future...
     //
@@ -171,7 +173,7 @@ public:
     KDE_DEPRECATED int  angle() const;
     KDE_DEPRECATED void setAngle(int);
 
-    /** In plugins use KIPIPlugins::KPImageInfo::url() instead.
+    /** Replaced by url().
      */
     KDE_DEPRECATED KUrl path() const;
 

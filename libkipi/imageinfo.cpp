@@ -86,6 +86,11 @@ void ImageInfo::cloneData(const ImageInfo& other)
     d->cloneData(other.d);
 }
 
+KUrl ImageInfo::url() const
+{
+    return d->url();
+}
+
 // DEPRECATED METHODS --------------------------------------------------------------
 
 KUrl ImageInfo::path() const
