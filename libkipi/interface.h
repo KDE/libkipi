@@ -140,6 +140,16 @@ class ImageInfo;
   This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.
  */
 
+/*!
+  \enum KIPI::HostSupportsPickLabel
+  This feature specify whether the host application supports pick label values for images, used for photograph workflow.
+*/
+
+/*!
+  \enum KIPI::HostSupportsColorLabel
+  This feature specify whether the host application supports color label values for images, used to sort item with color flag.
+*/
+
 enum Features
 {
     CollectionsHaveComments     = 1 << 0,
@@ -154,7 +164,9 @@ enum Features
     HostSupportsTags            = 1 << 9,
     HostSupportsRating          = 1 << 10,
     HostSupportsThumbnails      = 1 << 11,
-    HostSupportsItemLock        = 1 << 12
+    HostSupportsItemLock        = 1 << 12,
+    HostSupportsPickLabel       = 1 << 13,
+    HostSupportsColorLabel      = 1 << 14,
 };
 
 /** class Interface */
@@ -171,7 +183,7 @@ public:
      * Tells whether the host application under which the plugin currently executes a given feature.
      * See KIPI::Features for details on the individual features.
      */
-    bool hasFeature(KIPI::Features feature) const;
+    bool hasFeature(Features feature) const;
 
     /**
      * Returns list of all images in current album.

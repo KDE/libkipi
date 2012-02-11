@@ -72,11 +72,11 @@ QString KIPI::Interface::version()
     return QString(kipi_version);
 }
 
-void Interface::refreshImages( const KUrl::List& )
+void Interface::refreshImages(const KUrl::List&)
 {
 }
 
-bool Interface::hasFeature( KIPI::Features feature ) const
+bool Interface::hasFeature(Features feature) const
 {
     return ( features() & feature ) != 0;
 }
@@ -107,6 +107,10 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsTags );
     else if ( feature == "HostSupportsRating" )
         return hasFeature( HostSupportsRating );
+    else if ( feature == "HostSupportsPickLabel" )
+        return hasFeature( HostSupportsPickLabel );
+    else if ( feature == "HostSupportsColorLabel" )
+        return hasFeature( HostSupportsColorLabel );
     else
     {
         kWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature;
@@ -114,7 +118,7 @@ bool Interface::hasFeature( const QString& feature ) const
     }
 }
 
-bool Interface::addImage( const KUrl&, QString& /*err*/ )
+bool Interface::addImage(const KUrl&, QString& /*err*/)
 {
     kWarning() << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
                   "AcceptNewImages - if the host application do support that, then this function should\n"
@@ -150,14 +154,14 @@ int Interface::features() const
     return 0;
 }
 
-void Interface::thumbnail( const KUrl& url, int size )
+void Interface::thumbnail(const KUrl& url, int size)
 {
     KUrl::List list;
     list << url;
     thumbnails(list, size);
 }
 
-void Interface::thumbnails( const KUrl::List& list, int size )
+void Interface::thumbnails(const KUrl::List& list, int size)
 {
 #if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
