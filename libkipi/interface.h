@@ -261,8 +261,16 @@ public:
          "UseXMPSidecar4Reading"            :: bool value     :: True if XMP sidecar is used to read metadata from item.
          "MetadataWritingMode"              :: integer        :: Mode to write metadata to item. See KExiv2::MetadataWritingMode
                                                                  for details.
-         "FileExtensions"                   :: QString        :: Return file extensions managed by host application, separated by
-                                                                 blank spaces (ex: "JPG PNG TIF NEF AVI").
+         "FileExtensions"                   :: QString        :: Return all file extensions (image, sound, video) managed by host application, separated by
+                                                                 blank spaces, (ex: "JPG PNG TIF NEF AVI MP3").
+         "ImagesExtensions"                 :: QString        :: Return images file extensions managed by host application, not incuding RAW formats, separated by
+                                                                 blank spaces, (ex: "JPG PNG TIF").
+         "RawExtensions"                    :: QString        :: Return RAW file extensions managed by host application, separated by
+                                                                 blank spaces, (ex: "NEF CR2 ARW PEF").
+         "VideoExtensions"                  :: QString        :: Return video file extensions managed by host application, separated by
+                                                                 blank spaces, (ex: "AVI MOV MPG").
+         "AudioExtensions"                  :: QString        :: Return audio file extensions managed by host application, separated by
+                                                                 blank spaces, (ex: "MP3 WAV OGG").
 
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.

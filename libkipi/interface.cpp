@@ -206,12 +206,24 @@ QVariant Interface::hostSetting(const QString& settingName)
     {
         return 0;
     }
-    else if (settingName == QString("FileExtensions"))
+    else if (settingName == QString("FileExtensions") || settingName == QString("ImagesExtensions"))
     {
         // Return a list of images file extensions supported by KDE.
         QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
         QString imagesFileFilter  = KDEImagetypes.join(" ");
         return QString( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
+    }
+    else if (settingName == QString("RawExtensions"))
+    {
+        // TODO
+    }
+    else if (settingName == QString("VideoExtensions"))
+    {
+        // TODO
+    }
+    else if (settingName == QString("AudioExtensions"))
+    {
+        // TODO
     }
 
     return QVariant();
