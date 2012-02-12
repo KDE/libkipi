@@ -74,6 +74,7 @@ QString KIPI::Interface::version()
 
 void Interface::refreshImages(const KUrl::List&)
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
 }
 
 bool Interface::hasFeature(Features feature) const
@@ -126,25 +127,30 @@ bool Interface::addImage(const KUrl&, QString&)
 
 void Interface::delImage(const KUrl&)
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
 }
 
 KIPI::ImageCollection KIPI::Interface::currentAlbum()
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
     return ImageCollection();
 }
 
 ImageCollection Interface::currentSelection()
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
     return KIPI::ImageCollection();
 }
 
 QList<ImageCollection> Interface::allAlbums()
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
     return QList<ImageCollection>();
 }
 
 int Interface::features() const
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
     return 0;
 }
 
@@ -188,6 +194,8 @@ void Interface::failedKDEPreview(const KFileItem& item)
 
 QVariant Interface::hostSetting(const QString& settingName)
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
+
     if (settingName == QString("WriteMetadataUpdateFiletimeStamp"))
     {
         return false;
@@ -213,15 +221,12 @@ QVariant Interface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("RawExtensions"))
     {
-        // TODO
     }
     else if (settingName == QString("VideoExtensions"))
     {
-        // TODO
     }
     else if (settingName == QString("AudioExtensions"))
     {
-        // TODO
     }
 
     return QVariant();
@@ -229,6 +234,7 @@ QVariant Interface::hostSetting(const QString& settingName)
 
 QAbstractItemModel* Interface::getTagTree() const
 {
+    kWarning() << "This method should have been overridden in the kipi host interface.";
     return 0;
 }
 
