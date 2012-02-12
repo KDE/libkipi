@@ -322,7 +322,7 @@ public:
     virtual bool itemIsLocked(const KUrl& url) const;
 
     /**
-     * Returns a string version of libkipi release
+     * Returns a string version of libkipi release ID.
      */
     static QString version();
 

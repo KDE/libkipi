@@ -78,7 +78,7 @@ void Interface::refreshImages(const KUrl::List&)
 
 bool Interface::hasFeature(Features feature) const
 {
-    return ( features() & feature ) != 0;
+    return (features() & feature) != 0;
 }
 
 bool Interface::hasFeature( const QString& feature ) const
@@ -130,37 +130,33 @@ void Interface::delImage(const KUrl&)
 
 KIPI::ImageCollection KIPI::Interface::currentAlbum()
 {
-    // This implementation is just to be able to write documentation above.
     return ImageCollection();
 }
 
 ImageCollection Interface::currentSelection()
 {
-    // This implementation is just to be able to write documentation above.
     return KIPI::ImageCollection();
 }
 
 QList<ImageCollection> Interface::allAlbums()
 {
-    // This implementation is just to be able to write documentation above.
     return QList<ImageCollection>();
 }
 
 int Interface::features() const
 {
-    // This implementation is just to be able to write documentation above.
     return 0;
 }
 
 void Interface::thumbnail(const KUrl& url, int size)
 {
-    KUrl::List list;
-    list << url;
-    thumbnails(list, size);
+    thumbnails(KUrl::List() << url, size);
 }
 
 void Interface::thumbnails(const KUrl::List& list, int size)
 {
+    printWarningMessage("thumbnails", "HostSupportsThumbnails");
+
 #if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
     for (KUrl::List::ConstIterator it = list.begin() ; it != list.end() ; ++it)
@@ -233,7 +229,7 @@ QVariant Interface::hostSetting(const QString& settingName)
 
 QAbstractItemModel* Interface::getTagTree() const
 {
-    return NULL;
+    return 0;
 }
 
 QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
@@ -295,9 +291,9 @@ bool Interface::itemIsLocked(const KUrl& url) const
 
 void Interface::printWarningMessage(const QString& method, const QString& feature) const
 {
-    kWarning() << "KIPI::Interface::" << method << "() should only be invoked if the host application supports the\n"
-                  "KIPI::Features::" << feature << ". If the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    kWarning() << "KIPI::Interface::" << method << "() should only be invoked if the host application supports\n"
+                  "KIPI::Features::" << feature << ". If host application do support that, then this function should\n"
+                  "have been overridden in the kipi host interface.";
 }
 
 } // namespace KIPI
