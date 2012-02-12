@@ -113,20 +113,18 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsColorLabel );
     else
     {
-        kWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature: " << feature;
+        kWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
         return false;
     }
 }
 
-bool Interface::addImage(const KUrl&, QString& /*err*/)
+bool Interface::addImage(const KUrl&, QString&)
 {
-    kWarning() << "Interface::addImage should only be invoked if the host application supports the KIPI::Features\n"
-                  "AcceptNewImages - if the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    printWarningMessage("addImage", "AcceptNewImages");
     return false;
 }
 
-void Interface::delImage( const KUrl& )
+void Interface::delImage(const KUrl&)
 {
 }
 
@@ -240,6 +238,7 @@ QAbstractItemModel* Interface::getTagTree() const
 
 QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
 {
+    printWarningMessage("progressScheduled", "HostSupportsProgressBar");
     Q_UNUSED(title);
     Q_UNUSED(canBeCanceled);
     Q_UNUSED(hasThumb);
@@ -248,43 +247,57 @@ QString Interface::progressScheduled(const QString& title, bool canBeCanceled, b
 
 void Interface::progressValueChanged(const QString& id, float percent)
 {
+    printWarningMessage("progressValueChanged", "HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(percent);
 }
 
 void Interface::progressStatusChanged(const QString& id, const QString& status)
 {
+    printWarningMessage("progressStatusChanged", "HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(status);
 }
 
 void Interface::progressThumbnailChanged(const QString& id, const QPixmap& thumb)
 {
+    printWarningMessage("progressThumbnailChanged", "HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(thumb);
 }
 
 void Interface::progressCompleted(const QString& id)
 {
+    printWarningMessage("progressCompleted", "HostSupportsProgressBar");
     Q_UNUSED(id);
 }
 
 bool Interface::lockItem(const KUrl& url) const
 {
+    printWarningMessage("lockItem", "HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
 }
 
 bool Interface::unlockItem(const KUrl& url) const
 {
+    printWarningMessage("unlockItem", "HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
 }
 
 bool Interface::itemIsLocked(const KUrl& url) const
 {
+    printWarningMessage("itemIsLocked", "HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
+}
+
+void Interface::printWarningMessage(const QString& method, const QString& feature) const
+{
+    kWarning() << "KIPI::Interface::" << method << "() should only be invoked if the host application supports the\n"
+                  "KIPI::Features::" << feature << ". If the host application do support that, then this function should\n"
+                  "have been overridden in the host application.";
 }
 
 } // namespace KIPI
