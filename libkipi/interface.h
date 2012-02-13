@@ -286,6 +286,9 @@ public:
 
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
+
+      NOTE: If you want to manage host settings from kipi-plugins, use wrapper class KIPIPlugins::KPHostSettings,
+      not this method directly.
     */
     virtual QVariant hostSetting(const QString& settingName);
 
