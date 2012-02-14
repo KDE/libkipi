@@ -376,7 +376,6 @@ private Q_SLOTS:
 private:
 
     bool hasFeature(const QString& feature) const;
-    void printWarningMessage(const QString& method, const QString& feature) const;
 
 private:
 

@@ -54,6 +54,14 @@
 #include "imagecollectionselector.h"
 #include "uploadwidget.h"
 
+#define PrintWarningMessageFeature(feature)                                           \
+        kWarning() << "This should only be invoked if the host application supports " \
+                      "KIPI::Features (" << feature << "). If host application do "   \
+                      "support that, then this function should have been overridden " \
+                      "in the KIPI host interface."
+
+#define PrintWarningMessage() kWarning() << "This method should have been overridden in the kipi host interface."
+
 namespace KIPI
 {
 
@@ -74,7 +82,7 @@ QString KIPI::Interface::version()
 
 void Interface::refreshImages(const KUrl::List&)
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
 }
 
 bool Interface::hasFeature(Features feature) const
@@ -121,36 +129,36 @@ bool Interface::hasFeature( const QString& feature ) const
 
 bool Interface::addImage(const KUrl&, QString&)
 {
-    printWarningMessage("addImage", "AcceptNewImages");
+    PrintWarningMessageFeature("AcceptNewImages");
     return false;
 }
 
 void Interface::delImage(const KUrl&)
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
 }
 
 KIPI::ImageCollection KIPI::Interface::currentAlbum()
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
     return ImageCollection();
 }
 
 ImageCollection Interface::currentSelection()
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
     return KIPI::ImageCollection();
 }
 
 QList<ImageCollection> Interface::allAlbums()
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
     return QList<ImageCollection>();
 }
 
 int Interface::features() const
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
     return 0;
 }
 
@@ -161,7 +169,7 @@ void Interface::thumbnail(const KUrl& url, int size)
 
 void Interface::thumbnails(const KUrl::List& list, int size)
 {
-    printWarningMessage("thumbnails", "HostSupportsThumbnails");
+    PrintWarningMessageFeature("HostSupportsThumbnails");
 
 #if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
@@ -194,7 +202,7 @@ void Interface::failedKDEPreview(const KFileItem& item)
 
 QVariant Interface::hostSetting(const QString& settingName)
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
 
     if (settingName == QString("WriteMetadataUpdateFiletimeStamp"))
     {
@@ -234,13 +242,13 @@ QVariant Interface::hostSetting(const QString& settingName)
 
 QAbstractItemModel* Interface::getTagTree() const
 {
-    kWarning() << "This method should have been overridden in the kipi host interface.";
+    PrintWarningMessage();
     return 0;
 }
 
 QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
 {
-    printWarningMessage("progressScheduled", "HostSupportsProgressBar");
+    PrintWarningMessageFeature("HostSupportsProgressBar");
     Q_UNUSED(title);
     Q_UNUSED(canBeCanceled);
     Q_UNUSED(hasThumb);
@@ -249,57 +257,50 @@ QString Interface::progressScheduled(const QString& title, bool canBeCanceled, b
 
 void Interface::progressValueChanged(const QString& id, float percent)
 {
-    printWarningMessage("progressValueChanged", "HostSupportsProgressBar");
+    PrintWarningMessageFeature("HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(percent);
 }
 
 void Interface::progressStatusChanged(const QString& id, const QString& status)
 {
-    printWarningMessage("progressStatusChanged", "HostSupportsProgressBar");
+    PrintWarningMessageFeature("HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(status);
 }
 
 void Interface::progressThumbnailChanged(const QString& id, const QPixmap& thumb)
 {
-    printWarningMessage("progressThumbnailChanged", "HostSupportsProgressBar");
+    PrintWarningMessageFeature("HostSupportsProgressBar");
     Q_UNUSED(id);
     Q_UNUSED(thumb);
 }
 
 void Interface::progressCompleted(const QString& id)
 {
-    printWarningMessage("progressCompleted", "HostSupportsProgressBar");
+    PrintWarningMessageFeature("HostSupportsProgressBar");
     Q_UNUSED(id);
 }
 
 bool Interface::lockItem(const KUrl& url) const
 {
-    printWarningMessage("lockItem", "HostSupportsItemLock");
+    PrintWarningMessageFeature("HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
 }
 
 bool Interface::unlockItem(const KUrl& url) const
 {
-    printWarningMessage("unlockItem", "HostSupportsItemLock");
+    PrintWarningMessageFeature("HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
 }
 
 bool Interface::itemIsLocked(const KUrl& url) const
 {
-    printWarningMessage("itemIsLocked", "HostSupportsItemLock");
+    PrintWarningMessageFeature("HostSupportsItemLock");
     Q_UNUSED(url);
     return false;
-}
-
-void Interface::printWarningMessage(const QString& method, const QString& feature) const
-{
-    kWarning() << "KIPI::Interface::" << method << "() should only be invoked if the host application supports\n"
-                  "KIPI::Features::" << feature << ". If host application do support that, then this function should\n"
-                  "have been overridden in the kipi host interface.";
 }
 
 } // namespace KIPI
