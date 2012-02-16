@@ -88,6 +88,10 @@
    write images into.
    <li> KIPI::Interface::thumbnail() helps you load thumbnails of images from KIPI host thumbnail manager.
    <li> KIPI::Interface::progress*() helps you dispatch progress information to KIPI host progress manager.
+   <li> <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/show/tests">
+   kipicmd command line program</a> helps you to test your plugin without to have a KIPI host application available. 
+   It emule a simplified KIPI interface and can run plugin as stand-alone application. 
+   Look kipicmd command line documentation for details.
    </ul>
 
 
