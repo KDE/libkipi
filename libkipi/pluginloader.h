@@ -52,6 +52,115 @@ class Plugin;
 class Interface;
 class ConfigWidget;
 
+/**
+    \author Gilles Caulier
+    \class KIPI::PluginLoader
+    This is the class that will help host applications to load plugins.
+
+    The host application must create an instance of the plugin loader, and
+    call the method loadPlugins() to get the plugins loaded. To ensure that
+    plugins are correctly removed from menus and toolbars when loaded and
+    unloaded after constructions, the application must connect to either the
+    signals plug() / unplug() or the signal replug(). These signals are
+    emitted when a plugin is to be inserted into the menus.
+
+    If your application is using XMLGUI, the easiest way to get the plugins
+    inserted into the menus is by adding an item in the ui.rc file looking
+    list this:
+
+        &lt;ActionList name="image_actions"/&gt;
+
+    Then plugin plugins into menus could be done with code similar to this from digiKam:
+
+    \code
+    void DigikamApp::slotKipiPluginPlug()
+    {
+        unplugActionList(QString::fromLatin1("file_actions_export"));
+        unplugActionList(QString::fromLatin1("image_actions"));
+        unplugActionList(QString::fromLatin1("tool_actions"));
+
+        d->kipiImageActions.clear();
+        d->kipiFileActionsExport.clear();
+        d->kipiToolsActions.clear();
+
+        d->kipipluginsActionCollection->clear();
+
+        KIPI::PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
+        int cpt                             = 0;
+
+        for ( KIPI::PluginLoader::PluginList::ConstIterator it = list.constBegin() ;
+            it != list.constEnd() ; ++it )
+        {
+            KIPI::Plugin* plugin = (*it)->plugin();
+
+            if ( !plugin || !(*it)->shouldLoad() )
+                continue;
+
+            ++cpt;
+
+            plugin->setup( this );
+
+            // Add actions to kipipluginsActionCollection
+            QList<QAction*> allPluginActions = plugin->actionCollection()->actions();
+
+            foreach(QAction* action, allPluginActions)
+            {
+                QString actionName(action->objectName());
+
+                if (!pluginActionsDisabled.contains(actionName))
+                    d->kipipluginsActionCollection->addAction(actionName, action);
+            }
+
+            // Plugin category identification using KAction method based.
+
+            QList<KAction*> actions = plugin->actions();
+            foreach(KAction* action, actions)
+            {
+                QString actionName(action->objectName());
+
+                switch (plugin->category(action))
+                {
+                    case KIPI::ExportPlugin:
+                    {
+                        d->kipiFileActionsExport.append(action);
+                        break;
+                    }
+                    case KIPI::ImagesPlugin:
+                    {
+                        d->kipiImageActions.append(action);
+                        break;
+                    }
+                    case KIPI::ToolsPlugin:
+                    {
+                        d->kipiToolsActions.append(action);
+                        break;
+                    }
+                    default:
+                    {
+                        kDebug() << "No menu found for a plugin!";
+                        break;
+                    }
+                }
+            }
+        }
+
+        // load KIPI actions settings
+        d->kipipluginsActionCollection->readSettings();
+
+        // Create GUI menu in according with plugins.
+        plugActionList(QString::fromLatin1("file_actions_export"),        d->kipiFileActionsExport);
+        plugActionList(QString::fromLatin1("image_actions"),              d->kipiImageActions);
+        plugActionList(QString::fromLatin1("tool_actions"),               d->kipiToolsActions);
+    }
+    \endcode
+
+    For a complete implementation used to manage Kipi-plugins in digiKam, look <a href="https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/digikam/main/digikamapp.cpp">
+    into this class</a>.
+
+    To configure which plugins should be loaded, simply call
+    PluginLoader::configWidget(), and insert the widget into your normal
+    configuration dialog.
+*/
 class LIBKIPI_EXPORT PluginLoader : public QObject
 {
     Q_OBJECT

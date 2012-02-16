@@ -57,84 +57,8 @@
 #include "interface.h"
 #include "version.h"
 
-/**
-   \author Renchi Raju
-   \class KIPI::PluginLoader
-   This is the class that will help host applications to load plugins.
-
-   The host application must create an instance of the plugin loader, and
-   call the method loadPlugins() to get the plugins loaded. To ensure that
-   plugins are correctly removed from menus and toolbars when loaded and
-   unloaded after constructions, the application must connect to either the
-   signals plug() / unplug() or the signal replug(). These signals are
-   emitted when a plugin is to be inserted into the menus.
-
-   If your application is using XMLGUI, the easiest way to get the plugins
-   inserted into the menus is by adding an item in the ui.rc file looking
-   list this:
-      &lt;ActionList name="image_actions"/&gt;
-
-   Then plugin plugins into menus could be done with code similar to this from KimDaBa:
-   \code
-    void slotReplug()
-    {
-        unplugActionList( QString::fromLatin1("file_actions") );
-        unplugActionList( QString::fromLatin1("image_actions") );
-        unplugActionList( QString::fromLatin1("tool_actions") );
-
-        QPtrList<KAction> fileActions;
-        QPtrList<KAction> imageActions;
-        QPtrList<KAction> toolsActions;
-
-        KIPI::PluginLoader::PluginList list = _pluginLoader->pluginList();
-        for( KIPI::PluginLoader::PluginList::Iterator it = list.begin(); it != list.end(); ++it )
-        {
-            KIPI::Plugin* plugin = (*it)->plugin;
-            if ( !plugin || !(*it)->shouldLoad )
-                continue;
-
-            plugin->setup( this );
-            QPtrList<KAction>* popup = 0;
-            if ( plugin->category() == KIPI::IMAGESPLUGIN )
-                popup = &imageActions;
-
-            else if ( plugin->category() == KIPI::EXPORTPLUGIN  ||
-                        plugin->category() == KIPI::IMPORTPLUGIN )
-                popup = &fileActions;
-
-            else if ( plugin->category() == KIPI::TOOLSPLUGIN )
-                popup = &toolsActions;
-
-            if ( popup )
-            {
-                KActionPtrList actions = plugin->actions();
-                for( KActionPtrList::Iterator it = actions.begin(); it != actions.end(); ++it )
-                {
-                    popup->append( *it );
-                }
-            }
-            else
-            {
-                kDebug(51001) << "No menu found\n";
-            }
-            plugin->actionCollection()->readShortcutSettings();
-        }
-
-        // For this to work I need to pass false as second arg for createGUI
-        plugActionList( QString::fromLatin1("file_actions"), fileActions );
-        plugActionList( QString::fromLatin1("image_actions"), imageActions );
-        plugActionList( QString::fromLatin1("tool_actions"), toolsActions );
-    }
-    \endcode
-
-  To configure which plugins should be loaded, simply call
-  PluginLoader::configWidget(), and insert the widget into your normal
-  configuration dialog.
-*/
 namespace KIPI
 {
-
-//---------------------------------------------------------------------
 
 class PluginLoader::Info::InfoPrivate
 {
