@@ -43,12 +43,13 @@
 
 // Local includes
 
-#include "imagecollection.h"
 #include "libkipi_export.h"
 
 namespace KIPI
 {
 
+/** See ImageCollection documentation for details.
+ */
 class LIBKIPI_EXPORT ImageCollectionShared
 {
 
@@ -57,18 +58,20 @@ public:
     ImageCollectionShared();
     virtual ~ImageCollectionShared();
 
-    virtual QString comment();
-    virtual QString category();
-    virtual QDate date();
-    virtual KUrl path();
-    virtual KUrl uploadPath();
-    virtual KUrl uploadRoot();
-    virtual QString uploadRootName();
-
+    /** These methods must be re-implemented in your KIPI host application to manage collection attributes with plugins.
+     */
     virtual KUrl::List images() = 0;
-    virtual QString name() = 0;
+    virtual QString    name() = 0;
 
-    virtual bool isDirectory();
+    virtual QString    comment();
+    virtual QString    category();
+    virtual QDate      date();
+    virtual KUrl       path();
+    virtual KUrl       uploadPath();
+    virtual KUrl       uploadRoot();
+    virtual QString    uploadRootName();
+    virtual bool       isDirectory();
+
     virtual bool operator==(ImageCollectionShared&);
 
 private:

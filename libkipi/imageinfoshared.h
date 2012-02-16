@@ -54,6 +54,8 @@ namespace KIPI
 
 class Interface;
 
+/** See ImageInfo documentation for details.
+ */
 class LIBKIPI_EXPORT ImageInfoShared
 {
 
@@ -74,7 +76,7 @@ public:
     virtual void cloneData(ImageInfoShared* const other);
 
     // ---------------------------------------------------------------------------------------
-    // DEPRECATED METHODS. Do not use it. See Imageinfo for details.
+    // DEPRECATED METHODS. Do not use it.
 
     KDE_DEPRECATED virtual QString name();
     KDE_DEPRECATED virtual void    setName(const QString&);

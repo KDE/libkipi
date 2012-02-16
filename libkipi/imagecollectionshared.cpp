@@ -31,9 +31,21 @@
 
 #include "imagecollectionshared.h"
 
-// KDE Includes.
+// KDE Includes
 
 #include <kdebug.h>
+
+// Local includes
+
+#include "imagecollection.h"
+
+// Macros
+
+#define PrintWarningMessageFeature(feature)                                           \
+        kWarning() << "This should only be invoked if the host application supports " \
+                      "KIPI::Features (" << feature << "). If host application do "   \
+                      "support that, then this function should have been overridden " \
+                      "in the KIPI host interface."
 
 namespace KIPI
 {
@@ -64,16 +76,14 @@ void ImageCollectionShared::removeRef()
 
 KUrl ImageCollectionShared::path()
 {
-    kWarning() << "This method should only be invoked if this imagecollection is a directory.\n"
+    kWarning() << "This method should only be invoked if this imagecollection is a directory. "
                << "See KIPI::ImageCollectionShared::isDirectory()";
     return KUrl();
 }
 
 KUrl ImageCollectionShared::uploadPath()
 {
-    kWarning() << "This method should only be invoked if the host application supports the KIPI::Features\n"
-                  "AcceptNewImages - if the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    PrintWarningMessageFeature("AcceptNewImages");
     return KUrl();
 }
 
@@ -103,25 +113,19 @@ bool ImageCollectionShared::isDirectory()
 
 QString ImageCollectionShared::comment()
 {
-    kWarning() << "This method should only be invoked if the host application supports\n"
-                  "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    PrintWarningMessageFeature("AlbumsHaveComments");
     return QString();
 }
 
 QString ImageCollectionShared::category()
 {
-    kWarning() << "This method should should only be invoked if the host application supports\n"
-                  "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    PrintWarningMessageFeature("AlbumsHaveCategory");
     return QString();
 }
 
 QDate ImageCollectionShared::date()
 {
-    kWarning() << "This method should should only be invoked if the host application supports\n"
-                  "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
-                  "have been overridden in the host application.";
+    PrintWarningMessageFeature("AlbumsHaveCreationDate");
     return QDate();
 }
 

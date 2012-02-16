@@ -54,6 +54,8 @@
 #include "imagecollectionselector.h"
 #include "uploadwidget.h"
 
+// Macros
+
 #define PrintWarningMessageFeature(feature)                                           \
         kWarning() << "This should only be invoked if the host application supports " \
                       "KIPI::Features (" << feature << "). If host application do "   \
