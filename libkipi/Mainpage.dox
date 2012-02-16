@@ -6,16 +6,17 @@
    application (referred to as host application).
 
    You can find more information about KIPI at this <a
-   href="http://extragear.kde.org/apps/kipi">url</a>.
+   href="http://wwww.digikam.org/docs">url</a>.
 
-   This documentation has been writen by Renchi Raju, Gilles Caulier,
-    Jesper K. Pedersen, and Aurelien Gateau. 
+   This documentation has been writen by Gilles Caulier.
 
-   <h1>Developing a new Plugin</h1>
-   The easiest way to start a new plugin, is to copy the hello world
-   plugin, which you may find in kdeextragear-libs-1/kipi-plugins. Please
-   also read <a
-   href="http://developer.kde.org/documentation/tutorials/developing-a-plugin-structure/index.html">
+   <h1>Developing a New Plugin</h1>
+
+   The easiest way to start a new plugin, is to copy the HelloWorld
+   plugin, which you may find in <a
+   href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins">
+   kipi-plugins</a>. Please also read <a
+   href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html">
    this tutorial</a> which tells in general about developing a plugin
    structure for an application, but it also gives some background
    information on how plugins are loaded, and especially on the macros
@@ -26,23 +27,25 @@
 
 
 
-   <h2>General things to do to implement a plugin</h2>
+   <h2>General Things to do to Implement a Plugin</h2>
+
    Here is a list of things to do.
    <ul>
    <li> Create a class that inherits KIPI::Plugin. In the constructor you
    must create instances of KAction for your application. The topmost
    actions should be given to the Plugin super class using 
    KIPI::Plugin::addAction().
-   <li> As described in the tutorial <a href="http://developer.kde.org/documentation/tutorials/developing-a-plugin-structure/index.html#understanding_loading">here</a>, you must call the macro
-   <tt>K_EXPORT_COMPONENT_FACTORY</tt>.
-   <li> You also need to create a desktop file, as described <a href="http://developer.kde.org/documentation/tutorials/developing-a-plugin-structure/index.html#makefile_am_client">here</a>
+   <li> As described in the tutorial <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#understanding_loading">here</a>, you must call KDE macros
+   <tt>K_PLUGIN_FACTORY</tt> and <tt>K_EXPORT_PLUGIN</tt>.
+   <li> You also need to create a desktop file, as described <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#makefile_am_client">here</a>
    </ul>
 
 
 
 
 
-   <h2>Retrieving information from the host application</h2>
+   <h2>Retrieving Information from the Host Application</h2>
+
    The above was the required step to build the plugin. The following will
    tell you about the functions with which you communicate with the host
    application.
@@ -58,29 +61,40 @@
 
    Finally to obtain information about individual images, call
    KIPI::Interface::info(), which returns a KIPI::ImageInfo, with the
-   information.
+   information. Note that Kipi-plugins provide a dedicated wrapper around KIPI::ImageInfo 
+   to simplify item attribute management with host application. See 
+   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpimageinfo.h">
+   here</a> for details.
 
    When developing plugins, you should pay special attention to the fact the different
    host applications may have different feature sets they
    support. Information about what the host application support can be
-   obtained from KIPI::Interface::hasFeature().
+   obtained from KIPI::Interface::hasFeature(). See also extra settings that can be shared 
+   by KIPI host application. Kipi-plugins provide a dedicated wrapper around KIPI::Interface to 
+   simplify host settings management. See 
+   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kphostsettings.h">
+   here</a> and <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpmetasettings.h">
+   here</a> for details.
 
 
 
 
    <h2>Utilities for Plugins</h2>
+
    KIPI has a number of utilities useful when developing plugins:
    <ul>
-   <li> use KIPI::ImageCollectionDialog to ask the user for an image.
+   <li> use KIPI::ImageCollectionSelector to ask the user for a collection.
    <li> use KIPI::UploadWidget when the user should specify a directory to
    write images into.
-   <li> KIPI::ThumbnailJob helps you load thumb nails of images.
+   <li> KIPI::Interface::thumbnail() helps you load thumbnails of images from KIPI host thumbnail manager.
+   <li> KIPI::Interface::progress*() helps you dispatch progress information to KIPI host progress manager.
    </ul>
 
 
 
 
    <h1>Adding KIPI support to a new host application.</h1>
+
    To add KIPI support to your application you must inherit
    KIPI::Interface, and give an instance of this class to
    KIPI::PluginLoader. See \ref KIPI::PluginLoader for details on loading plugins.
@@ -97,4 +111,8 @@
    ownership of pointers to the classes in question. The
    KIPI::ImageCollectionShared pointer you give to KIPI::ImageCollection
    constructor will be the owned by the ImageCollection instance.
+
+   digiKam has a full implemented KIPI interface. Look <a href="
+   https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/show/utilities/kipiiface">
+   here</a> for details.
 */
