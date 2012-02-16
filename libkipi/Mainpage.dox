@@ -12,10 +12,11 @@
 
    <h1>Developing a New Plugin</h1>
 
-   The easiest way to start a new plugin, is to copy the HelloWorld
-   plugin, which you may find in <a
+   The easiest way to start a new plugin, is to copy the 
+   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/show/tests/helloworld">
+   HelloWorld</a> plugin, which you may find in <a
    href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins">
-   kipi-plugins</a>. Please also read <a
+   kipi-plugins</a> project from KDE git repository. Please also read <a
    href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html">
    this tutorial</a> which tells in general about developing a plugin
    structure for an application, but it also gives some background
