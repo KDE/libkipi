@@ -39,14 +39,15 @@
 
 #include "imagecollectionshared.h"
 
+#define PrintWarningMessage()                                           \
+        kWarning() << "Image collection is invalid - this might be the case if you asked for an album, " \
+                   << "and not album existed. You should check using .isValid() first. "                 \
+                   << "Note: Plugins should never create an instance of ImageCollection, only the "      \
+                   << "host application should do that."
+
 namespace KIPI
 {
 
-/**
-   @file imagecollection.cpp
-   returns the comment for the collection of images or QString::null if that doesn't make any sense.
-   A comment makes sense for an album, but not for a KIPI::Interface::currentSelection().
-*/
 QString ImageCollection::comment() const
 {
     if ( d )
@@ -55,14 +56,11 @@ QString ImageCollection::comment() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return QString::null;
     }
 }
 
-/**
-   PENDING(blackie) document
-*/
 QString ImageCollection::name() const
 {
     if ( d )
@@ -71,15 +69,11 @@ QString ImageCollection::name() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return QString();
     }
 }
 
-/**
-   Return the category of the image collection. For example in Digikam,
-   a category is a sorting class like 'travels', 'friends', 'monuments', etc.
-*/
 QString ImageCollection::category() const
 {
     if ( d )
@@ -88,15 +82,11 @@ QString ImageCollection::category() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return QString::null;
     }
 }
 
-/**
-   Return the Creation date of the image collection. The default implementation
-   return a null date.
-*/
 QDate ImageCollection::date() const
 {
     if ( d )
@@ -105,14 +95,11 @@ QDate ImageCollection::date() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return QDate();
     }
 }
 
-/**
-   PENDING(blackie) document
-*/
 KUrl::List ImageCollection::images() const
 {
     if ( d )
@@ -121,17 +108,17 @@ KUrl::List ImageCollection::images() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return KUrl::List();
     }
 }
 
-ImageCollection::ImageCollection( ImageCollectionShared* const data )
-               : d( data )
+ImageCollection::ImageCollection(ImageCollectionShared* const data)
+    : d(data)
 {
 }
 
-ImageCollection::ImageCollection( const ImageCollection& rhs )
+ImageCollection::ImageCollection(const ImageCollection& rhs)
 {
     if ( rhs.d )
     {
@@ -155,7 +142,7 @@ ImageCollection::~ImageCollection()
         d->removeRef();
 }
 
-ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
+ImageCollection& ImageCollection::operator=(const ImageCollection& rhs)
 {
     if ( rhs.d == d )
         return *this;
@@ -165,7 +152,7 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
 
     if ( !rhs.d )
     {
-        printNullError();
+        PrintWarningMessage();
         d = 0;
     }
     else
@@ -176,14 +163,6 @@ ImageCollection& ImageCollection::operator=( const ImageCollection& rhs )
     return *this;
 }
 
-/*!
-  Returns the directory for the image collection.
-  The host application may, however, return anything in case this
-  imagecollection is not a directory (check isDirectory()),  or may
-  return the directory of the first image in the collection, the root
-   of the image collection (in case all images has a common root), or
-   even an empty URL.
-*/
 KUrl ImageCollection::path() const
 {
     if ( d )
@@ -192,23 +171,11 @@ KUrl ImageCollection::path() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return KUrl();
     }
 }
 
-/*!
-  Returns the directory to place images into.
-  This function should only be called if KIPI::Features AcceptNewImages
-  is available.
-
-  The function may choose to return the directory for the image collection
-  or if images from the collection are not available in a common directory,
-  then instead a common upload directory.
-  In contrast to \ref path, this function must return a valid url.
-
-  <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
-*/
 KUrl ImageCollection::uploadPath() const
 {
     if ( d )
@@ -217,26 +184,11 @@ KUrl ImageCollection::uploadPath() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return KUrl();
     }
 }
 
-/*!
-  When a plugin wants to upload images, it may choose to display an upload widget,
-  which gives the user the possible to show a directory from a tree view.
-
-  This tree view widget needs to starts at some URL. This function specifies that location.
-  Here are a couble of possible return value different host applications may choose.
-  <ul>
-  <li> If all images are stored rooted at some tree (which is the case for
-  KimDaBa), then this function may return this directory unconditionally.
-  <li> The root directory returned by uploadPath() (which is the default implementation for this method)
-  <li> The directory returned by uploadPath().
-  </ul>
-
-  <b>IMPORTANT:</b> uploadRoot() must be a subpath of uploadPath()
-*/
 KUrl ImageCollection::uploadRoot() const
 {
     if ( d )
@@ -245,16 +197,11 @@ KUrl ImageCollection::uploadRoot() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return KUrl();
     }
 }
 
-/*!
-  This fonction return the name of the upload root path used by the
-  the KIPI::UploadWidget. This name can be different for each host
-  app (like "Images" for Kimdaba or "My Albums" for Digikam).
-*/
 QString ImageCollection::uploadRootName() const
 {
     if ( d )
@@ -263,16 +210,11 @@ QString ImageCollection::uploadRootName() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return QString();
     }
 }
 
-/*!
-  Returns whether an imagecollection is a physical folder on the filesystem
-  or not. It is important to check this, if your plugin needs to do folder
-  based operations for an image collection.
-*/
 bool ImageCollection::isDirectory() const
 {
     if ( d )
@@ -281,7 +223,7 @@ bool ImageCollection::isDirectory() const
     }
     else
     {
-        printNullError();
+        PrintWarningMessage();
         return false;
     }
 }
@@ -291,19 +233,11 @@ bool ImageCollection::isValid() const
     return (d != 0);
 }
 
-void ImageCollection::printNullError() const
-{
-    kWarning() << "Image collection is invalid - this might be the case if you asked for an album, " << endl
-               << "and not album existed. You should check using .isValid() first." << endl
-               << "Notice: Plugins should never create an instance of ImageCollection, only the host application "
-               << "should do that.";
-}
-
 bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const
 {
     if (!d || !(ic.d))
     {
-        printNullError();
+        PrintWarningMessage();
         return false;
     }
     return *d == *(ic.d);

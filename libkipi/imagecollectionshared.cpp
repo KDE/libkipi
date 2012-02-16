@@ -103,7 +103,7 @@ bool ImageCollectionShared::isDirectory()
 
 QString ImageCollectionShared::comment()
 {
-    kWarning() << "KIPI::ImageCollectionShared::comment should only be invoked if the host application supports\n"
+    kWarning() << "This method should only be invoked if the host application supports\n"
                   "the KIPI::Features AlbumsHaveComments - if the host application do support that, then this function should\n"
                   "have been overridden in the host application.";
     return QString();
@@ -111,7 +111,7 @@ QString ImageCollectionShared::comment()
 
 QString ImageCollectionShared::category()
 {
-    kWarning() << "KIPI::ImageCollectionShared::category should only be invoked if the host application supports\n"
+    kWarning() << "This method should should only be invoked if the host application supports\n"
                   "the KIPI::Features AlbumsHaveCategory - if the host application do support that, then this function should\n"
                   "have been overridden in the host application.";
     return QString();
@@ -119,7 +119,7 @@ QString ImageCollectionShared::category()
 
 QDate ImageCollectionShared::date()
 {
-    kWarning() << "KIPI::ImageCollectionShared::date should only be invoked if the host application supports\n"
+    kWarning() << "This method should should only be invoked if the host application supports\n"
                   "the KIPI::Features AlbumsHaveCreationDate - if the host application do support that, then this function should\n"
                   "have been overridden in the host application.";
     return QDate();
