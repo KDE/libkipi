@@ -283,10 +283,10 @@ void PluginLoader::loadPlugins()
 }
 
 ///deprecated
-void PluginLoader::loadPlugin(Info* const)
+/*void PluginLoader::loadPlugin(Info* const)
 {
 }
-
+*/
 const PluginLoader::PluginList& PluginLoader::pluginList()
 {
     return d->pluginList;
