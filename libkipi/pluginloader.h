@@ -172,26 +172,20 @@ public:
 
     public:
 
-        Info( const KService::Ptr& service, bool shouldLoad );
+        Info(const KService::Ptr& service, bool shouldLoad);
         ~Info();
 
+        QString       name() const;
+        QString       comment() const;
+        QIcon         icon() const;
+        QString       library() const;
         KService::Ptr service() const;
-
-        QString name() const;
-
-        QString comment() const;
-
-        QString library() const;
-
-        QIcon icon() const;
-
-        Plugin* plugin() const;
-
-        void reload();
+        Plugin*       plugin() const;
 
         /** @p deprecated. You do not want to change the plugin instance. */
         KDE_DEPRECATED void setPlugin(Plugin*);
 
+        void reload();
         bool shouldLoad() const;
         void setShouldLoad(bool);
 
@@ -207,11 +201,11 @@ public:
 
 public:
 
-    PluginLoader( const QStringList& ignores, KIPI::Interface* const interface );
-    PluginLoader( const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint );
+    PluginLoader(const QStringList& ignores, KIPI::Interface* const interface);
+    PluginLoader(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
     virtual ~PluginLoader();
 
-    ConfigWidget* configWidget( QWidget* parent ) const;
+    ConfigWidget* configWidget(QWidget* parent) const;
 
     const PluginList& pluginList();
 
