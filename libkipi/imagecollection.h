@@ -82,7 +82,7 @@ public:
      * A comment makes sense for an album, but not for a KIPI::Interface::currentSelection().
      */
     QString    comment() const;
-    
+
     /**
      * Return the category of the image collection. For example in digiKam,
      * a category is a sorting class like 'travels', 'friends', 'monuments', etc.
