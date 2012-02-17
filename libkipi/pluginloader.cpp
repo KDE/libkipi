@@ -282,11 +282,6 @@ void PluginLoader::loadPlugins()
     emit replug(); //added for convenience, now they will be loaded on demand
 }
 
-///deprecated
-/*void PluginLoader::loadPlugin(Info* const)
-{
-}
-*/
 const PluginLoader::PluginList& PluginLoader::pluginList()
 {
     return d->pluginList;

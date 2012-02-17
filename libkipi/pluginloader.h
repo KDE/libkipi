@@ -209,9 +209,6 @@ public:
     /** @p deprecated now plugins will be loaded when requested to the Info item */
     void loadPlugins();
 
-    /** @p deprecated now plugins will be loaded when requested to the Info item */
-//    KDE_DEPRECATED void loadPlugin(Info* const);
-
     ConfigWidget*        configWidget(QWidget* parent) const;
     KIPI::Interface*     interface() const;
     static PluginLoader* instance();
