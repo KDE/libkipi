@@ -182,9 +182,6 @@ public:
         KService::Ptr service() const;
         Plugin*       plugin() const;
 
-        /** @p deprecated. You do not want to change the plugin instance. */
-        KDE_DEPRECATED void setPlugin(Plugin*);
-
         void reload();
         bool shouldLoad() const;
         void setShouldLoad(bool);

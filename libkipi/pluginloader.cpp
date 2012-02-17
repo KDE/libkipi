@@ -175,12 +175,6 @@ void PluginLoader::Info::reload()
     d->plugin = 0;
 }
 
-void PluginLoader::Info::setPlugin(Plugin* const plugin)
-{
-    delete d->plugin;
-    d->plugin = plugin;
-}
-
 bool PluginLoader::Info::shouldLoad() const
 {
     return d->shouldLoad;
