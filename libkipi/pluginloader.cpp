@@ -223,9 +223,7 @@ void PluginLoader::construct(const QStringList& ignores, Interface* const interf
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
-    KService::List::ConstIterator iter;
-
-    for (iter = offers.begin(); iter != offers.end(); ++iter)
+    for (KService::List::ConstIterator iter = offers.begin(); iter != offers.end(); ++iter)
     {
         KService::Ptr service   = *iter;
         QString name            = service->name();
@@ -279,7 +277,7 @@ PluginLoader::~PluginLoader()
 
 void PluginLoader::loadPlugins()
 {
-    emit replug(); //added for convenience, now they will be loaded on demand
+    emit replug(); // added for convenience, now they can be loaded on demand
 }
 
 const PluginLoader::PluginList& PluginLoader::pluginList()
@@ -361,7 +359,6 @@ void ConfigWidget::apply()
 {
     KSharedConfigPtr config = KGlobal::config();
     KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
-    //    bool changes            = false;
 
     for (QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it)
     {
@@ -370,22 +367,22 @@ void ConfigWidget::apply()
 
         if (orig != load)
         {
-            //            changes = true;
             group.writeEntry((*it)->info->name(), load);
             (*it)->info->setShouldLoad(load);
 
             // Bugfix #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
             // to reload plugins properly when the replug() signal is send.
+            /*
+            if (load)
+            {
+                (*it)->info->reload();
+            }
+            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
+            {
+                emit PluginLoader::instance()->unplug((*it)->info);
+            }
+            */
             (*it)->info->reload();
-
-//            if (load)
-//            {
-//                (*it)->info->reload();
-//            }
-//            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
-//            {
-//                emit PluginLoader::instance()->unplug((*it)->info);
-//            }
         }
     }
 

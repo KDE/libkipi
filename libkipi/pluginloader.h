@@ -206,7 +206,7 @@ public:
 
     const PluginList& pluginList();
 
-    /** @p deprecated now plugins will be loaded when requested to the Info item */
+    // NOTE: plugin can be loaded through Info item.
     void loadPlugins();
 
     ConfigWidget*        configWidget(QWidget* parent) const;
@@ -218,7 +218,7 @@ Q_SIGNALS:
     void plug(KIPI::PluginLoader::Info*);
     void unplug(KIPI::PluginLoader::Info*);
 
-    /** @deprecated */
+    // NOTE: plugin can be pluged through Info item.
     void replug();
 
 private:
@@ -240,13 +240,12 @@ class LIBKIPI_EXPORT ConfigWidget : public QListWidget
 
 public:
 
-    ConfigWidget( QWidget* parent );
+    ConfigWidget(QWidget* parent);
     ~ConfigWidget();
 
 public Q_SLOTS:
 
     void apply();
-
     void slotCheckAll();
     void slotClear();
 
