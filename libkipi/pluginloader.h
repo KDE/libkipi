@@ -202,7 +202,7 @@ public:
     PluginLoader(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
     virtual ~PluginLoader();
 
-    ConfigWidget* configWidget(QWidget* parent) const;
+    void construct(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
 
     const PluginList& pluginList();
 
@@ -212,15 +212,14 @@ public:
     /** @p deprecated now plugins will be loaded when requested to the Info item */
     KDE_DEPRECATED void loadPlugin(Info* const);
 
-    void construct(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
-    KIPI::Interface* interface() const;
-
+    ConfigWidget*        configWidget(QWidget* parent) const;
+    KIPI::Interface*     interface() const;
     static PluginLoader* instance();
 
 Q_SIGNALS:
 
-    void plug( KIPI::PluginLoader::Info* );
-    void unplug( KIPI::PluginLoader::Info* );
+    void plug(KIPI::PluginLoader::Info*);
+    void unplug(KIPI::PluginLoader::Info*);
 
     /** @deprecated */
     void replug();
