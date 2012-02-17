@@ -72,101 +72,24 @@ class ImageInfo;
   it should check whether KIPI::CollectionsHaveComments are set. It does so
   using KIPI::Interface::hasFeature().
 */
-
-/*!
-  \enum KIPI::CollectionsHaveComments
-  This feature specify that albums have descriptions associated to them.
- */
-
-/*!
-  \enum KIPI::ImagesHasComments
-  This feature specifies that images in the host application has descriptions associated to them.
- */
-
-/*!
-  \enum KIPI::ImagesHasTime
-  This feature specifies that images has a date associated with it, which the host application can display and set.
-*/
-
-/*!
-  \enum KIPI::HostSupportsDateRanges
-  This feature specify whether the host application supports that the user can specify a date range for images, like 1998-2000.
-*/
-
-/*!
-  \enum KIPI::HostAcceptNewImages
-  This feature specifies that the host application do accept new images.
-  Use \ref ImageCollection::uploadPath to find the location to place the image, and
-  \ref KIPI::Interface::addImage() to tell the host application about the new image.
-*/
-
-/*!
-  \enum KIPI::ImagesHasTitlesWritable
-  This features specifies whether the plugin can change the title for images.
-*/
-
-/*!
-  \enum KIPI::CollectionHaveCategory
-  This feature specify that collections are category associated to them ('travels', 'friends', 'monuments', etc.).
-*/
-
-/*!
-  \enum KIPI::CollectionsHaveCreationDate
-  This feature specify that collections are a creation date associated to them.
-*/
-
-/*!
-  \enum KIPI::HostSupportsProgressBar
-  This feature specify whether the host application has a progress manager available to report progress information from plugins.
-*/
-
-/*!
-  \enum KIPI::HostSupportsTags
-  This feature specify whether the host application supports keywords for images.
-*/
-
-/*!
-  \enum KIPI::HostSupportsRating
-  This feature specify whether the host application supports rating values for images.
-*/
-
-/*!
-  \enum KIPI::HostSupportsThumbnails
-  This feature specifies that host application can provide image thumbnails.
- */
-
-/*!
-  \enum KIPI::HostSupportsItemLock
-  This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.
- */
-
-/*!
-  \enum KIPI::HostSupportsPickLabel
-  This feature specify whether the host application supports pick label values for images, used for photograph workflow.
-*/
-
-/*!
-  \enum KIPI::HostSupportsColorLabel
-  This feature specify whether the host application supports color label values for images, used to sort item with color flag.
-*/
-
 enum Features
 {
-    CollectionsHaveComments     = 1 << 0,
-    ImagesHasComments           = 1 << 1,
-    ImagesHasTime               = 1 << 2,
-    HostSupportsDateRanges      = 1 << 3,
-    HostAcceptNewImages         = 1 << 4,
-    ImagesHasTitlesWritable     = 1 << 5,
-    CollectionsHaveCategory     = 1 << 6,
-    CollectionsHaveCreationDate = 1 << 7,
-    HostSupportsProgressBar     = 1 << 8,
-    HostSupportsTags            = 1 << 9,
-    HostSupportsRating          = 1 << 10,
-    HostSupportsThumbnails      = 1 << 11,
-    HostSupportsItemLock        = 1 << 12,
-    HostSupportsPickLabel       = 1 << 13,
-    HostSupportsColorLabel      = 1 << 14,
+    CollectionsHaveComments     = 1 << 0,  /** This feature specify that albums have descriptions associated to them.                                                          */
+    ImagesHasComments           = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                 */
+    ImagesHasTime               = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.               */
+    HostSupportsDateRanges      = 1 << 3,  /** This feature specify whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
+    HostAcceptNewImages         = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
+                                               location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.             */
+    ImagesHasTitlesWritable     = 1 << 5,  /** This features specifies whether the plugin can change the title for images.                                                     */
+    CollectionsHaveCategory     = 1 << 6,  /** This feature specify that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
+    CollectionsHaveCreationDate = 1 << 7,  /** This feature specify that collections are a creation date associated to them.                                                   */
+    HostSupportsProgressBar     = 1 << 8,  /** This feature specify whether the host application has a progress manager available to report progress information from plugins. */
+    HostSupportsTags            = 1 << 9,  /** This feature specify whether the host application supports keywords for images.                                                 */
+    HostSupportsRating          = 1 << 10, /** This feature specify whether the host application supports rating values for images.                                            */
+    HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                      */
+    HostSupportsItemLock        = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                */
+    HostSupportsPickLabel       = 1 << 13, /** This feature specify whether the host application supports pick label values for images, used for photograph workflow.          */
+    HostSupportsColorLabel      = 1 << 14  /** This feature specify whether the host application supports color label values for images, used to sort item with color flag.    */
 };
 
 /** class Interface */
