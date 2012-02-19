@@ -93,6 +93,8 @@ enum Features
     HostSupportsItemReservation = 1 << 15  /** This feature specifies whether the host application supports item reservation */
 };
 
+// NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
+
 // ---------------------------------------------------------------------------------------------------------------
 
 class LIBKIPI_EXPORT FileReadWriteLock

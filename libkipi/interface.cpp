@@ -94,34 +94,38 @@ bool Interface::hasFeature(Features feature) const
 
 bool Interface::hasFeature( const QString& feature ) const
 {
-    if ( feature == "CollectionsHaveComments" )
+    if       ( feature == "CollectionsHaveComments" )
         return hasFeature( CollectionsHaveComments );
-    else if ( feature == "CollectionsHaveCategory" )
+    else if  ( feature == "CollectionsHaveCategory" )
         return hasFeature( CollectionsHaveCategory );
-    else if ( feature == "CollectionsHaveCreationDate" )
+    else if  ( feature == "CollectionsHaveCreationDate" )
         return hasFeature( CollectionsHaveCreationDate );
-    else if ( feature == "ImagesHasComments" )
+    else if  ( feature == "ImagesHasComments" )
         return hasFeature( ImagesHasComments );
-    else if ( feature == "ImagesHasTime" )
+    else if  ( feature == "ImagesHasTime" )
         return hasFeature( ImagesHasTime );
-    else if ( feature == "ImagesHasTitlesWritable" )
+    else if  ( feature == "ImagesHasTitlesWritable" )
         return hasFeature( ImagesHasTitlesWritable );
-    else if ( feature == "HostSupportsThumbnails" )
+    else if  ( feature == "HostSupportsThumbnails" )
         return hasFeature( HostSupportsThumbnails );
-    else if ( feature == "HostSupportsDateRanges" )
+    else if  ( feature == "HostSupportsReadWriteLock" )
+        return hasFeature( HostSupportsReadWriteLock );
+    else if  ( feature == "HostSupportsDateRanges" )
         return hasFeature( HostSupportsDateRanges );
-    else if ( feature == "HostAcceptNewImages" )
+    else if  ( feature == "HostAcceptNewImages" )
         return hasFeature( HostAcceptNewImages );
-    else if ( feature == "HostSupportsProgressBar" )
+    else if  ( feature == "HostSupportsProgressBar" )
         return hasFeature( HostSupportsProgressBar );
-    else if ( feature == "HostSupportsTags" )
+    else if  ( feature == "HostSupportsTags" )
         return hasFeature( HostSupportsTags );
-    else if ( feature == "HostSupportsRating" )
+    else if  ( feature == "HostSupportsRating" )
         return hasFeature( HostSupportsRating );
-    else if ( feature == "HostSupportsPickLabel" )
+    else if  ( feature == "HostSupportsPickLabel" )
         return hasFeature( HostSupportsPickLabel );
-    else if ( feature == "HostSupportsColorLabel" )
+    else if  ( feature == "HostSupportsColorLabel" )
         return hasFeature( HostSupportsColorLabel );
+    else if  ( feature == "HostSupportsItemReservation" )
+        return hasFeature( HostSupportsItemReservation );
     else
     {
         kWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
