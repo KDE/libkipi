@@ -185,27 +185,51 @@ public:
     virtual void progressStatusChanged(const QString& id, const QString& status);
     virtual void progressThumbnailChanged(const QString& id, const QPixmap& thumb);
     virtual void progressCompleted(const QString& id);
+ 
+    /*!
+      \brief Tells to host application to return a setting to share with plugins. Current setting are:
 
-    /**
-      Tells to host application to return a setting to share with plugins. Current setting are:
-
-         SETTING NAME                       :: VALUE RETURNED :: COMMENTS
-         --------------------------------------------------------------------------------------------------------------------------
-         "WriteMetadataUpdateFiletimeStamp" :: bool value     :: True if file timestamp are updated when metadata are saved.
-         "WriteMetadataToRAW"               :: bool value     :: True if RAW files metadata can be writted to image.
-         "UseXMPSidecar4Reading"            :: bool value     :: True if XMP sidecar is used to read metadata from item.
-         "MetadataWritingMode"              :: integer        :: Mode to write metadata to item. See KExiv2::MetadataWritingMode
-                                                                 for details.
-         "FileExtensions"                   :: QString        :: Return all file extensions (image, sound, video) managed by host application, separated by
-                                                                 blank spaces, (ex: "JPG PNG TIF NEF AVI MP3").
-         "ImagesExtensions"                 :: QString        :: Return images file extensions managed by host application, not incuding RAW formats, separated by
-                                                                 blank spaces, (ex: "JPG PNG TIF").
-         "RawExtensions"                    :: QString        :: Return RAW file extensions managed by host application, separated by
-                                                                 blank spaces, (ex: "NEF CR2 ARW PEF").
-         "VideoExtensions"                  :: QString        :: Return video file extensions managed by host application, separated by
-                                                                 blank spaces, (ex: "AVI MOV MPG").
-         "AudioExtensions"                  :: QString        :: Return audio file extensions managed by host application, separated by
-                                                                 blank spaces, (ex: "MP3 WAV OGG").
+      <table><tr>
+            <th>SETTING NAME</th>
+            <th>VALUE RETURNED</th>
+            <th>COMMENTS</th>
+        </tr><tr>
+            <th>"WriteMetadataUpdateFiletimeStamp"</th>
+            <td>bool value</td>
+            <td>True if file timestamp are updated when metadata are saved.</td>
+        </tr><tr>
+            <th>"WriteMetadataToRAW"</th>
+            <td>bool value</td>
+            <td>Returns true if RAW files metadata can be writted to image.</td>
+        </tr><tr>
+            <th>"UseXMPSidecar4Reading"</th>
+            <td>bool value</td>
+            <td>Returns true if XMP sidecar is used to read metadata from item.</td>
+        </tr><tr>
+            <th>"MetadataWritingMode"</th>
+            <td>integer</td>
+            <td>Returns mode to write metadata to item. See KExiv2::MetadataWritingMode for details.</td>
+        </tr><tr>
+            <th>"FileExtensions"</th>
+            <td>QString</td>
+            <td>Returns all file extensions (image, sound, video) managed by host application, separated by blank spaces, (ex: "JPG PNG TIF NEF AVI MP3").</td>
+        </tr><tr>
+            <th>"ImagesExtensions"</th>
+            <td>QString</td>
+            <td>Returns images file extensions managed by host application, not incuding RAW formats, separated by blank spaces, (ex: "JPG PNG TIF").</td>
+        </tr><tr>
+            <th>"RawExtensions"</th>
+            <td>QString</td>
+            <td>Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").</td>
+        </tr><tr>
+            <th>"VideoExtensions"</th>
+            <td>QString</td>
+            <td>Returns video file extensions managed by host application, separated by blank spaces, (ex: "AVI MOV MPG").</td>
+        </tr><tr>
+            <th>"AudioExtensions"</th>
+            <td>QString</td>
+            <td>Return audio file extensions managed by host application, separated by blank spaces, (ex: "MP3 WAV OGG").</td>
+      </tr></table>
 
       This method return the default settings. Re-implement this method in your dedicated kipi interface
       to control kipi-plugins rules with your kipi host application settings.
