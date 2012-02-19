@@ -187,7 +187,7 @@ public:
     virtual void progressCompleted(const QString& id);
  
     /*!
-      \brief Tells to host application to return a setting to share with plugins. Current setting are:
+      \brief Tells to host application to return a setting to share with plugins.
 
       <table><tr>
             <th>SETTING NAME</th>
