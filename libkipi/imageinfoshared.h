@@ -78,9 +78,9 @@ public:
 
     /** Convenience methods calling the respective methods in the interface for this item.
      */
-    bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction);
+    bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction) const;
     void clearReservation(QObject* reservingObject);
-    bool itemIsReserved(QString* descriptionOfAction = 0);
+    bool itemIsReserved(QString* descriptionOfAction = 0) const;
     FileReadWriteLock* createReadWriteLock() const;
 
     // ---------------------------------------------------------------------------------------

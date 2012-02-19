@@ -296,7 +296,7 @@ public:
      * Returns true if a reservation was made, or false if a reservation could not be made.
      */
     virtual bool reserveForAction(const KUrl& url, QObject* reservingObject,
-                                  const QString& descriptionOfAction);
+                                  const QString& descriptionOfAction) const;
     /**
      * Supported if HostSupportsItemReservation
      *
@@ -311,7 +311,7 @@ public:
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
      * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool itemIsReserved(const KUrl& url, QString* descriptionOfAction = 0);
+    virtual bool itemIsReserved(const KUrl& url, QString* descriptionOfAction = 0) const;
 
     /**
      * Supported if HostSupportsReadWriteLock

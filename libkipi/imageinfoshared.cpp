@@ -102,7 +102,7 @@ void ImageInfoShared::cloneData(ImageInfoShared* const other)
     addAttributes(other->attributes());
 }
 
-bool ImageInfoShared::reserveForAction(QObject* reservingObject, const QString& descriptionOfAction)
+bool ImageInfoShared::reserveForAction(QObject* reservingObject, const QString& descriptionOfAction) const
 {
     return d->interface->reserveForAction(_url, reservingObject, descriptionOfAction);
 }
@@ -112,7 +112,7 @@ void ImageInfoShared::clearReservation(QObject* reservingObject)
     return d->interface->clearReservation(_url, reservingObject);
 }
 
-bool ImageInfoShared::itemIsReserved(QString* descriptionOfAction)
+bool ImageInfoShared::itemIsReserved(QString* descriptionOfAction) const
 {
     return d->interface->itemIsReserved(_url, descriptionOfAction);
 }
