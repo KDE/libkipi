@@ -102,6 +102,26 @@ void ImageInfoShared::cloneData(ImageInfoShared* const other)
     addAttributes(other->attributes());
 }
 
+bool ImageInfoShared::reserveForAction(QObject* reservingObject, const QString& descriptionOfAction)
+{
+    return d->interface->reserveForAction(_url, reservingObject, descriptionOfAction);
+}
+
+void ImageInfoShared::clearReservation(QObject* reservingObject)
+{
+    return d->interface->clearReservation(_url, reservingObject);
+}
+
+bool ImageInfoShared::itemIsReserved(QString* descriptionOfAction)
+{
+    return d->interface->itemIsReserved(_url, descriptionOfAction);
+}
+
+FileReadWriteLock* ImageInfoShared::createReadWriteLock()
+{
+    return d->interface->createReadWriteLock(_url);
+}
+
 // DEPRECATED METHODS --------------------------------------------------------------------
 
 void ImageInfoShared::setName(const QString&)
@@ -169,26 +189,6 @@ int ImageInfoShared::size()
     {
         return QFileInfo(_url.toLocalFile() ).size();
     }
-}
-
-bool ImageInfoShared::reserveForAction(QObject* reservingObject, const QString& descriptionOfAction)
-{
-    return d->interface->reserveForAction(_url, reservingObject, descriptionOfAction);
-}
-
-void ImageInfoShared::clearReservation(QObject* reservingObject)
-{
-    return d->interface->clearReservation(_url, reservingObject);
-}
-
-bool ImageInfoShared::itemIsReserved(QString* descriptionOfAction)
-{
-    return d->interface->itemIsReserved(_url, descriptionOfAction);
-}
-
-FileReadWriteLock* ImageInfoShared::createReadWriteLock()
-{
-    return d->interface->createReadWriteLock(_url);
 }
 
 } // namespace KIPI

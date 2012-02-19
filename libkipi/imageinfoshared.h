@@ -76,7 +76,8 @@ public:
 
     virtual void cloneData(ImageInfoShared* const other);
 
-    /** Convenience methods calling the respective methods in the interface for this item. */
+    /** Convenience methods calling the respective methods in the interface for this item.
+     */
     bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction);
     void clearReservation(QObject* reservingObject);
     bool itemIsReserved(QString* descriptionOfAction = 0);
