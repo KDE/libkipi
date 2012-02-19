@@ -196,7 +196,7 @@ public:
         </tr><tr>
             <th>"WriteMetadataUpdateFiletimeStamp"</th>
             <td>bool value</td>
-            <td>True if file timestamp are updated when metadata are saved.</td>
+            <td>Returns true if file timestamp are updated when metadata are saved.</td>
         </tr><tr>
             <th>"WriteMetadataToRAW"</th>
             <td>bool value</td>
