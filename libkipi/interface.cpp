@@ -48,10 +48,10 @@
 // Local includes
 
 #include "version.h"
-#include "pluginloader.h"
 #include "imageinfo.h"
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
+#include "pluginloader.h"
 #include "uploadwidget.h"
 
 // Macros
@@ -301,7 +301,7 @@ bool Interface::itemIsReserved(const KUrl&, QString*)
     return false;
 }
 
-FileReadWriteLock* Interface::createReadWriteLock(const KUrl&)
+FileReadWriteLock* Interface::createReadWriteLock(const KUrl&) const
 {
     PrintWarningMessageFeature("HostSupportsReadWriteLock");
     return 0;

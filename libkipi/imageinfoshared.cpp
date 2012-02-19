@@ -117,7 +117,7 @@ bool ImageInfoShared::itemIsReserved(QString* descriptionOfAction)
     return d->interface->itemIsReserved(_url, descriptionOfAction);
 }
 
-FileReadWriteLock* ImageInfoShared::createReadWriteLock()
+FileReadWriteLock* ImageInfoShared::createReadWriteLock() const
 {
     return d->interface->createReadWriteLock(_url);
 }

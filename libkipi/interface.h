@@ -61,8 +61,8 @@ namespace KIPI
 
 class ImageCollection;
 class ImageCollectionSelector;
-class UploadWidget;
 class ImageInfo;
+class UploadWidget;
 
 /*!
   @enum KIPI::Features
@@ -74,24 +74,26 @@ class ImageInfo;
 */
 enum Features
 {
-    CollectionsHaveComments     = 1 << 0,  /** This feature specify that albums have descriptions associated to them.                                                          */
+    CollectionsHaveComments     = 1 << 0,  /** This feature specifies that albums have descriptions associated to them.                                                          */
     ImagesHasComments           = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                 */
     ImagesHasTime               = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.               */
-    HostSupportsDateRanges      = 1 << 3,  /** This feature specify whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
+    HostSupportsDateRanges      = 1 << 3,  /** This feature specifies whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
     HostAcceptNewImages         = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
                                                location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.             */
-    ImagesHasTitlesWritable     = 1 << 5,  /** This features specifies whether the plugin can change the title for images.                                                     */
-    CollectionsHaveCategory     = 1 << 6,  /** This feature specify that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
-    CollectionsHaveCreationDate = 1 << 7,  /** This feature specify that collections are a creation date associated to them.                                                   */
-    HostSupportsProgressBar     = 1 << 8,  /** This feature specify whether the host application has a progress manager available to report progress information from plugins. */
-    HostSupportsTags            = 1 << 9,  /** This feature specify whether the host application supports keywords for images.                                                 */
-    HostSupportsRating          = 1 << 10, /** This feature specify whether the host application supports rating values for images.                                            */
+    ImagesHasTitlesWritable     = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                     */
+    CollectionsHaveCategory     = 1 << 6,  /** This feature specifies that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
+    CollectionsHaveCreationDate = 1 << 7,  /** This feature specifies that collections are a creation date associated to them.                                                   */
+    HostSupportsProgressBar     = 1 << 8,  /** This feature specifies whether the host application has a progress manager available to report progress information from plugins. */
+    HostSupportsTags            = 1 << 9,  /** This feature specifies whether the host application supports keywords for images.                                                 */
+    HostSupportsRating          = 1 << 10, /** This feature specifies whether the host application supports rating values for images.                                            */
     HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                      */
     HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                */
-    HostSupportsPickLabel       = 1 << 13, /** This feature specify whether the host application supports pick label values for images, used for photograph workflow.          */
-    HostSupportsColorLabel      = 1 << 14,  /** This feature specify whether the host application supports color label values for images, used to sort item with color flag.    */
-    HostSupportsItemReservation = 1 << 15 /** This feature specify whether the host application supports item reservation */
+    HostSupportsPickLabel       = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
+    HostSupportsColorLabel      = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
+    HostSupportsItemReservation = 1 << 15  /** This feature specifies whether the host application supports item reservation */
 };
+
+// ---------------------------------------------------------------------------------------------------------------
 
 class LIBKIPI_EXPORT FileReadWriteLock
 {
@@ -127,7 +129,8 @@ public:
     virtual void unlock() = 0;
 };
 
-/** class Interface */
+// ---------------------------------------------------------------------------------------------------------------
+
 class LIBKIPI_EXPORT Interface : public QObject
 {
     Q_OBJECT
@@ -220,7 +223,7 @@ public:
     virtual void progressStatusChanged(const QString& id, const QString& status);
     virtual void progressThumbnailChanged(const QString& id, const QPixmap& thumb);
     virtual void progressCompleted(const QString& id);
- 
+
     /*!
       \brief Tells to host application to return a setting to share with plugins.
 
@@ -280,7 +283,7 @@ public:
 
     /**
      * Supported if HostSupportsItemReservation
-     * 
+     *
      * If an item is scheduled in a plugin for an action which will edit the object,
      * call this method. If the user tries to subject the reserved item to another operation,
      * possibly conflicting, a warning message or other action may be taken.
@@ -317,7 +320,7 @@ public:
      * Deleting the object does not unlock it.
      * 
      */
-    virtual FileReadWriteLock* createReadWriteLock(const KUrl& url);
+    virtual FileReadWriteLock* createReadWriteLock(const KUrl& url) const;
 
     /**
      * Returns a string version of libkipi release ID.
@@ -377,6 +380,7 @@ private:
     friend class PluginLoader;
 };
 
+// ---------------------------------------------------------------------------------------------------------------
 
 /**
  * Convenience classes creating a FileReadWriteLock and locking it for you.
@@ -394,6 +398,8 @@ private:
 
     FileReadWriteLock* d;
 };
+
+// ---------------------------------------------------------------------------------------------------------------
 
 class LIBKIPI_EXPORT FileWriteLocker
 {

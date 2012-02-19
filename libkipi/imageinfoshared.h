@@ -81,7 +81,7 @@ public:
     bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction);
     void clearReservation(QObject* reservingObject);
     bool itemIsReserved(QString* descriptionOfAction = 0);
-    FileReadWriteLock* createReadWriteLock();
+    FileReadWriteLock* createReadWriteLock() const;
 
     // ---------------------------------------------------------------------------------------
     // DEPRECATED METHODS. Do not use it.
