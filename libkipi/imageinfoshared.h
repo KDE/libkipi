@@ -53,6 +53,7 @@ namespace KIPI
 {
 
 class Interface;
+class FileReadWriteLock;
 
 /** See ImageInfo documentation for details.
  */
@@ -74,6 +75,12 @@ public:
     virtual void                    delAttributes(const QStringList&) = 0;
 
     virtual void cloneData(ImageInfoShared* const other);
+
+    /** Convenience methods calling the respective methods in the interface for this item. */
+    bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction);
+    void clearReservation(QObject* reservingObject);
+    bool itemIsReserved(QString* descriptionOfAction = 0);
+    FileReadWriteLock* createReadWriteLock();
 
     // ---------------------------------------------------------------------------------------
     // DEPRECATED METHODS. Do not use it.

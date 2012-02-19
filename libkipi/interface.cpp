@@ -284,25 +284,27 @@ void Interface::progressCompleted(const QString& id)
     Q_UNUSED(id);
 }
 
-bool Interface::lockItem(const KUrl& url) const
+bool Interface::reserveForAction(const KUrl&, QObject*, const QString&)
 {
-    PrintWarningMessageFeature("HostSupportsItemLock");
-    Q_UNUSED(url);
+    PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
 }
 
-bool Interface::unlockItem(const KUrl& url) const
+void Interface::clearReservation(const KUrl&, QObject*)
 {
-    PrintWarningMessageFeature("HostSupportsItemLock");
-    Q_UNUSED(url);
+    PrintWarningMessageFeature("HostSupportsItemReservation");
+}
+
+bool Interface::itemIsReserved(const KUrl&, QString*)
+{
+    PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
 }
 
-bool Interface::itemIsLocked(const KUrl& url) const
+FileReadWriteLock* Interface::createReadWriteLock(const KUrl&)
 {
-    PrintWarningMessageFeature("HostSupportsItemLock");
-    Q_UNUSED(url);
-    return false;
+    PrintWarningMessageFeature("HostSupportsReadWriteLock");
+    return 0;
 }
 
 } // namespace KIPI

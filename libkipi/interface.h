@@ -87,9 +87,44 @@ enum Features
     HostSupportsTags            = 1 << 9,  /** This feature specify whether the host application supports keywords for images.                                                 */
     HostSupportsRating          = 1 << 10, /** This feature specify whether the host application supports rating values for images.                                            */
     HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                      */
-    HostSupportsItemLock        = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                */
+    HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                */
     HostSupportsPickLabel       = 1 << 13, /** This feature specify whether the host application supports pick label values for images, used for photograph workflow.          */
-    HostSupportsColorLabel      = 1 << 14  /** This feature specify whether the host application supports color label values for images, used to sort item with color flag.    */
+    HostSupportsColorLabel      = 1 << 14,  /** This feature specify whether the host application supports color label values for images, used to sort item with color flag.    */
+    HostSupportsItemReservation = 1 << 15 /** This feature specify whether the host application supports item reservation */
+};
+
+class LIBKIPI_EXPORT FileReadWriteLock
+{
+public:
+
+    /**
+     *  A Kipi FileReadWriteLock refers to application-wide reading/writing
+     *  to a file on disk; it is created with createReadWriteLock for a URL.
+     *  All semantics are identical to a recursive QReadWriteLock.
+     *  You must unlock as often as you locked.
+     *
+     *  Note: locking will incur a mutex wait if the file is not free.
+     *  Therefore, calling the lock methods, especially lockForWrite,
+     *  from the UI thread shall be done with care, or rather avoided.
+     *
+     *  Note that you must not keep a lock for a longer time, but only for the imminent
+     *  low-level reading or writing on disk.
+     *
+     *  See reserveForAction() API for longer lasting reservation which
+     *  do not incur waits.
+     *
+     *  It is strongly recommended to use the FileReadLocker or FileWriteLocker
+     *  convenience locks instead of creating and locking a FileReadWriteLock directly.
+     */
+
+    virtual ~FileReadWriteLock() {}
+    virtual void lockForRead() = 0;
+    virtual void lockForWrite() = 0;
+    virtual bool tryLockForRead() = 0;
+    virtual bool tryLockForRead(int timeout) = 0;
+    virtual bool tryLockForWrite() = 0;
+    virtual bool tryLockForWrite(int timeout) = 0;
+    virtual void unlock() = 0;
 };
 
 /** class Interface */
@@ -244,32 +279,45 @@ public:
     virtual QAbstractItemModel*      getTagTree() const;
 
     /**
-     * Lock item to prevent concurent operations from host application and plugins. 
-     * See feature "HostSupportsItemLock". Return true if item is scheduled
-     * by host application to be locked. If item is already locked, this method return false.
-     * Use itemIsLocked() to check if item is already locked by host application before to call this method.
-     * When item is locked by host application, signal itemLocked() is fired.
-     * Default implementation do nothing.
+     * Supported if HostSupportsItemReservation
+     * 
+     * If an item is scheduled in a plugin for an action which will edit the object,
+     * call this method. If the user tries to subject the reserved item to another operation,
+     * possibly conflicting, a warning message or other action may be taken.
+     *
+     * Give the URL of the item and a QObject which acts as the holder of the reservation.
+     * The object must not be null, and the reservation will be cancelled when the object is deleted.
+     * descriptionOfAction is a user-presentable string describing the action for which
+     * the reservation was made.
+     *
+     * Returns true if a reservation was made, or false if a reservation could not be made.
      */
-    virtual bool lockItem(const KUrl& url) const;
+    virtual bool reserveForAction(const KUrl& url, QObject* reservingObject,
+                                  const QString& descriptionOfAction);
+    /**
+     * Supported if HostSupportsItemReservation
+     *
+     * Clears a reservation made previously with reserveForAction for the given reservingObject.
+     * You must clear any reservation you made, or, alternatively, delete the reserving object.
+     */
+    virtual void clearReservation(const KUrl& url, QObject* reservingObject);
 
     /**
-     * Unlock item in host application. This method must be called after than plugin call lockItem(),
-     * when all operations to perform on item are done.
-     * See feature "HostSupportsItemLock". Return true if item is scheduled
-     * by host application to be unlocked. If item is already unlocked, this method return false.
-     * When item is unlocked by host application, signal itemUnlocked() is fired.
-     * Default implementation do nothing.
+     * Supported if HostSupportsItemReservation
+     *
+     * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
+     * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool unlockItem(const KUrl& url) const;
+    virtual bool itemIsReserved(const KUrl& url, QString* descriptionOfAction = 0);
 
     /**
-     * Check if item is locked by host application to prevent concurents operations. This method must be called after
-     * than plugin call lockItem(), when all operations to perform on item are done.
-     * See feature "HostSupportsItemLock". Return true if item is already locked, else false.
-     * Default implementation do nothing.
+     * Supported if HostSupportsReadWriteLock
+     * Creates a ReadWriteLock for the given URL.
+     * You must unlock the ReadWriteLock as often as you locked.
+     * Deleting the object does not unlock it.
+     * 
      */
-    virtual bool itemIsLocked(const KUrl& url) const;
+    virtual FileReadWriteLock* createReadWriteLock(const KUrl& url);
 
     /**
      * Returns a string version of libkipi release ID.
@@ -301,12 +349,12 @@ Q_SIGNALS:
     void progressCanceled(const QString& id);
 
     /**
-     * These signals are emited from host application when item lock/unlock operations are done by host application lock manager.
-     * Bool value is sent to indicate if operation fail or not. See feature "HostSupportsItemLock", 
-     * and lockItem() / unlockItem() methods for details.
-     */
-    void itemLocked(const KUrl& url, bool locked);
-    void itemUnlocked(const KUrl& url, bool unlocked);
+     * Supported if HostSupportsItemReservation
+     *
+     * Emitted from reservedForAction and clearReservation, respectively.
+     * */
+    void reservedForAction(const KUrl& url, const QString& descriptionOfAction);
+    void reservationCleared(const KUrl& url);
 
 protected:
 
@@ -327,6 +375,36 @@ private:
 private:
 
     friend class PluginLoader;
+};
+
+
+/**
+ * Convenience classes creating a FileReadWriteLock and locking it for you.
+ * It is strongly recommended to use FileReadWriteLock only through these
+ * classes, created on the stack, as unlocking will be done automatically for you.
+ */
+class LIBKIPI_EXPORT FileReadLocker
+{
+public:
+
+    FileReadLocker(const KUrl& filePath);
+    ~FileReadLocker();
+
+private:
+
+    FileReadWriteLock* d;
+};
+
+class LIBKIPI_EXPORT FileWriteLocker
+{
+public:
+
+    FileWriteLocker(const KUrl& filePath);
+    ~FileWriteLocker();
+
+private:
+
+    FileReadWriteLock* d;
 };
 
 }  // namespace KIPI
