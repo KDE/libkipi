@@ -55,7 +55,8 @@ namespace KIPI
 
 class ImageInfoShared;
 
-// Deprecated data used by time() and setTime()
+/** DEPRECATED old data used by time() and setTime()
+ */
 enum KDE_DEPRECATED TimeSpec
 {
     FromInfo,
@@ -72,16 +73,15 @@ class LIBKIPI_EXPORT ImageInfo
 
 public:
 
-    /** constructor
-        Interface for host application + general stuff
+    /** Constructor and interface for host application.
      */
     ImageInfo(ImageInfoShared* const);
     ImageInfo(const ImageInfo&);
     ~ImageInfo();
 
     /**
-        Returns a Map of attributes of the image
-        In case the host application supports some special attributes of the image
+        Returns a Map of attributes of the image.
+        In case the host application supports some special attributes of the image,
         this function can be used to return them. Following attributes are supported:
 
       <table><tr>
@@ -170,18 +170,44 @@ public:
     void addAttributes(const QMap<QString, QVariant>&);
 
     /** Remove attributes listed from the image. Following values can be used:
-        "comment"     :: Remove all comments.
-        "date"        :: Remove date info.
-        "orientation" :: Remove orientation info.
-        "title"       :: Remove all titles.
-        "tagspath"    :: Remove all tags path.
-        "rating"      :: Remove rating info.
-        "colorlabel"  :: Remove color labels info.
-        "picklabel"   :: Remove pick labels info.
-        "gpslocation" :: Remove latitude, longitude, and altitude values.
 
-        "tags"        :: DEPRECATED: for compatibility. Deprecated and replaced by "tagspath" attribute.
-        "angle"       :: DEPRECATED: for compatibility. Deprecated and replaced by "orientation" attribute.
+      <table><tr>
+            <th>ATTRIBUTES</th>
+            <th>COMMENTS</th>
+        </tr><tr>
+            <th>"comment"</th>
+            <td>Remove all comments.</td>
+        </tr><tr>
+            <th>"date"</th>
+            <td>Remove date info.</td>
+        </tr><tr>
+            <th>"orientation"</th>
+            <td>Remove orientation info.</td>
+        </tr><tr>
+            <th>"title"</th>
+            <td>Remove all titles.</td>
+        </tr><tr>
+            <th>"rating"</th>
+            <td>Remove rating info.</td>
+        </tr><tr>
+            <th>"colorlabel"</th>
+            <td>Remove color labels info.</td>
+        </tr><tr>
+            <th>"picklabel"</th>
+            <td>Remove pick labels info.</td>
+        </tr><tr>
+            <th>"gpslocation"</th>
+            <td>Return item altitude in meters.</td>
+        </tr><tr>
+            <th>"tagspath"</th>
+            <td>Remove all tags path.</td>
+        </tr><tr>
+            <th>"tags"</th>
+            <td>For compatibility. DEPRECATED and replaced by "keywords" attribute..</td>
+        </tr><tr>
+            <th>"angle"</th>
+            <td>For compatibility. DEPRECATED and replaced by "orientation" attribute..</td>
+      </tr></table>
     */
     void delAttributes(const QStringList&);
 
@@ -203,35 +229,35 @@ public:
     // More universal methods based on attributes must be used instead to extend more easily data exange between 
     // kipi-plugins and kipi host without to break binary compatibility.
 
-    /** Managed by attribute "name".
+    /** DEPRECATED Managed by attribute "name".
      */
     KDE_DEPRECATED QString name() const;
     KDE_DEPRECATED void    setName(const QString& name);
 
-    /** Managed by attribute "date" and "dateto".
+    /** DEPRECATED Managed by attribute "date" and "dateto".
      */
     KDE_DEPRECATED QDateTime time(TimeSpec spec = FromInfo) const;
     KDE_DEPRECATED void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
 
-    /** Managed by attribute "isexactdate".
+    /** DEPRECATED Managed by attribute "isexactdate".
      */
     KDE_DEPRECATED bool isTimeExact() const;
 
-    /** Managed by attributes "comment"
+    /** DEPRECATED Managed by attributes "comment"
      */
     KDE_DEPRECATED QString description() const;
     KDE_DEPRECATED void    setDescription(const QString& description);
 
-    /** Managed by attribute "angle"
+    /** DEPRECATED Managed by attribute "angle"
     */
     KDE_DEPRECATED int  angle() const;
     KDE_DEPRECATED void setAngle(int);
 
-    /** Replaced by url().
+    /** DEPRECATED Replaced by url().
      */
     KDE_DEPRECATED KUrl path() const;
 
-    /** Managed by attribute "filesize".
+    /** DEPRECATED Managed by attribute "filesize".
     */
     KDE_DEPRECATED int size() const;
 
