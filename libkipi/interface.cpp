@@ -53,6 +53,7 @@
 #include "imageinfo.h"
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
+#include "imageinfoshared.h"
 #include "pluginloader.h"
 #include "uploadwidget.h"
 
@@ -309,8 +310,87 @@ bool Interface::itemIsReserved(const KUrl&, QString*) const
 
 FileReadWriteLock* Interface::createReadWriteLock(const KUrl&) const
 {
-    PrintWarningMessageFeature("HostSupportsReadWriteLock");
+    // Dont print warning as we use the feature from low-level kipi libraries without testing for support
+    //PrintWarningMessageFeature("HostSupportsReadWriteLock");
     return 0;
 }
+
+FileReadLocker::FileReadLocker(KIPI::Interface* const interface, const KUrl& filePath)
+    : d(interface->createReadWriteLock(filePath))
+{
+    relock();
+}
+
+FileReadLocker::FileReadLocker(ImageInfoShared* const info)
+    : d(info->createReadWriteLock())
+{
+    relock();
+}
+
+FileReadLocker::~FileReadLocker()
+{
+    unlock();
+}
+
+FileReadWriteLock* FileReadLocker::fileReadWriteLock() const
+{
+    return d;
+}
+
+void FileReadLocker::relock()
+{
+    if (d)
+    {
+        d->lockForRead();
+    }
+}
+
+void FileReadLocker::unlock()
+{
+    if (d)
+    {
+        d->unlock();
+    }
+}
+
+FileWriteLocker::FileWriteLocker(KIPI::Interface* const interface, const KUrl& filePath)
+    : d(interface->createReadWriteLock(filePath))
+{
+    relock();
+}
+
+FileWriteLocker::FileWriteLocker(ImageInfoShared* const info)
+    : d(info->createReadWriteLock())
+{
+    relock();
+}
+
+FileWriteLocker::~FileWriteLocker()
+{
+    unlock();
+}
+
+FileReadWriteLock* FileWriteLocker::fileReadWriteLock() const
+{
+    return d;
+}
+
+void FileWriteLocker::relock()
+{
+    if (d)
+    {
+        d->lockForWrite();
+    }
+}
+
+void FileWriteLocker::unlock()
+{
+    if (d)
+    {
+        d->unlock();
+    }
+}
+
+
 
 } // namespace KIPI

@@ -386,17 +386,28 @@ private:
 
 // ---------------------------------------------------------------------------------------------------------------
 
+class ImageInfoShared;
+
 /**
  * Convenience classes creating a FileReadWriteLock and locking it for you.
  * It is strongly recommended to use FileReadWriteLock only through these
  * classes, created on the stack, as unlocking will be done automatically for you.
+ *
+ * The API is modelled according to the QReadLocker/QWriteLocker classes.
+ *
+ * Note that operations are no-ops and fileReadWriteLock() is 0 if not HostSupportsReadWriteLock.
  */
 class LIBKIPI_EXPORT FileReadLocker
 {
 public:
 
-    FileReadLocker(const KUrl& url);
+    FileReadLocker(KIPI::Interface* const interface, const KUrl& url);
+    FileReadLocker(ImageInfoShared* const info);
     ~FileReadLocker();
+
+    FileReadWriteLock* fileReadWriteLock() const;
+    void unlock();
+    void relock();
 
 private:
 
@@ -409,8 +420,13 @@ class LIBKIPI_EXPORT FileWriteLocker
 {
 public:
 
-    FileWriteLocker(const KUrl& url);
+    FileWriteLocker(KIPI::Interface* const interface, const KUrl& url);
+    FileWriteLocker(ImageInfoShared* const info);
     ~FileWriteLocker();
+
+    FileReadWriteLock* fileReadWriteLock() const;
+    void unlock();
+    void relock();
 
 private:
 
