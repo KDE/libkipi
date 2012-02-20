@@ -64,6 +64,7 @@ namespace KIPI
 class ImageCollection;
 class ImageCollectionSelector;
 class ImageInfo;
+class ImageInfoShared;
 class UploadWidget;
 
 /*!
@@ -386,8 +387,6 @@ private:
 
 // ---------------------------------------------------------------------------------------------------------------
 
-class ImageInfoShared;
-
 /**
  * Convenience classes creating a FileReadWriteLock and locking it for you.
  * It is strongly recommended to use FileReadWriteLock only through these
@@ -401,7 +400,7 @@ class LIBKIPI_EXPORT FileReadLocker
 {
 public:
 
-    FileReadLocker(KIPI::Interface* const interface, const KUrl& url);
+    FileReadLocker(Interface* const iface, const KUrl& url);
     FileReadLocker(ImageInfoShared* const info);
     ~FileReadLocker();
 
@@ -420,7 +419,7 @@ class LIBKIPI_EXPORT FileWriteLocker
 {
 public:
 
-    FileWriteLocker(KIPI::Interface* const interface, const KUrl& url);
+    FileWriteLocker(Interface* const iface, const KUrl& url);
     FileWriteLocker(ImageInfoShared* const info);
     ~FileWriteLocker();
 

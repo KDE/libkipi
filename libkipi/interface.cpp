@@ -315,8 +315,10 @@ FileReadWriteLock* Interface::createReadWriteLock(const KUrl&) const
     return 0;
 }
 
-FileReadLocker::FileReadLocker(KIPI::Interface* const interface, const KUrl& filePath)
-    : d(interface->createReadWriteLock(filePath))
+// -----------------------------------------------------------------------------------------------------------
+
+FileReadLocker::FileReadLocker(Interface* const iface, const KUrl& url)
+    : d(iface->createReadWriteLock(url))
 {
     relock();
 }
@@ -353,8 +355,10 @@ void FileReadLocker::unlock()
     }
 }
 
-FileWriteLocker::FileWriteLocker(KIPI::Interface* const interface, const KUrl& filePath)
-    : d(interface->createReadWriteLock(filePath))
+// -----------------------------------------------------------------------------------------------------------
+
+FileWriteLocker::FileWriteLocker(Interface* const iface, const KUrl& url)
+    : d(iface->createReadWriteLock(url))
 {
     relock();
 }
@@ -390,7 +394,5 @@ void FileWriteLocker::unlock()
         d->unlock();
     }
 }
-
-
 
 } // namespace KIPI
