@@ -395,7 +395,7 @@ class LIBKIPI_EXPORT FileReadLocker
 {
 public:
 
-    FileReadLocker(const KUrl& filePath);
+    FileReadLocker(const KUrl& url);
     ~FileReadLocker();
 
 private:
@@ -409,7 +409,7 @@ class LIBKIPI_EXPORT FileWriteLocker
 {
 public:
 
-    FileWriteLocker(const KUrl& filePath);
+    FileWriteLocker(const KUrl& url);
     ~FileWriteLocker();
 
 private:
