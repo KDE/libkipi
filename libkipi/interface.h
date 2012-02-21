@@ -323,7 +323,8 @@ public:
      * Creates a ReadWriteLock for the given URL.
      * You must unlock the ReadWriteLock as often as you locked.
      * Deleting the object does not unlock it.
-     * 
+     * The implementation KIPI host application must be thread-safe.
+     *
      */
     virtual FileReadWriteLock* createReadWriteLock(const KUrl& url) const;
 
