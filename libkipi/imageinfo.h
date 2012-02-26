@@ -64,9 +64,11 @@ enum KDE_DEPRECATED TimeSpec
 };
 
 /** @class ImageInfo
-    Holds info about an image
+    Holds info about an image from KIPI host application.
     NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
-    not this class directly.
+    not this class directly. See kipi-plugins/common/libkipi-plugins API for details.
+    IMPORTANT: this class must re-implemented in KIPI host application through KII::ImageInfoShared. This implementation 
+    must be thread-safe, due to possible use into kipi plugins separated thread implementation in the future.
  */
 class LIBKIPI_EXPORT ImageInfo
 {

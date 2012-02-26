@@ -64,7 +64,7 @@ class LIBKIPI_EXPORT ImageInfoShared
 
 public:
 
-    ImageInfoShared(KIPI::Interface* const interface, const KUrl& url);
+    ImageInfoShared(Interface* const interface, const KUrl& url);
     virtual ~ImageInfoShared();
 
     KUrl url() const;
@@ -80,9 +80,9 @@ public:
 
     /** Convenience methods calling the respective methods in the interface for this item.
      */
-    bool reserveForAction(QObject* reservingObject, const QString& descriptionOfAction) const;
-    void clearReservation(QObject* reservingObject);
-    bool itemIsReserved(QString* descriptionOfAction = 0) const;
+    bool               reserveForAction(QObject* reservingObject, const QString& descriptionOfAction) const;
+    void               clearReservation(QObject* reservingObject);
+    bool               itemIsReserved(QString* descriptionOfAction = 0) const;
     FileReadWriteLock* createReadWriteLock() const;
 
     // ---------------------------------------------------------------------------------------

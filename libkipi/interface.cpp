@@ -70,7 +70,7 @@
 namespace KIPI
 {
 
-Interface::Interface(QObject* parent, const char* name)
+Interface::Interface(QObject* const parent, const char* name)
     : QObject(parent)
 {
     setObjectName(name);
@@ -80,7 +80,7 @@ Interface::~Interface()
 {
 }
 
-QString KIPI::Interface::version()
+QString Interface::version()
 {
     return QString(kipi_version);
 }
@@ -147,7 +147,7 @@ void Interface::delImage(const KUrl&)
     PrintWarningMessage();
 }
 
-KIPI::ImageCollection KIPI::Interface::currentAlbum()
+KIPI::ImageCollection Interface::currentAlbum()
 {
     PrintWarningMessage();
     return ImageCollection();
@@ -156,7 +156,7 @@ KIPI::ImageCollection KIPI::Interface::currentAlbum()
 ImageCollection Interface::currentSelection()
 {
     PrintWarningMessage();
-    return KIPI::ImageCollection();
+    return ImageCollection();
 }
 
 QList<ImageCollection> Interface::allAlbums()
