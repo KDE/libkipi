@@ -64,7 +64,7 @@ public:
     QWidget*                           m_defaultWidget;
 };
 
-Plugin::Plugin(const KComponentData& instance, QObject* parent, const char* name)
+Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char* name)
       : QObject(parent), d(new PluginPrivate)
 {
     d->m_instance = instance;
@@ -78,36 +78,36 @@ Plugin::~Plugin()
     delete d;
 }
 
-KActionCollection* Plugin::actionCollection( QWidget* widget ) const
+KActionCollection* Plugin::actionCollection(QWidget* widget) const
 {
-    if ( widget == 0 )
+    if (!widget)
         widget = d->m_defaultWidget;
 
-    if (!d->m_actionCollection.contains( widget ))
-        kWarning() << "Error in the plugin. The plugin needs to call Plugin::setup( QWidget* ) "
+    if (!d->m_actionCollection.contains(widget))
+        kWarning() << "Error in the plugin. The plugin needs to call Plugin::setup(QWidget*) "
                    << "as the very first line when overriding the setup method.";
 
     return d->m_actionCollection[widget];
 }
 
-void Plugin::addAction( KAction* const action )
+void Plugin::addAction(KAction* const action)
 {
-    d->m_actions[d->m_defaultWidget].append( action );
+    d->m_actions[d->m_defaultWidget].append(action);
 }
 
-QList<KAction*> Plugin::actions( QWidget* widget )
+QList<KAction*> Plugin::actions(QWidget* widget)
 {
-    if ( widget == 0 )
+    if (!widget)
         widget = d->m_defaultWidget;
 
     return d->m_actions[widget];
 }
 
-void Plugin::setup( QWidget* widget )
+void Plugin::setup(QWidget* widget)
 {
     d->m_defaultWidget = widget;
-    d->m_actions.insert( widget, QList<KAction*>() );
-    d->m_actionCollection.insert( widget, new KActionCollection( widget, d->m_instance ) );
+    d->m_actions.insert(widget, QList<KAction*>());
+    d->m_actionCollection.insert(widget, new KActionCollection(widget, d->m_instance));
 }
 
 } // namespace KIPI

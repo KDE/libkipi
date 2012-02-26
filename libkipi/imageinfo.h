@@ -67,7 +67,7 @@ enum KDE_DEPRECATED TimeSpec
     Holds info about an image from KIPI host application.
     NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
     not this class directly. See kipi-plugins/common/libkipi-plugins API for details.
-    IMPORTANT: this class must re-implemented in KIPI host application through KII::ImageInfoShared. This implementation 
+    IMPORTANT: this class must re-implemented in KIPI host application through KIPI::ImageInfoShared. This implementation 
     must be thread-safe, due to possible use into kipi plugins separated thread implementation in the future.
  */
 class LIBKIPI_EXPORT ImageInfo
@@ -157,11 +157,11 @@ public:
         </tr><tr>
             <th>"tags"</th>
             <td>QStringList</td>
-            <td>For compatibility. DEPRECATED and replaced by "keywords" attribute..</td>
+            <td>For compatibility. DEPRECATED and replaced by "keywords" attribute.</td>
         </tr><tr>
             <th>"angle"</th>
             <td>integer value</td>
-            <td>For compatibility. DEPRECATED and replaced by "orientation" attribute..</td>
+            <td>For compatibility. DEPRECATED and replaced by "orientation" attribute.</td>
       </tr></table>
     */
     QMap<QString, QVariant> attributes() const;
@@ -205,10 +205,10 @@ public:
             <td>Remove all tags path.</td>
         </tr><tr>
             <th>"tags"</th>
-            <td>For compatibility. DEPRECATED and replaced by "keywords" attribute..</td>
+            <td>For compatibility. DEPRECATED and replaced by "keywords" attribute.</td>
         </tr><tr>
             <th>"angle"</th>
-            <td>For compatibility. DEPRECATED and replaced by "orientation" attribute..</td>
+            <td>For compatibility. DEPRECATED and replaced by "orientation" attribute.</td>
       </tr></table>
     */
     void delAttributes(const QStringList&);
@@ -265,12 +265,12 @@ public:
 
 private:
 
-    ImageInfo() {}                                              // Disable
-    ImageInfo& operator=( const ImageInfo& ) { return *this; }  // Disable
+    ImageInfo();                            /// Disable
+    ImageInfo& operator=(const ImageInfo&); /// Disable
 
 private:
 
-    mutable KIPI::ImageInfoShared* d;
+    mutable ImageInfoShared* d;
 };
 
 } // namespace KIPI

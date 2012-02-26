@@ -147,7 +147,7 @@ void Interface::delImage(const KUrl&)
     PrintWarningMessage();
 }
 
-KIPI::ImageCollection Interface::currentAlbum()
+ImageCollection Interface::currentAlbum()
 {
     PrintWarningMessage();
     return ImageCollection();

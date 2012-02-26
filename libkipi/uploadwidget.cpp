@@ -36,7 +36,7 @@ namespace KIPI
   \class KIPI::UploadWidget
   This widget is used to specify an upload directory for new images.
 */
-UploadWidget::UploadWidget(QWidget* parent)
+UploadWidget::UploadWidget(QWidget* const parent)
     : QWidget(parent)
 {
 }

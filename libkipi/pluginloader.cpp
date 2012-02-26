@@ -136,13 +136,13 @@ Plugin* PluginLoader::Info::plugin() const
 
         if (plugin)
         {
-            kDebug(51001) << "KIPI::PluginLoader: Loaded plugin " << plugin->objectName();
+            kDebug(51001) << "Loaded plugin " << plugin->objectName();
 
             QVariant binaryVersion = plugin->property("KipiBinaryVersion");
 
             if (!binaryVersion.isValid() || binaryVersion.toInt() != kipi_binary_version)
             {
-                kDebug(51001) << "KIPI::PluginLoader: Plugin " << plugin->objectName()
+                kDebug(51001) << "Plugin " << plugin->objectName()
                               << "is compiled for a different libkipi ABI version."
                               << "Refusing to load.";
                 delete plugin;
@@ -151,7 +151,7 @@ Plugin* PluginLoader::Info::plugin() const
         }
         else
         {
-            kWarning(51001) << "KIPI::PluginLoader:: createInstance returned 0 for "
+            kWarning(51001) << "CreateInstance returned 0 for "
                             << name()
                             << " (" << library() << ")"
                             << " with error: "
@@ -232,14 +232,13 @@ void PluginLoader::construct(const QStringList& ignores, Interface* const interf
 
         if (library.isEmpty() || name.isEmpty())
         {
-            kWarning(51001) << "KIPI::PluginLoader: Plugin had an empty name or library file - this should not happen.";
+            kWarning(51001) << "Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
         if (ignores.contains(name))
         {
-            kDebug(51001) << "KIPI::PluginLoader: plugin " << name
-                          << " is in the ignore list for host application";
+            kDebug(51001) << "Plugin " << name << " is in the ignore list from host application";
             continue;
         }
 
@@ -289,7 +288,7 @@ PluginLoader* PluginLoader::instance()
 {
     if (!s_instance)
     {
-        kDebug(51001) << "KIPI::PluginLoader::instance is null...";
+        kDebug(51001) << "Instance is null...";
     }
 
     return s_instance;
@@ -300,7 +299,7 @@ Interface* PluginLoader::interface() const
     return d->interface;
 }
 
-ConfigWidget* PluginLoader::configWidget(QWidget* parent) const
+ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 {
     return new ConfigWidget(parent);
 }
@@ -311,8 +310,9 @@ class PluginCheckBox : public QListWidgetItem
 {
 public:
 
-    PluginCheckBox(PluginLoader::Info* const info, QListWidget* parent)
-        : QListWidgetItem(parent, QListWidgetItem::UserType), info(info)
+    PluginCheckBox(PluginLoader::Info* const info, QListWidget* const parent)
+        : QListWidgetItem(parent, QListWidgetItem::UserType),
+          info(info)
     {
         setText(QString("%1  (%2)").arg(info->name(), info->comment()));
         setIcon(info->icon());
@@ -336,8 +336,9 @@ public:
     QList<PluginCheckBox*> boxes;
 };
 
-ConfigWidget::ConfigWidget(QWidget* parent)
-    : QListWidget(parent), d(new ConfigWidgetPrivate)
+ConfigWidget::ConfigWidget(QWidget* const parent)
+    : QListWidget(parent),
+      d(new ConfigWidgetPrivate)
 {
     setAutoFillBackground(false);
     setSortingEnabled(true);

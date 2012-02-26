@@ -49,7 +49,7 @@ Q_OBJECT
 
 public:
 
-    ImageCollectionSelector(QWidget* parent=0);
+    ImageCollectionSelector(QWidget* const parent=0);
     virtual ~ImageCollectionSelector();
 
     virtual QList<ImageCollection> selectedImageCollections() const;

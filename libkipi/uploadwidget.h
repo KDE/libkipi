@@ -47,7 +47,7 @@ Q_OBJECT
 
 public:
 
-    UploadWidget(QWidget* parent);
+    UploadWidget(QWidget* const parent);
     virtual ~UploadWidget();
 
     virtual ImageCollection selectedImageCollection() const;

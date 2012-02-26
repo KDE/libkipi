@@ -51,9 +51,18 @@ ImageInfo::ImageInfo(const ImageInfo& rhs)
     d->addRef();
 }
 
+ImageInfo::ImageInfo()
+{
+}
+
 ImageInfo::~ImageInfo()
 {
     d->removeRef();
+}
+
+ImageInfo& ImageInfo::operator=(const ImageInfo&)
+{
+    return *this;
 }
 
 int ImageInfo::size() const

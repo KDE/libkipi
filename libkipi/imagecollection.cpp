@@ -50,6 +50,66 @@
 namespace KIPI
 {
 
+ImageCollection::ImageCollection(ImageCollectionShared* const data)
+    : d(data)
+{
+}
+
+ImageCollection::ImageCollection(const ImageCollection& rhs)
+{
+    if ( rhs.d )
+    {
+        d = rhs.d;
+        d->addRef();
+    }
+    else
+    {
+        d = 0;
+    }
+}
+
+ImageCollection::ImageCollection()
+{
+    d = 0;
+}
+
+ImageCollection::~ImageCollection()
+{
+    if ( d )
+        d->removeRef();
+}
+
+ImageCollection& ImageCollection::operator=(const ImageCollection& rhs)
+{
+    if ( rhs.d == d )
+        return *this;
+
+    if ( d )
+        d->removeRef();
+
+    if ( !rhs.d )
+    {
+        PrintWarningMessage();
+        d = 0;
+    }
+    else
+    {
+        d = rhs.d;
+        d->addRef();
+    }
+    return *this;
+}
+
+bool ImageCollection::operator==(const ImageCollection& ic) const
+{
+    if (!d || !(ic.d))
+    {
+        PrintWarningMessage();
+        return false;
+    }
+    return *d == *(ic.d);
+}
+
 QString ImageCollection::comment() const
 {
     if ( d )
@@ -113,56 +173,6 @@ KUrl::List ImageCollection::images() const
         PrintWarningMessage();
         return KUrl::List();
     }
-}
-
-ImageCollection::ImageCollection(ImageCollectionShared* const data)
-    : d(data)
-{
-}
-
-ImageCollection::ImageCollection(const ImageCollection& rhs)
-{
-    if ( rhs.d )
-    {
-        d = rhs.d;
-        d->addRef();
-    }
-    else
-    {
-        d = 0;
-    }
-}
-
-ImageCollection::ImageCollection()
-{
-    d = 0;
-}
-
-ImageCollection::~ImageCollection()
-{
-    if ( d )
-        d->removeRef();
-}
-
-ImageCollection& ImageCollection::operator=(const ImageCollection& rhs)
-{
-    if ( rhs.d == d )
-        return *this;
-
-    if ( d )
-        d->removeRef();
-
-    if ( !rhs.d )
-    {
-        PrintWarningMessage();
-        d = 0;
-    }
-    else
-    {
-        d = rhs.d;
-        d->addRef();
-    }
-    return *this;
 }
 
 KUrl ImageCollection::path() const
@@ -233,16 +243,6 @@ bool ImageCollection::isDirectory() const
 bool ImageCollection::isValid() const
 {
     return (d != 0);
-}
-
-bool ImageCollection::operator==(const KIPI::ImageCollection& ic) const
-{
-    if (!d || !(ic.d))
-    {
-        PrintWarningMessage();
-        return false;
-    }
-    return *d == *(ic.d);
 }
 
 } // namespace KIPI

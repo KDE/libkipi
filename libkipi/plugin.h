@@ -66,13 +66,14 @@ class LIBKIPI_EXPORT Plugin : public QObject
 
 public:
 
-    Plugin(const KComponentData& instance, QObject* parent, const char* name);
+    Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
 
-    virtual void       setup( QWidget* widget ) = 0;
-    QList<KAction*>    actions( QWidget* parent = 0 );
-    KActionCollection* actionCollection( QWidget* parent = 0 ) const;
-    virtual Category   category( KAction* action ) const = 0;
+    QList<KAction*>    actions(QWidget* parent = 0);
+    KActionCollection* actionCollection(QWidget* parent = 0) const;
+
+    virtual void       setup(QWidget* widget) = 0;
+    virtual Category   category(KAction* action) const = 0;
 
 protected:
 

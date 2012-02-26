@@ -54,7 +54,7 @@ class ConfigWidget;
 
 /**
     \author Gilles Caulier
-    \class KIPI::PluginLoader
+    \class PluginLoader
     This is the class that will help host applications to load plugins.
 
     The host application must create an instance of the plugin loader, and
@@ -85,13 +85,13 @@ class ConfigWidget;
 
         d->kipipluginsActionCollection->clear();
 
-        KIPI::PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
+        PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
         int cpt                             = 0;
 
-        for ( KIPI::PluginLoader::PluginList::ConstIterator it = list.constBegin() ;
+        for ( PluginLoader::PluginList::ConstIterator it = list.constBegin() ;
             it != list.constEnd() ; ++it )
         {
-            KIPI::Plugin* plugin = (*it)->plugin();
+            Plugin* plugin = (*it)->plugin();
 
             if ( !plugin || !(*it)->shouldLoad() )
                 continue;
@@ -120,17 +120,17 @@ class ConfigWidget;
 
                 switch (plugin->category(action))
                 {
-                    case KIPI::ExportPlugin:
+                    case ExportPlugin:
                     {
                         d->kipiFileActionsExport.append(action);
                         break;
                     }
-                    case KIPI::ImagesPlugin:
+                    case ImagesPlugin:
                     {
                         d->kipiImageActions.append(action);
                         break;
                     }
-                    case KIPI::ToolsPlugin:
+                    case ToolsPlugin:
                     {
                         d->kipiToolsActions.append(action);
                         break;
@@ -198,19 +198,19 @@ public:
 
 public:
 
-    PluginLoader(const QStringList& ignores, KIPI::Interface* const interface);
-    PluginLoader(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
+    PluginLoader(const QStringList& ignores, Interface* const interface);
+    PluginLoader(const QStringList& ignores, Interface* const interface, const QString& constraint);
     virtual ~PluginLoader();
 
-    void construct(const QStringList& ignores, KIPI::Interface* const interface, const QString& constraint);
+    void construct(const QStringList& ignores, Interface* const interface, const QString& constraint);
 
     const PluginList& pluginList();
 
     // NOTE: plugin can be loaded through Info item.
     void loadPlugins();
 
-    ConfigWidget*        configWidget(QWidget* parent) const;
-    KIPI::Interface*     interface() const;
+    ConfigWidget*        configWidget(QWidget* const parent) const;
+    Interface*           interface() const;
     static PluginLoader* instance();
 
 Q_SIGNALS:
@@ -240,7 +240,7 @@ class LIBKIPI_EXPORT ConfigWidget : public QListWidget
 
 public:
 
-    ConfigWidget(QWidget* parent);
+    ConfigWidget(QWidget* const parent);
     ~ConfigWidget();
 
 public Q_SLOTS:

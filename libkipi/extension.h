@@ -30,18 +30,18 @@
 
 #include <QtDesigner/QAbstractExtensionFactory>
 
-#define KIPI_DECLARE_EXTENSION_INTERFACE_NS(Namespace, IFace, IId)                                                        \
-                                                                                                                          \
-namespace Namespace                                                                                                       \
-{                                                                                                                         \
-    const char* const IFace##_iid = IId;                                                                                  \
-} /* namespace Namespace */                                                                                               \
-                                                                                                                          \
-template <> inline Namespace::IFace* qt_extension<Namespace::IFace*>(QAbstractExtensionManager* manager, QObject* object) \
-{                                                                                                                         \
-    QObject* extension = manager->extension(object, Q_TYPEID(Namespace::IFace));                                          \
-    return extension ? static_cast<Namespace::IFace*>(extension->qt_metacast(Namespace::IFace##_iid))                     \
-                     : static_cast<Namespace::IFace*>(0);                                                                 \
-}                                                                                                                         \
+#define KIPI_DECLARE_EXTENSION_INTERFACE_NS(Namespace, IFace, IId)                                                                    \
+                                                                                                                                      \
+namespace Namespace                                                                                                                   \
+{                                                                                                                                     \
+    const char* const IFace##_iid = IId;                                                                                              \
+} /* namespace Namespace */                                                                                                           \
+                                                                                                                                      \
+template <> inline Namespace::IFace* qt_extension<Namespace::IFace*>(QAbstractExtensionManager* const manager, QObject* const object) \
+{                                                                                                                                     \
+    QObject* extension = manager->extension(object, Q_TYPEID(Namespace::IFace));                                                      \
+    return extension ? static_cast<Namespace::IFace*>(extension->qt_metacast(Namespace::IFace##_iid))                                 \
+                     : static_cast<Namespace::IFace*>(0);                                                                             \
+}                                                                                                                                     \
 
 #endif // _EXTENSION_H

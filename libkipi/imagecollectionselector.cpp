@@ -32,7 +32,7 @@
 namespace KIPI 
 {
 
-ImageCollectionSelector::ImageCollectionSelector(QWidget* parent)
+ImageCollectionSelector::ImageCollectionSelector(QWidget* const parent)
     : QWidget(parent)
 {
 }
