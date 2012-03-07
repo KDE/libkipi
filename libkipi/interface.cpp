@@ -31,8 +31,6 @@
  *
  * ============================================================ */
 
-/** @file interface.cpp */
-
 #include "interface.moc"
 
 // Qt includes

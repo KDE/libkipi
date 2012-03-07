@@ -29,8 +29,6 @@
  *
  * ============================================================ */
 
-/** @file pluginloader.cpp */
-
 #include "pluginloader.moc"
 
 // Qt include.

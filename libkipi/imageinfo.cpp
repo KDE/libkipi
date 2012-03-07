@@ -29,9 +29,6 @@
  *
  * ============================================================ */
 
-/** @file imageinfo.cpp
-*/
-
 // Local includes
 
 #include "imageinfo.h"

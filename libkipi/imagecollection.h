@@ -29,8 +29,6 @@
  *
  * ============================================================ */
 
-/** @file imagecollection.h */
-
 #ifndef KIPI_IMAGECOLLECTION_H
 #define KIPI_IMAGECOLLECTION_H
 

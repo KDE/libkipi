@@ -31,8 +31,6 @@
  *
  * ============================================================ */
 
-/** @file interface.h */
-
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 

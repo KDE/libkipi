@@ -29,8 +29,6 @@
  *
  * ============================================================ */
 
-/** @file imageinfo.h */
-
 #ifndef KIPI_IMAGEINFO_H
 #define KIPI_IMAGEINFO_H
 
