@@ -409,7 +409,7 @@ public:
 
 private:
 
-    FileReadWriteLock* d;
+    FileReadWriteLock* const d;
 };
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -428,7 +428,7 @@ public:
 
 private:
 
-    FileReadWriteLock* d;
+    FileReadWriteLock* const d;
 };
 
 }  // namespace KIPI
