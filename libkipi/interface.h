@@ -298,7 +298,7 @@ public:
      *
      * Returns true if a reservation was made, or false if a reservation could not be made.
      */
-    virtual bool reserveForAction(const KUrl& url, QObject* reservingObject,
+    virtual bool reserveForAction(const KUrl& url, QObject* const reservingObject,
                                   const QString& descriptionOfAction) const;
     /**
      * Supported if HostSupportsItemReservation
@@ -306,7 +306,7 @@ public:
      * Clears a reservation made previously with reserveForAction for the given reservingObject.
      * You must clear any reservation you made, or, alternatively, delete the reserving object.
      */
-    virtual void clearReservation(const KUrl& url, QObject* reservingObject);
+    virtual void clearReservation(const KUrl& url, QObject* const reservingObject);
 
     /**
      * Supported if HostSupportsItemReservation
@@ -314,7 +314,7 @@ public:
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
      * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool itemIsReserved(const KUrl& url, QString* descriptionOfAction = 0) const;
+    virtual bool itemIsReserved(const KUrl& url, QString* const descriptionOfAction = 0) const;
 
     /**
      * Supported if HostSupportsReadWriteLock

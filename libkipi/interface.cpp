@@ -289,18 +289,18 @@ void Interface::progressCompleted(const QString& id)
     Q_UNUSED(id);
 }
 
-bool Interface::reserveForAction(const KUrl&, QObject*, const QString&) const
+bool Interface::reserveForAction(const KUrl&, QObject* const, const QString&) const
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
 }
 
-void Interface::clearReservation(const KUrl&, QObject*)
+void Interface::clearReservation(const KUrl&, QObject* const)
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
 }
 
-bool Interface::itemIsReserved(const KUrl&, QString*) const
+bool Interface::itemIsReserved(const KUrl&, QString* const) const
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
