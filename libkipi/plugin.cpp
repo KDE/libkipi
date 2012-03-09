@@ -55,19 +55,19 @@ public:
 
     PluginPrivate()
     {
-        m_defaultWidget = 0;
+        defaultWidget = 0;
     };
 
-    QMap<QWidget*, KActionCollection*> m_actionCollection;
-    KComponentData                     m_instance;
-    QMap< QWidget*, QList<KAction*> >  m_actions;
-    QWidget*                           m_defaultWidget;
+    QMap<QWidget*, KActionCollection*> actionCollection;
+    KComponentData                     instance;
+    QMap< QWidget*, QList<KAction*> >  actions;
+    QWidget*                           defaultWidget;
 };
 
 Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char* name)
       : QObject(parent), d(new PluginPrivate)
 {
-    d->m_instance = instance;
+    d->instance = instance;
     setObjectName(name);
 
     setProperty("KipiBinaryVersion", kipi_binary_version);
@@ -81,33 +81,35 @@ Plugin::~Plugin()
 KActionCollection* Plugin::actionCollection(QWidget* widget) const
 {
     if (!widget)
-        widget = d->m_defaultWidget;
+        widget = d->defaultWidget;
 
-    if (!d->m_actionCollection.contains(widget))
-        kWarning() << "Error in the plugin. The plugin needs to call Plugin::setup(QWidget*) "
+    if (!d->actionCollection.contains(widget))
+    {
+        kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
                    << "as the very first line when overriding the setup method.";
+    }
 
-    return d->m_actionCollection[widget];
+    return d->actionCollection[widget];
 }
 
 void Plugin::addAction(KAction* const action)
 {
-    d->m_actions[d->m_defaultWidget].append(action);
+    d->actions[d->defaultWidget].append(action);
 }
 
 QList<KAction*> Plugin::actions(QWidget* widget)
 {
     if (!widget)
-        widget = d->m_defaultWidget;
+        widget = d->defaultWidget;
 
-    return d->m_actions[widget];
+    return d->actions[widget];
 }
 
 void Plugin::setup(QWidget* widget)
 {
-    d->m_defaultWidget = widget;
-    d->m_actions.insert(widget, QList<KAction*>());
-    d->m_actionCollection.insert(widget, new KActionCollection(widget, d->m_instance));
+    d->defaultWidget = widget;
+    d->actions.insert(widget, QList<KAction*>());
+    d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
 }
 
 } // namespace KIPI
