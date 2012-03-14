@@ -52,12 +52,12 @@ namespace KIPI
 enum Category
 {
     ImagesPlugin = 0,
-    EffectsPlugin,
+    EffectsPlugin,    // KDE_DEPRECATED
     ToolsPlugin,
     ImportPlugin,
     ExportPlugin,
-    BatchPlugin,
-    CollectionsPlugin
+    BatchPlugin,      // KDE_DEPRECATED
+    CollectionsPlugin // KDE_DEPRECATED
 };
 
 class LIBKIPI_EXPORT Plugin : public QObject
