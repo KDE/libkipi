@@ -64,13 +64,35 @@ class ConfigWidget;
     signals plug() / unplug() or the signal replug(). These signals are
     emitted when a plugin is to be inserted into the menus.
 
-    If your application is using XMLGUI, the easiest way to get the plugins
-    inserted into the menus is by adding an item in the ui.rc file looking
+    If your application is use KDE XMLGUI, the easiest way to get the plugins
+    inserted into the menus is by adding an item in your application XML ui.rc file looking
     like this:
 
-        &lt;ActionList name="export_kipi_actions"/&gt;
-        &lt;ActionList name="image_kipi_actions"/&gt;
-        &lt;ActionList name="tool_kipi_actions"/&gt;
+    \code
+
+    <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+    <gui version="1" name="MyApplication" >
+
+        <MenuBar>
+
+            <Menu name="Image" ><text>&amp;Image</text>
+                <ActionList name="image_kipi_actions"/>
+            </Menu>
+
+            <Menu name="Tools"><text>&amp;Tools</text>
+                <ActionList name="tool_kipi_actions"/>
+                <Separator/>
+                <ActionList name="export_kipi_actions"/>
+            </Menu>
+
+            <Merge/>
+
+        </MenuBar>
+        <ActionProperties/>
+
+    </gui>
+
+    \endcode
 
     Then loading plugins into menus could be done with code similar to this slot implementation:
 
