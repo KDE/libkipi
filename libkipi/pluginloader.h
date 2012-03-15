@@ -66,95 +66,89 @@ class ConfigWidget;
 
     If your application is using XMLGUI, the easiest way to get the plugins
     inserted into the menus is by adding an item in the ui.rc file looking
-    list this:
+    like this:
 
-        &lt;ActionList name="image_actions"/&gt;
+        &lt;ActionList name="export_kipi_actions"/&gt;
+        &lt;ActionList name="image_kipi_actions"/&gt;
+        &lt;ActionList name="tool_kipi_actions"/&gt;
 
-    Then plugin plugins into menus could be done with code similar to this from digiKam:
+    Then loading plugins into menus could be done with code similar to this slot implementation:
 
     \code
-    void DigikamApp::slotKipiPluginPlug()
+
+    KIPI::Interface*    m_iface  = 0;
+    KIPI::PluginLoader* m_loader = 0;
+    QList<QAction*>     m_kipiImageActions;
+    QList<QAction*>     m_kipiExportActions;
+    QList<QAction*>     m_kipiToolsActions;
+
+    void MyApplication::loadPlugins()
     {
-        unplugActionList(QString::fromLatin1("file_actions_export"));
-        unplugActionList(QString::fromLatin1("image_actions"));
-        unplugActionList(QString::fromLatin1("tool_actions"));
+        m_iface  = new KIPI::Interface(this, "MyApplication_KIPI_interface");
+        m_loader = new KIPI::PluginLoader(QStringList(), m_iface);
 
-        d->kipiImageActions.clear();
-        d->kipiFileActionsExport.clear();
-        d->kipiToolsActions.clear();
+        connect(m_loader, SIGNAL(replug()),
+                this, SLOT(slotKipiPluginPlug()));
 
-        d->kipipluginsActionCollection->clear();
+        m_loader->loadPlugins();
+    }
+    
+    void MyApplication::slotKipiPluginPlug()
+    {
+        unplugActionList("export_kipi_actions");
+        unplugActionList("image_kipi_actions");
+        unplugActionList("tool_kipi_actions");
 
-        PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
-        int cpt                             = 0;
+        m_kipiImageActions.clear();
+        m_kipiExportActions.clear();
+        m_kipiToolsActions.clear();
 
-        for ( PluginLoader::PluginList::ConstIterator it = list.constBegin() ;
-            it != list.constEnd() ; ++it )
+        PluginLoader::PluginList list = m_loader->pluginList();
+
+        for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
         {
             Plugin* plugin = (*it)->plugin();
-
             if ( !plugin || !(*it)->shouldLoad() )
                 continue;
 
-            ++cpt;
+            plugin->setup(this);
 
-            plugin->setup( this );
+            // Plugin wrap based on category identification.
 
-            // Add actions to kipipluginsActionCollection
-            QList<QAction*> allPluginActions = plugin->actionCollection()->actions();
-
-            foreach(QAction* action, allPluginActions)
+            foreach(KAction* const action, plugin->actions())
             {
-                QString actionName(action->objectName());
-
-                if (!pluginActionsDisabled.contains(actionName))
-                    d->kipipluginsActionCollection->addAction(actionName, action);
-            }
-
-            // Plugin category identification using KAction method based.
-
-            QList<KAction*> actions = plugin->actions();
-            foreach(KAction* action, actions)
-            {
-                QString actionName(action->objectName());
-
                 switch (plugin->category(action))
                 {
                     case ExportPlugin:
                     {
-                        d->kipiFileActionsExport.append(action);
+                        m_kipiExportActions.append(action);
                         break;
                     }
                     case ImagesPlugin:
                     {
-                        d->kipiImageActions.append(action);
+                        m_kipiImageActions.append(action);
                         break;
                     }
                     case ToolsPlugin:
                     {
-                        d->kipiToolsActions.append(action);
+                        m_kipiToolsActions.append(action);
                         break;
                     }
                     default:
-                    {
-                        kDebug() << "No menu found for a plugin!";
                         break;
-                    }
                 }
             }
         }
 
-        // load KIPI actions settings
-        d->kipipluginsActionCollection->readSettings();
-
         // Create GUI menu in according with plugins.
-        plugActionList(QString::fromLatin1("file_actions_export"),        d->kipiFileActionsExport);
-        plugActionList(QString::fromLatin1("image_actions"),              d->kipiImageActions);
-        plugActionList(QString::fromLatin1("tool_actions"),               d->kipiToolsActions);
+        plugActionList("export_kipi_actions", m_kipiExportActions);
+        plugActionList("image_kipi_actions",  m_kipiImageActions);
+        plugActionList("tool_kipi_actions",   m_kipiToolsActions);
     }
+
     \endcode
 
-    For a complete implementation used to manage Kipi-plugins in digiKam, look <a href="https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/digikam/main/digikamapp.cpp">
+    For a complete implementation used to manage Kipi-plugins in digiKam, look <a href="https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/utilities/kipiiface/kipipluginloader.cpp">
     into this class</a>.
 
     To configure which plugins should be loaded, simply call
