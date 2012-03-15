@@ -98,18 +98,35 @@ class ConfigWidget;
 
     \code
 
-    KIPI::Interface*    s_iface  = 0;
-    KIPI::PluginLoader* s_loader = 0;
+    class MyKipiApplication : public KXmlGuiWindow
+    {
+        Q_OBJECT
+
+    public:
+
+        MyKipiApplication();
+
+    private Q_SLOTS:
+
+        void slotKipiPluginPlug();
+
+    private:
+
+        KIPI::Interface*    m_iface;
+        KIPI::PluginLoader* m_loader;
+    };
+
+    // -------------------------------------------------------------------------------
 
     MyKipiApplication::MyKipiApplication() : KXmlGuiWindow(0)
     {
-        s_iface  = new KIPI::Interface(this, "MyKipiApplication_KIPI_interface");
-        s_loader = new KIPI::PluginLoader(QStringList(), s_iface);
+        m_iface  = new KIPI::Interface(this, "MyKipiApplication_KIPI_interface");
+        m_loader = new KIPI::PluginLoader(QStringList(), m_iface);
 
-        connect(s_loader, SIGNAL(replug()),
+        connect(m_loader, SIGNAL(replug()),
                 this, SLOT(slotKipiPluginPlug()));
 
-        s_loader->loadPlugins();
+        m_loader->loadPlugins();
     }
 
     void MyKipiApplication::slotKipiPluginPlug()
@@ -119,8 +136,7 @@ class ConfigWidget;
         unplugActionList("tool_kipi_actions");
 
         QList<QAction*> kipiImageActions, kipiExportActions, kipiToolsActions;
-
-        PluginLoader::PluginList list = s_loader->pluginList();
+        PluginLoader::PluginList list = m_loader->pluginList();
 
         for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
         {
@@ -131,7 +147,6 @@ class ConfigWidget;
             plugin->setup(this);
 
             // Plugin wrap based on category identification.
-
             foreach(KAction* const action, plugin->actions())
             {
                 switch (plugin->category(action))
