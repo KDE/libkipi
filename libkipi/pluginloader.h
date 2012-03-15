@@ -71,7 +71,7 @@ class ConfigWidget;
     \code
 
     <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-    <gui version="1" name="MyApplication" >
+    <gui version="1" name="MyKipiApplication" >
 
         <MenuBar>
 
@@ -94,38 +94,33 @@ class ConfigWidget;
 
     \endcode
 
-    Then loading plugins into menus could be done with code similar to this slot implementation:
+    Then loading plugins into menus could be done with code similar to this implementation:
 
     \code
 
-    KIPI::Interface*    m_iface  = 0;
-    KIPI::PluginLoader* m_loader = 0;
-    QList<QAction*>     m_kipiImageActions;
-    QList<QAction*>     m_kipiExportActions;
-    QList<QAction*>     m_kipiToolsActions;
+    KIPI::Interface*    s_iface  = 0;
+    KIPI::PluginLoader* s_loader = 0;
 
-    void MyApplication::loadPlugins()
+    MyKipiApplication::MyKipiApplication() : KXmlGuiWindow(0)
     {
-        m_iface  = new KIPI::Interface(this, "MyApplication_KIPI_interface");
-        m_loader = new KIPI::PluginLoader(QStringList(), m_iface);
+        s_iface  = new KIPI::Interface(this, "MyKipiApplication_KIPI_interface");
+        s_loader = new KIPI::PluginLoader(QStringList(), s_iface);
 
-        connect(m_loader, SIGNAL(replug()),
+        connect(s_loader, SIGNAL(replug()),
                 this, SLOT(slotKipiPluginPlug()));
 
-        m_loader->loadPlugins();
+        s_loader->loadPlugins();
     }
-    
-    void MyApplication::slotKipiPluginPlug()
+
+    void MyKipiApplication::slotKipiPluginPlug()
     {
         unplugActionList("export_kipi_actions");
         unplugActionList("image_kipi_actions");
         unplugActionList("tool_kipi_actions");
 
-        m_kipiImageActions.clear();
-        m_kipiExportActions.clear();
-        m_kipiToolsActions.clear();
+        QList<QAction*> kipiImageActions, kipiExportActions, kipiToolsActions;
 
-        PluginLoader::PluginList list = m_loader->pluginList();
+        PluginLoader::PluginList list = s_loader->pluginList();
 
         for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
         {
@@ -142,20 +137,14 @@ class ConfigWidget;
                 switch (plugin->category(action))
                 {
                     case ExportPlugin:
-                    {
-                        m_kipiExportActions.append(action);
+                        kipiExportActions.append(action);
                         break;
-                    }
                     case ImagesPlugin:
-                    {
-                        m_kipiImageActions.append(action);
+                        kipiImageActions.append(action);
                         break;
-                    }
                     case ToolsPlugin:
-                    {
-                        m_kipiToolsActions.append(action);
+                        kipiToolsActions.append(action);
                         break;
-                    }
                     default:
                         break;
                 }
@@ -163,9 +152,9 @@ class ConfigWidget;
         }
 
         // Create GUI menu in according with plugins.
-        plugActionList("export_kipi_actions", m_kipiExportActions);
-        plugActionList("image_kipi_actions",  m_kipiImageActions);
-        plugActionList("tool_kipi_actions",   m_kipiToolsActions);
+        plugActionList("export_kipi_actions", kipiExportActions);
+        plugActionList("image_kipi_actions",  kipiImageActions);
+        plugActionList("tool_kipi_actions",   kipiToolsActions);
     }
 
     \endcode
