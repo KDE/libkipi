@@ -11,9 +11,9 @@
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
- * @author Copyright (C) 2009 by Andi Clemens
+ * @author Copyright (C) 2009      by Andi Clemens
  *         <a href="mailto:andi dot clemens at googlemail dot com">andi dot clemens at googlemail dot com</a>
- * @author Copyright (C) 2009 by Aleix Pol Gonzalez
+ * @author Copyright (C) 2009      by Aleix Pol Gonzalez
  *         <a href="mailto:aleixpol at kde dot org">aleixpol at kde dot org</a>
  *
  * This program is free software; you can redistribute it
