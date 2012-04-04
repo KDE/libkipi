@@ -153,6 +153,22 @@ public:
             <td>qlonglong value</td>
             <td>Return item file size in bytes.</td>
         </tr><tr>
+            <th>"creators"</th>
+            <td>QStringList</td>
+            <td>Return creators list of item.</td>
+        </tr><tr>
+            <th>"credit"</th>
+            <td>QString</td>
+            <td>Return credit of item.</td>
+        </tr><tr>
+            <th>"rights"</th>
+            <td>QString</td>
+            <td>Return rights of item.</td>
+        </tr><tr>
+            <th>"source"</th>
+            <td>QString</td>
+            <td>Return source of item.</td>
+        </tr><tr>
             <th>"tags"</th>
             <td>QStringList</td>
             <td>For compatibility. DEPRECATED and replaced by "keywords" attribute.</td>
@@ -201,6 +217,9 @@ public:
         </tr><tr>
             <th>"tagspath"</th>
             <td>Remove all tags path.</td>
+        </tr><tr>
+            <th>"copyrights"</th>
+            <td>Remove all copyrights info.</td>
         </tr><tr>
             <th>"tags"</th>
             <td>For compatibility. DEPRECATED and replaced by "keywords" attribute.</td>
