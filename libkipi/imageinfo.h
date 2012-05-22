@@ -53,14 +53,6 @@ namespace KIPI
 
 class ImageInfoShared;
 
-/** DEPRECATED old data used by time() and setTime()
- */
-enum KDE_DEPRECATED TimeSpec
-{
-    FromInfo,
-    ToInfo
-};
-
 /** @class ImageInfo
     Holds info about an image from KIPI host application.
     NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
@@ -241,44 +233,6 @@ public:
     /** Return item url.
     */
     KUrl url() const;
-
-    // -------------------------------------------------------------------------------------------------------
-    // DEPRECATED METHODS. Do not use it, they will be removed in the future...
-    //
-    // More universal methods based on attributes must be used instead to extend more easily data exange between 
-    // kipi-plugins and kipi host without to break binary compatibility.
-
-    /** DEPRECATED Managed by attribute "name".
-     */
-    KDE_DEPRECATED QString name() const;
-    KDE_DEPRECATED void    setName(const QString& name);
-
-    /** DEPRECATED Managed by attribute "date" and "dateto".
-     */
-    KDE_DEPRECATED QDateTime time(TimeSpec spec = FromInfo) const;
-    KDE_DEPRECATED void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
-
-    /** DEPRECATED Managed by attribute "isexactdate".
-     */
-    KDE_DEPRECATED bool isTimeExact() const;
-
-    /** DEPRECATED Managed by attributes "comment"
-     */
-    KDE_DEPRECATED QString description() const;
-    KDE_DEPRECATED void    setDescription(const QString& description);
-
-    /** DEPRECATED Managed by attribute "angle"
-    */
-    KDE_DEPRECATED int  angle() const;
-    KDE_DEPRECATED void setAngle(int);
-
-    /** DEPRECATED Replaced by url().
-     */
-    KDE_DEPRECATED KUrl path() const;
-
-    /** DEPRECATED Managed by attribute "filesize".
-    */
-    KDE_DEPRECATED int size() const;
 
 private:
 

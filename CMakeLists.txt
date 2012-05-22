@@ -66,10 +66,11 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 #                                            Add new deprecated methods in ImageInfo class: description(), setDescription(), 
 #                                            angle(), and setAngle().
 # 1.6.0 => 9.1.0  (released with KDE 4.8.1 - Minor API fix
+# 2.0.0 => 10.0.0
 
 # Library API version
-SET(KIPI_LIB_MAJOR_VERSION "1")
-SET(KIPI_LIB_MINOR_VERSION "6")
+SET(KIPI_LIB_MAJOR_VERSION "2")
+SET(KIPI_LIB_MINOR_VERSION "0")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
@@ -83,8 +84,8 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "9")
-SET(KIPI_LIB_SO_REV_VERSION "1")
+SET(KIPI_LIB_SO_CUR_VERSION "10")
+SET(KIPI_LIB_SO_REV_VERSION "0")
 SET(KIPI_LIB_SO_AGE_VERSION "0")
 
 # =======================================================
