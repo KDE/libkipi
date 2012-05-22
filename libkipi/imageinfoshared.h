@@ -85,25 +85,6 @@ public:
     bool               itemIsReserved(QString* descriptionOfAction = 0) const;
     FileReadWriteLock* createReadWriteLock() const;
 
-    // ---------------------------------------------------------------------------------------
-    // DEPRECATED METHODS. Do not use it.
-
-    KDE_DEPRECATED virtual QString name();
-    KDE_DEPRECATED virtual void    setName(const QString&);
-
-    KDE_DEPRECATED virtual QDateTime time(KIPI::TimeSpec spec);
-    KDE_DEPRECATED virtual void      setTime(const QDateTime& time, TimeSpec spec = FromInfo);
-    KDE_DEPRECATED virtual bool      isTimeExact();
-
-    KDE_DEPRECATED virtual QString description();
-    KDE_DEPRECATED virtual void    setDescription(const QString&);
-
-    KDE_DEPRECATED virtual int  angle();
-    KDE_DEPRECATED virtual void setAngle(int);
-
-    KDE_DEPRECATED virtual KUrl path();
-    KDE_DEPRECATED virtual int  size();
-
 protected:
 
     KUrl _url;

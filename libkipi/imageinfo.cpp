@@ -62,11 +62,6 @@ ImageInfo& ImageInfo::operator=(const ImageInfo&)
     return *this;
 }
 
-int ImageInfo::size() const
-{
-    return d->size();
-}
-
 QMap<QString,QVariant> ImageInfo::attributes() const
 {
     return d->attributes();
@@ -95,58 +90,6 @@ void ImageInfo::cloneData(const ImageInfo& other)
 KUrl ImageInfo::url() const
 {
     return d->url();
-}
-
-// DEPRECATED METHODS --------------------------------------------------------------
-
-KUrl ImageInfo::path() const
-{
-    return d->path();
-}
-
-QDateTime ImageInfo::time(TimeSpec spec) const
-{
-    return d->time(spec);
-}
-
-void ImageInfo::setTime(const QDateTime& time, TimeSpec spec)
-{
-    d->setTime(time, spec);
-}
-
-bool ImageInfo::isTimeExact() const
-{
-    return d->isTimeExact();
-}
-
-QString ImageInfo::description() const
-{
-    return d->description();
-}
-
-void ImageInfo::setDescription( const QString& description )
-{
-    d->setDescription(description);
-}
-
-int ImageInfo::angle() const
-{
-    return d->angle();
-}
-
-void ImageInfo::setAngle( int angle )
-{
-    d->setAngle(angle);
-}
-
-QString ImageInfo::name() const
-{
-    return d->name();
-}
-
-void ImageInfo::setName( const QString& name )
-{
-    d->setName(name);
 }
 
 } // namespace KIPI
