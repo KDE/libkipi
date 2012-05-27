@@ -45,6 +45,7 @@
 // Local includes
 
 #include "version.h"
+#include "interface.h"
 
 namespace KIPI
 {
@@ -110,6 +111,11 @@ void Plugin::setup(QWidget* widget)
     d->defaultWidget = widget;
     d->actions.insert(widget, QList<KAction*>());
     d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
+}
+
+Interface* Plugin::interface() const
+{
+    return (dynamic_cast<Interface*>(parent()));
 }
 
 } // namespace KIPI

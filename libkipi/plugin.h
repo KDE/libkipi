@@ -49,6 +49,8 @@ class KComponentData;
 namespace KIPI
 {
 
+class Interface;
+
 enum Category
 {
     ImagesPlugin = 0,
@@ -68,11 +70,19 @@ public:
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
 
+    // TODO : change as QList<KAction*> actions(QWidget* const parent = 0) const;
     QList<KAction*>    actions(QWidget* parent = 0);
+
+    // TODO : change as KActionCollection* actionCollection(QWidget* const parent = 0) const;
     KActionCollection* actionCollection(QWidget* parent = 0) const;
 
+    // TODO ; change as virtual void setup(QWidget* const widget) = 0;
     virtual void       setup(QWidget* widget) = 0;
+
+    // TODO : change as virtual Category category(KAction* const action) const = 0;
     virtual Category   category(KAction* action) const = 0;
+
+    Interface* interface() const;
 
 protected:
 
