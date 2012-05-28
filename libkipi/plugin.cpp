@@ -61,7 +61,7 @@ public:
 
     QMap<QWidget*, KActionCollection*> actionCollection;
     KComponentData                     instance;
-    QMap< QWidget*, QList<KAction*> >  actions;
+    QMap<QWidget*, QList<KAction*> >   actions;
     QWidget*                           defaultWidget;
 };
 
@@ -79,18 +79,30 @@ Plugin::~Plugin()
     delete d;
 }
 
-KActionCollection* Plugin::actionCollection(QWidget* widget) const
+KActionCollection* Plugin::actionCollection(QWidget* const widget) const
 {
-    if (!widget)
-        widget = d->defaultWidget;
+    QWidget* w = !widget ? d->defaultWidget : widget;
 
-    if (!d->actionCollection.contains(widget))
+    if (!d->actions.contains(w))
     {
         kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
                    << "as the very first line when overriding the setup method.";
     }
 
-    return d->actionCollection[widget];
+    return d->actionCollection[w];
+}
+
+QList<KAction*> Plugin::actions(QWidget* const widget) const
+{
+    QWidget* w = !widget ? d->defaultWidget : widget;
+
+    if (!d->actions.contains(w))
+    {
+        kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
+                   << "as the very first line when overriding the setup method.";
+    }
+
+    return d->actions[w];
 }
 
 void Plugin::addAction(KAction* const action)
@@ -98,15 +110,7 @@ void Plugin::addAction(KAction* const action)
     d->actions[d->defaultWidget].append(action);
 }
 
-QList<KAction*> Plugin::actions(QWidget* widget)
-{
-    if (!widget)
-        widget = d->defaultWidget;
-
-    return d->actions[widget];
-}
-
-void Plugin::setup(QWidget* widget)
+void Plugin::setup(QWidget* const widget)
 {
     d->defaultWidget = widget;
     d->actions.insert(widget, QList<KAction*>());
