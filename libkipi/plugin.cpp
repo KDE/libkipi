@@ -79,7 +79,7 @@ Plugin::~Plugin()
     delete d;
 }
 
-KActionCollection* Plugin::actionCollection(QWidget* const widget) const
+KActionCollection* Plugin::widgetActionCollection(QWidget* const widget) const
 {
     QWidget* w = !widget ? d->defaultWidget : widget;
 

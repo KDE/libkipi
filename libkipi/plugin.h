@@ -37,6 +37,10 @@
 #include <QtCore/QObject>
 #include <QtCore/QList>
 
+// KDE includes
+
+#include <kxmlguiclient.h>
+
 // Local includes
 
 #include "libkipi_export.h"
@@ -61,7 +65,7 @@ enum Category
     CollectionsPlugin
 };
 
-class LIBKIPI_EXPORT Plugin : public QObject
+class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
     Q_OBJECT
 
@@ -71,11 +75,11 @@ public:
     virtual ~Plugin();
 
     QList<KAction*>    actions(QWidget* const widget = 0) const;
-    KActionCollection* actionCollection(QWidget* const widget = 0) const;
+    KActionCollection* widgetActionCollection(QWidget* const widget = 0) const;
     Interface*         interface() const;
 
-    virtual void     setup(QWidget* const widget) = 0;
-    virtual Category category(KAction* const action) const = 0;
+    virtual void       setup(QWidget* const widget) = 0;
+    virtual Category   category(KAction* const action) const = 0;
 
 protected:
 
