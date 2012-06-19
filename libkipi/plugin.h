@@ -49,7 +49,6 @@ class KAction;
 class KActionCollection;
 class KComponentData;
 
-/** @namespace KIPI */
 namespace KIPI
 {
 
