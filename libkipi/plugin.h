@@ -75,6 +75,8 @@ public:
     virtual ~Plugin();
 
     QList<KAction*>    actions(QWidget* const widget = 0) const;
+    // The old name : actionCollection cannot be used anymore because it hides
+    // a method in KXMLGUIClient class. Maybe a better name than this?
     KActionCollection* widgetActionCollection(QWidget* const widget = 0) const;
     Interface*         interface() const;
 

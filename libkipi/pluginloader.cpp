@@ -132,7 +132,7 @@ Plugin* PluginLoader::Info::plugin() const
         QString error;
         Plugin* plugin = d->service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
 
-        if (plugin)
+        if (plugin && (dynamic_cast<KXMLGUIClient*>(plugin) != 0))
         {
             kDebug(51001) << "Loaded plugin " << plugin->objectName();
 
