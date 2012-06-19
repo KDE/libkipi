@@ -8,6 +8,8 @@
 #
 # @author Copyright (C) 2004-2012 by Gilles Caulier
 #         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+# @author Copyright (C) 2012 by Victor Dodon
+#         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
 #
 # This program is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General
@@ -64,7 +66,7 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 1.3.0 => 8.0.1  (released with KDE 4.7.1 - Set deprecated ImageInfo::title() and ImageInfo::setTitle(). Add ImageInfo::name() and ImageInfo::setName().
 # 1.4.0 => 8.0.2  (released with KDE 4.8.0 - Add 2 new slots in ConfigWidget class).
 # 1.5.0 => 9.0.0  (released with KDE 4.8.1 - Add Progress Manager feature support from Host application. Remove deprecated methods.
-#                                            Add new deprecated methods in ImageInfo class: description(), setDescription(), 
+#                                            Add new deprecated methods in ImageInfo class: description(), setDescription(),
 #                                            angle(), and setAngle().
 # 1.6.0 => 9.1.0  (released with KDE 4.8.1 - Minor API fix
 # 2.0.0 => 10.0.0
@@ -103,6 +105,12 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/mod
 
 ADD_SUBDIRECTORY(pics)
 ADD_SUBDIRECTORY(libkipi)
+
+# kipi host test application to check the plugins
+IF(KDE4_BUILD_TESTS)
+    FIND_PACKAGE(Kexiv2 REQUIRED)
+    ADD_SUBDIRECTORY(tests)
+ENDIF(KDE4_BUILD_TESTS)
 
 IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
