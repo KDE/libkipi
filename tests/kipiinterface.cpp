@@ -45,8 +45,6 @@
 
 // local includes
 
-#include "kpmetadata.h"
-#include "kprawthumbthread.h"
 #include "kipiimageinfoshared.h"
 #include "kipiimagecollectionselector.h"
 #include "kipiuploadwidget.h"
@@ -59,15 +57,10 @@ KipiInterface::KipiInterface(QObject* const parent, const char* name)
       m_selectedAlbums(),
       m_albums()
 {
-    m_loadRawThumb = new KPRawThumbThread(this);
-
-    connect(m_loadRawThumb, SIGNAL(signalRawThumb(KUrl, QImage)),
-            this, SLOT(slotRawThumb(KUrl, QImage)));
 }
 
 KipiInterface::~KipiInterface()
 {
-    //  m_currentSelection->removeRef();
 }
 
 ImageCollection KipiInterface::currentAlbum()
@@ -203,7 +196,7 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("MetadataWritingMode"))
     {
-        return (QVariant::fromValue((int)KPMetadata::WRITETOSIDECARONLY4READONLYFILES));
+        return (QVariant::fromValue(false));
     }
 
     return QVariant();
@@ -212,7 +205,7 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
 void KipiInterface::thumbnails(const KUrl::List& list, int)
 {
     foreach(const KUrl& url, list)
-        m_loadRawThumb->getRawThumb(url);
+        slotRawThumb(url, QImage());
 }
 
 void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)

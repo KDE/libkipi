@@ -39,13 +39,7 @@ namespace KIPI
     class ImageInfo;
 }
 
-namespace KIPIPlugins
-{
-    class KPRawThumbThread;
-}
-
 using namespace KIPI;
-using namespace KIPIPlugins;
 
 class KipiInterface : public Interface
 {
@@ -95,8 +89,6 @@ private Q_SLOTS:
     void slotFailedKDEPreview(const KFileItem&);
 
 private:
-
-    KPRawThumbThread* m_loadRawThumb;
 
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;

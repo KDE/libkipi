@@ -27,12 +27,7 @@
 PROJECT(kxmlkipitest)
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../kipi-plugins/common/libkipiplugins/tools
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../kipi-plugins/common/libkipiplugins
-                    ${CMAKE_CURRENT_BINARY_DIR}/../../kipi-plugins/common/libkipiplugins
                    )
-
-ADD_DEFINITIONS(${KEXIV2_DEFINITIONS})
 
 SET(kxmlkipicmd_sources
     kipiinterface.cpp
@@ -46,12 +41,11 @@ SET(kxmlkipicmd_sources
 
 KDE4_ADD_EXECUTABLE(kxmlkipicmd ${kxmlkipicmd_sources})
 
-TARGET_LINK_LIBRARIES(kxmlkipicmd 
+TARGET_LINK_LIBRARIES(kxmlkipicmd
                       ${KDE4_UI_LIBS}
                       ${KDE4_KPARTS_LIBS}
-                      ${KEXIV2_LIBRARIES}
-                      ${KIPI_LIBRARIES}
-                      kipiplugins
+                      kipi
                      )
 
+# for now we do not need HelloWorld plugin
 ADD_SUBDIRECTORY(helloworld)

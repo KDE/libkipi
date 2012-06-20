@@ -11,6 +11,8 @@
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
  * @author Copyright (C) 2011-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2012 by Victor Dodon
+ *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -46,6 +48,7 @@
 
 // LibKIPI includes
 
+#include <libkipi/version.h>
 #include <libkipi/plugin.h>
 #include <libkipi/pluginloader.h>
 
@@ -53,7 +56,6 @@
 
 #include "kipiinterface.h"
 #include "kipitest-debug.h"
-#include "kpversion.h"
 
 using namespace KIPI;
 
@@ -314,14 +316,15 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("kipiplugins",
+    const KAboutData aboutData("kxmlkipicmd",
                                "kipi",
-                               ki18n("kipicmd"),
-                               kipiplugins_version,            // version
-                               ki18n("Kipi host test application"),
+                               ki18n("kxmlkipicmd"),
+                               kipi_version,                   // libkipi version
+                               ki18n("Kipi host test application using KDE XML-GUI"),
                                KAboutData::License_GPL,
                                ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                                     "(c) 2011-2012 Gilles Caulier "),
+                                     "(c) 2011-2012 Gilles Caulier\n"
+                                     "(c) 2012 Victor Dodon "),
                                KLocalizedString(),             // optional text
                                "http://www.digikam.org",       // URI of homepage
                                "kde-imaging@kde.org"           // bugs e-mail address

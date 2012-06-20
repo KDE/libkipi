@@ -29,13 +29,11 @@
 // Qt includes
 
 #include <QFileInfo>
+#include <QStringList>
 
 // local includes:
 
 #include "kipitest-debug.h"
-#include "kpmetadata.h"
-
-using namespace KIPIPlugins;
 
 class KipiImageInfoShared::KipiImageInfoSharedPrivate
 {
@@ -78,14 +76,8 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
         }
         else
         {
-            KPMetadata meta;
-            meta.load(_url.path());
-            d->dateTime = meta.getImageDateTime();
-
-            if (!d->dateTime.isValid())
-            {
-                d->dateTime = QFileInfo( _url.toLocalFile() ).lastModified();
-            }
+            // File creation date only
+            d->dateTime = QFileInfo( _url.toLocalFile() ).lastModified();
         }
     }
     res["date"] = d->dateTime;
