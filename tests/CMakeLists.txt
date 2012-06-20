@@ -48,4 +48,4 @@ TARGET_LINK_LIBRARIES(kxmlkipicmd
                      )
 
 # for now we do not need HelloWorld plugin
-ADD_SUBDIRECTORY(helloworld)
+#ADD_SUBDIRECTORY(helloworld)
