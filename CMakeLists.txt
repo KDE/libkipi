@@ -109,7 +109,7 @@ ADD_SUBDIRECTORY(libkipi)
 # kipi host test application to check the plugins
 IF(KDE4_BUILD_TESTS)
     FIND_PACKAGE(Kexiv2 REQUIRED)
-    ADD_SUBDIRECTORY(tests)
+#    ADD_SUBDIRECTORY(tests)
 ENDIF(KDE4_BUILD_TESTS)
 
 IF(NOT WIN32)
