@@ -1,11 +1,11 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=HelloWorld
-Comment=A demo kipi tool
+Name=KXMLHelloWorld
+Comment=A demo kipi tool using KDE XML-GUI technology
 Comment=An hello world tool
 Type=Service
 Icon=script-error
 ServiceTypes=KIPI/Plugin
-X-KDE-Library=kipiplugin_helloworld
+X-KDE-Library=kipiplugin_kxmlhelloworld
 author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-ReqFeatures=

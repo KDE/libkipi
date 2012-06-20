@@ -343,7 +343,7 @@ int main(int argc, char* argv[])
     options.add( "!allalbums <albums>", ki18n("All albums") );
     options.add( "+[images]", ki18n("List of images") );
     options.add( "+[albums]", ki18n("List of albums") );
-    options.add( "", ki18n("Exemple : ./kipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
+    options.add( "", ki18n("Exemple : ./kxmlkipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;

@@ -1,4 +1,4 @@
-kipicmd - Allows you to start kipi-plugins from the command line
+kxmlkipicmd - Allows you to start kipi-plugins from the command line
 
 This program can be used to easily start kipi-plugins from the command line
 which is useful when developing plugins. You can specify which action of the plugin

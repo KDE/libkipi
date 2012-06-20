@@ -1,12 +1,13 @@
 # ============================================================
 #
-# This file is a part of kipi-plugins project
+# This file is a part of digiKam project
 # http://www.digikam.org
 #
 # Date        : 2012-02-16
-# Description : an Hello World plugin.
+# Description : a Hello World plugin using KDE XML-GUI techlnology.
 #
 # Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+# Copyright (C) 2012 by Victor Dodon <dodonvictor at gmail dot com>
 #
 # This program is free software; you can redistribute it
 # and/or modify it under the terms of the GNU General
@@ -20,19 +21,17 @@
 #
 # ============================================================
 
-SET(kipiplugin_helloworld_PART_SRCS plugin_helloworld.cpp)
+SET(kipiplugin_kxmlhelloworld_PART_SRCS plugin_kxmlhelloworld.cpp)
 
-KDE4_ADD_PLUGIN(kipiplugin_helloworld ${kipiplugin_helloworld_PART_SRCS})
+KDE4_ADD_PLUGIN(kipiplugin_kxmlhelloworld ${kipiplugin_kxmlhelloworld_PART_SRCS})
 
-TARGET_LINK_LIBRARIES(kipiplugin_helloworld
+TARGET_LINK_LIBRARIES(kipiplugin_kxmlhelloworld
                       ${KDE4_KPARTS_LIBS}
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
-                      ${KEXIV2_LIBRARIES}
-                      ${KDCRAW_LIBRARIES}
-                      kipiplugins
+                      kipi
                      )
 
-INSTALL(TARGETS kipiplugin_helloworld DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_kxmlhelloworld DESTINATION ${PLUGIN_INSTALL_DIR})
 
-INSTALL(FILES kipiplugin_helloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})

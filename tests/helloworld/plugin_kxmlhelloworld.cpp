@@ -4,15 +4,16 @@
  * http://www.digikam.org
  *
  * Date        : 2012-02-16
- * Description : an Hello World plugin.
+ * Description : an Hello World plugin using KDE XML-GUI technology.
  *
  * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012 by Victor Dodon   <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
  * either version 2, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,7 +35,7 @@
  */
 
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
-#include "plugin_helloworld.moc"
+#include "plugin_kxmlhelloworld.moc"
 
 // Qt includes
 
@@ -60,60 +61,25 @@
  *  Look into kipi-plugins/common/libkipiplugins/ for details.
  */
 
-#include "kptooldialog.h"
-#include "kpaboutdata.h"
-#include "kpimageslist.h"
-#include "kppreviewmanager.h"
-
-/// We will use Kipi-plugins namespace.
-using namespace KIPIPlugins;
-
 /// You must wrap all your plugin code to a dedicated namespace
-namespace KIPIHelloWorldPlugin
+namespace KIPIKXMLHelloWorldPlugin
 {
 
-/** We will use KPToolDialog class from kipi-plugins to display plugin dialogs. It offers some facilities to 
+/** We will use KPToolDialog class from kipi-plugins to display plugin dialogs. It offers some facilities to
     set data and rules about plugins, especially to wrap properlly tool with KDE bugilla. We use KPAboutData container
     for that.
 */
-class HelloWorldAbout : public KPAboutData
-{
-public:
-
-    HelloWorldAbout()
-        : KPAboutData(ki18n("Hello World"),                           /// Title
-                            0,
-                            KAboutData::License_GPL,
-                            ki18n("A simple demo Kipi plugin"),       /// Description
-                            ki18n("(c) 2004-2012, Gilles Caulier")    /// Lead authors
-                     )
-        {
-            /** We set list of contributors
-             */
-            addAuthor(ki18n("Gilles Caulier"),
-                      ki18n("Developer"),
-                      "caulier dot gilles at gmail dot com");
-
-            /** The anchor in kipi-plugins handbook
-             */
-            setHandbookEntry("helloworld");
-        }
-
-    ~HelloWorldAbout()
-    {
-    }
-};
 
 /** Using private container everywhere is clear to speed up compilation and reduce source code depencies through header files.
  *  See this url for details : http://techbase.kde.org/Policies/Binary_Compatibility_Issues_With_C%2B%2B#Using_a_d-Pointer
  */
-class Plugin_HelloWorld::Private
+class Plugin_KXMLHelloWorld::Private
 {
 public:
 
     Private()
     {
-        /// It's always clean to init pointers to zero. If crash appear, 
+        /// It's always clean to init pointers to zero. If crash appear,
         /// debugger will show a null pointer instead a non initialized one.
         actionImages = 0;
         actionTools  = 0;
@@ -137,39 +103,40 @@ public:
 };
 
 /** Macro from KDE KParts to create the factory for this plugin.
- *  The first argument is the name of the plugin library 
+ *  The first argument is the name of the plugin library
  *  and the second is the generic factory templated from
  *  the class for your plugin.
  */
-K_PLUGIN_FACTORY(HelloWorldFactory, registerPlugin<Plugin_HelloWorld>();)
+K_PLUGIN_FACTORY(KXMLHelloWorldFactory, registerPlugin<Plugin_KXMLHelloWorld>();)
 
 /** Macro from KDE KParts to export the symbols for this plugin
- *  NOTE: The plugin library is the name used in CMakeList.txt to link bin file, 
+ *  NOTE: The plugin library is the name used in CMakeList.txt to link bin file,
  *  and with X-KDE-Library value from .desktop file.
  */
-K_EXPORT_PLUGIN(HelloWorldFactory("kipiplugin_helloworld") )
+K_EXPORT_PLUGIN(KXMLHelloWorldFactory("kipiplugin_kxmlhelloworld") )
 
 /** The plugin constructor. Note that plugin name passed as string in 3rd arguement of KIPI::Plugin parent class
  *  is the same than Name value from .desktop file.
  */
-Plugin_HelloWorld::Plugin_HelloWorld(QObject* const parent, const QVariantList&)
-    : Plugin(HelloWorldFactory::componentData(), parent, "HelloWorld"),
+Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList&)
+    : Plugin(KXMLHelloWorldFactory::componentData(), parent, "HelloWorld"),
       /// Private container is allocated here.
       d(new Private)
 {
     /** There is a debug space for plugin loading area. Please do not use qDebug and qWarning in plugin.
      *  To show debug messages on the console, run kdebugdialog, and turn on KIPI debug space
-     */ 
-    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
+     */
+//    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
+    kDebug() << "Plugin_HelloWorld plugin loaded";
 }
 
-Plugin_HelloWorld::~Plugin_HelloWorld()
+Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
 {
     /// Don't forget to clear d private container allocation in destructor to prevent memory leak.
     delete d;
 }
 
-void Plugin_HelloWorld::setup(QWidget* const widget)
+void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 {
     /** We pass the widget which host plugin in KIPI host application
      */
@@ -188,8 +155,8 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
     /** We define plugin action which will be plug in KIPI host application.
      *  Note that if you set keyboard shortcut to an action you must take a care
      *  about already existing one from other tool to prevent conflict.
-     *  Don't forget to define an unique string name to your action, to be able to disable it 
-     *  in KIPI host application if necessary. You must check of course name already used in 
+     *  Don't forget to define an unique string name to your action, to be able to disable it
+     *  in KIPI host application if necessary. You must check of course name already used in
      *  others tool before to prevent redondancy.
      */
 
@@ -250,11 +217,11 @@ void Plugin_HelloWorld::setup(QWidget* const widget)
     addAction(d->actionImport);
 }
 
-void Plugin_HelloWorld::slotActivateActionImages()
+void Plugin_KXMLHelloWorld::slotActivateActionImages()
 {
     /** When actionImages is actived, we display list of items selected in a message box.
      *  This example show a simple dialog with current items selected in KIPI host application.
-     *  You can branch here your dedicated dialog to process items as you want. 
+     *  You can branch here your dedicated dialog to process items as you want.
      */
     ImageCollection images = d->iface->currentSelection();
 
@@ -268,12 +235,12 @@ void Plugin_HelloWorld::slotActivateActionImages()
     }
 }
 
-void Plugin_HelloWorld::slotActivateActionTools()
+void Plugin_KXMLHelloWorld::slotActivateActionTools()
 {
     /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
-
+/*
     QPointer<KPToolDialog> dlg        = new KPToolDialog(0);
     ImageCollectionSelector* selector = d->iface->imageCollectionSelector(dlg);
     dlg->setMainWidget(selector);
@@ -291,15 +258,15 @@ void Plugin_HelloWorld::slotActivateActionTools()
         KMessageBox::informationList(0, i18n("This is the list of selected albums"), names);
     }
 
-    delete dlg;
+    delete dlg;*/
 }
 
-void Plugin_HelloWorld::slotActivateActionExport()
+void Plugin_KXMLHelloWorld::slotActivateActionExport()
 {
-    /** When actionExport is actived, we display a dedicated widget from libkipiplugins which will show 
+    /** When actionExport is actived, we display a dedicated widget from libkipiplugins which will show
      *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
      */
-
+/*
     QPointer<KPToolDialog> dlg = new KPToolDialog(0);
     KPImagesList* listView     = new KPImagesList(dlg);
     listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
@@ -321,11 +288,12 @@ void Plugin_HelloWorld::slotActivateActionExport()
     }
 
     delete dlg;
+*/
 }
 
-void Plugin_HelloWorld::slotActivateActionImport()
+void Plugin_KXMLHelloWorld::slotActivateActionImport()
 {
-    /** When actionImport is actived, we display a dedicated widget from libkipiplugins which will preview 
+    /** When actionImport is actived, we display a dedicated widget from libkipiplugins which will preview
      *  the first selected item of current selection from kipi host application.
      */
 
@@ -333,17 +301,17 @@ void Plugin_HelloWorld::slotActivateActionImport()
 
     if (images.isValid() && !images.images().isEmpty())
     {
-        QPointer<KPToolDialog> dlg = new KPToolDialog(0);
+/*        QPointer<KPToolDialog> dlg = new KPToolDialog(0);
         KPPreviewManager* mng      = new KPPreviewManager(dlg);
         dlg->setMainWidget(mng);
         dlg->setAboutData(new HelloWorldAbout);
         mng->load(images.images().first().path());
         dlg->exec();
-        delete dlg;
+        delete dlg;*/
     }
 }
 
-Category Plugin_HelloWorld::category(KAction* const action) const
+Category Plugin_KXMLHelloWorld::category(KAction* const action) const
 {
     /** For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
      */
