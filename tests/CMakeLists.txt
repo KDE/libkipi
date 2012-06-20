@@ -36,6 +36,8 @@ SET(kxmlkipicmd_sources
     kipiimagecollectionselector.cpp
     kipiuploadwidget.cpp
     kipitest-debug.cpp
+    kipipluginloader.cpp
+    kipitestmainwindow.cpp
     main.cpp
    )
 
@@ -49,3 +51,6 @@ TARGET_LINK_LIBRARIES(kxmlkipicmd
 
 # for now we do not need HelloWorld plugin
 #ADD_SUBDIRECTORY(helloworld)
+
+INSTALL(TARGETS kxmlkipicmd DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+INSTALL(FILES kxmlkipicmdui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)

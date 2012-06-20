@@ -46,7 +46,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-// LibKIPI includes
+// LibKipi includes
 
 #include <libkipi/version.h>
 #include <libkipi/plugin.h>
@@ -56,11 +56,12 @@
 
 #include "kipiinterface.h"
 #include "kipitest-debug.h"
+#include "kipitestmainwindow.h"
 
 using namespace KIPI;
 
 /**
-* \brief Returns the name of a KIPI::Category
+* \brief Returns the name of a Kipi::Category
 * \param category Category which should be returned as a string
 * \returns String version of the category
 */
@@ -343,16 +344,21 @@ int main(int argc, char* argv[])
     options.add( "!allalbums <albums>", ki18n("All albums") );
     options.add( "+[images]", ki18n("List of images") );
     options.add( "+[albums]", ki18n("List of albums") );
-    options.add( "", ki18n("Exemple : ./kxmlkipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
+    options.add( "", ki18n("Example : ./kxmlkipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
+    KipiInterface* const kipiInterface = new KipiInterface(&app);
 
     KGlobal::locale()->insertCatalog("kipiplugins");
     KGlobal::locale()->insertCatalog("libkdcraw");
 
-    KipiInterface* const kipiInterface = new KipiInterface(&app);
+    KipiTestMainWindow *mainWindow = new KipiTestMainWindow();
+    QObject::connect(mainWindow, SIGNAL(destroyed(QObject*)),
+                     &app, SLOT(quit()));
+
+    app.setTopWidget(mainWindow);
 
     // create an instance of the plugin loader:
     new PluginLoader(QStringList(), kipiInterface);
@@ -463,8 +469,10 @@ int main(int argc, char* argv[])
                                        "or specify an action to be called.") );
     }
 
+
     if (startedPlugin&&args->isSet("wait"))
     {
+        mainWindow->show();
         return app.exec();
     }
     else
