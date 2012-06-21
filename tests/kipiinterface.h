@@ -45,12 +45,6 @@ class KipiInterface : public Interface
 {
     Q_OBJECT
 
-private:
-
-    KUrl::List m_selectedImages;
-    KUrl::List m_selectedAlbums;
-    KUrl::List m_albums;
-
 public:
 
     KipiInterface(QObject* const parent, const char* name=0);
@@ -84,9 +78,14 @@ public:
 
 private Q_SLOTS:
 
-    void slotRawThumb(const KUrl&, const QImage&);
     void slotGotKDEPreview(const KFileItem&, const QPixmap&);
     void slotFailedKDEPreview(const KFileItem&);
+
+private:
+
+    KUrl::List m_selectedImages;
+    KUrl::List m_selectedAlbums;
+    KUrl::List m_albums;
 
 private:
 

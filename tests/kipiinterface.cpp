@@ -205,12 +205,6 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
 void KipiInterface::thumbnails(const KUrl::List& list, int)
 {
     foreach(const KUrl& url, list)
-        slotRawThumb(url, QImage());
-}
-
-void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
-{
-    if (img.isNull())
     {
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
@@ -225,10 +219,6 @@ void KipiInterface::slotRawThumb(const KUrl& url, const QImage& img)
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotFailedKDEPreview(KFileItem)));
-    }
-    else
-    {
-        emit gotThumbnail(url, QPixmap::fromImage(img));
     }
 }
 
