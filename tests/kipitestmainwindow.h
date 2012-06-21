@@ -43,6 +43,10 @@ public:
 
     static KipiTestMainWindow* instance();
 
+private:
+
+    void loadPlugins();
+
 private Q_SLOTS:
 
     void slotShowMenuBar();

@@ -132,13 +132,13 @@ void KipiTestPluginLoader::loadPlugins()
     d->kipipluginsActionCollection = new KActionCollection(d->app, KGlobal::mainComponent());
 
     QStringList ignores;
-    d->kipiInterface = new KipiInterface(d->app, "Digikam_KIPI_interface");
+    d->kipiInterface = new KipiInterface(d->app, "kxmlkipicmd_KIPI_interface");
 
     // List of obsoletes plugins to not load
 
     // Comment the following two lines if you want to load the HelloWorld and
     // the KXMLHelloWorld plugins for testing purposes
-    //ignores.append("HelloWorld");
+    ignores.append("HelloWorld");
     //ignores.append("KXMLHelloWorld");
 
     ignores.append("KameraKlient");

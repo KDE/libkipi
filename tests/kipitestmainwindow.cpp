@@ -34,6 +34,10 @@
 #include <kmenubar.h>
 #include <kactioncollection.h>
 
+// Local includes
+
+#include "kipitestpluginloader.h"
+
 namespace KXMLKipiCmd
 {
 
@@ -65,7 +69,12 @@ KipiTestMainWindow::KipiTestMainWindow()
     d->config = KGlobal::config();
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
-    setupGUI(Default, xmlFile());
+    // Ensure creation
+    KipiTestPluginLoader::instance();
+
+    createGUI(xmlFile());
+
+    loadPlugins();
 }
 
 KipiTestMainWindow::~KipiTestMainWindow()
@@ -81,6 +90,11 @@ KipiTestMainWindow* KipiTestMainWindow::instance()
 void KipiTestMainWindow::slotShowMenuBar()
 {
     menuBar()->setVisible(d->showMenuBarAction->isChecked());
+}
+
+void KipiTestMainWindow::loadPlugins()
+{
+    new KipiTestPluginLoader(this);
 }
 
 } // namespace KXMLKipiCmd
