@@ -31,9 +31,9 @@
 #include <QFileInfo>
 #include <QStringList>
 
-// local includes:
+// KDE includes
 
-#include "kipitest-debug.h"
+#include <kdebug.h>
 
 class KipiImageInfoShared::KipiImageInfoSharedPrivate
 {
@@ -59,7 +59,7 @@ KipiImageInfoShared::~KipiImageInfoShared()
 
 QMap<QString, QVariant> KipiImageInfoShared::attributes()
 {
-    kipiDebug("QMap<QString,QVariant> attributes()");
+    kDebug() << "QMap<QString,QVariant> attributes()";
 
     QMap<QString, QVariant> res;
 
@@ -86,25 +86,25 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
 }
 void KipiImageInfoShared::clearAttributes()
 {
-    kipiDebug("void KipiImageInfoShared::clearAttributes()");
+    kDebug() << "void KipiImageInfoShared::clearAttributes()";
 }
 
 void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attributes)
 {
-    kipiDebug("void KipiImageInfoShared::addAttributes()");
+    kDebug() << "void KipiImageInfoShared::addAttributes()";
 
     QMap<QString, QVariant>::const_iterator it = attributes.constBegin();
     while (it != attributes.constEnd())
     {
         QString key = it.key();
         QString val = it.value().toString();
-        kipiDebug(QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val));
+        kDebug() << QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val);
         ++it;
     }
 }
 
 void KipiImageInfoShared::delAttributes(const QStringList& attributes)
 {
-    kipiDebug("void KipiImageInfoShared::delAttributes()");
-    kipiDebug(QString("attributes : \"%1\"").arg(attributes.join(", ")));
+    kDebug() << "void KipiImageInfoShared::delAttributes()";
+    kDebug() << QString("attributes : \"%1\"").arg(attributes.join(", "));
 }

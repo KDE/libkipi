@@ -28,10 +28,6 @@
 
 #include <QDir>
 
-// local includes:
-
-#include "kipitest-debug.h"
-
 KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
     : KIPI::ImageCollectionShared(),
       m_albumPath(albumPath),

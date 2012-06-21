@@ -33,6 +33,7 @@
 // KDE includes
 
 #include <klocale.h>
+#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -41,7 +42,6 @@
 // local includes:
 
 #include "kipiinterface.h"
-#include "kipitest-debug.h"
 
 KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* interface, QWidget* parent)
     : KIPI::ImageCollectionSelector(parent),
@@ -89,7 +89,7 @@ QList< KIPI::ImageCollection > KipiImageCollectionSelector::selectedImageCollect
     }
 
     //  result.append(m_interface->currentAlbum());
-    kipiDebug(QString("selectedImageCollections: %1 items selected").arg(result.size()));
+    kDebug() << QString("selectedImageCollections: %1 items selected").arg(result.size());
     return result;
 }
 

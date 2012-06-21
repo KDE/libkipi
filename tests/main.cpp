@@ -55,7 +55,6 @@
 // local includes:
 
 #include "kipiinterface.h"
-#include "kipitest-debug.h"
 #include "kipitestmainwindow.h"
 
 using namespace KIPI;
@@ -337,8 +336,6 @@ int main(int argc, char* argv[])
     options.add( "l" ).add("library <libraryname>", ki18n("Library name of plugin to use") );
     options.add( "a" ).add( "action <action>", ki18n("Action to call") );
     options.add( "w" ).add( "wait", ki18n("Wait until non-modal dialogs are closed.") );
-    options.add( "e" ).add( "stderr", ki18n("Send additional debug output to stderr") );
-    options.add( "k" ).add( "kdebug", ki18n("Send additional debug output to kdebug") );
     options.add( "!selectedalbums <album>", ki18n("Selected albums") );
     options.add( "!selectedimages <images>", ki18n("Selected images") );
     options.add( "!allalbums <albums>", ki18n("All albums") );
@@ -354,7 +351,7 @@ int main(int argc, char* argv[])
     KGlobal::locale()->insertCatalog("kipiplugins");
     KGlobal::locale()->insertCatalog("libkdcraw");
 
-    KipiTestMainWindow *mainWindow = new KipiTestMainWindow();
+    KipiTestMainWindow* mainWindow = new KipiTestMainWindow();
     QObject::connect(mainWindow, SIGNAL(destroyed(QObject*)),
                      &app, SLOT(quit()));
 
@@ -364,15 +361,6 @@ int main(int argc, char* argv[])
     new PluginLoader(QStringList(), kipiInterface);
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
-
-    if (args->isSet("stderr"))
-    {
-        kipiTestDebugTarget = KipiTestDebugStdErr;
-    }
-    if (args->isSet("kdebug"))
-    {
-        kipiTestDebugTarget = KipiTestDebugKDebug;
-    }
 
     // handling of selectedimages, selectalbums and otheralbums is complicated
     // create new lists of these parameters:

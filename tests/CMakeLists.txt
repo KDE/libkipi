@@ -34,7 +34,6 @@ SET(kxmlkipicmd_sources
     kipiimageinfoshared.cpp
     kipiimagecollectionselector.cpp
     kipiuploadwidget.cpp
-    kipitest-debug.cpp
     kipipluginloader.cpp
     kipitestmainwindow.cpp
     main.cpp

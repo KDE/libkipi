@@ -33,6 +33,7 @@
 // KDE includes
 
 #include <klocale.h>
+#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -41,7 +42,6 @@
 // local includes
 
 #include "kipiinterface.h"
-#include "kipitest-debug.h"
 
 KipiUploadWidget::KipiUploadWidget(KipiInterface* interface, QWidget* parent)
     : KIPI::UploadWidget(parent),
