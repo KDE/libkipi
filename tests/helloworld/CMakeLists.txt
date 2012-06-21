@@ -21,6 +21,10 @@
 #
 # ============================================================
 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../../libkipi
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../libkipi
+                   )
+
 SET(kipiplugin_kxmlhelloworld_PART_SRCS plugin_kxmlhelloworld.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_kxmlhelloworld ${kipiplugin_kxmlhelloworld_PART_SRCS})

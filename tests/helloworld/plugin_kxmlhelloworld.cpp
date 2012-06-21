@@ -53,9 +53,9 @@
 
 /// This is all libkipi header includes in this tool.
 
-#include <libkipi/imagecollection.h>
-#include <libkipi/imagecollectionselector.h>
-#include <libkipi/interface.h>
+#include "imagecollection.h"
+#include "imagecollectionselector.h"
+#include "interface.h"
 
 /** This is all Kipi-plugins common includes used in this tool.
  *  Look into kipi-plugins/common/libkipiplugins/ for details.

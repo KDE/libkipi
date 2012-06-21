@@ -35,7 +35,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/plugin.h>
+#include "plugin.h"
 
 /** To make source code more readable, we will declare KIPI namespace as well.
  */
