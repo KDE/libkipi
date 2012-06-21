@@ -22,26 +22,67 @@
  *
  * ============================================================ */
 
-#ifndef KIPIPLUGINLOADER_H
-#define KIPIPLUGINLOADER_H
+#ifndef KIPITESTPLUGINLOADER_H
+#define KIPITESTPLUGINLOADER_H
 
 // Qt includes
 
 #include <QObject>
+#include <QList>
+#include <QString>
 
 // Libkipi includes
 
 #include <libkipi/plugin.h>
 
+class QAction;
+
+class KActionCollection;
+
 namespace KXMLKipiCmd
 {
 
-class KipiPluginLoader : public QObject
+class KipiTestPluginLoader : public QObject
 {
     Q_OBJECT
+
+public:
+
+    KipiTestPluginLoader(QObject* const parent);
+
+    QList<QAction*>    kipiActionsByCategory(KIPI::Category cat) const;
+
+    KActionCollection* pluginsActionCollection() const;
+
+    void kipiPlugActions(bool unplug = false);
+
+    static KipiTestPluginLoader* instance();
+
+private Q_SLOTS:
+
+    /** Called by KIPI::PluginLoader when plugins list must be reloaded
+     */
+    void slotKipiPluginsPlug();
+
+private:
+
+    ~KipiTestPluginLoader();
+
+    void loadPlugins();
+
+    void checkEmptyCategory(KIPI::Category cat);
+
+    QString categoryName(KIPI::Category cat) const;
+
+private:
+
+    static KipiTestPluginLoader* m_instance;
+
+    class KipiTestPluginLoaderPriv;
+    KipiTestPluginLoaderPriv* const d;
 
 };
 
 } // namespace KXMLKipiCmd
 
-#endif // KIPIPLUGINLOADER_H
+#endif // KIPITESTPLUGINLOADER_H

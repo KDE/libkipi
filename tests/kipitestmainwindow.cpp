@@ -37,6 +37,8 @@
 namespace KXMLKipiCmd
 {
 
+KipiTestMainWindow* KipiTestMainWindow::m_instance = 0;
+
 class KipiTestMainWindow::KipiTestMainWindowPriv
 {
 
@@ -59,6 +61,7 @@ KipiTestMainWindow::KipiTestMainWindow()
 
     setObjectName("kxmlkipicmd");
 
+    m_instance = this;
     d->config = KGlobal::config();
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
@@ -68,6 +71,11 @@ KipiTestMainWindow::KipiTestMainWindow()
 KipiTestMainWindow::~KipiTestMainWindow()
 {
     delete d;
+}
+
+KipiTestMainWindow* KipiTestMainWindow::instance()
+{
+    return m_instance;
 }
 
 void KipiTestMainWindow::slotShowMenuBar()

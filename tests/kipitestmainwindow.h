@@ -41,6 +41,8 @@ public:
     KipiTestMainWindow();
     ~KipiTestMainWindow();
 
+    static KipiTestMainWindow* instance();
+
 private Q_SLOTS:
 
     void slotShowMenuBar();
@@ -49,6 +51,8 @@ private:
 
     class KipiTestMainWindowPriv;
     KipiTestMainWindowPriv * const d;
+
+    static KipiTestMainWindow* m_instance;
 
 };
 
