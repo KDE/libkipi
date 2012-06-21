@@ -29,7 +29,7 @@
 
 // libkipi includes
 
-#include <libkipi/imageinfoshared.h>
+#include "imageinfoshared.h"
 
 using namespace KIPI;
 

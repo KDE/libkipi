@@ -36,7 +36,7 @@
 
 // LibKipi includes
 
-#include <libkipi/version.h>
+#include "version.h"
 
 // local includes:
 

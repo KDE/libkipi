@@ -40,8 +40,8 @@
 
 // LibKIPI includes
 
-#include <libkipi/version.h>
-#include <libkipi/imagecollection.h>
+#include "version.h"
+#include "imagecollection.h"
 
 // local includes
 

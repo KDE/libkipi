@@ -27,7 +27,7 @@
 
 // libkipi includes
 
-#include <libkipi/imagecollectionshared.h>
+#include "imagecollectionshared.h"
 
 namespace KXMLKipiCmd
 {

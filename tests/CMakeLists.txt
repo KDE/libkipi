@@ -24,7 +24,9 @@
 #
 # ============================================================
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../libkipi)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../libkipi
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi
+                   )
 
 SET(kxmlkipicmd_SRCS
     kipiinterface.cpp

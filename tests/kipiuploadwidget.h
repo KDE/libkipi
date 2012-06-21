@@ -27,7 +27,7 @@
 
 // libkipi includes
 
-#include <libkipi/uploadwidget.h>
+#include "uploadwidget.h"
 
 class QListWidget;
 

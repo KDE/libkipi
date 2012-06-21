@@ -39,7 +39,7 @@
 
 // LibKIPI includes
 
-#include <libkipi/pluginloader.h>
+#include "pluginloader.h"
 
 // Local includes
 

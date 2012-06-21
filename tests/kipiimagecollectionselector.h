@@ -27,7 +27,7 @@
 
 // libkipi includes
 
-#include <libkipi/imagecollectionselector.h>
+#include "imagecollectionselector.h"
 
 class QListWidget;
 
