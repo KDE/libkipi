@@ -75,7 +75,6 @@ public:
 
     KActionCollection*          kipipluginsActionCollection;
     QMap<int, KActionCategory*> kipiCategoryMap;
-
 };
 
 // -- Static values -------------------------------
@@ -156,8 +155,8 @@ void KipiTestPluginLoader::loadPlugins()
 
     d->kipiPluginLoader = new KIPI::PluginLoader(ignores, d->kipiInterface);
 
-    connect( d->kipiPluginLoader, SIGNAL(replug()),
-             this, SLOT(slotKipiPluginsPlug()) );
+    connect(d->kipiPluginLoader, SIGNAL(replug()),
+            this, SLOT(slotKipiPluginsPlug()));
 
     d->kipiPluginLoader->loadPlugins();
 }

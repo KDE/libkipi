@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
 
-    KGlobal::locale()->insertCatalog("kipiplugins");
+    KGlobal::locale()->insertCatalog("libkipi");
     KGlobal::locale()->insertCatalog("libkdcraw");
 
     KipiTestMainWindow* mainWindow = new KipiTestMainWindow();

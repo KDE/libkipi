@@ -54,10 +54,9 @@ private Q_SLOTS:
 private:
 
     class KipiTestMainWindowPriv;
-    KipiTestMainWindowPriv * const d;
+    KipiTestMainWindowPriv* const d;
 
     static KipiTestMainWindow* m_instance;
-
 };
 
 } // namespace KXMLKipiCmd

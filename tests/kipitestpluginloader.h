@@ -80,7 +80,6 @@ private:
 
     class KipiTestPluginLoaderPriv;
     KipiTestPluginLoaderPriv* const d;
-
 };
 
 } // namespace KXMLKipiCmd

@@ -54,19 +54,18 @@ public:
     {
     }
 
-    KSharedConfig::Ptr  config;
-    KToggleAction*      showMenuBarAction;
+    KSharedConfig::Ptr config;
+    KToggleAction*     showMenuBarAction;
 };
 
 KipiTestMainWindow::KipiTestMainWindow()
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
     setXMLFile("kxmlkipicmdui.rc");
-
     setObjectName("kxmlkipicmd");
 
-    m_instance = this;
-    d->config = KGlobal::config();
+    m_instance           = this;
+    d->config            = KGlobal::config();
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
     // Ensure creation
