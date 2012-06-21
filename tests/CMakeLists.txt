@@ -26,8 +26,7 @@
 
 PROJECT(kxmlkipitest)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}
-                   )
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
 SET(kxmlkipicmd_sources
     kipiinterface.cpp
@@ -52,5 +51,5 @@ TARGET_LINK_LIBRARIES(kxmlkipicmd
 # for now we do not need HelloWorld plugin
 ADD_SUBDIRECTORY(helloworld)
 
-INSTALL(TARGETS kxmlkipicmd DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(FILES kxmlkipicmdui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+INSTALL(TARGETS kxmlkipicmd      DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+INSTALL(FILES   kxmlkipicmdui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
