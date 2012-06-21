@@ -38,6 +38,10 @@ public:
     KipiTestMainWindow();
     ~KipiTestMainWindow();
 
+private Q_SLOTS:
+
+    void slotShowMenuBar();
+
 private:
 
     class KipiTestMainWindowPriv;

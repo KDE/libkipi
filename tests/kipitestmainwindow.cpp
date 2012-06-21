@@ -30,7 +30,9 @@
 #include <ksharedconfig.h>
 #include <kaction.h>
 #include <ktoggleaction.h>
-#include <kaboutdata.h>
+#include <kstandardaction.h>
+#include <kmenubar.h>
+#include <kactioncollection.h>
 
 // Local includes
 
@@ -58,6 +60,7 @@ KipiTestMainWindow::KipiTestMainWindow()
     setObjectName("kxmlkipicmd");
 
     d->config = KGlobal::config();
+    d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
     setupGUI(Default, xmlFile());
 }
@@ -65,4 +68,9 @@ KipiTestMainWindow::KipiTestMainWindow()
 KipiTestMainWindow::~KipiTestMainWindow()
 {
     delete d;
+}
+
+void KipiTestMainWindow::slotShowMenuBar()
+{
+    menuBar()->setVisible(d->showMenuBarAction->isChecked());
 }
