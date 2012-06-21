@@ -33,7 +33,6 @@ class QListWidget;
 
 namespace KXMLKipiCmd
 {
-
 class KipiInterface;
 
 class KipiUploadWidget : public KIPI::UploadWidget
@@ -42,14 +41,14 @@ class KipiUploadWidget : public KIPI::UploadWidget
 
 public:
 
-    KipiUploadWidget(KipiInterface* interface, QWidget* parent);
+    KipiUploadWidget(KipiInterface* const interface, QWidget* const parent);
     virtual ~KipiUploadWidget();
 
     virtual KIPI::ImageCollection selectedImageCollection() const;
 
 public Q_SLOTS:
 
-    void on_m_listWidget_itemSelectionChanged();
+    void slotItemSelectionChanged();
 
 private:
 
