@@ -168,17 +168,6 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     kipiPlugActions(true);
 
     d->kipiCategoryMap.clear();
-
-    // Remove Advanced slideshow kipi-plugin action from View/Slideshow menu.
-//    foreach(QAction* const action, d->app->slideShowMenu()->menu()->actions())
-//    {
-//        if (action->objectName() == QString("advancedslideshow"))
-//        {
-//            d->app->slideShowMenu()->removeAction(action);
-//            break;
-//        }
-//    }
-
     d->kipipluginsActionCollection->clear();
 
     KIPI::PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
@@ -221,12 +210,6 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
                     category = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
                     d->kipiCategoryMap.insert(cat, category);
                 }
-
-//                if (cat == KIPI::ToolsPlugin && actionName == QString("advancedslideshow"))
-//                {
-//                    // Special wrap for Advanced Slideshow plugin action which need to be pluged to View/Slideshow menu.
-//                    d->app->slideShowMenu()->addAction(action);
-//                }
 
                 category->addAction(actionName, qobject_cast<QAction*>(action));
             }
