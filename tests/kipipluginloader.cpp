@@ -24,4 +24,4 @@
 
 // Local includes
 
-#include "kipipluginloader.h"
+#include "kipipluginloader.moc"
