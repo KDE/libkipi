@@ -31,19 +31,21 @@
 
 class QListWidget;
 
+using namespace KIPI;
+
 namespace KXMLKipiCmd
 {
 
 class KipiInterface;
 
-class KipiImageCollectionSelector : public KIPI::ImageCollectionSelector
+class KipiImageCollectionSelector : public ImageCollectionSelector
 {
     Q_OBJECT
 
 public:
 
     KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent = 0);
-    virtual QList< KIPI::ImageCollection > selectedImageCollections () const;
+    virtual QList< ImageCollection > selectedImageCollections () const;
 
 public Q_SLOTS:
 
@@ -53,7 +55,7 @@ private:
 
     KipiInterface*               m_interface;
     QListWidget*                 m_listWidget;
-    QList<KIPI::ImageCollection> m_allAlbums;
+    QList<ImageCollection> m_allAlbums;
 };
 
 } // namespace KXMLKipiCmd

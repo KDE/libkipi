@@ -47,7 +47,7 @@ namespace KXMLKipiCmd
 {
 
 KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent)
-    : KIPI::ImageCollectionSelector(parent),
+    : ImageCollectionSelector(parent),
       m_interface(interface),
       m_listWidget(0)
 {
@@ -65,7 +65,7 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
     // add all albums to the list widget:
     m_allAlbums = m_interface->allAlbums();
 
-    for (QList<KIPI::ImageCollection>::const_iterator it = m_allAlbums.constBegin();
+    for (QList<ImageCollection>::const_iterator it = m_allAlbums.constBegin();
          it!=m_allAlbums.constEnd(); ++it)
     {
         m_listWidget->addItem(it->name());
@@ -78,10 +78,10 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
     //TODO: select albums specified on the command line
 }
 
-QList< KIPI::ImageCollection > KipiImageCollectionSelector::selectedImageCollections () const
+QList< ImageCollection > KipiImageCollectionSelector::selectedImageCollections () const
 {
     // return the selected albums:
-    QList<KIPI::ImageCollection> result;
+    QList<ImageCollection> result;
     const QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
 
     for (QList<QListWidgetItem*>::const_iterator it = selectedItems.constBegin();

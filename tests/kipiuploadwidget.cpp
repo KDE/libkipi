@@ -47,7 +47,7 @@ namespace KXMLKipiCmd
 {
 
 KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* const parent)
-    : KIPI::UploadWidget(parent),
+    : UploadWidget(parent),
       m_interface(interface),
       m_listWidget(0)
 {
@@ -64,7 +64,7 @@ KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* cons
     // add all albums to the list widget:
     m_allAlbums = m_interface->allAlbums();
 
-    for (QList<KIPI::ImageCollection>::const_iterator it = m_allAlbums.constBegin(); it != m_allAlbums.constEnd(); ++it)
+    for (QList<ImageCollection>::const_iterator it = m_allAlbums.constBegin(); it != m_allAlbums.constEnd(); ++it)
     {
         m_listWidget->addItem(it->name());
 
@@ -78,7 +78,7 @@ KipiUploadWidget::~KipiUploadWidget()
 {
 }
 
-KIPI::ImageCollection KipiUploadWidget::selectedImageCollection() const
+ImageCollection KipiUploadWidget::selectedImageCollection() const
 {
     // return the selected albums (should be only one):
     const QList<QListWidgetItem*> selectedItems = m_listWidget->selectedItems();
@@ -87,7 +87,7 @@ KIPI::ImageCollection KipiUploadWidget::selectedImageCollection() const
     {
         // this should not happen!!! the calling application will probably crash now...
         kDebug() << "Nothing selected... impossible!";
-        return KIPI::ImageCollection(0);
+        return ImageCollection(0);
     }
 
     const int row = m_listWidget->row( selectedItems.at(0) );

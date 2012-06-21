@@ -69,7 +69,7 @@ public:
     static const QString        batchActionName;
     static const QString        albumsActionName;
 
-    KIPI::PluginLoader*         kipiPluginLoader;
+    PluginLoader*         kipiPluginLoader;
     KipiInterface*              kipiInterface;
     KipiTestMainWindow*         app;
 
@@ -114,7 +114,7 @@ KActionCollection* KipiTestPluginLoader::pluginsActionCollection() const
     return d->kipipluginsActionCollection;
 }
 
-QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(KIPI::Category cat) const
+QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(Category cat) const
 {
     KActionCategory* category = d->kipiCategoryMap[cat];
 
@@ -153,7 +153,7 @@ void KipiTestPluginLoader::loadPlugins()
     // These plugins have been replaced by digiKam core solution with 2.6.0
     ignores.append("JPEGLossless");
 
-    d->kipiPluginLoader = new KIPI::PluginLoader(ignores, d->kipiInterface);
+    d->kipiPluginLoader = new PluginLoader(ignores, d->kipiInterface);
 
     connect(d->kipiPluginLoader, SIGNAL(replug()),
             this, SLOT(slotKipiPluginsPlug()));
@@ -169,7 +169,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     d->kipiCategoryMap.clear();
     d->kipipluginsActionCollection->clear();
 
-    KIPI::PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
+    PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
     int cpt                             = 0;
 
     // List of obsolete tool actions to not load
@@ -183,9 +183,9 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     pluginActionsDisabled << QString("batch_color_images");             // Obsolete since 1.2.0, replaced by BQM color tool.
     pluginActionsDisabled << QString("batch_filter_images");            // Obsolete since 1.2.0, replaced by BQM enhance tool.
 
-    for (KIPI::PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
+    for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
-        KIPI::Plugin* plugin = (*it)->plugin();
+        Plugin* plugin = (*it)->plugin();
 
         if (!plugin || !(*it)->shouldLoad())
         {
@@ -198,7 +198,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
         foreach(KAction* const action, plugin->actions())
         {
             QString actionName(action->objectName());
-            KIPI::Category cat = plugin->category(action);
+            Category cat = plugin->category(action);
 
             if (!pluginActionsDisabled.contains(actionName))
             {
@@ -225,15 +225,15 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     // Check if the Export/Import/tools Plugin lists are empty, if so, add an empty action which tells the user that no
     // Export/Import/tools plugins are available. It is more user-friendly to present some menu entry,
     // instead of leaving it completely empty.
-    checkEmptyCategory(KIPI::ExportPlugin);
-    checkEmptyCategory(KIPI::ImportPlugin);
-    checkEmptyCategory(KIPI::ToolsPlugin);
+    checkEmptyCategory(ExportPlugin);
+    checkEmptyCategory(ImportPlugin);
+    checkEmptyCategory(ToolsPlugin);
 
     // Create plugin GUI menus in application.
     kipiPlugActions();
 }
 
-void KipiTestPluginLoader::checkEmptyCategory(KIPI::Category cat)
+void KipiTestPluginLoader::checkEmptyCategory(Category cat)
 {
     KActionCategory* category = d->kipiCategoryMap[cat];
 
@@ -259,42 +259,42 @@ void KipiTestPluginLoader::kipiPlugActions(bool unplug)
     }
     else
     {
-        d->app->plugActionList(d->exportActionName, kipiActionsByCategory(KIPI::ExportPlugin));
-        d->app->plugActionList(d->importActionName, kipiActionsByCategory(KIPI::ImportPlugin));
-        d->app->plugActionList(d->imagesActionName, kipiActionsByCategory(KIPI::ImagesPlugin));
-        d->app->plugActionList(d->toolsActionName,  kipiActionsByCategory(KIPI::ToolsPlugin));
-        d->app->plugActionList(d->batchActionName,  kipiActionsByCategory(KIPI::BatchPlugin));
-        d->app->plugActionList(d->albumsActionName, kipiActionsByCategory(KIPI::CollectionsPlugin));
+        d->app->plugActionList(d->exportActionName, kipiActionsByCategory(ExportPlugin));
+        d->app->plugActionList(d->importActionName, kipiActionsByCategory(ImportPlugin));
+        d->app->plugActionList(d->imagesActionName, kipiActionsByCategory(ImagesPlugin));
+        d->app->plugActionList(d->toolsActionName,  kipiActionsByCategory(ToolsPlugin));
+        d->app->plugActionList(d->batchActionName,  kipiActionsByCategory(BatchPlugin));
+        d->app->plugActionList(d->albumsActionName, kipiActionsByCategory(CollectionsPlugin));
     }
 }
 
-QString KipiTestPluginLoader::categoryName(KIPI::Category cat) const
+QString KipiTestPluginLoader::categoryName(Category cat) const
 {
     QString res;
 
     switch (cat)
     {
-        case KIPI::ExportPlugin:
+        case ExportPlugin:
             res = i18n("Export Tools");
             break;
 
-        case KIPI::ImportPlugin:
+        case ImportPlugin:
             res = i18n("Import Tools");
             break;
 
-        case KIPI::ImagesPlugin:
+        case ImagesPlugin:
             res = i18n("Images Tools");
             break;
 
-        case KIPI::ToolsPlugin:
+        case ToolsPlugin:
             res = i18n("Miscellaneous Tools");
             break;
 
-        case KIPI::BatchPlugin:
+        case BatchPlugin:
             res = i18n("Batch Tools");
             break;
 
-        case KIPI::CollectionsPlugin:
+        case CollectionsPlugin:
             res = i18n("Albums Tools");
             break;
 

@@ -29,10 +29,12 @@
 
 #include "imagecollectionshared.h"
 
+using namespace KIPI;
+
 namespace KXMLKipiCmd
 {
 
-class KipiImageCollectionShared : public KIPI::ImageCollectionShared
+class KipiImageCollectionShared : public ImageCollectionShared
 {
 public:
 

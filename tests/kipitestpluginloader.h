@@ -39,6 +39,8 @@ class QAction;
 
 class KActionCollection;
 
+using namespace KIPI;
+
 namespace KXMLKipiCmd
 {
 
@@ -50,7 +52,7 @@ public:
 
     KipiTestPluginLoader(QObject* const parent);
 
-    QList<QAction*>    kipiActionsByCategory(KIPI::Category cat) const;
+    QList<QAction*>    kipiActionsByCategory(Category cat) const;
 
     KActionCollection* pluginsActionCollection() const;
 
@@ -60,7 +62,7 @@ public:
 
 private Q_SLOTS:
 
-    /** Called by KIPI::PluginLoader when plugins list must be reloaded
+    /** Called by PluginLoader when plugins list must be reloaded
      */
     void slotKipiPluginsPlug();
 
@@ -70,9 +72,9 @@ private:
 
     void loadPlugins();
 
-    void checkEmptyCategory(KIPI::Category cat);
+    void checkEmptyCategory(Category cat);
 
-    QString categoryName(KIPI::Category cat) const;
+    QString categoryName(Category cat) const;
 
 private:
 
