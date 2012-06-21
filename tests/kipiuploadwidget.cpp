@@ -43,6 +43,9 @@
 
 #include "kipiinterface.h"
 
+namespace KXMLKipiCmd
+{
+
 KipiUploadWidget::KipiUploadWidget(KipiInterface* interface, QWidget* parent)
     : KIPI::UploadWidget(parent),
       m_interface(interface),
@@ -93,3 +96,5 @@ void KipiUploadWidget::on_m_listWidget_itemSelectionChanged()
 {
     emit(selectionChanged());
 }
+
+} // namespace KXMLKipiCmd

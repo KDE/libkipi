@@ -29,6 +29,9 @@
 
 #include <kxmlguiwindow.h>
 
+namespace KXMLKipiCmd
+{
+
 class KipiTestMainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
@@ -48,5 +51,7 @@ private:
     KipiTestMainWindowPriv * const d;
 
 };
+
+} // namespace KXMLKipiCmd
 
 #endif // KIPITESTMAINWINDOW_H

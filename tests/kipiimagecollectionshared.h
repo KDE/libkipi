@@ -29,6 +29,9 @@
 
 #include <libkipi/imagecollectionshared.h>
 
+namespace KXMLKipiCmd
+{
+
 class KipiImageCollectionShared : public KIPI::ImageCollectionShared
 {
 public:
@@ -38,13 +41,12 @@ public:
     KipiImageCollectionShared(const KUrl::List& images);
     virtual ~KipiImageCollectionShared();
 
-    virtual QString name();
+    virtual QString    name();
     virtual KUrl::List images();
-    virtual KUrl path();
-    virtual KUrl uploadPath();
-    virtual KUrl uploadRoot();
-    virtual bool isDirectory();
-
+    virtual KUrl       path();
+    virtual KUrl       uploadPath();
+    virtual KUrl       uploadRoot();
+    virtual bool       isDirectory();
 
     // functions used internally:
     void addImages(const KUrl::List& images);
@@ -55,5 +57,7 @@ private:
     KUrl       m_albumPath;
     KUrl::List m_images;
 };
+
+} // namespace KXMLKipiCmd
 
 #endif // __KIPIIMAGECOLLECTIONSHARED_H

@@ -31,6 +31,9 @@
 
 class QListWidget;
 
+namespace KXMLKipiCmd
+{
+
 class KipiInterface;
 
 class KipiUploadWidget : public KIPI::UploadWidget
@@ -54,5 +57,7 @@ private:
     QListWidget*                 m_listWidget;
     QList<KIPI::ImageCollection> m_allAlbums;
 };
+
+} // namespace KXMLKipiCmd
 
 #endif // __KIPIUPLOADWIDGET_H

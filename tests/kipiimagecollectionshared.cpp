@@ -28,6 +28,9 @@
 
 #include <QDir>
 
+namespace KXMLKipiCmd
+{
+
 KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
     : KIPI::ImageCollectionShared(),
       m_albumPath(albumPath),
@@ -96,3 +99,5 @@ bool KipiImageCollectionShared::isDirectory()
 {
     return true;
 }
+
+} // namespace KXMLKipiCmd

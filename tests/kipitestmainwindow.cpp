@@ -34,8 +34,8 @@
 #include <kmenubar.h>
 #include <kactioncollection.h>
 
-// Local includes
-
+namespace KXMLKipiCmd
+{
 
 class KipiTestMainWindow::KipiTestMainWindowPriv
 {
@@ -74,3 +74,5 @@ void KipiTestMainWindow::slotShowMenuBar()
 {
     menuBar()->setVisible(d->showMenuBarAction->isChecked());
 }
+
+} // namespace KXMLKipiCmd

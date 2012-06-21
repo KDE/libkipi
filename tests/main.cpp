@@ -58,6 +58,7 @@
 #include "kipitestmainwindow.h"
 
 using namespace KIPI;
+using namespace KXMLKipiCmd;
 
 /**
 * \brief Returns the name of a Kipi::Category

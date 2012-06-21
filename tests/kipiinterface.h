@@ -41,6 +41,9 @@ namespace KIPI
 
 using namespace KIPI;
 
+namespace KXMLKipiCmd
+{
+
 class KipiInterface : public Interface
 {
     Q_OBJECT
@@ -92,5 +95,7 @@ private:
     friend class KipiUploadWidget;
     friend class KipiImageCollectionSelector;
 };
+
+} // namespace KXMLKipiCmd
 
 #endif // __KIPIINTERFACE_H

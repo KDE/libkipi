@@ -25,3 +25,10 @@
 // Local includes
 
 #include "kipipluginloader.moc"
+
+namespace KXMLKipiCmd
+{
+
+
+
+} // namespace KXMLKipiCmd

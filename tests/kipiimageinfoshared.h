@@ -33,6 +33,9 @@
 
 using namespace KIPI;
 
+namespace KXMLKipiCmd
+{
+
 class KipiImageInfoShared : public ImageInfoShared
 {
 public:
@@ -51,5 +54,6 @@ private:
     KipiImageInfoSharedPrivate* const d;
 };
 
-#endif // KIPIIMAGEINFOSHARED_H
+} // namespace KXMLKipiCmd
 
+#endif // KIPIIMAGEINFOSHARED_H

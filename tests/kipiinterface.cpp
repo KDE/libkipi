@@ -50,6 +50,9 @@
 #include "kipiuploadwidget.h"
 #include "kipiimagecollectionshared.h"
 
+namespace KXMLKipiCmd
+{
+
 KipiInterface::KipiInterface(QObject* const parent, const char* name)
     : Interface(parent, name),
       m_selectedImages(),
@@ -230,3 +233,5 @@ void KipiInterface::slotFailedKDEPreview(const KFileItem& item)
 {
     emit gotThumbnail(item.url(), QPixmap());
 }
+
+} // namespace KXMLKipiCmd

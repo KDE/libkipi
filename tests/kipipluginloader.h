@@ -33,10 +33,15 @@
 
 #include <libkipi/plugin.h>
 
+namespace KXMLKipiCmd
+{
+
 class KipiPluginLoader : public QObject
 {
     Q_OBJECT
 
 };
+
+} // namespace KXMLKipiCmd
 
 #endif // KIPIPLUGINLOADER_H

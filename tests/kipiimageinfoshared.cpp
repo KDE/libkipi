@@ -35,6 +35,9 @@
 
 #include <kdebug.h>
 
+namespace KXMLKipiCmd
+{
+
 class KipiImageInfoShared::KipiImageInfoSharedPrivate
 {
 public:
@@ -108,3 +111,5 @@ void KipiImageInfoShared::delAttributes(const QStringList& attributes)
     kDebug() << "void KipiImageInfoShared::delAttributes()";
     kDebug() << QString("attributes : \"%1\"").arg(attributes.join(", "));
 }
+
+} // namespace KXMLKipiCmd

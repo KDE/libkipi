@@ -43,7 +43,10 @@
 
 #include "kipiinterface.h"
 
-KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* interface, QWidget* parent)
+namespace KXMLKipiCmd
+{
+
+KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent)
     : KIPI::ImageCollectionSelector(parent),
       m_interface(interface),
       m_listWidget(0)
@@ -97,3 +100,5 @@ void KipiImageCollectionSelector::on_m_listWidget_itemSelectionChanged()
 {
     emit(selectionChanged());
 }
+
+} // namespace KXMLKipiCmd
