@@ -32,6 +32,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_kxmlhelloworld
                       kipi
                      )
 
-INSTALL(TARGETS kipiplugin_kxmlhelloworld DESTINATION ${PLUGIN_INSTALL_DIR})
-
-INSTALL(FILES kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_kxmlhelloworld         DESTINATION ${PLUGIN_INSTALL_DIR}  )
+INSTALL(FILES   kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})

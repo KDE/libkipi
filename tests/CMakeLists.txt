@@ -24,11 +24,9 @@
 #
 # ============================================================
 
-PROJECT(kxmlkipitest)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../libkipi)
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
-
-SET(kxmlkipicmd_sources
+SET(kxmlkipicmd_SRCS
     kipiinterface.cpp
     kipiimagecollectionshared.cpp
     kipiimageinfoshared.cpp
@@ -39,12 +37,13 @@ SET(kxmlkipicmd_sources
     main.cpp
    )
 
-KDE4_ADD_EXECUTABLE(kxmlkipicmd ${kxmlkipicmd_sources})
+KDE4_ADD_EXECUTABLE(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 TARGET_LINK_LIBRARIES(kxmlkipicmd
+                      kipi
+                      ${QT_QTGUI_LIBRARY}
                       ${KDE4_UI_LIBS}
                       ${KDE4_KPARTS_LIBS}
-                      kipi
                      )
 
 # for now we do not need HelloWorld plugin
