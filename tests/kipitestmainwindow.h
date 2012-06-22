@@ -45,6 +45,7 @@ public:
 
 private:
 
+    void setupActions();
     void loadPlugins();
 
 private Q_SLOTS:

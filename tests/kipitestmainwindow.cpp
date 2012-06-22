@@ -62,11 +62,13 @@ public:
 
     KipiTestMainWindowPriv() :
         config(0),
+        quitAction(0),
         showMenuBarAction(0)
     {
     }
 
     KSharedConfig::Ptr config;
+    KAction*           quitAction;
     KToggleAction*     showMenuBarAction;
 };
 
@@ -79,11 +81,8 @@ KipiTestMainWindow::KipiTestMainWindow()
 
     m_instance           = this;
     d->config            = KGlobal::config();
-    d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
-    KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());
-    KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());
-    KStandardAction::preferences(this,       SLOT(slotSetup()),        actionCollection());
+    setupActions();
 
     // Ensure creation
     KipiTestPluginLoader::instance();
@@ -104,6 +103,17 @@ KipiTestMainWindow::~KipiTestMainWindow()
 KipiTestMainWindow* KipiTestMainWindow::instance()
 {
     return m_instance;
+}
+
+void KipiTestMainWindow::setupActions()
+{
+    d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
+    d->quitAction = KStandardAction::quit(this, SLOT(close()), this);
+    actionCollection()->addAction("app_exit", d->quitAction);
+
+    KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());
+    KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());
+    KStandardAction::preferences(this,       SLOT(slotSetup()),        actionCollection());
 }
 
 void KipiTestMainWindow::loadPlugins()
