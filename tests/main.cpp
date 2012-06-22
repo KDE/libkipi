@@ -67,15 +67,14 @@ int main(int argc, char* argv[])
     options.add("!selectedalbums <album>",  ki18n("Selected albums"));
     options.add("!selectedimages <images>", ki18n("Selected images"));
     options.add("!allalbums <albums>",      ki18n("All albums"));
-    options.add("+[images]", ki18n("List of images"));
-    options.add("+[albums]", ki18n("Selected albums"));
+    options.add("+[images]",                ki18n("List of images"));
+    options.add("+[albums]",                ki18n("Selected albums"));
     KCmdLineArgs::addCmdLineOptions(options);
 
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
 
     KGlobal::locale()->insertCatalog("libkipi");
-    KGlobal::locale()->insertCatalog("libkdcraw");
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
@@ -123,7 +122,7 @@ int main(int argc, char* argv[])
         {
             if (startList == 0)
             {
-                kError()<<"startList==0";
+                kError() << "startList is null";
                 args->usageError(i18n("Please specify how the filenames you provided should be used."));
             }
             else

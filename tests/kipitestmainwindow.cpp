@@ -85,9 +85,9 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
     setObjectName("kxmlkipicmd");
     setMinimumSize(QSize(800, 600));
 
-    m_instance           = this;
-    d->config            = KGlobal::config();
-    d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
+    m_instance       = this;
+    d->config        = KGlobal::config();
+    d->kipiInterface = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
 
     if (!selectedImages.empty())
     {
@@ -128,7 +128,7 @@ KipiTestMainWindow* KipiTestMainWindow::instance()
 void KipiTestMainWindow::setupActions()
 {
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
-    d->quitAction = KStandardAction::quit(this, SLOT(close()), this);
+    d->quitAction        = KStandardAction::quit(this,        SLOT(close()),           actionCollection());
     actionCollection()->addAction("app_exit", d->quitAction);
 
     KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());

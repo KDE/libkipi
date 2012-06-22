@@ -170,7 +170,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     d->kipipluginsActionCollection->clear();
 
     PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
-    int cpt                             = 0;
+    int cpt                       = 0;
 
     // List of obsolete tool actions to not load
 

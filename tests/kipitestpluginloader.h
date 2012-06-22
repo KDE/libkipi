@@ -54,7 +54,7 @@ public:
 
     KipiTestPluginLoader(QObject* const parent, KipiInterface* const interface);
 
-    QList<QAction*>    kipiActionsByCategory(Category cat) const;
+    QList<QAction*> kipiActionsByCategory(Category cat) const;
 
     KActionCollection* pluginsActionCollection() const;
 
@@ -73,9 +73,7 @@ private:
     ~KipiTestPluginLoader();
 
     void loadPlugins();
-
     void checkEmptyCategory(Category cat);
-
     QString categoryName(Category cat) const;
 
 private:
