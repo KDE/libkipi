@@ -30,6 +30,7 @@
 
 // KDE includes
 
+#include <kdialog.h>
 #include <kconfig.h>
 #include <ksharedconfig.h>
 #include <kaction.h>
@@ -40,6 +41,10 @@
 #include <kshortcutsdialog.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
+
+// LibKIPI includes
+
+#include "pluginloader.h"
 
 // Local includes
 
@@ -75,9 +80,9 @@ KipiTestMainWindow::KipiTestMainWindow()
     d->config            = KGlobal::config();
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
-    KStandardAction::keyBindings(this,            SLOT(slotEditKeys()),          actionCollection());
-    KStandardAction::configureToolbars(this,      SLOT(slotConfToolbars()),      actionCollection());
-    KStandardAction::preferences(this,            SLOT(slotSetup()),             actionCollection());
+    KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());
+    KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());
+    KStandardAction::preferences(this,       SLOT(slotSetup()),        actionCollection());
 
     // Ensure creation
     KipiTestPluginLoader::instance();
@@ -135,7 +140,13 @@ void KipiTestMainWindow::slotConfToolbars()
 
 void KipiTestMainWindow::slotSetup()
 {
-    // TODO
+    QPointer<KDialog> dlg    = new KDialog(0);
+    ConfigWidget* kipiConfig = PluginLoader::instance()->configWidget(dlg);
+    dlg->setMainWidget(kipiConfig);
+    dlg->setInitialSize(QSize(600, 400));
+    dlg->exec();
+    kipiConfig->apply();
+    delete dlg;
 }
 
 } // namespace KXMLKipiCmd
