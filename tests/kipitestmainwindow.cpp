@@ -49,6 +49,7 @@
 // Local includes
 
 #include "kipitestpluginloader.h"
+#include "kipiinterface.h"
 
 namespace KXMLKipiCmd
 {
@@ -63,16 +64,21 @@ public:
     KipiTestMainWindowPriv() :
         config(0),
         quitAction(0),
-        showMenuBarAction(0)
+        showMenuBarAction(0),
+        kipiInterface(0)
     {
     }
 
     KSharedConfig::Ptr config;
     KAction*           quitAction;
     KToggleAction*     showMenuBarAction;
+    KipiInterface*     kipiInterface;
+
 };
 
-KipiTestMainWindow::KipiTestMainWindow()
+KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
+                                       const KUrl::List& selectedAlbums,
+                                       const KUrl::List& allAlbums)
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
     setXMLFile("kxmlkipicmdui.rc");
@@ -81,6 +87,20 @@ KipiTestMainWindow::KipiTestMainWindow()
 
     m_instance           = this;
     d->config            = KGlobal::config();
+    d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
+
+    if (!selectedImages.empty())
+    {
+        d->kipiInterface->addSelectedImages(selectedImages);
+    }
+    if (!selectedAlbums.empty())
+    {
+        d->kipiInterface->addSelectedAlbums(selectedAlbums);
+    }
+    if (!allAlbums.empty())
+    {
+        d->kipiInterface->addAlbums(allAlbums);
+    }
 
     setupActions();
 
@@ -118,7 +138,7 @@ void KipiTestMainWindow::setupActions()
 
 void KipiTestMainWindow::loadPlugins()
 {
-    new KipiTestPluginLoader(this);
+    new KipiTestPluginLoader(this, d->kipiInterface);
 }
 
 void KipiTestMainWindow::slotShowMenuBar()

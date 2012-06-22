@@ -44,13 +44,15 @@ using namespace KIPI;
 namespace KXMLKipiCmd
 {
 
+class KipiInterface;
+
 class KipiTestPluginLoader : public QObject
 {
     Q_OBJECT
 
 public:
 
-    KipiTestPluginLoader(QObject* const parent);
+    KipiTestPluginLoader(QObject* const parent, KipiInterface* const interface);
 
     QList<QAction*>    kipiActionsByCategory(Category cat) const;
 

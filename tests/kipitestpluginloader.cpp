@@ -69,7 +69,7 @@ public:
     static const QString        batchActionName;
     static const QString        albumsActionName;
 
-    PluginLoader*         kipiPluginLoader;
+    PluginLoader*               kipiPluginLoader;
     KipiInterface*              kipiInterface;
     KipiTestMainWindow*         app;
 
@@ -90,10 +90,11 @@ KipiTestPluginLoader* KipiTestPluginLoader::m_instance = 0;
 
 // -----------------------------------------------
 
-KipiTestPluginLoader::KipiTestPluginLoader(QObject* const parent)
+KipiTestPluginLoader::KipiTestPluginLoader(QObject* const parent, KipiInterface *const interface)
     : QObject(parent), d(new KipiTestPluginLoaderPriv)
 {
     m_instance = this;
+    d->kipiInterface = interface;
 
     loadPlugins();
 }
@@ -131,7 +132,6 @@ void KipiTestPluginLoader::loadPlugins()
     d->kipipluginsActionCollection = new KActionCollection(d->app, KGlobal::mainComponent());
 
     QStringList ignores;
-    d->kipiInterface = new KipiInterface(d->app, "kxmlkipicmd_KIPI_interface");
 
     // List of obsoletes plugins to not load
 

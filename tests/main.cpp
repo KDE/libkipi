@@ -33,6 +33,8 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <kurl.h>
+#include <kdebug.h>
 
 // LibKipi includes
 
@@ -61,6 +63,13 @@ int main(int argc, char* argv[])
                               );
 
     KCmdLineArgs::init(argc, argv, &aboutData);
+    KCmdLineOptions options;
+    options.add("!selectedalbums <album>",  ki18n("Selected albums"));
+    options.add("!selectedimages <images>", ki18n("Selected images"));
+    options.add("!allalbums <albums>",      ki18n("All albums"));
+    options.add("+[images]", ki18n("List of images"));
+    options.add("+[albums]", ki18n("Selected albums"));
+    KCmdLineArgs::addCmdLineOptions(options);
 
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
@@ -68,7 +77,63 @@ int main(int argc, char* argv[])
     KGlobal::locale()->insertCatalog("libkipi");
     KGlobal::locale()->insertCatalog("libkdcraw");
 
-    KipiTestMainWindow* mainWindow = new KipiTestMainWindow();
+    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
+
+    KUrl::List listSelectedImages;
+    KUrl::List listSelectedAlbums;
+    KUrl::List listAllAlbums;
+
+    // determine which with list we start:
+    KUrl::List* startList = 0;
+
+    if (args->isSet("selectedimages"))
+    {
+        startList = &listSelectedImages;
+        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedimages").toUtf8()));
+    }
+    else if (args->isSet("selectedalbums"))
+    {
+        startList = &listSelectedAlbums;
+        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedalbums").toUtf8()));
+    }
+    else if (args->isSet("allalbums"))
+    {
+        startList = &listAllAlbums;
+        startList->append(KCmdLineArgs::makeURL(args->getOption("allalbums").toUtf8()));
+    }
+
+    // append the remaining arguments to the lists:
+    for (int i = 0; i < args->count(); ++i)
+    {
+        const QString argValue = args->arg(i);
+
+        if (argValue == "--selectedimages")
+        {
+            startList = &listSelectedImages;
+        }
+        else if (argValue == "--selectedalbums")
+        {
+            startList = &listSelectedAlbums;
+        }
+        else if (argValue == "--allalbums")
+        {
+            startList = &listAllAlbums;
+        }
+        else
+        {
+            if (startList == 0)
+            {
+                kError()<<"startList==0";
+                args->usageError(i18n("Please specify how the filenames you provided should be used."));
+            }
+            else
+            {
+                startList->append(args->url(i));
+            }
+        }
+    }
+
+    KipiTestMainWindow* mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
     QObject::connect(mainWindow, SIGNAL(destroyed(QObject*)),
                      &app, SLOT(quit()));
 
