@@ -75,6 +75,7 @@ KipiTestMainWindow::KipiTestMainWindow()
 {
     setXMLFile("kxmlkipicmdui.rc");
     setObjectName("kxmlkipicmd");
+    setMinimumSize(QSize(800, 600));
 
     m_instance           = this;
     d->config            = KGlobal::config();
