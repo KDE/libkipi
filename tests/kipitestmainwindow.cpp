@@ -24,6 +24,10 @@
 
 #include "kipitestmainwindow.moc"
 
+// Qt includes
+
+#include <QPointer>
+
 // KDE includes
 
 #include <kconfig.h>
@@ -33,6 +37,9 @@
 #include <kstandardaction.h>
 #include <kmenubar.h>
 #include <kactioncollection.h>
+#include <kshortcutsdialog.h>
+#include <klocale.h>
+#include <kedittoolbar.h>
 
 // Local includes
 
@@ -68,6 +75,10 @@ KipiTestMainWindow::KipiTestMainWindow()
     d->config            = KGlobal::config();
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
 
+    KStandardAction::keyBindings(this,            SLOT(slotEditKeys()),          actionCollection());
+    KStandardAction::configureToolbars(this,      SLOT(slotConfToolbars()),      actionCollection());
+    KStandardAction::preferences(this,            SLOT(slotSetup()),             actionCollection());
+
     // Ensure creation
     KipiTestPluginLoader::instance();
 
@@ -86,14 +97,45 @@ KipiTestMainWindow* KipiTestMainWindow::instance()
     return m_instance;
 }
 
+void KipiTestMainWindow::loadPlugins()
+{
+    new KipiTestPluginLoader(this);
+}
+
 void KipiTestMainWindow::slotShowMenuBar()
 {
     menuBar()->setVisible(d->showMenuBarAction->isChecked());
 }
 
-void KipiTestMainWindow::loadPlugins()
+void KipiTestMainWindow::slotEditKeys()
 {
-    new KipiTestPluginLoader(this);
+    KShortcutsDialog dialog(KShortcutsEditor::AllActions,
+                            KShortcutsEditor::LetterShortcutsAllowed, this);
+    dialog.addCollection(actionCollection(), i18nc("general keyboard shortcuts", "General"));
+    dialog.addCollection(KipiTestPluginLoader::instance()->pluginsActionCollection(), 
+                         i18nc("KIPI-Plugins keyboard shortcuts", "KIPI-Plugins"));
+    dialog.configure();
+}
+
+void KipiTestMainWindow::slotConfToolbars()
+{
+    saveMainWindowSettings(d->config->group("General Settings"));
+    QPointer<KEditToolBar> dlg = new KEditToolBar(actionCollection(), this);
+    dlg->setResourceFile(xmlFile());
+
+    if (dlg->exec())
+    {
+        createGUI(xmlFile());
+        applyMainWindowSettings(d->config->group("General Settings"));
+        KipiTestPluginLoader::instance()->kipiPlugActions();
+    }
+
+    delete dlg;
+}
+
+void KipiTestMainWindow::slotSetup()
+{
+    // TODO
 }
 
 } // namespace KXMLKipiCmd

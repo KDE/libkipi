@@ -50,6 +50,9 @@ private:
 private Q_SLOTS:
 
     void slotShowMenuBar();
+    void slotEditKeys();
+    void slotConfToolbars();
+    void slotSetup();
 
 private:
 
