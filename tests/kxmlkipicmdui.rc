@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="3" name="kxmlkipicmd" >
+<gui version="6" name="kxmlkipicmd" >
 
     <MenuBar>
 
@@ -42,8 +42,6 @@
         <Menu name="settings" noMerge="1"><Text>&amp;Settings</Text>
             <Merge name="StandardToolBarMenuHandler" />
             <Action name="options_show_menubar"/>
-            <Action name="options_show_statusbar"/>
-            <Action name="options_show_toolbar"/>
             <Separator/>
             <Action name="options_configure_keybinding"/>
             <Action name="options_configure_toolbars"/>
@@ -60,6 +58,12 @@
 
     <ToolBar noMerge="1" name="mainToolBar" >
         <text>Main Toolbar</text>
+        <Action name="options_show_menubar" />
+        <Action name="options_show_toolbar" />
+        <Separator/>
+        <Action name="options_configure_keybinding" />
+        <Action name="options_configure_toolbars" />
+        <Action name="options_configure" />
     </ToolBar>
 
     <MainWindow>

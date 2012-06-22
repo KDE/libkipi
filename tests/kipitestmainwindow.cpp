@@ -88,6 +88,9 @@ KipiTestMainWindow::KipiTestMainWindow()
     // Ensure creation
     KipiTestPluginLoader::instance();
 
+    // Provides a menu entry that allows showing/hiding the toolbar(s)
+    setStandardToolBarMenuEnabled(true);
+
     createGUI(xmlFile());
 
     loadPlugins();
