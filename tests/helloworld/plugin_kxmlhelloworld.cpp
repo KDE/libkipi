@@ -128,6 +128,8 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      */
 //    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
+
+    setXMLFile("kipiplugin_kxmlhelloworldui.rc", true);
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
@@ -215,8 +217,6 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
     addAction(d->actionImport);
-
-    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()
