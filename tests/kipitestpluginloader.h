@@ -38,6 +38,7 @@
 // Libkipi includes
 
 #include "plugin.h"
+#include "pluginloader.h"
 
 class QAction;
 
@@ -65,6 +66,8 @@ public:
     void kipiPlugActions(bool unplug = false);
 
     static KipiTestPluginLoader* instance();
+
+    QList<PluginLoader::Info*> pluginList();
 
 private Q_SLOTS:
 

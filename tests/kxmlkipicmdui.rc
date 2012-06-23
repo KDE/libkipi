@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="7" name="kxmlkipicmd" >
+<gui version="8" name="kxmlkipicmd" >
 
     <MenuBar>
 

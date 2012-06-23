@@ -1,4 +1,4 @@
-/** ===========================================================
+﻿/** ===========================================================
  * @file
  *
  * This file is a part of kipi-plugins project
@@ -41,6 +41,8 @@
 #include <kshortcutsdialog.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
+#include <kdebug.h>
+#include <kxmlguifactory.h>
 
 // LibKIPI includes
 
@@ -104,19 +106,20 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
 
     setupActions();
 
-    // Ensure creation
-    KipiTestPluginLoader::instance();
-
     // Provides a menu entry that allows showing/hiding the toolbar(s)
     setStandardToolBarMenuEnabled(true);
-
-    createGUI(xmlFile());
 
     loadPlugins();
 }
 
 KipiTestMainWindow::~KipiTestMainWindow()
 {
+    // Just for debuggin purposes
+    foreach (KXMLGUIClient* client, childClients())
+    {
+        QObject* obj = dynamic_cast<QObject*>(client);
+        kDebug() << obj->objectName();
+    }
     delete d;
 }
 
@@ -134,11 +137,19 @@ void KipiTestMainWindow::setupActions()
     KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());
     KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());
     KStandardAction::preferences(this,       SLOT(slotSetup()),        actionCollection());
+
+    createGUI(xmlFile());
 }
 
 void KipiTestMainWindow::loadPlugins()
 {
     new KipiTestPluginLoader(this, d->kipiInterface);
+
+    foreach (PluginLoader::Info* plugin, KipiTestPluginLoader::instance()->pluginList())
+    {
+        guiFactory()->addClient(plugin->plugin());
+        insertChildClient(plugin->plugin());
+    }
 }
 
 void KipiTestMainWindow::slotShowMenuBar()
@@ -151,7 +162,7 @@ void KipiTestMainWindow::slotEditKeys()
     KShortcutsDialog dialog(KShortcutsEditor::AllActions,
                             KShortcutsEditor::LetterShortcutsAllowed, this);
     dialog.addCollection(actionCollection(), i18nc("general keyboard shortcuts", "General"));
-    dialog.addCollection(KipiTestPluginLoader::instance()->pluginsActionCollection(), 
+    dialog.addCollection(KipiTestPluginLoader::instance()->pluginsActionCollection(),
                          i18nc("KIPI-Plugins keyboard shortcuts", "KIPI-Plugins"));
     dialog.configure();
 }
@@ -164,9 +175,9 @@ void KipiTestMainWindow::slotConfToolbars()
 
     if (dlg->exec())
     {
-        createGUI(xmlFile());
         applyMainWindowSettings(d->config->group("General Settings"));
         KipiTestPluginLoader::instance()->kipiPlugActions();
+        createGUI(xmlFile());
     }
 
     delete dlg;

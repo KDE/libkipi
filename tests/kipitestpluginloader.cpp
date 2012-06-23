@@ -37,10 +37,7 @@
 #include <kaction.h>
 #include <kdebug.h>
 #include <kxmlguiclient.h>
-
-// LibKIPI includes
-
-#include "pluginloader.h"
+#include <kxmlguifactory.h>
 
 // Local includes
 
@@ -95,7 +92,6 @@ KipiTestPluginLoader::KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInte
     : QObject(parent), d(new KipiTestPluginLoaderPriv)
 {
     m_instance       = this;
-    d->app           = parent;
     d->kipiInterface = interface;
 
     loadPlugins();
@@ -115,6 +111,11 @@ KipiTestPluginLoader* KipiTestPluginLoader::instance()
 KActionCollection* KipiTestPluginLoader::pluginsActionCollection() const
 {
     return d->kipipluginsActionCollection;
+}
+
+QList<KIPI::PluginLoader::Info*> KipiTestPluginLoader::pluginList()
+{
+    return d->kipiPluginLoader->pluginList();
 }
 
 QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(Category cat) const
@@ -196,8 +197,6 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
         ++cpt;
         plugin->setup(d->app);
-        d->app->insertChildClient(plugin);
-        kDebug() << "------ " << plugin->xmlFile();
 
         foreach(KAction* const action, plugin->actions())
         {
