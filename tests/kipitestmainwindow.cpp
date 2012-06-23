@@ -114,12 +114,6 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
 
 KipiTestMainWindow::~KipiTestMainWindow()
 {
-    // Just for debuggin purposes
-    foreach (KXMLGUIClient* client, childClients())
-    {
-        QObject* obj = dynamic_cast<QObject*>(client);
-        kDebug() << obj->objectName();
-    }
     delete d;
 }
 
@@ -148,7 +142,7 @@ void KipiTestMainWindow::loadPlugins()
     foreach (PluginLoader::Info* plugin, KipiTestPluginLoader::instance()->pluginList())
     {
         guiFactory()->addClient(plugin->plugin());
-        insertChildClient(plugin->plugin());
+//        insertChildClient(plugin->plugin());
     }
 }
 
@@ -170,17 +164,17 @@ void KipiTestMainWindow::slotEditKeys()
 void KipiTestMainWindow::slotConfToolbars()
 {
     saveMainWindowSettings(d->config->group("General Settings"));
-    QPointer<KEditToolBar> dlg = new KEditToolBar(actionCollection(), this);
-    dlg->setResourceFile(xmlFile());
+    KEditToolBar dlg(factory(), this);
 
-    if (dlg->exec())
-    {
-        applyMainWindowSettings(d->config->group("General Settings"));
-        KipiTestPluginLoader::instance()->kipiPlugActions();
-        createGUI(xmlFile());
-    }
+    connect(&dlg, SIGNAL(newToolBarConfig()),
+            this, SLOT(slotNewToolbarConfig()));
 
-    delete dlg;
+    dlg.exec();
+}
+
+void KipiTestMainWindow::slotNewToolbarConfig()
+{
+    applyMainWindowSettings(KGlobal::config()->group("General Settings"));
 }
 
 void KipiTestMainWindow::slotSetup()
