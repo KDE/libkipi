@@ -50,6 +50,7 @@
 #include <klibloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kstandarddirs.h>
 
 /// This is all libkipi header includes in this tool.
 
@@ -133,7 +134,8 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      *  application gui. The recommended naming rule for the ui file is:
      *  nameofthepluginui.rc
      */
-    setXMLFile("kipiplugin_kxmlhelloworldui.rc", true);
+    QString uiFile = KStandardDirs::locate("data", "kipiplugin_kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc");
+    setXMLFile(uiFile, true);
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
