@@ -129,6 +129,10 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
 //    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
+    /** This is needed to setup the plugin gui and to merge with the kipi host
+     *  application gui. The recommended naming rule for the ui file is:
+     *  nameofthepluginui.rc
+     */
     setXMLFile("kipiplugin_kxmlhelloworldui.rc", true);
 }
 
