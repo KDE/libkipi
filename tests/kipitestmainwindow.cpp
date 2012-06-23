@@ -142,7 +142,6 @@ void KipiTestMainWindow::loadPlugins()
     foreach (PluginLoader::Info* plugin, KipiTestPluginLoader::instance()->pluginList())
     {
         guiFactory()->addClient(plugin->plugin());
-//        insertChildClient(plugin->plugin());
     }
 }
 
