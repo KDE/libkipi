@@ -57,7 +57,7 @@ private:
 
     KipiInterface* const         m_interface;
     QListWidget*                 m_listWidget;
-    QList<ImageCollection> m_allAlbums;
+    QList<ImageCollection>       m_allAlbums;
 };
 
 } // namespace KXMLKipiCmd

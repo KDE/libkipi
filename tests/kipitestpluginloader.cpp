@@ -113,7 +113,7 @@ KActionCollection* KipiTestPluginLoader::pluginsActionCollection() const
     return d->kipipluginsActionCollection;
 }
 
-QList<KIPI::PluginLoader::Info*> KipiTestPluginLoader::pluginList()
+QList<PluginLoader::Info*> KipiTestPluginLoader::pluginList()
 {
     return d->kipiPluginLoader->pluginList();
 }

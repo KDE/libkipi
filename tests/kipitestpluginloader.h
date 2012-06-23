@@ -59,15 +59,14 @@ public:
 
     KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInterface* const interface);
 
-    QList<QAction*> kipiActionsByCategory(Category cat) const;
-
-    KActionCollection* pluginsActionCollection() const;
+    QList<PluginLoader::Info*> pluginList();
+    QList<QAction*>            kipiActionsByCategory(Category cat) const;
+    KActionCollection*         pluginsActionCollection() const;
 
     void kipiPlugActions(bool unplug = false);
 
     static KipiTestPluginLoader* instance();
 
-    QList<PluginLoader::Info*> pluginList();
 
 private Q_SLOTS:
 
