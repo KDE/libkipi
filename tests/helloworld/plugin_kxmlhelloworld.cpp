@@ -119,7 +119,7 @@ K_EXPORT_PLUGIN(KXMLHelloWorldFactory("kipiplugin_kxmlhelloworld") )
  *  is the same than Name value from .desktop file.
  */
 Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList&)
-    : Plugin(KXMLHelloWorldFactory::componentData(), parent, "HelloWorld"),
+    : Plugin(KXMLHelloWorldFactory::componentData(), parent, "KXMLHelloWorld"),
       /// Private container is allocated here.
       d(new Private)
 {
@@ -127,7 +127,7 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      *  To show debug messages on the console, run kdebugdialog, and turn on KIPI debug space
      */
 //    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
-    kDebug() << "Plugin_HelloWorld plugin loaded";
+    kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
@@ -162,8 +162,8 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** An action dedicated to be plugged in digiKam Image menu.
      */
-    d->actionImages = actionCollection()->addAction("helloworld-actionImages");
-    d->actionImages->setText(i18n("Hello World..."));
+    d->actionImages = actionCollection()->addAction("kxmlhelloworld-actionImages");
+    d->actionImages->setText(i18n("KXML Hello World..."));
     d->actionImages->setIcon(KIcon("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F1));
 
@@ -188,8 +188,8 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
-    d->actionTools = actionCollection()->addAction("helloworld-actionTools");
-    d->actionTools->setText(i18n("Hello World..."));
+    d->actionTools = actionCollection()->addAction("kxmlhelloworld-actionTools");
+    d->actionTools->setText(i18n("KXML Hello World..."));
     d->actionTools->setIcon(KIcon("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
     connect(d->actionTools, SIGNAL(triggered(bool)),
@@ -198,8 +198,8 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
-    d->actionExport = actionCollection()->addAction("helloworld-actionExport");
-    d->actionExport->setText(i18n("Hello World..."));
+    d->actionExport = actionCollection()->addAction("kxmlhelloworld-actionExport");
+    d->actionExport->setText(i18n("KXML Hello World..."));
     d->actionExport->setIcon(KIcon("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
     connect(d->actionExport, SIGNAL(triggered(bool)),
@@ -208,13 +208,15 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
-    d->actionImport = actionCollection()->addAction("helloworld-actionImport");
-    d->actionImport->setText(i18n("Hello World..."));
+    d->actionImport = actionCollection()->addAction("kxmlhelloworld-actionImport");
+    d->actionImport->setText(i18n("KXML Hello World..."));
     d->actionImport->setIcon(KIcon("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
     addAction(d->actionImport);
+
+    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()

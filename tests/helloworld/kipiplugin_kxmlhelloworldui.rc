@@ -1,0 +1,10 @@
+﻿<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
+<gui version="3" name="kipiplugin_kxmlkipicmd" >
+
+ <MenuBar>
+ </MenuBar>
+
+ <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+ </ToolBar>
+
+</gui>

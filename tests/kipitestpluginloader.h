@@ -31,6 +31,10 @@
 #include <QList>
 #include <QString>
 
+// KDE includes
+
+#include <kxmlguiwindow.h>
+
 // Libkipi includes
 
 #include "plugin.h"
@@ -52,7 +56,7 @@ class KipiTestPluginLoader : public QObject
 
 public:
 
-    KipiTestPluginLoader(QObject* const parent, KipiInterface* const interface);
+    KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInterface* const interface);
 
     QList<QAction*> kipiActionsByCategory(Category cat) const;
 
