@@ -139,9 +139,10 @@ void KipiTestMainWindow::loadPlugins()
 {
     new KipiTestPluginLoader(this, d->kipiInterface);
 
-    foreach (PluginLoader::Info* plugin, KipiTestPluginLoader::instance()->pluginList())
+    foreach(PluginLoader::Info* const plugin, KipiTestPluginLoader::instance()->pluginList())
     {
-        guiFactory()->addClient(plugin->plugin());
+        if (plugin)
+            guiFactory()->addClient(plugin->plugin());
     }
 }
 
