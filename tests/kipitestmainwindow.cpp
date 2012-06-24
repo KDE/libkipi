@@ -47,6 +47,7 @@
 // LibKIPI includes
 
 #include "pluginloader.h"
+#include "version.h"
 
 // Local includes
 
@@ -139,12 +140,16 @@ void KipiTestMainWindow::loadPlugins()
 {
     new KipiTestPluginLoader(this, d->kipiInterface);
 
-    foreach(PluginLoader::Info* const plugin, KipiTestPluginLoader::instance()->pluginList())
+    foreach(PluginLoader::Info* const plInfo, KipiTestPluginLoader::instance()->pluginList())
     {
-        KXMLGUIClient* kxmlplugin = dynamic_cast<KXMLGUIClient*>(plugin->plugin());
-        if (kxmlplugin)
+        Plugin* plugin = plInfo->plugin();
+        if (plInfo && dynamic_cast<KXMLGUIClient*>(plugin))
         {
-            guiFactory()->addClient(kxmlplugin);
+            if (plugin->property("KipiBinaryVersion") == kipi_binary_version)
+            {
+                kDebug() << plInfo->name() << " :: " << kipi_binary_version;
+                guiFactory()->addClient(plugin);
+            }
         }
     }
 }
