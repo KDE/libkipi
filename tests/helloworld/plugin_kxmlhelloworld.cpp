@@ -51,6 +51,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
+#include <kcomponentdata.h>
 
 /// This is all libkipi header includes in this tool.
 
@@ -131,11 +132,18 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
-     *  application gui. The recommended naming rule for the ui file is:
-     *  nameofthepluginui.rc
+     *  application gui. The recommended naming rule for the ui file is: nameofthepluginui.rc
+     *  Firstly, we need to locate the ui file of the plugin to be able the
+     *  merge the gui. Normally this would be:
+     *  $(kde4-config --prefix)/share/apps/kipiplugin_kxmlkipicmd/kipiplugin_kxmlhelloworldui.rc
      */
     QString uiFile = KStandardDirs::locate("data", "kipiplugin_kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc");
     setXMLFile(uiFile, true);
+
+    /** Second, we need to set a local ui file so that the kipi host application
+     *  to be able to save custom settings
+     */
+    setLocalXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
