@@ -54,7 +54,7 @@ public:
 
     KipiTestPluginLoaderPriv()
     {
-        app                         = KipiTestMainWindow::instance();
+        app                         = 0;
         kipipluginsActionCollection = 0;
         kipiPluginLoader            = 0;
         kipiInterface               = 0;
@@ -93,6 +93,7 @@ KipiTestPluginLoader::KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInte
 {
     m_instance       = this;
     d->kipiInterface = interface;
+    d->app           = parent;
 
     loadPlugins();
 }
@@ -156,7 +157,7 @@ void KipiTestPluginLoader::loadPlugins()
     // These plugins have been replaced by digiKam core solution with 2.6.0
     ignores.append("JPEGLossless");
 
-    d->kipiPluginLoader = new PluginLoader(ignores, d->kipiInterface);
+    d->kipiPluginLoader = new PluginLoader(ignores, d->app, d->kipiInterface);
 
     connect(d->kipiPluginLoader, SIGNAL(replug()),
             this, SLOT(slotKipiPluginsPlug()));

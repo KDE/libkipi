@@ -48,6 +48,7 @@
 #include <kglobal.h>
 #include <klibloader.h>
 #include <kaction.h>
+#include <kxmlguifactory.h>
 
 // Local includes
 
@@ -66,22 +67,27 @@ public:
     {
         shouldLoad = false;
         plugin     = 0;
+        host       = 0;
     };
 
-    bool          shouldLoad;
-    KService::Ptr service;
-    Plugin*       plugin;
+    bool           shouldLoad;
+    KService::Ptr  service;
+    Plugin*        plugin;
+    KXmlGuiWindow* host;
 };
 
-PluginLoader::Info::Info(const KService::Ptr& service, bool shouldLoad)
+PluginLoader::Info::Info(KXmlGuiWindow* host, const KService::Ptr& service, bool shouldLoad)
     : d(new InfoPrivate)
 {
     d->service    = service;
     d->shouldLoad = shouldLoad;
+    d->host       = host;
 }
 
 PluginLoader::Info::~Info()
 {
+    if (d->host)
+        d->host->guiFactory()->removeClient(d->plugin);
     delete d->plugin;
     delete d;
 }
@@ -160,6 +166,7 @@ Plugin* PluginLoader::Info::plugin() const
 
         if (d->plugin)   // Do not emit if we had trouble loading the plugin.
         {
+            d->host->guiFactory()->addClient(d->plugin);
             emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
     }
@@ -169,6 +176,8 @@ Plugin* PluginLoader::Info::plugin() const
 
 void PluginLoader::Info::reload()
 {
+    if (d->host)
+        d->host->guiFactory()->removeClient(d->plugin);
     delete d->plugin;
     d->plugin = 0;
 }
@@ -194,29 +203,32 @@ public:
     PluginLoaderPrivate()
     {
         interface = 0;
+        host      = 0;
     };
 
     PluginLoader::PluginList pluginList;
     Interface*               interface;
+    KXmlGuiWindow*           host;
 };
 
-PluginLoader::PluginLoader(const QStringList& ignores, Interface* const interface)
+PluginLoader::PluginLoader(const QStringList &ignores, KXmlGuiWindow *host, Interface *const interface)
     : d(new PluginLoaderPrivate)
 {
-    construct(ignores, interface, QString());
+    construct(ignores, host, interface, QString());
 }
 
-PluginLoader::PluginLoader(const QStringList& ignores, Interface* const interface, const QString& constraint)
+PluginLoader::PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint)
     : d(new PluginLoaderPrivate)
 {
-    construct(ignores, interface, constraint);
+    construct(ignores, host, interface, constraint);
 }
 
-void PluginLoader::construct(const QStringList& ignores, Interface* const interface, const QString& constraint)
+void PluginLoader::construct(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint)
 {
     Q_ASSERT(s_instance == 0);
     s_instance                  = this;
     d->interface                = interface;
+    d->host                     = host;
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin", constraint);
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
@@ -261,7 +273,7 @@ void PluginLoader::construct(const QStringList& ignores, Interface* const interf
             continue;
         }
 
-        Info* info = new Info(service, load);
+        Info* info = new Info(d->host, service, load);
         d->pluginList.append(info);
     }
 }

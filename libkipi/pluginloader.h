@@ -40,6 +40,7 @@
 // KDE includes
 
 #include <kservice.h>
+#include <kxmlguiwindow.h>
 
 // Local includes
 
@@ -192,7 +193,7 @@ public:
 
     public:
 
-        Info(const KService::Ptr& service, bool shouldLoad);
+        Info(KXmlGuiWindow *host, const KService::Ptr& service, bool shouldLoad);
         ~Info();
 
         QString       name()    const;
@@ -218,11 +219,11 @@ public:
 
 public:
 
-    PluginLoader(const QStringList& ignores, Interface* const interface);
-    PluginLoader(const QStringList& ignores, Interface* const interface, const QString& constraint);
+    PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface);
+    PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint);
     virtual ~PluginLoader();
 
-    void construct(const QStringList& ignores, Interface* const interface, const QString& constraint);
+    void construct(const QStringList& ignores, KXmlGuiWindow *host, Interface* const interface, const QString& constraint);
 
     const PluginList& pluginList();
 

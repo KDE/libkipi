@@ -139,19 +139,6 @@ void KipiTestMainWindow::setupActions()
 void KipiTestMainWindow::loadPlugins()
 {
     new KipiTestPluginLoader(this, d->kipiInterface);
-
-    foreach(PluginLoader::Info* const plInfo, KipiTestPluginLoader::instance()->pluginList())
-    {
-        Plugin* plugin = plInfo->plugin();
-        if (plInfo && dynamic_cast<KXMLGUIClient*>(plugin))
-        {
-            if (plugin->property("KipiBinaryVersion") == kipi_binary_version)
-            {
-                kDebug() << plInfo->name() << " :: " << kipi_binary_version;
-                guiFactory()->addClient(plugin);
-            }
-        }
-    }
 }
 
 void KipiTestMainWindow::slotShowMenuBar()
