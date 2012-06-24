@@ -141,8 +141,11 @@ void KipiTestMainWindow::loadPlugins()
 
     foreach(PluginLoader::Info* const plugin, KipiTestPluginLoader::instance()->pluginList())
     {
-        if (plugin)
-            guiFactory()->addClient(plugin->plugin());
+        KXMLGUIClient* kxmlplugin = dynamic_cast<KXMLGUIClient*>(plugin->plugin());
+        if (kxmlplugin)
+        {
+            guiFactory()->addClient(kxmlplugin);
+        }
     }
 }
 
@@ -174,7 +177,7 @@ void KipiTestMainWindow::slotConfToolbars()
 
 void KipiTestMainWindow::slotNewToolbarConfig()
 {
-    applyMainWindowSettings(KGlobal::config()->group("General Settings"));
+    applyMainWindowSettings(d->config->group("General Settings"));
 }
 
 void KipiTestMainWindow::slotSetup()
