@@ -76,7 +76,7 @@ public:
     KXmlGuiWindow* host;
 };
 
-PluginLoader::Info::Info(KXmlGuiWindow* host, const KService::Ptr& service, bool shouldLoad)
+PluginLoader::Info::Info(KXmlGuiWindow* const host, const KService::Ptr& service, bool shouldLoad)
     : d(new InfoPrivate)
 {
     d->service    = service;
@@ -211,19 +211,19 @@ public:
     KXmlGuiWindow*           host;
 };
 
-PluginLoader::PluginLoader(const QStringList &ignores, KXmlGuiWindow *host, Interface *const interface)
+PluginLoader::PluginLoader(const QStringList &ignores, KXmlGuiWindow* const host, Interface* const interface)
     : d(new PluginLoaderPrivate)
 {
     construct(ignores, host, interface, QString());
 }
 
-PluginLoader::PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint)
+PluginLoader::PluginLoader(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint)
     : d(new PluginLoaderPrivate)
 {
     construct(ignores, host, interface, constraint);
 }
 
-void PluginLoader::construct(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint)
+void PluginLoader::construct(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint)
 {
     Q_ASSERT(s_instance == 0);
     s_instance                  = this;

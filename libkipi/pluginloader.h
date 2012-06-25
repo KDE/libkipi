@@ -193,7 +193,7 @@ public:
 
     public:
 
-        Info(KXmlGuiWindow *host, const KService::Ptr& service, bool shouldLoad);
+        Info(KXmlGuiWindow* const host, const KService::Ptr& service, bool shouldLoad);
         ~Info();
 
         QString       name()    const;
@@ -219,11 +219,11 @@ public:
 
 public:
 
-    PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface);
-    PluginLoader(const QStringList& ignores, KXmlGuiWindow* host, Interface* const interface, const QString& constraint);
+    PluginLoader(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface);
+    PluginLoader(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint);
     virtual ~PluginLoader();
 
-    void construct(const QStringList& ignores, KXmlGuiWindow *host, Interface* const interface, const QString& constraint);
+    void construct(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint);
 
     const PluginList& pluginList();
 
