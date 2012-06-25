@@ -193,7 +193,7 @@ public:
 
     public:
 
-        Info(KXmlGuiWindow* const host, const KService::Ptr& service, bool shouldLoad);
+        Info(KXmlGuiWindow* const parent, const KService::Ptr& service, bool shouldLoad);
         ~Info();
 
         QString       name()    const;
@@ -219,19 +219,48 @@ public:
 
 public:
 
-    PluginLoader(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface);
-    PluginLoader(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint);
+    /** Standard constructor. You must pass the instance of KDE XML GUI application as argument.
+     */
+    PluginLoader(KXmlGuiWindow* const parent);
     virtual ~PluginLoader();
 
-    void construct(const QStringList& ignores, KXmlGuiWindow* const host, Interface* const interface, const QString& constraint);
+    /** Set KIPI interface instance form host application.
+     */
+    void setInterface(Interface* const interface);
 
-    const PluginList& pluginList();
+    /** Return KIPI host interface instance.
+     */
+    Interface* interface() const;
 
-    // NOTE: plugin can be loaded through Info item.
+    /** Set Plugins ignore list, with name of obsoletes plugins to not load through init().
+     */
+    void setIgnoreList(const QStringList& ignores);
+
+    /** Set Plugins constraint to pass to the service trader.
+     */
+    void setConstraint(const QString& constraint);
+
+    /** Init plugin loader. Call this method to parse relevant plugins installed on your system.
+     *  Before to call this method, you must setup KIPI insterface instance.
+     *  Optionally, setup list of plugins to ignore, and the constraint list.
+     */
+    void init();
+
+    /** Call this method to load relevant plugins installed on your system to your KIPI host application
+     *  NOTE: plugins can be loaded through Info item.
+     */
     void loadPlugins();
 
+    /** Return plugins list loaded
+     */
+    const PluginList&    pluginList();
+
+    /** Return the config widget with list of plugins to manage.
+     */
     ConfigWidget*        configWidget(QWidget* const parent) const;
-    Interface*           interface() const;
+
+    /** Return loader instance instance.
+     */
     static PluginLoader* instance();
 
 Q_SIGNALS:

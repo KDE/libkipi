@@ -157,7 +157,10 @@ void KipiTestPluginLoader::loadPlugins()
     // These plugins have been replaced by digiKam core solution with 2.6.0
     ignores.append("JPEGLossless");
 
-    d->kipiPluginLoader = new PluginLoader(ignores, d->app, d->kipiInterface);
+    d->kipiPluginLoader = new PluginLoader(d->app);
+    d->kipiPluginLoader->setInterface(d->kipiInterface);
+    d->kipiPluginLoader->setIgnoreList(ignores);
+    d->kipiPluginLoader->init();
 
     connect(d->kipiPluginLoader, SIGNAL(replug()),
             this, SLOT(slotKipiPluginsPlug()));
