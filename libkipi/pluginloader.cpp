@@ -166,7 +166,8 @@ Plugin* PluginLoader::Info::plugin() const
 
         if (d->plugin)   // Do not emit if we had trouble loading the plugin.
         {
-            d->parent->guiFactory()->addClient(d->plugin);
+            if (d->parent)
+                d->parent->guiFactory()->addClient(d->plugin);
             emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
     }
