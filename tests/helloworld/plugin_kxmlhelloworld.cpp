@@ -132,11 +132,6 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      *  UI file of plugin is installed in kipi data dir.
      */
     setXMLFile("kipiplugin_kxmlhelloworldui.rc");
-
-    /** Second, we need to set a local ui file so that the kipi host application
-     *  to be able to save custom settings
-     */
-//    setLocalXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
