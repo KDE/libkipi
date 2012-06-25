@@ -125,25 +125,18 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
       /// Private container is allocated here.
       d(new Private)
 {
-    /** There is a debug space for plugin loading area. Please do not use qDebug and qWarning in plugin.
-     *  To show debug messages on the console, run kdebugdialog, and turn on KIPI debug space
-     */
-//    kDebug(AREA_CODE_LOADING) << "Plugin_HelloWorld plugin loaded";
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui. The recommended naming rule for the ui file is: nameofthepluginui.rc
-     *  Firstly, we need to locate the ui file of the plugin to be able the
-     *  merge the gui. Normally this would be:
-     *  $(kde4-config --prefix)/share/apps/kipiplugin_kxmlkipicmd/kipiplugin_kxmlhelloworldui.rc
+     *  UI file of plugin is installed in kipi data dir.
      */
-    QString uiFile = KStandardDirs::locate("data", "kipiplugin_kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc");
-    setXMLFile(uiFile, true);
+    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
 
     /** Second, we need to set a local ui file so that the kipi host application
      *  to be able to save custom settings
      */
-    setLocalXMLFile("kipiplugin_kxmlhelloworldui.rc");
+//    setLocalXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
