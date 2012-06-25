@@ -49,6 +49,7 @@
 #include <klibloader.h>
 #include <kaction.h>
 #include <kxmlguifactory.h>
+#include <kstandarddirs.h>
 
 // Local includes
 
@@ -228,6 +229,8 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
         kWarning() << "KDE XML application instance is null...";
     }
     d->parent = parent;
+
+    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
 }
 
 void PluginLoader::setInterface(Interface* const interface)
