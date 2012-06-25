@@ -1,59 +1,56 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="11" name="kxmlkipicmd" >
+<gui version="12" name="kxmlkipicmd" >
 
- <MenuBar>
+    <MenuBar>
 
-  <Menu name="Browse"><text>&amp;Browse</text>
-      <Action name="app_exit"/>
-  </Menu>
+        <Menu name="Browse"><text>&amp;Browse</text>
+            <Action name="app_exit"/>
+        </Menu>
 
-  <Menu name="Album"><text>&amp;Album</text>
-  </Menu>
+        <Menu name="Album"><text>&amp;Album</text>
+        </Menu>
 
-  <Menu name="Image"><text>&amp;Image</text>
-  </Menu>
+        <Menu name="Image"><text>&amp;Image</text>
+        </Menu>
 
-  <Menu name="Tools"><text>&amp;Tools</text>
-  </Menu>
+        <Menu name="Tools"><text>&amp;Tools</text>
+        </Menu>
 
-  <Menu name="Import"><text>I&amp;mport</text>
-  </Menu>
+        <Menu name="Import"><text>I&amp;mport</text>
+        </Menu>
 
-  <Menu name="Export"><text>&amp;Export</text>
-  </Menu>
+        <Menu name="Export"><text>&amp;Export</text>
+        </Menu>
 
-  <Menu name="settings" noMerge="1"><Text>&amp;Settings</Text>
-       <Merge name="StandardToolBarMenuHandler" />
-       <Action name="options_show_menubar"/>
-       <Separator/>
-       <Action name="options_configure_keybinding"/>
-       <Action name="options_configure_toolbars"/>
-       <Action name="options_configure"/>
-  </Menu>
+        <Merge/>
 
-  <Menu name="help"><Text>&amp;Help</Text>
-       <Action name="help_kipi"/>
-  </Menu>
+        <Menu name="settings" noMerge="1"><Text>&amp;Settings</Text>
+            <Merge name="StandardToolBarMenuHandler" />
+            <Action name="options_show_menubar"/>
+            <Separator/>
+            <Action name="options_configure_keybinding"/>
+            <Action name="options_configure_toolbars"/>
+            <Action name="options_configure"/>
+        </Menu>
 
-  <Merge/>
+        <Menu name="help"><Text>&amp;Help</Text>
+            <Action name="help_kipi"/>
+        </Menu>
 
- </MenuBar>
+    </MenuBar>
 
- <ToolBar name="mainToolBar"><text>Main Toolbar</text>
-      <Action name="app_exit" />
-      <Action name="options_show_menubar" />
-      <Action name="options_show_toolbar" />
-      <Separator/>
-      <Action name="options_configure_keybinding" />
-      <Action name="options_configure_toolbars" />
-      <Action name="options_configure" />
-      <Merge/>
- </ToolBar>
+    <ToolBar name="mainToolBar"><text>Main Toolbar</text>
+        <Action name="app_exit" />
+        <Action name="options_show_menubar" />
+        <Action name="options_show_toolbar" />
+        <Separator/>
+        <Action name="options_configure_keybinding" />
+        <Action name="options_configure_toolbars" />
+        <Action name="options_configure" />
+        <Merge/>
+    </ToolBar>
 
- <MainWindow>
- </MainWindow>
-
- <ActionProperties/>
+    <ActionProperties/>
 
 </gui>
 
