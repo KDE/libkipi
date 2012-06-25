@@ -197,6 +197,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 //---------------------------------------------------------------------
 
 static PluginLoader* s_instance = 0;
+static bool s_loaded            = false;
 
 class PluginLoader::PluginLoaderPrivate
 {
@@ -222,7 +223,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
 {
     s_instance = this;
 
-    if (parent)
+    if (!parent)
     {
         kWarning() << "KDE XML application instance is null...";
     }
@@ -246,7 +247,7 @@ void PluginLoader::setConstraint(const QString& constraint)
 
 void PluginLoader::init()
 {
-    Q_ASSERT(s_instance == 0);
+    Q_ASSERT((s_instance != 0) && (!s_loaded));
 
     if (!d->interface)
     {
@@ -254,6 +255,7 @@ void PluginLoader::init()
         return;
     }
 
+    s_loaded                    = true;
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin", d->constraint);
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
