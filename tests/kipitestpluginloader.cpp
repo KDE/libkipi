@@ -171,7 +171,7 @@ void KipiTestPluginLoader::loadPlugins()
 void KipiTestPluginLoader::slotKipiPluginsPlug()
 {
     // Remove plugin GUI menus in application.
-    kipiPlugActions(true);
+//    kipiPlugActions(true);
 
     d->kipiCategoryMap.clear();
     d->kipipluginsActionCollection->clear();
@@ -232,12 +232,12 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     // Check if the Export/Import/tools Plugin lists are empty, if so, add an empty action which tells the user that no
     // Export/Import/tools plugins are available. It is more user-friendly to present some menu entry,
     // instead of leaving it completely empty.
-    checkEmptyCategory(ExportPlugin);
-    checkEmptyCategory(ImportPlugin);
-    checkEmptyCategory(ToolsPlugin);
+//    checkEmptyCategory(ExportPlugin);
+//    checkEmptyCategory(ImportPlugin);
+//    checkEmptyCategory(ToolsPlugin);
 
     // Create plugin GUI menus in application.
-    kipiPlugActions();
+//    kipiPlugActions();
 }
 
 void KipiTestPluginLoader::checkEmptyCategory(Category cat)

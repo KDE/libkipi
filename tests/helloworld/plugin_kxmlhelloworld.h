@@ -67,6 +67,8 @@ public:
      */
     Category category(KAction* const action) const;
 
+    void setupActions();
+
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
      */
     void setup(QWidget* const widget);

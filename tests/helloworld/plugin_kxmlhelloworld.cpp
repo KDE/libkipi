@@ -127,11 +127,7 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
 {
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
-    /** This is needed to setup the plugin gui and to merge with the kipi host
-     *  application gui. The recommended naming rule for the ui file is: nameofthepluginui.rc
-     *  UI file of plugin is installed in kipi data dir.
-     */
-    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
+    setupActions();
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
@@ -140,12 +136,8 @@ Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
     delete d;
 }
 
-void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
+void Plugin_KXMLHelloWorld::setupActions()
 {
-    /** We pass the widget which host plugin in KIPI host application
-     */
-    Plugin::setup(widget);
-
     /** We will check KIPI host application interface instance validity
      */
     d->iface = dynamic_cast<Interface*>(parent());
@@ -155,7 +147,6 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
        kError() << "Kipi interface is null!";
        return;
     }
-
     /** We define plugin action which will be plug in KIPI host application.
      *  Note that if you set keyboard shortcut to an action you must take a care
      *  about already existing one from other tool to prevent conflict.
@@ -166,10 +157,10 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** An action dedicated to be plugged in digiKam Image menu.
      */
-    d->actionImages = actionCollection()->addAction("kxmlhelloworld-actionImages");
-    d->actionImages->setText(i18n("KXML Hello World..."));
+    d->actionImages = actionCollection()->addAction("kxmlhelloworld-actionImage");
+    d->actionImages->setText(i18n("KXML Hello Wolrd Image..."));
     d->actionImages->setIcon(KIcon("script-error"));
-    d->actionImages->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F1));
+    d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
 
     /** Connect plugin action signal to dedicated slot.
      */
@@ -193,7 +184,7 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
     d->actionTools = actionCollection()->addAction("kxmlhelloworld-actionTools");
-    d->actionTools->setText(i18n("KXML Hello World..."));
+    d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(KIcon("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
     connect(d->actionTools, SIGNAL(triggered(bool)),
@@ -203,7 +194,7 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
     d->actionExport = actionCollection()->addAction("kxmlhelloworld-actionExport");
-    d->actionExport->setText(i18n("KXML Hello World..."));
+    d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(KIcon("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
     connect(d->actionExport, SIGNAL(triggered(bool)),
@@ -213,12 +204,25 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
     d->actionImport = actionCollection()->addAction("kxmlhelloworld-actionImport");
-    d->actionImport->setText(i18n("KXML Hello World..."));
+    d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(KIcon("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
     addAction(d->actionImport);
+
+    /** This is needed to setup the plugin gui and to merge with the kipi host
+     *  application gui. The recommended naming rule for the ui file is: nameofthepluginui.rc
+     *  UI file of plugin is installed in kipi data dir.
+     */
+    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
+}
+
+void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
+{
+    /** We pass the widget which host plugin in KIPI host application
+     */
+    Plugin::setup(widget);
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()
