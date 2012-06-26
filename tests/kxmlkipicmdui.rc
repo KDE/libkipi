@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<gui version="14" name="kxmlkipicmd" >
+<gui version="15" name="kxmlkipicmd" >
 
     <MenuBar>
 
@@ -47,6 +47,7 @@
         <Action name="options_configure_keybinding" />
         <Action name="options_configure_toolbars" />
         <Action name="options_configure" />
+        <Merge />
     </ToolBar>
 
     <ActionProperties/>
