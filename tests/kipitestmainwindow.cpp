@@ -53,6 +53,7 @@
 
 #include "kipitestpluginloader.h"
 #include "kipiinterface.h"
+#include "kipisetup.h"
 
 namespace KXMLKipiCmd
 {
@@ -84,7 +85,7 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
                                        const KUrl::List& allAlbums)
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
-    setXMLFile("kxmlkipicmdui.rc");
+    setXMLFile("kxmlkipicmd_defaultui.rc");
     setObjectName("kxmlkipicmd");
     setMinimumSize(QSize(800, 600));
 
@@ -174,13 +175,7 @@ void KipiTestMainWindow::slotNewToolbarConfig()
 
 void KipiTestMainWindow::slotSetup()
 {
-    QPointer<KDialog> dlg    = new KDialog(0);
-    ConfigWidget* kipiConfig = PluginLoader::instance()->configWidget(dlg);
-    dlg->setMainWidget(kipiConfig);
-    dlg->setInitialSize(QSize(600, 400));
-    dlg->exec();
-    kipiConfig->apply();
-    delete dlg;
+    KipiSetup::exec(this);
 }
 
 } // namespace KXMLKipiCmd
