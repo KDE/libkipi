@@ -57,7 +57,7 @@ private Q_SLOTS:
 
 private:
 
-    KipiSetup(QWidget* parent);
+    KipiSetup(QWidget* const parent);
     ~KipiSetup();
 
     void okClicked();
@@ -85,7 +85,6 @@ private:
 
     class SetupXMLPriv;
     SetupXMLPriv* const d;
-
 };
 
 } // namespace KXMLKipiCmd

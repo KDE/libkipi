@@ -60,7 +60,9 @@ public:
 
     KipiSetupPriv() :
         page_plugins(0),
-        page_xml(0)
+        page_xml(0),
+        pluginsPage(0),
+        xmlPage(0)
     {
     }
 
@@ -71,7 +73,7 @@ public:
     SetupXML*        xmlPage;
 };
 
-KipiSetup::KipiSetup(QWidget* parent)
+KipiSetup::KipiSetup(QWidget* const parent)
     : KPageDialog(parent), d(new KipiSetupPriv)
 {
     setCaption(i18n("Configure"));
@@ -99,7 +101,7 @@ KipiSetup::~KipiSetup()
 bool KipiSetup::exec(QWidget *parent)
 {
     QPointer<KipiSetup> setup = new KipiSetup(parent);
-    bool success = setup->KPageDialog::exec() == QDialog::Accepted;
+    bool success              = (setup->KPageDialog::exec() == QDialog::Accepted);
     delete setup;
     return success;
 }
@@ -135,11 +137,12 @@ public:
 
     SetupXMLPriv()
     {
+        xmlFilesCob = 0;
     }
 
-    QString              uiFilesPath;
-    QList<QString>       uiFilesList;
-    KComboBox*           xmlFilesCob;
+    QString        uiFilesPath;
+    QList<QString> uiFilesList;
+    KComboBox*     xmlFilesCob;
 };
 
 SetupXML::SetupXML(QWidget* const parent)
