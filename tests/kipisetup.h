@@ -28,6 +28,7 @@
 // Qt includes
 
 #include <QScrollArea>
+#include <QString>
 
 // KDE includes
 
@@ -61,6 +62,9 @@ private:
     ~KipiSetup();
 
     void okClicked();
+    int activePageIndex();
+
+    friend class SetupXML;
 
     class KipiSetupPriv;
     KipiSetupPriv* const d;
@@ -76,6 +80,8 @@ public:
 
     SetupXML(QWidget* const parent);
     ~SetupXML();
+
+    static const QString CONFIG_GROUP_NAME;
 
 public Q_SLOTS:
 

@@ -85,13 +85,18 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
                                        const KUrl::List& allAlbums)
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
-    setXMLFile("kxmlkipicmd_defaultui.rc");
-    setObjectName("kxmlkipicmd");
-    setMinimumSize(QSize(800, 600));
+    m_instance           = this;
+    d->config            = KGlobal::config();
+    d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
+    KConfigGroup uiGroup = d->config->group("UI Settings");
+    QString uiFile       = uiGroup.readEntry("UiFile", QString("kxmlkipicmd_defaultui.rc"));
 
-    m_instance       = this;
-    d->config        = KGlobal::config();
-    d->kipiInterface = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
+    setXMLFile(uiFile);
+    setObjectName("kxmlkipicmd");
+
+    setMinimumSize(QSize(800, 600));
+    KConfigGroup mainWindowGroup = d->config->group("MainWindow Dialog");
+    restoreWindowSize(mainWindowGroup);
 
     if (!selectedImages.empty())
     {
@@ -116,6 +121,9 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
 
 KipiTestMainWindow::~KipiTestMainWindow()
 {
+    KConfigGroup group = d->config->group("MainWindow Dialog");
+    saveWindowSize(group);
+    group.sync();
     delete d;
 }
 

@@ -44,7 +44,7 @@
 
 #include "pluginloader.h"
 
-// Loacal includes
+// Local includes
 
 #include "kipitestpluginloader.h"
 
@@ -52,6 +52,8 @@ using namespace KIPI;
 
 namespace KXMLKipiCmd
 {
+
+const QString SetupXML::CONFIG_GROUP_NAME = "UI Settings";
 
 class KipiSetup::KipiSetupPriv
 {
@@ -91,10 +93,31 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->page_xml = addPage(d->xmlPage, i18n("UI layouts"));
     d->page_xml->setIcon(KIcon("application-xml"));
     d->page_xml->setHeader("Configure the UI file for the KXMLKipiCmd application");
+
+    KSharedConfig::Ptr config = KGlobal::config();
+    KConfigGroup group        = config->group("Setup Dialog");
+    restoreDialogSize(group);
+
+    int pageIndex         = group.readEntry("Setup Page", 0);
+    KPageWidgetItem *page = 0;
+    if (pageIndex == XmlFilesPage)
+    {
+        page = d->page_xml;
+    }
+    else
+    {
+        page = d->page_plugins;
+    }
+    setCurrentPage(page);
 }
 
 KipiSetup::~KipiSetup()
 {
+    KSharedConfig::Ptr config = KGlobal::config();
+    KConfigGroup group        = config->group(QString("Setup Dialog"));
+    saveDialogSize(group);
+    group.writeEntry("Setup Page", (int)activePageIndex());
+    config->sync();
     delete d;
 }
 
@@ -127,6 +150,18 @@ void KipiSetup::okClicked()
 
     kapp->restoreOverrideCursor();
     accept();
+}
+
+int KipiSetup::activePageIndex()
+{
+    KPageWidgetItem* curr = currentPage();
+
+    if (curr == d->page_xml)
+    {
+        return XmlFilesPage;
+    }
+
+    return KipiPluginsPage;
 }
 
 // -------------------------------------------------------------------
@@ -171,6 +206,11 @@ SetupXML::SetupXML(QWidget* const parent)
     mainLayout->addWidget(d->xmlFilesCob);
     panel->setLayout(mainLayout);
 
+    KSharedConfig::Ptr config = KGlobal::config();
+    KConfigGroup group        = config->group(CONFIG_GROUP_NAME);
+    QString uiFile            = group.readEntry("UiFile", "kxmlkipicmd_defaultui.rc");
+    d->xmlFilesCob->setCurrentIndex(d->uiFilesList.indexOf(uiFile));
+
     setWidgetResizable(true);
 }
 
@@ -181,6 +221,17 @@ SetupXML::~SetupXML()
 
 void SetupXML::apply()
 {
+    QString uiFile            = d->xmlFilesCob->itemData(d->xmlFilesCob->currentIndex()).toString();
+
+    KSharedConfig::Ptr config = KGlobal::config();
+    KConfigGroup group        = config->group(CONFIG_GROUP_NAME);
+    QString oldUiFile         = group.readEntry("UiFile", "kxmlkipicmd_defaultui.rc");
+
+    if (uiFile != oldUiFile)
+    {
+        group.writeEntry("UiFile", uiFile);
+    }
+    group.sync();
 }
 
 } // namespace KXMLKipiCmd
