@@ -40,6 +40,7 @@
 // Qt includes
 
 #include <QPointer>
+#include <QDomDocument>
 
 // KDE includes
 
@@ -128,10 +129,18 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
     setupActions();
+    Plugin::setup(dynamic_cast<QWidget*>(parent));
+
+    mergeXMLFile("test");
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
 {
+    actionCollection()->removeAction(d->actionExport);
+    actionCollection()->removeAction(d->actionImages);
+    actionCollection()->removeAction(d->actionTools);
+    actionCollection()->removeAction(d->actionImport);
+
     /// Don't forget to clear d private container allocation in destructor to prevent memory leak.
     delete d;
 }

@@ -50,6 +50,7 @@
 #include <kaction.h>
 #include <kxmlguifactory.h>
 #include <kstandarddirs.h>
+#include <kactioncollection.h>
 
 // Local includes
 
@@ -88,7 +89,9 @@ PluginLoader::Info::Info(KXmlGuiWindow* const parent, const KService::Ptr& servi
 PluginLoader::Info::~Info()
 {
     if (d->parent)
+    {
         d->parent->guiFactory()->removeClient(d->plugin);
+    }
     delete d->plugin;
     delete d;
 }
@@ -179,7 +182,9 @@ Plugin* PluginLoader::Info::plugin() const
 void PluginLoader::Info::reload()
 {
     if (d->parent)
+    {
         d->parent->guiFactory()->removeClient(d->plugin);
+    }
 
     delete d->plugin;
     d->plugin = 0;

@@ -34,12 +34,14 @@
 // Qt includes
 
 #include <QWidget>
+#include <QDomDocument>
 
 // KDE includes
 
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kcomponentdata.h>
+#include <kstandarddirs.h>
 #include <kdebug.h>
 
 // Local includes
@@ -120,6 +122,25 @@ void Plugin::setup(QWidget* const widget)
 Interface* Plugin::interface() const
 {
     return (dynamic_cast<Interface*>(parent()));
+}
+
+void Plugin::mergeXMLFile(const QString &hostXMLFile)
+{
+    // TODO
+    setXMLFiles();
+}
+
+void Plugin::setXMLFiles()
+{
+    const QString pluginName      = "kipiplugin_" + objectName().toLower();
+    const QString component       = KGlobal::mainComponent().componentName();
+    const QString newPluginFile   =
+            KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
+    const QString localPluginFile =
+            KStandardDirs::locateLocal("data", component + "/" + pluginName + "ui.rc");
+
+    if (xmlFile() != newPluginFile  || localXMLFile() != localPluginFile)
+        replaceXMLFile(newPluginFile, localPluginFile, true);
 }
 
 } // namespace KIPI

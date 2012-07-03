@@ -85,6 +85,8 @@ public:
 protected:
 
     void addAction(KAction* const action);
+    void mergeXMLFile(const QString& hostXMLFile);
+    void setXMLFiles();
 
 private:
 
