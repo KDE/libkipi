@@ -273,8 +273,8 @@ Q_SIGNALS:
 
 private:
 
-    class PluginLoaderPrivate;
-    PluginLoaderPrivate* const d;
+    class Private;
+    Private* const d;
 
 private:
 
@@ -301,8 +301,8 @@ public Q_SLOTS:
 
 private:
 
-    class ConfigWidgetPrivate;
-    ConfigWidgetPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPI

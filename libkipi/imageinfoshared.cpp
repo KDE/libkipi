@@ -48,11 +48,11 @@
 namespace KIPI
 {
 
-class ImageInfoShared::ImageInfoSharedPrivate
+class ImageInfoShared::Private
 {
 public:
 
-    ImageInfoSharedPrivate()
+    Private()
     {
         count     = 1;
         interface = 0;
@@ -63,12 +63,12 @@ public:
 };
 
 ImageInfoShared::ImageInfoShared()
-    : d(new ImageInfoSharedPrivate)
+    : d(new Private)
 {
 }
 
 ImageInfoShared::ImageInfoShared(Interface* const interface, const KUrl& url)
-    : d(new ImageInfoSharedPrivate)
+    : d(new Private)
 {
     d->interface = interface;
     _url         = url;

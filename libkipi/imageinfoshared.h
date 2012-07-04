@@ -98,8 +98,8 @@ private:
 
 private:
 
-    class ImageInfoSharedPrivate;
-    ImageInfoSharedPrivate* const d;
+    class Private;
+    Private* const d;
 
     friend class ImageInfo;
 };

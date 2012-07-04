@@ -205,11 +205,11 @@ void PluginLoader::Info::setShouldLoad(bool value)
 static PluginLoader* s_instance = 0;
 static bool s_loaded            = false;
 
-class PluginLoader::PluginLoaderPrivate
+class PluginLoader::Private
 {
 public:
 
-    PluginLoaderPrivate()
+    Private()
     {
         interface = 0;
         parent    = 0;
@@ -225,7 +225,7 @@ public:
 };
 
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
-    : d(new PluginLoaderPrivate)
+    : d(new Private)
 {
     s_instance = this;
 
@@ -370,11 +370,11 @@ public:
 
 // ---------------------------------------------------------------------
 
-class ConfigWidget::ConfigWidgetPrivate
+class ConfigWidget::Private
 {
 public:
 
-    ConfigWidgetPrivate()
+    Private()
     {
     };
 
@@ -383,7 +383,7 @@ public:
 
 ConfigWidget::ConfigWidget(QWidget* const parent)
     : QListWidget(parent),
-      d(new ConfigWidgetPrivate)
+      d(new Private)
 {
     setAutoFillBackground(false);
     setSortingEnabled(true);

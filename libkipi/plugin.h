@@ -90,8 +90,8 @@ protected:
 
 private:
 
-    class PluginPrivate;
-    PluginPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KIPI

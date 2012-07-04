@@ -52,11 +52,11 @@
 namespace KIPI
 {
 
-class Plugin::PluginPrivate
+class Plugin::Private
 {
 public:
 
-    PluginPrivate()
+    Private()
     {
         defaultWidget = 0;
     };
@@ -68,7 +68,7 @@ public:
 };
 
 Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char* name)
-      : QObject(parent), d(new PluginPrivate)
+      : QObject(parent), d(new Private)
 {
     d->instance = instance;
     setObjectName(name);
@@ -124,7 +124,7 @@ Interface* Plugin::interface() const
     return (dynamic_cast<Interface*>(parent()));
 }
 
-void Plugin::mergeXMLFile(const QString &hostXMLFile)
+void Plugin::mergeXMLFile(const QString& /*hostXMLFile*/)
 {
     // TODO
     setXMLFiles();
