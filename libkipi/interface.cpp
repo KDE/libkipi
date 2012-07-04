@@ -68,37 +68,19 @@
 namespace KIPI
 {
 
-class Interface::InterfacePrivate
-{
-public:
-    InterfacePrivate() :
-        application(0)
-    {
-    }
-
-    QObject* application;
-};
-
 Interface::Interface(QObject* const parent, const char* name)
-    : QObject(parent), d(new InterfacePrivate)
+    : QObject(parent)
 {
     setObjectName(name);
-    d->application = parent;
 }
 
 Interface::~Interface()
 {
-    delete d;
 }
 
 QString Interface::version()
 {
     return QString(kipi_version);
-}
-
-QObject* Interface::parent()
-{
-    return d->application;
 }
 
 void Interface::refreshImages(const KUrl::List&)

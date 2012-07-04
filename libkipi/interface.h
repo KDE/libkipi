@@ -331,11 +331,6 @@ public:
      */
     static QString version();
 
-    /**
-      * Returns the parent object supplied when instantiating the class
-      */
-    QObject* parent();
-
 Q_SIGNALS:
 
     /**
@@ -385,9 +380,6 @@ private:
     bool hasFeature(const QString& feature) const;
 
 private:
-
-    class InterfacePrivate;
-    InterfacePrivate* const d;
 
     friend class PluginLoader;
 };
