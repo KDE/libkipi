@@ -36,6 +36,10 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QList>
+#include <QtCore/QHash>
+#include <QtXml/QDomElement>
+#include <QtXml/QDomNode>
+#include <QtXml/QDomDocument>
 
 // KDE includes
 
@@ -70,6 +74,9 @@ class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 
 public:
 
+    typedef QList<QDomElement*> QDomElemPtrList;
+    typedef QHash<QString, QDomElemPtrList> QHashElemPath;
+
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
 
@@ -89,6 +96,22 @@ protected:
     void setXMLFiles();
 
 private:
+
+    class XMLParser
+    {
+
+    public:
+
+        static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
+        static void buildPaths(QDomElement original, QDomElement local, QHashElemPath& paths);
+        static int findByNameAttr(const QDomNodeList& list, QDomNode node);
+        static QDomElement findInSubtreeByNameAttr(const QDomElement& root, QDomElement elem);
+
+    private:
+
+        XMLParser();
+
+    };
 
     class Private;
     Private* const d;

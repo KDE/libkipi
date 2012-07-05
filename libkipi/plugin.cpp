@@ -34,7 +34,7 @@
 // Qt includes
 
 #include <QWidget>
-#include <QDomDocument>
+#include <QFile>
 
 // KDE includes
 
@@ -52,6 +52,78 @@
 namespace KIPI
 {
 
+QDomElement Plugin::XMLParser::makeElement(QDomDocument domDoc, const QDomElement& from)
+{
+    QDomElement elem = domDoc.createElement(from.tagName());
+    for (int i = 0; i < from.attributes().size(); ++i)
+    {
+        elem.setAttributeNode(from.attributes().item(i).toAttr());
+    }
+    return elem;
+}
+
+int Plugin::XMLParser::findByNameAttr(const QDomNodeList& list, QDomNode node)
+{
+    const QString nodeName = node.toElement().attribute("name");
+    for (int i = 0; i < list.size(); ++i)
+    {
+        if (list.at(i).toElement().attribute("name") == nodeName)
+            return i;
+    }
+    return -1;
+}
+
+QDomElement Plugin::XMLParser::findInSubtreeByNameAttr(const QDomElement& root, QDomElement elem)
+{
+    if (root.attribute("name") == elem.attribute("name"))
+    {
+        return root.toElement();
+    }
+    if (!root.hasChildNodes())
+    {
+        return QDomElement();
+    }
+    for (QDomNode e = root.firstChild(); !e.isNull(); e = e.nextSibling())
+    {
+        QDomElement t = e.toElement();
+        if (t.tagName() == elem.tagName() && t.attribute("name") == elem.attribute("name"))
+        {
+            return t;
+        }
+        if (t.tagName() == "Menu" && t.hasChildNodes())
+        {
+            QDomElement ret = findInSubtreeByNameAttr(e.toElement(), elem);
+            if (!ret.isNull())
+            {
+                return ret;
+            }
+        }
+    }
+    return QDomElement();
+}
+
+void Plugin::XMLParser::buildPaths(QDomElement original, QDomElement local, QHashElemPath& paths)
+{
+    /*
+     * For each child element of "local", we will construct the path from the
+     * "original" element to first appearance of the respective child in the
+     * subtree.
+     */
+    if (!local.hasChildNodes())
+        return;
+
+    for (QDomNode n = local.firstChild(); !n.isNull(); n = n.nextSibling())
+    {
+        QDomElement ret = findInSubtreeByNameAttr(original, n.toElement());
+        kDebug() << ret.tagName() << " -- " << ret.attribute("name");
+        while (!ret.isNull() && ret.tagName() != "MenuBar")
+        {
+            paths[n.toElement().attribute("name")].push_front(&ret);
+            ret = ret.parentNode().toElement();
+        }
+    }
+}
+
 class Plugin::Private
 {
 public:
@@ -59,7 +131,7 @@ public:
     Private()
     {
         defaultWidget = 0;
-    };
+    }
 
     QMap<QWidget*, KActionCollection*> actionCollection;
     KComponentData                     instance;
@@ -124,9 +196,57 @@ Interface* Plugin::interface() const
     return (dynamic_cast<Interface*>(parent()));
 }
 
-void Plugin::mergeXMLFile(KXMLGUIClient* const /*host*/)
+void Plugin::mergeXMLFile(KXMLGUIClient* const host)
 {
-    // TODO
+    if (!host)
+    {
+        kError() << "Host KXMLGUIClient is null! Cannot merge!";
+        return;
+    }
+    const QDomDocument hostDoc = host->domDocument();
+    QDomDocument pluginDoc     = domDocument();
+    if (hostDoc.isNull() || pluginDoc.isNull())
+    {
+        kError() << "Cannot merge the XML files, at least one is null.";
+        return;
+    }
+
+    QDomElement hostGuiElem = hostDoc.firstChildElement("kpartgui");
+    QDomElement hostMenuBarElem = hostGuiElem.firstChildElement("MenuBar");
+    kDebug() << hostDoc.toString();
+    kDebug() << hostMenuBarElem.tagName();
+    QDomDocument newPluginDoc(pluginDoc.doctype());
+    QDomElement guiElem = pluginDoc.firstChildElement("gui");
+    if (guiElem.isNull())
+    {
+        return;
+    }
+    QDomElement newGuiElem = XMLParser::makeElement(newPluginDoc, guiElem);
+    QDomElement menuBarElem = guiElem.firstChildElement("MenuBar");
+    QDomElement newMenuBarElem = XMLParser::makeElement(newPluginDoc, menuBarElem);
+    QDomElement toolBarElem = guiElem.firstChildElement("ToolBar");
+
+    QHashElemPath paths;
+    XMLParser::buildPaths(hostMenuBarElem, menuBarElem, paths);
+    for (QDomNode n = menuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
+    {
+        if (paths[n.toElement().attribute("name")].empty())
+        {
+            kDebug() << "not found " << n.toElement().attribute("name");
+            newMenuBarElem.appendChild(n.cloneNode());
+        }
+        else
+        {
+            kDebug() << "found deep" << n.toElement().attribute("name");
+        }
+    }
+
+    newGuiElem.appendChild(newMenuBarElem);
+    newGuiElem.appendChild(toolBarElem.cloneNode());
+    newPluginDoc.appendChild(newGuiElem);
+
+    kDebug() << domDocument().toString();
+    kDebug() << newPluginDoc.toString();
     //setXMLFiles();
 }
 
