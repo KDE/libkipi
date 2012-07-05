@@ -69,6 +69,8 @@ public:
 
     void setupActions();
 
+    void setupXML();
+
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
      */
     void setup(QWidget* const widget);

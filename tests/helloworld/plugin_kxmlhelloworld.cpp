@@ -128,10 +128,18 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
 {
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
-    setupActions();
-    Plugin::setup(dynamic_cast<QWidget*>(parent));
+    /** We will check KIPI host application interface instance validity
+     */
+    d->iface = dynamic_cast<Interface*>(parent);
+    if (!d->iface)
+    {
+       /// No need special debug space outside load plugin area, it will be selected automatically.
+       kError() << "Kipi interface is null!";
+       return;
+    }
 
-    mergeXMLFile("test");
+    setupActions();
+    setupXML();
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
@@ -147,15 +155,6 @@ Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
 
 void Plugin_KXMLHelloWorld::setupActions()
 {
-    /** We will check KIPI host application interface instance validity
-     */
-    d->iface = dynamic_cast<Interface*>(parent());
-    if (!d->iface)
-    {
-       /// No need special debug space outside load plugin area, it will be selected automatically.
-       kError() << "Kipi interface is null!";
-       return;
-    }
     /** We define plugin action which will be plug in KIPI host application.
      *  Note that if you set keyboard shortcut to an action you must take a care
      *  about already existing one from other tool to prevent conflict.
@@ -225,6 +224,12 @@ void Plugin_KXMLHelloWorld::setupActions()
      *  UI file of plugin is installed in kipi data dir.
      */
     setXMLFile("kipiplugin_kxmlhelloworldui.rc");
+}
+
+void Plugin_KXMLHelloWorld::setupXML()
+{
+    KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
+    mergeXMLFile(host);
 }
 
 void Plugin_KXMLHelloWorld::setup(QWidget* const widget)

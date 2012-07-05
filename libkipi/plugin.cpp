@@ -124,10 +124,10 @@ Interface* Plugin::interface() const
     return (dynamic_cast<Interface*>(parent()));
 }
 
-void Plugin::mergeXMLFile(const QString& /*hostXMLFile*/)
+void Plugin::mergeXMLFile(KXMLGUIClient* const /*host*/)
 {
     // TODO
-    setXMLFiles();
+    //setXMLFiles();
 }
 
 void Plugin::setXMLFiles()

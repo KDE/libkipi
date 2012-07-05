@@ -70,7 +70,7 @@ public:
         shouldLoad = false;
         plugin     = 0;
         parent     = 0;
-    };
+    }
 
     bool           shouldLoad;
     KService::Ptr  service;
