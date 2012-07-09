@@ -54,20 +54,25 @@ namespace KIPI
 
 QDomElement Plugin::XMLParser::makeElement(QDomDocument domDoc, const QDomElement& from)
 {
-    QDomElement elem = domDoc.createElement(from.tagName());
-    for (int i = 0; i < from.attributes().size(); ++i)
+    QDomElement elem            = domDoc.createElement(from.tagName());
+    QDomNamedNodeMap attributes = elem.attributes();
+    for (int i = 0; i < attributes.size(); ++i)
     {
-        elem.setAttributeNode(from.attributes().item(i).toAttr());
+        QDomAttr attr = attributes.item(i).toAttr();
+        if (attr.name() == "alreadyVisited")
+            elem.setAttributeNode(attr);
     }
     return elem;
 }
 
-int Plugin::XMLParser::findByNameAttr(const QDomNodeList& list, QDomNode node)
+int Plugin::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement &node)
 {
     const QString nodeName = node.toElement().attribute("name");
+    const QString nodeTag  = node.toElement().tagName();
     for (int i = 0; i < list.size(); ++i)
     {
-        if (list.at(i).toElement().attribute("name") == nodeName)
+        QDomElement e = list.at(i).toElement();
+        if (e.tagName() == nodeTag && e.attribute("name") == nodeName)
             return i;
     }
     return -1;
@@ -115,7 +120,6 @@ void Plugin::XMLParser::buildPaths(QDomElement original, QDomElement local, QHas
     for (QDomNode n = local.firstChild(); !n.isNull(); n = n.nextSibling())
     {
         QDomElement ret = findInSubtreeByNameAttr(original, n.toElement());
-        kDebug() << ret.tagName() << " -- " << ret.attribute("name");
         while (!ret.isNull() && ret.tagName() != "MenuBar")
         {
             paths[n.toElement().attribute("name")].push_front(&ret);
@@ -211,20 +215,20 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
         return;
     }
 
-    QDomElement hostGuiElem = hostDoc.firstChildElement("kpartgui");
+    QDomElement hostGuiElem     = hostDoc.firstChildElement("kpartgui");
     QDomElement hostMenuBarElem = hostGuiElem.firstChildElement("MenuBar");
     kDebug() << hostDoc.toString();
-    kDebug() << hostMenuBarElem.tagName();
+
     QDomDocument newPluginDoc(pluginDoc.doctype());
     QDomElement guiElem = pluginDoc.firstChildElement("gui");
     if (guiElem.isNull())
     {
         return;
     }
-    QDomElement newGuiElem = XMLParser::makeElement(newPluginDoc, guiElem);
-    QDomElement menuBarElem = guiElem.firstChildElement("MenuBar");
+    QDomElement newGuiElem     = XMLParser::makeElement(newPluginDoc, guiElem);
+    QDomElement menuBarElem    = guiElem.firstChildElement("MenuBar");
     QDomElement newMenuBarElem = XMLParser::makeElement(newPluginDoc, menuBarElem);
-    QDomElement toolBarElem = guiElem.firstChildElement("ToolBar");
+    QDomElement toolBarElem    = guiElem.firstChildElement("ToolBar");
 
     QHashElemPath paths;
     XMLParser::buildPaths(hostMenuBarElem, menuBarElem, paths);

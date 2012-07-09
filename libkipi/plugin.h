@@ -104,7 +104,7 @@ private:
 
         static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
         static void buildPaths(QDomElement original, QDomElement local, QHashElemPath& paths);
-        static int findByNameAttr(const QDomNodeList& list, QDomNode node);
+        static int findByNameAttr(const QDomNodeList& list, const QDomElement& node);
         static QDomElement findInSubtreeByNameAttr(const QDomElement& root, QDomElement elem);
 
     private:
