@@ -74,10 +74,8 @@ class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 
 public:
 
-    typedef QList<QDomElement*>             QDomElemPtrList;
     typedef QList<QDomElement>              QDomElemList;
     typedef QHash<QString, QDomElemList>    QHashPath;
-    typedef QHash<QString, QDomElemPtrList> QHashElemPath;
 
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
@@ -107,7 +105,6 @@ private:
         static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
         static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths);
         static int findByNameAttr(const QDomNodeList& list, const QDomElement& node);
-        static QDomElement findInSubtreeByNameAttr(const QDomElement& root, QDomElement elem);
 
     private:
 

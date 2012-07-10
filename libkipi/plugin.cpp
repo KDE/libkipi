@@ -78,35 +78,6 @@ int Plugin::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElemen
     return -1;
 }
 
-QDomElement Plugin::XMLParser::findInSubtreeByNameAttr(const QDomElement& root, QDomElement elem)
-{
-    if (root.tagName() == elem.tagName() && root.attribute("name") == elem.attribute("name"))
-    {
-        return root;
-    }
-    if (!root.hasChildNodes())
-    {
-        return QDomElement();
-    }
-    for (QDomNode e = root.firstChild(); !e.isNull(); e = e.nextSibling())
-    {
-        QDomElement t = e.toElement();
-        if (t.tagName() == elem.tagName() && t.attribute("name") == elem.attribute("name"))
-        {
-            return t;
-        }
-        if (t.tagName() == "Menu" && t.hasChildNodes())
-        {
-            QDomElement ret = findInSubtreeByNameAttr(e.toElement(), elem);
-            if (!ret.isNull())
-            {
-                return ret;
-            }
-        }
-    }
-    return QDomElement();
-}
-
 void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths, QDomElemList stack)
 {
     stack.push_back(original);
@@ -235,7 +206,6 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
 
     QDomElement hostGuiElem     = hostDoc.firstChildElement("kpartgui");
     QDomElement hostMenuBarElem = hostGuiElem.firstChildElement("MenuBar");
-    kDebug() << hostDoc.toString();
 
     QDomDocument newPluginDoc(pluginDoc.doctype());
     QDomElement guiElem = pluginDoc.firstChildElement("gui");
@@ -282,15 +252,12 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
                 }
             }
         }
-        QDomNode newN(n.cloneNode());
-        current.appendChild(newN);
+        current.appendChild(n.cloneNode());
     }
 
     newGuiElem.appendChild(newMenuBarElem);
     newGuiElem.appendChild(toolBarElem.cloneNode());
     newPluginDoc.appendChild(newGuiElem);
-
-    kDebug() << newPluginDoc.toString();
 
     const QString pluginName      = "kipiplugin_" + objectName().toLower();
     const QString component       = KGlobal::mainComponent().componentName();

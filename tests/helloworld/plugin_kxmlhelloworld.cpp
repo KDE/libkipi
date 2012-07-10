@@ -144,6 +144,7 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
 {
+    /// We need to remove the actions from the action collection
     actionCollection()->removeAction(d->actionExport);
     actionCollection()->removeAction(d->actionImages);
     actionCollection()->removeAction(d->actionTools);
@@ -220,14 +221,20 @@ void Plugin_KXMLHelloWorld::setupActions()
     addAction(d->actionImport);
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
-     *  application gui. The recommended naming rule for the ui file is: nameofthepluginui.rc
-     *  UI file of plugin is installed in kipi data dir.
+     *  application gui.
+     *  The name of the UI file must be: nameofpluginui.rc, where "nameofplugin"
+     *  is the name given to the plugin factory, usualy: kipiplugin_<name> .
+     *  UI file of the plugin must be installed in kipi data dir.
      */
     setXMLFile("kipiplugin_kxmlhelloworldui.rc");
 }
 
 void Plugin_KXMLHelloWorld::setupXML()
 {
+    /** We need to call mergeXMLFile with the host application window as the
+      * argument so the XML file and the GUI of the plugin to be merged with
+      * those of the KIPI host app
+      */
     KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
     mergeXMLFile(host);
 }
