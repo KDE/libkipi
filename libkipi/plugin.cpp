@@ -52,37 +52,76 @@
 namespace KIPI
 {
 
-QDomElement Plugin::XMLParser::makeElement(QDomDocument domDoc, const QDomElement& from)
+class Plugin::Private
+{
+public:
+
+    Private()
+    {
+        defaultWidget = 0;
+    }
+
+    QMap<QWidget*, KActionCollection*> actionCollection;
+    KComponentData                     instance;
+    QMap<QWidget*, QList<KAction*> >   actions;
+    QWidget*                           defaultWidget;
+
+public:
+
+    class XMLParser
+    {
+
+    public:
+
+        static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
+        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths);
+        static int findByNameAttr(const QDomNodeList& list, const QDomElement& node);
+
+    private:
+
+        XMLParser();
+        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath &paths, QDomElemList stack);
+    };
+};
+
+QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument domDoc, const QDomElement& from)
 {
     QDomElement elem            = domDoc.createElement(from.tagName());
     QDomNamedNodeMap attributes = from.attributes();
+
     for (int i = 0; i < attributes.size(); ++i)
     {
         QDomAttr attr = attributes.item(i).toAttr();
+
         if (attr.name() != "alreadyVisited")
             elem.setAttributeNode(attr);
     }
+
     return elem;
 }
 
-int Plugin::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement &node)
+int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement &node)
 {
     const QString nodeName = node.toElement().attribute("name");
     const QString nodeTag  = node.toElement().tagName();
+
     for (int i = 0; i < list.size(); ++i)
     {
         QDomElement e = list.at(i).toElement();
+
         if (e.tagName() == nodeTag && e.attribute("name") == nodeName)
             return i;
     }
+
     return -1;
 }
 
-void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths, QDomElemList stack)
+void Plugin::Private::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes,
+                                            QHashPath& paths, QDomElemList stack)
 {
     stack.push_back(original);
-
     int idx;
+
     if ((idx = findByNameAttr(localNodes, original)) != -1)
     {
         paths[localNodes.item(idx).toElement().attribute("name")] = stack;
@@ -97,6 +136,7 @@ void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& loc
     for (QDomNode n = original.firstChild(); !n.isNull(); n = n.nextSibling())
     {
         QDomElement e = n.toElement();
+
         if (e.tagName() == "Menu" && e.hasChildNodes())
         {
             buildPaths(e, localNodes, paths, stack);
@@ -106,7 +146,7 @@ void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& loc
     stack.pop_back();
 }
 
-void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths)
+void Plugin::Private::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths)
 {
     /*
      * For each child element of "local", we will construct the path from the
@@ -117,20 +157,7 @@ void Plugin::XMLParser::buildPaths(QDomElement original, const QDomNodeList& loc
     buildPaths(original, localNodes, paths, stack);
 }
 
-class Plugin::Private
-{
-public:
-
-    Private()
-    {
-        defaultWidget = 0;
-    }
-
-    QMap<QWidget*, KActionCollection*> actionCollection;
-    KComponentData                     instance;
-    QMap<QWidget*, QList<KAction*> >   actions;
-    QWidget*                           defaultWidget;
-};
+// --------------------------------------------------------------------------------------------------------------
 
 Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char* name)
       : QObject(parent), d(new Private)
@@ -196,8 +223,10 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
         kError() << "Host KXMLGUIClient is null! Cannot merge!";
         return;
     }
+
     const QDomDocument hostDoc = host->domDocument();
     QDomDocument pluginDoc     = domDocument();
+
     if (hostDoc.isNull() || pluginDoc.isNull())
     {
         kError() << "Cannot merge the XML files, at least one is null.";
@@ -209,22 +238,26 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
 
     QDomDocument newPluginDoc(pluginDoc.doctype());
     QDomElement guiElem = pluginDoc.firstChildElement("gui");
+
     if (guiElem.isNull())
     {
         return;
     }
-    QDomElement newGuiElem     = XMLParser::makeElement(newPluginDoc, guiElem);
+
+    QDomElement newGuiElem     = Private::XMLParser::makeElement(newPluginDoc, guiElem);
     QDomElement menuBarElem    = guiElem.firstChildElement("MenuBar");
-    QDomElement newMenuBarElem = XMLParser::makeElement(newPluginDoc, menuBarElem);
+    QDomElement newMenuBarElem = Private::XMLParser::makeElement(newPluginDoc, menuBarElem);
     QDomElement toolBarElem    = guiElem.firstChildElement("ToolBar");
 
     QHashPath paths;
-    XMLParser::buildPaths(hostMenuBarElem, menuBarElem.childNodes(), paths);
+    Private::XMLParser::buildPaths(hostMenuBarElem, menuBarElem.childNodes(), paths);
+
     for (QDomNode n = menuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
     {
         QDomElemList path   = paths[n.toElement().attribute("name")];
         QDomElement current = newMenuBarElem;
         QDomElement origCur = menuBarElem;
+
         if (path.empty())
         {
             newMenuBarElem.appendChild(n.cloneNode());
@@ -233,12 +266,14 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
         {
             for (int i = 1; i < path.size() - 1; ++i)
             {
-                int idx = XMLParser::findByNameAttr(current.childNodes(), path[i]);
+                int idx = Private::XMLParser::findByNameAttr(current.childNodes(), path[i]);
                 origCur = path[i];
+
                 if (idx == -1)
                 {
-                    QDomElement newChild = XMLParser::makeElement(newPluginDoc, path[i]);
+                    QDomElement newChild = Private::XMLParser::makeElement(newPluginDoc, path[i]);
                     QDomElement textElem = origCur.firstChildElement("text");
+
                     if (!textElem.isNull())
                     {
                         newChild.appendChild(textElem.cloneNode());
@@ -252,6 +287,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
                 }
             }
         }
+
         current.appendChild(n.cloneNode());
     }
 
@@ -259,16 +295,17 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
     newGuiElem.appendChild(toolBarElem.cloneNode());
     newPluginDoc.appendChild(newGuiElem);
 
-    const QString pluginName      = "kipiplugin_" + objectName().toLower();
-    const QString component       = KGlobal::mainComponent().componentName();
-    const QString newPluginFile   =
-            KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
+    const QString pluginName    = "kipiplugin_" + objectName().toLower();
+    const QString component     = KGlobal::mainComponent().componentName();
+    const QString newPluginFile = KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
     QFile file(newPluginFile);
+
     if (!file.open(QFile::WriteOnly))
     {
         kWarning() << "Cannot write to " << newPluginFile;
         return;
     }
+
     file.write(newPluginDoc.toString().toUtf8());
     file.flush();
 
@@ -279,10 +316,8 @@ void Plugin::setXMLFiles()
 {
     const QString pluginName      = "kipiplugin_" + objectName().toLower();
     const QString component       = KGlobal::mainComponent().componentName();
-    const QString newPluginFile   =
-            KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
-    const QString localPluginFile =
-            KStandardDirs::locateLocal("data", component + "/" + pluginName + "ui.rc");
+    const QString newPluginFile   = KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
+    const QString localPluginFile = KStandardDirs::locateLocal("data", component + "/" + pluginName + "ui.rc");
 
     setXMLFile(newPluginFile);
     setLocalXMLFile(localPluginFile);

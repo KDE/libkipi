@@ -74,8 +74,10 @@ class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 
 public:
 
-    typedef QList<QDomElement>              QDomElemList;
-    typedef QHash<QString, QDomElemList>    QHashPath;
+    typedef QList<QDomElement>           QDomElemList;
+    typedef QHash<QString, QDomElemList> QHashPath;
+
+public:
 
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
@@ -96,22 +98,6 @@ protected:
     void setXMLFiles();
 
 private:
-
-    class XMLParser
-    {
-
-    public:
-
-        static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
-        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths);
-        static int findByNameAttr(const QDomNodeList& list, const QDomElement& node);
-
-    private:
-
-        XMLParser();
-        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath &paths, QDomElemList stack);
-
-    };
 
     class Private;
     Private* const d;
