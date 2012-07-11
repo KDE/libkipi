@@ -73,18 +73,18 @@ public:
 
     public:
 
-        static QDomElement makeElement(QDomDocument domDoc, const QDomElement& from);
-        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths);
-        static int findByNameAttr(const QDomNodeList& list, const QDomElement& node);
+        static QDomElement makeElement(QDomDocument& domDoc, const QDomElement& from);
+        static void        buildPaths(const QDomElement& original, const QDomNodeList& localNodes, QHashPath& paths);
+        static int         findByNameAttr(const QDomNodeList& list, const QDomElement& node);
 
     private:
 
         XMLParser();
-        static void buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath &paths, QDomElemList stack);
+        static void buildPaths(const QDomElement& original, const QDomNodeList& localNodes, QHashPath& paths, QDomElemList& stack);
     };
 };
 
-QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument domDoc, const QDomElement& from)
+QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument& domDoc, const QDomElement& from)
 {
     QDomElement elem            = domDoc.createElement(from.tagName());
     QDomNamedNodeMap attributes = from.attributes();
@@ -100,7 +100,18 @@ QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument domDoc, const Q
     return elem;
 }
 
-int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement &node)
+void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const QDomNodeList& localNodes, QHashPath& paths)
+{
+    /*
+     * For each child element of "local", we will construct the path from the
+     * "original" element to first appearance of the respective child in the
+     * subtree.
+     */
+    QDomElemList stack;
+    buildPaths(original, localNodes, paths, stack);
+}
+
+int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement& node)
 {
     const QString nodeName = node.toElement().attribute("name");
     const QString nodeTag  = node.toElement().tagName();
@@ -116,8 +127,8 @@ int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const Q
     return -1;
 }
 
-void Plugin::Private::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes,
-                                            QHashPath& paths, QDomElemList stack)
+void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const QDomNodeList& localNodes,
+                                            QHashPath& paths, QDomElemList& stack)
 {
     stack.push_back(original);
     int idx;
@@ -144,17 +155,6 @@ void Plugin::Private::XMLParser::buildPaths(QDomElement original, const QDomNode
     }
 
     stack.pop_back();
-}
-
-void Plugin::Private::XMLParser::buildPaths(QDomElement original, const QDomNodeList& localNodes, QHashPath& paths)
-{
-    /*
-     * For each child element of "local", we will construct the path from the
-     * "original" element to first appearance of the respective child in the
-     * subtree.
-     */
-    QDomElemList stack;
-    buildPaths(original, localNodes, paths, stack);
 }
 
 // --------------------------------------------------------------------------------------------------------------
