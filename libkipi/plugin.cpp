@@ -248,6 +248,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
     QDomElement menuBarElem    = guiElem.firstChildElement("MenuBar");
     QDomElement newMenuBarElem = Private::XMLParser::makeElement(newPluginDoc, menuBarElem);
     QDomElement toolBarElem    = guiElem.firstChildElement("ToolBar");
+    QDomElement actionPropElem = guiElem.firstChildElement("ActionProperties");
 
     QHashPath paths;
     Private::XMLParser::buildPaths(hostMenuBarElem, menuBarElem.childNodes(), paths);
@@ -294,6 +295,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
     newGuiElem.appendChild(newMenuBarElem);
     newGuiElem.appendChild(toolBarElem.cloneNode());
     newPluginDoc.appendChild(newGuiElem);
+    newGuiElem.appendChild(actionPropElem.cloneNode());
 
     const QString pluginName    = "kipiplugin_" + objectName().toLower();
     const QString component     = KGlobal::mainComponent().componentName();
