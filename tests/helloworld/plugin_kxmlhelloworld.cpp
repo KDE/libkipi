@@ -226,7 +226,8 @@ void Plugin_KXMLHelloWorld::setupActions()
      *  is the name given to the plugin factory, usualy: kipiplugin_<name> .
      *  UI file of the plugin must be installed in kipi data dir.
      */
-    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
+//    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
+    setUiBaseName("kipiplugin_kxmlhelloworldui.rc");
 }
 
 void Plugin_KXMLHelloWorld::setupXML()

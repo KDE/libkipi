@@ -56,7 +56,8 @@ class Plugin::Private
 {
 public:
 
-    Private()
+    Private() :
+        uiBaseName(QString())
     {
         defaultWidget = 0;
     }
@@ -65,6 +66,7 @@ public:
     KComponentData                     instance;
     QMap<QWidget*, QList<KAction*> >   actions;
     QWidget*                           defaultWidget;
+    QString                            uiBaseName;
 
 public:
 
@@ -216,71 +218,95 @@ Interface* Plugin::interface() const
     return (dynamic_cast<Interface*>(parent()));
 }
 
-void Plugin::mergeXMLFile(KXMLGUIClient* const host)
+void Plugin::setUiBaseName(const char* name)
+{
+    d->uiBaseName = QString(name);
+}
+
+QString Plugin::uiBaseName() const
+{
+    return d->uiBaseName;
+}
+
+void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 {
     if (!host)
     {
-        kError() << "Host KXMLGUIClient is null! Cannot merge!";
+        kError() << "Host KXMLGUIClient is null!";
         return;
     }
+    if (d->uiBaseName.isEmpty())
+    {
+        kError() << "UI file basename is not set!";
+        return;
+    }
+
+    const QString componentName = KGlobal::mainComponent().componentName();
+    const QString defaultUI     = KGlobal::dirs()->locate("data", KStandardDirs::installPath("data") + QString("kipi/") + d->uiBaseName);
+    const QString localUI       = KGlobal::dirs()->locateLocal("data", componentName + "/" + d->uiBaseName);
+
+    QFile defaultUIFile(defaultUI);
+    QDomDocument defaultDomDoc;
+    if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
+    {
+        kError() << "Could not open default ui file";
+        return;
+    }
+    defaultUIFile.close();
 
     const QDomDocument hostDoc = host->domDocument();
-    QDomDocument pluginDoc     = domDocument();
-
-    if (hostDoc.isNull() || pluginDoc.isNull())
+    if (hostDoc.isNull() || defaultDomDoc.isNull())
     {
-        kError() << "Cannot merge the XML files, at least one is null.";
+        kError() << "Cannot merge the XML files, at least one is null!";
         return;
     }
 
-    QDomElement hostGuiElem     = hostDoc.firstChildElement("kpartgui");
+    QDomElement hostGuiElem = hostDoc.firstChildElement("kpartgui");
     QDomElement hostMenuBarElem = hostGuiElem.firstChildElement("MenuBar");
 
-    QDomDocument newPluginDoc(pluginDoc.doctype());
-    QDomElement guiElem = pluginDoc.firstChildElement("gui");
+    QDomDocument newPluginDoc(defaultDomDoc.doctype());
+    QDomElement defGuiElem = defaultDomDoc.firstChildElement("gui");
 
-    if (guiElem.isNull())
-    {
-        return;
-    }
-
-    QDomElement newGuiElem     = Private::XMLParser::makeElement(newPluginDoc, guiElem);
-    QDomElement menuBarElem    = guiElem.firstChildElement("MenuBar");
-    QDomElement newMenuBarElem = Private::XMLParser::makeElement(newPluginDoc, menuBarElem);
-    QDomElement toolBarElem    = guiElem.firstChildElement("ToolBar");
-    QDomElement actionPropElem = guiElem.firstChildElement("ActionProperties");
+    QDomElement newGuiElem = Private::XMLParser::makeElement(newPluginDoc, defGuiElem);
+    QDomElement defMenuBarElem = defGuiElem.firstChildElement("MenuBar");
+    QDomElement newMenuBarElem = Private::XMLParser::makeElement(newPluginDoc, defMenuBarElem);
+    QDomElement defToolBarElem = defGuiElem.firstChildElement("ToolBar");
+    QDomElement defActionPropElem = defGuiElem.firstChildElement("ActionProperties");
 
     QHashPath paths;
-    Private::XMLParser::buildPaths(hostMenuBarElem, menuBarElem.childNodes(), paths);
+    Private::XMLParser::buildPaths(hostMenuBarElem, defMenuBarElem.childNodes(), paths);
 
-    for (QDomNode n = menuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
+    for (QDomNode n = defMenuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
     {
-        QDomElemList path   = paths[n.toElement().attribute("name")];
+        QDomElemList path = paths[n.toElement().attribute("name")];
         QDomElement current = newMenuBarElem;
-        QDomElement origCur = menuBarElem;
+        QDomElement origCurr = defMenuBarElem;
 
         if (path.empty())
         {
-            newMenuBarElem.appendChild(n.cloneNode());
+            if (!n.isNull())
+                newMenuBarElem.appendChild(n.cloneNode());
         }
         else
         {
             for (int i = 1; i < path.size() - 1; ++i)
             {
                 int idx = Private::XMLParser::findByNameAttr(current.childNodes(), path[i]);
-                origCur = path[i];
-
+                origCurr = path[i];
                 if (idx == -1)
                 {
-                    QDomElement newChild = Private::XMLParser::makeElement(newPluginDoc, path[i]);
-                    QDomElement textElem = origCur.firstChildElement("text");
-
-                    if (!textElem.isNull())
+                    if (!path[i].isNull())
                     {
-                        newChild.appendChild(textElem.cloneNode());
+                        QDomElement newChild = Private::XMLParser::makeElement(newPluginDoc, path[i]);
+                        QDomElement textElem = origCurr.firstChildElement("text");
+
+                        if (!textElem.isNull())
+                        {
+                            newChild.appendChild(textElem.cloneNode());
+                        }
+                        current.appendChild(newChild);
+                        current = newChild;
                     }
-                    current.appendChild(newChild);
-                    current = newChild;
                 }
                 else
                 {
@@ -288,30 +314,41 @@ void Plugin::mergeXMLFile(KXMLGUIClient* const host)
                 }
             }
         }
-
-        current.appendChild(n.cloneNode());
+        if (!n.isNull() && !current.isNull())
+            current.appendChild(n.cloneNode());
     }
-
     newGuiElem.appendChild(newMenuBarElem);
-    newGuiElem.appendChild(toolBarElem.cloneNode());
-    newPluginDoc.appendChild(newGuiElem);
-    newGuiElem.appendChild(actionPropElem.cloneNode());
 
-    const QString pluginName    = "kipiplugin_" + objectName().toLower();
-    const QString component     = KGlobal::mainComponent().componentName();
-    const QString newPluginFile = KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
-    QFile file(newPluginFile);
-
-    if (!file.open(QFile::WriteOnly))
+    QFile localUIFile(localUI);
+    QDomDocument localDomDoc;
+    if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
     {
-        kWarning() << "Cannot write to " << newPluginFile;
+        newGuiElem.appendChild(defToolBarElem.cloneNode());
+        newGuiElem.appendChild(defActionPropElem.cloneNode());
+    }
+    else
+    {
+        QDomElement localGuiElem = localDomDoc.firstChildElement("gui");
+        QDomElement localToolBarElem = localGuiElem.firstChildElement("ToolBar");
+        QDomElement localActionPropElem = localGuiElem.firstChildElement("ActionProperties");
+
+        newGuiElem.appendChild(localToolBarElem.cloneNode());
+        newGuiElem.appendChild(localActionPropElem.cloneNode());
+    }
+    localUIFile.close();
+    QFile writeFile(localUI);
+    if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        kError() << "Could not open " << localUI << " for wrinting!";
         return;
     }
+    newPluginDoc.appendChild(newGuiElem);
 
-    file.write(newPluginDoc.toString().toUtf8());
-    file.flush();
+    writeFile.write(newPluginDoc.toString().toUtf8());
+    writeFile.flush();
+    writeFile.close();
 
-    setXMLFiles();
+    setXMLFile(d->uiBaseName);
 }
 
 void Plugin::setXMLFiles()
