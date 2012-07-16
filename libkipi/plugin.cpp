@@ -132,9 +132,9 @@ int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const Q
 void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const QDomNodeList& localNodes,
                                             QHashPath& paths, QDomElemList& stack)
 {
-    stack.push_back(original);
-    int idx;
+    stack.push_back(original.cloneNode(true).toElement());
 
+    int idx;
     if ((idx = findByNameAttr(localNodes, original)) != -1)
     {
         paths[localNodes.item(idx).toElement().attribute("name")] = stack;
@@ -237,7 +237,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
     if (d->uiBaseName.isEmpty())
     {
-        kError() << "UI file basename is not set!";
+        kError() << "UI file basename is not set! You must first call setUiBaseName.";
         return;
     }
 
@@ -261,16 +261,16 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         return;
     }
 
-    QDomElement hostGuiElem = hostDoc.firstChildElement("kpartgui");
-    QDomElement hostMenuBarElem = hostGuiElem.firstChildElement("MenuBar");
+    QDomElement hostGuiElem       = hostDoc.firstChildElement("kpartgui");
+    QDomElement hostMenuBarElem   = hostGuiElem.firstChildElement("MenuBar");
 
     QDomDocument newPluginDoc(defaultDomDoc.doctype());
-    QDomElement defGuiElem = defaultDomDoc.firstChildElement("gui");
+    QDomElement defGuiElem        = defaultDomDoc.firstChildElement("gui");
 
-    QDomElement newGuiElem = Private::XMLParser::makeElement(newPluginDoc, defGuiElem);
-    QDomElement defMenuBarElem = defGuiElem.firstChildElement("MenuBar");
-    QDomElement newMenuBarElem = Private::XMLParser::makeElement(newPluginDoc, defMenuBarElem);
-    QDomElement defToolBarElem = defGuiElem.firstChildElement("ToolBar");
+    QDomElement newGuiElem        = Private::XMLParser::makeElement(newPluginDoc, defGuiElem);
+    QDomElement defMenuBarElem    = defGuiElem.firstChildElement("MenuBar");
+    QDomElement newMenuBarElem    = Private::XMLParser::makeElement(newPluginDoc, defMenuBarElem);
+    QDomElement defToolBarElem    = defGuiElem.firstChildElement("ToolBar");
     QDomElement defActionPropElem = defGuiElem.firstChildElement("ActionProperties");
 
     QHashPath paths;
@@ -278,14 +278,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     for (QDomNode n = defMenuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
     {
-        QDomElemList path = paths[n.toElement().attribute("name")];
-        QDomElement current = newMenuBarElem;
+        QDomElemList path    = paths[n.toElement().attribute("name")];
+        QDomElement current  = newMenuBarElem;
         QDomElement origCurr = defMenuBarElem;
 
         if (path.empty())
         {
-            if (!n.isNull())
-                newMenuBarElem.appendChild(n.cloneNode());
+            newMenuBarElem.appendChild(n.cloneNode());
         }
         else
         {
@@ -314,7 +313,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
                 }
             }
         }
-        if (!n.isNull() && !current.isNull())
+        if (!current.isNull())
             current.appendChild(n.cloneNode());
     }
     newGuiElem.appendChild(newMenuBarElem);
@@ -345,7 +344,6 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     newPluginDoc.appendChild(newGuiElem);
 
     writeFile.write(newPluginDoc.toString().toUtf8());
-    writeFile.flush();
     writeFile.close();
 
     setXMLFile(d->uiBaseName);

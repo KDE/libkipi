@@ -193,7 +193,6 @@ SetupXML::SetupXML(QWidget* const parent)
     QDir dir(d->uiFilesPath);
     QString filter("*ui.rc");
     d->uiFilesList = dir.entryList(QStringList(filter), QDir::Files | QDir::NoSymLinks);
-    kDebug() << d->uiFilesList;
 
     d->xmlFilesCob = new KComboBox(panel);
     d->xmlFilesCob->setEditable(false);
