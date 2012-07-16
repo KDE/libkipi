@@ -97,7 +97,6 @@ protected:
     void    setUiBaseName(const char* name);
     QString uiBaseName() const;
     void    mergeXMLFile(KXMLGUIClient* const host);
-    void    setXMLFiles();
 
 private:
 

@@ -351,15 +351,4 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     setXMLFile(d->uiBaseName);
 }
 
-void Plugin::setXMLFiles()
-{
-    const QString pluginName      = "kipiplugin_" + objectName().toLower();
-    const QString component       = KGlobal::mainComponent().componentName();
-    const QString newPluginFile   = KStandardDirs::locateLocal("data", component + "/default-" + pluginName + "ui.rc");
-    const QString localPluginFile = KStandardDirs::locateLocal("data", component + "/" + pluginName + "ui.rc");
-
-    setXMLFile(newPluginFile);
-    setLocalXMLFile(localPluginFile);
-}
-
 } // namespace KIPI

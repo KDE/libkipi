@@ -28,6 +28,7 @@
 
 #include <QList>
 #include <QRadioButton>
+#include <QPushButton>
 #include <QDir>
 #include <QVBoxLayout>
 
@@ -43,6 +44,7 @@
 // Libkipi includes
 
 #include "pluginloader.h"
+#include "version.h"
 
 // Local includes
 
@@ -71,7 +73,7 @@ public:
     KPageWidgetItem* page_plugins;
     KPageWidgetItem* page_xml;
 
-    ConfigWidget*    pluginsPage;
+    SetupPlugins*    pluginsPage;
     SetupXML*        xmlPage;
 };
 
@@ -85,7 +87,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     setModal(true);
     setMinimumSize(600, 400);
 
-    d->pluginsPage  = PluginLoader::instance()->configWidget(this);
+    d->pluginsPage  = new SetupPlugins(this);
     d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
     d->page_plugins->setIcon(KIcon("kipi"));
 
@@ -233,5 +235,103 @@ void SetupXML::apply()
     }
     group.sync();
 }
+
+// -------------------------------------------------------------------
+
+class SetupPlugins::SetupPluginsPriv
+{
+
+public:
+
+    SetupPluginsPriv() :
+        checkAllBtn(0),
+        clearListBtn(0),
+        kipiConfig(0)
+    {
+    }
+
+    QPushButton*  checkAllBtn;
+    QPushButton*  clearListBtn;
+    ConfigWidget* kipiConfig;
+};
+
+SetupPlugins::SetupPlugins(QWidget* parent)
+    : QScrollArea(parent), d(new SetupPluginsPriv)
+{
+    QWidget *panel = new QWidget(viewport());
+    setWidget(panel);
+    setWidgetResizable(true);
+
+    QGridLayout* mainLayout = new QGridLayout;
+    d->checkAllBtn          = new QPushButton(i18n("Check all"));
+    d->clearListBtn         = new QPushButton(i18n("Clear"));
+
+    if (PluginLoader::instance())
+    {
+        d->kipiConfig = PluginLoader::instance()->configWidget(panel);
+        d->kipiConfig->setWhatsThis(i18n("Available KIPI plugins"));
+    }
+
+    mainLayout->addWidget(d->checkAllBtn,   0,  0,  1,  1);
+    mainLayout->addWidget(d->clearListBtn,  0,  1,  1,  1);
+    mainLayout->addWidget(d->kipiConfig,    1,  0,  1, -1);
+    mainLayout->setColumnStretch(2, 10);
+    mainLayout->setMargin(KDialog::spacingHint());
+    mainLayout->setSpacing(KDialog::spacingHint());
+
+    panel->setLayout(mainLayout);
+
+#if KIPI_VERSION < 0x010400
+    d->checkAllBtn->setVisible(false);
+    d->clearListBtn->setVisible(false);
+#endif
+
+    // --------------------------------------------------------
+
+    setAutoFillBackground(false);
+    viewport()->setAutoFillBackground(false);
+    panel->setAutoFillBackground(false);
+
+    // --------------------------------------------------------
+
+    connect(d->checkAllBtn, SIGNAL(clicked()),
+            this, SLOT(slotCheckAll()));
+
+    connect(d->clearListBtn, SIGNAL(clicked()),
+            this, SLOT(slotClearList()));
+
+}
+
+SetupPlugins::~SetupPlugins()
+{
+    delete d;
+}
+
+void SetupPlugins::apply()
+{
+    if (PluginLoader::instance())
+    {
+        d->kipiConfig->apply();
+    }
+}
+
+void SetupPlugins::slotCheckAll()
+{
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+#if KIPI_VERSION >= 0x010400
+    d->kipiConfig->slotCheckAll();
+#endif
+    QApplication::restoreOverrideCursor();
+}
+
+void SetupPlugins::slotClearList()
+{
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+#if KIPI_VERSION >= 0x010400
+    d->kipiConfig->slotClear();
+#endif
+    QApplication::restoreOverrideCursor();
+}
+
 
 } // namespace KXMLKipiCmd
