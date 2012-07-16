@@ -242,7 +242,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
 
     const QString componentName = KGlobal::mainComponent().componentName();
-    const QString defaultUI     = KGlobal::dirs()->locate("data", KStandardDirs::installPath("data") + QString("kipi/") + d->uiBaseName);
+    const QString defaultUI     = KGlobal::dirs()->locate("data", QString("kipi/") + d->uiBaseName);
     const QString localUI       = KGlobal::dirs()->locateLocal("data", componentName + "/" + d->uiBaseName);
 
     QFile defaultUIFile(defaultUI);
