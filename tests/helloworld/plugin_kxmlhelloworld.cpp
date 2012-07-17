@@ -53,6 +53,7 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kcomponentdata.h>
+#include <kdialog.h>
 
 /// This is all libkipi header includes in this tool.
 
@@ -270,11 +271,9 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
-/*
-    QPointer<KPToolDialog> dlg        = new KPToolDialog(0);
+    QPointer<KDialog> dlg = new KDialog(0);
     ImageCollectionSelector* selector = d->iface->imageCollectionSelector(dlg);
     dlg->setMainWidget(selector);
-    dlg->setAboutData(new HelloWorldAbout);
     dlg->exec();
 
     QList<ImageCollection> list = selector->selectedImageCollections();
@@ -288,7 +287,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
         KMessageBox::informationList(0, i18n("This is the list of selected albums"), names);
     }
 
-    delete dlg;*/
+    delete dlg;
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionExport()

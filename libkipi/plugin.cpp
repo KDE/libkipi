@@ -338,7 +338,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     QFile writeFile(localUI);
     if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
     {
-        kError() << "Could not open " << localUI << " for wrinting!";
+        kError() << "Could not open " << localUI << " for writing!";
         return;
     }
     newPluginDoc.appendChild(newGuiElem);

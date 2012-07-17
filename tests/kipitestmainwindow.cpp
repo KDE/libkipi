@@ -69,7 +69,8 @@ public:
         config(0),
         quitAction(0),
         showMenuBarAction(0),
-        kipiInterface(0)
+        kipiInterface(0),
+        uiFile(QString())
     {
     }
 
@@ -77,6 +78,7 @@ public:
     KAction*           quitAction;
     KToggleAction*     showMenuBarAction;
     KipiInterface*     kipiInterface;
+    QString            uiFile;
 
 };
 
@@ -91,7 +93,7 @@ KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
     KConfigGroup uiGroup = d->config->group("UI Settings");
     QString uiFile       = uiGroup.readEntry("UiFile", QString("kxmlkipicmd_defaultui.rc"));
 
-    setXMLFile(uiFile);
+    d->uiFile = uiFile;
     setObjectName("kxmlkipicmd");
 
     setMinimumSize(QSize(800, 600));
@@ -142,7 +144,7 @@ void KipiTestMainWindow::setupActions()
     KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());
     KStandardAction::preferences(this,       SLOT(slotSetup()),        actionCollection());
 
-    createGUI(xmlFile());
+    createGUI(d->uiFile);
 }
 
 void KipiTestMainWindow::loadPlugins()
