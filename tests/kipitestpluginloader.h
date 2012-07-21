@@ -63,8 +63,6 @@ public:
     QList<QAction*>            kipiActionsByCategory(Category cat) const;
     KActionCollection*         pluginsActionCollection() const;
 
-    void kipiPlugActions(bool unplug = false);
-
     static KipiTestPluginLoader* instance();
 
 
@@ -81,6 +79,7 @@ private:
     void loadPlugins();
     void checkEmptyCategory(Category cat);
     QString categoryName(Category cat) const;
+    QString categoryShortName(Category cat) const;
 
 private:
 

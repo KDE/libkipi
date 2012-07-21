@@ -139,18 +139,19 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
        return;
     }
 
-    setupActions();
+    /** This is needed to setup the plugin gui and to merge with the kipi host
+     *  application gui.
+     *  The name of the UI file must be: nameofpluginui.rc, where "nameofplugin"
+     *  is the name given to the plugin factory, usualy: kipiplugin_<name> .
+     *  UI file of the plugin must be installed in kipi data dir.
+     */
+    setUiBaseName("kipiplugin_kxmlhelloworldui.rc");
+
     setupXML();
 }
 
 Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
 {
-    /// We need to remove the actions from the action collection
-    actionCollection()->removeAction(d->actionExport);
-    actionCollection()->removeAction(d->actionImages);
-    actionCollection()->removeAction(d->actionTools);
-    actionCollection()->removeAction(d->actionImport);
-
     /// Don't forget to clear d private container allocation in destructor to prevent memory leak.
     delete d;
 }
@@ -171,20 +172,15 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImages->setText(i18n("KXML Hello Wolrd Image..."));
     d->actionImages->setIcon(KIcon("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
+    d->actionImages->setEnabled(false);
 
     /** Connect plugin action signal to dedicated slot.
      */
     connect(d->actionImages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImages()));
-
-    /** Action is registered in plugin instance.
+    /** We need to register actions in plugin instance
      */
     addAction(d->actionImages);
-
-    /** This will get items selection from KIPI host application.
-     */
-    ImageCollection selection = d->iface->currentSelection();
-    d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
@@ -197,6 +193,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(KIcon("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
+    d->actionTools->setEnabled(false);
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
     addAction(d->actionTools);
@@ -207,6 +204,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(KIcon("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
+    d->actionExport->setEnabled(false);
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
     addAction(d->actionExport);
@@ -217,18 +215,10 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(KIcon("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
+    d->actionImport->setEnabled(false);
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
     addAction(d->actionImport);
-
-    /** This is needed to setup the plugin gui and to merge with the kipi host
-     *  application gui.
-     *  The name of the UI file must be: nameofpluginui.rc, where "nameofplugin"
-     *  is the name given to the plugin factory, usualy: kipiplugin_<name> .
-     *  UI file of the plugin must be installed in kipi data dir.
-     */
-//    setXMLFile("kipiplugin_kxmlhelloworldui.rc");
-    setUiBaseName("kipiplugin_kxmlhelloworldui.rc");
 }
 
 void Plugin_KXMLHelloWorld::setupXML()
@@ -243,9 +233,28 @@ void Plugin_KXMLHelloWorld::setupXML()
 
 void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 {
-    /** We pass the widget which host plugin in KIPI host application
+    /** Each plugin must overload Plugin::setup method.
+     *  We pass the widget which host plugin in KIPI host application
      */
     Plugin::setup(widget);
+
+    clearActions();
+    setupActions();
+
+    if (!d->iface)
+        return;
+
+    /** We will enable plugin actions only if the KIPI interface is not null
+      */
+    d->actionTools->setEnabled(true);
+
+    /** This will get items selection from KIPI host application.
+     */
+    ImageCollection selection = d->iface->currentSelection();
+
+    d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
+    d->actionExport->setEnabled(true);
+    d->actionImport->setEnabled(true);
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()

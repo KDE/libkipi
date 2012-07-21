@@ -172,6 +172,7 @@ Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char
 
 Plugin::~Plugin()
 {
+    clearActions();
     delete d;
 }
 
@@ -208,6 +209,7 @@ void Plugin::addAction(KAction* const action)
 
 void Plugin::setup(QWidget* const widget)
 {
+    clearActions();
     d->defaultWidget = widget;
     d->actions.insert(widget, QList<KAction*>());
     d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
@@ -347,6 +349,15 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     writeFile.close();
 
     setXMLFile(d->uiBaseName);
+}
+
+void Plugin::clearActions()
+{
+    QList<QAction*> actions = actionCollection()->actions();
+    foreach (QAction* action, actions)
+    {
+        actionCollection()->removeAction(action);
+    }
 }
 
 } // namespace KIPI

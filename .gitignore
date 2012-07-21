@@ -4,3 +4,4 @@ tests/databases/*/*.db
 *.autosave
 build
 CMakeLists.txt.user
+*.patch

@@ -170,9 +170,6 @@ void KipiTestPluginLoader::loadPlugins()
 
 void KipiTestPluginLoader::slotKipiPluginsPlug()
 {
-    // Remove plugin GUI menus in application.
-//    kipiPlugActions(true);
-
     d->kipiCategoryMap.clear();
     d->kipipluginsActionCollection->clear();
 
@@ -200,7 +197,9 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
         }
 
         ++cpt;
+        d->app->guiFactory()->removeClient(plugin);
         plugin->setup(d->app);
+        d->app->guiFactory()->addClient(plugin);
 
         foreach(KAction* const action, plugin->actions())
         {
@@ -228,16 +227,6 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
     // load KIPI actions settings
     d->kipipluginsActionCollection->readSettings();
-
-    // Check if the Export/Import/tools Plugin lists are empty, if so, add an empty action which tells the user that no
-    // Export/Import/tools plugins are available. It is more user-friendly to present some menu entry,
-    // instead of leaving it completely empty.
-//    checkEmptyCategory(ExportPlugin);
-//    checkEmptyCategory(ImportPlugin);
-//    checkEmptyCategory(ToolsPlugin);
-
-    // Create plugin GUI menus in application.
-//    kipiPlugActions();
 }
 
 void KipiTestPluginLoader::checkEmptyCategory(Category cat)
@@ -246,32 +235,12 @@ void KipiTestPluginLoader::checkEmptyCategory(Category cat)
 
     if (!category)
     {
-        QAction* action = new QAction(i18n("No tool available"), d->app);
+//        QAction* action = new QAction(i18n("No tool available"), d->app);
+        QString actionName = "emptyCategory" + categoryShortName(cat);
+        KAction* action = d->app->actionCollection()->addAction(actionName);
         action->setEnabled(false);
         category        = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
         d->kipiCategoryMap.insert(cat, category);
-    }
-}
-
-void KipiTestPluginLoader::kipiPlugActions(bool unplug)
-{
-    if (unplug)
-    {
-        d->app->unplugActionList(d->exportActionName);
-        d->app->unplugActionList(d->importActionName);
-        d->app->unplugActionList(d->imagesActionName);
-        d->app->unplugActionList(d->toolsActionName);
-        d->app->unplugActionList(d->batchActionName);
-        d->app->unplugActionList(d->albumsActionName);
-    }
-    else
-    {
-        d->app->plugActionList(d->exportActionName, kipiActionsByCategory(ExportPlugin));
-        d->app->plugActionList(d->importActionName, kipiActionsByCategory(ImportPlugin));
-        d->app->plugActionList(d->imagesActionName, kipiActionsByCategory(ImagesPlugin));
-        d->app->plugActionList(d->toolsActionName,  kipiActionsByCategory(ToolsPlugin));
-        d->app->plugActionList(d->batchActionName,  kipiActionsByCategory(BatchPlugin));
-        d->app->plugActionList(d->albumsActionName, kipiActionsByCategory(CollectionsPlugin));
     }
 }
 
@@ -308,6 +277,40 @@ QString KipiTestPluginLoader::categoryName(Category cat) const
         default:
             res = i18n("Unknown Tools");
             break;
+    }
+
+    return res;
+}
+
+QString KipiTestPluginLoader::categoryShortName(Category cat) const
+{
+    QString res;
+
+    switch (cat)
+    {
+    case ExportPlugin:
+        res = i18n("Export");
+        break;
+
+    case ImportPlugin:
+        res = i18n("Import");
+        break;
+
+    case ToolsPlugin:
+        res = i18n("Tools");
+        break;
+
+    case BatchPlugin:
+        res = i18n("Batch");
+        break;
+
+    case CollectionsPlugin:
+        res = i18n("Collenctions");
+        break;
+
+    default:
+        res = i18n("Unknown");
+        break;
     }
 
     return res;
