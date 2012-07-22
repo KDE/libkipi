@@ -15,6 +15,8 @@
  *         <a href="mailto:blackie at kde dot org">blackie at kde dot org</a>
  * @author Copyright (C) 2004-2005 by Aurelien Gateau
  *         <a href="mailto:aurelien dot gateau at free dot fr">aurelien dot gateau at free dot fr</a>
+ * @author Copyright (C) 2012 by Victor Dodon
+ *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
