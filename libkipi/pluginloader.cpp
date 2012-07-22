@@ -224,9 +224,19 @@ public:
     Interface*               interface;
 };
 
+PluginLoader::PluginLoader()
+    : d(new Private)
+{
+    Q_ASSERT((s_instance == 0) && (!s_loaded));
+    s_instance = this;
+
+    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
+}
+
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     : d(new Private)
 {
+    Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
     if (!parent)

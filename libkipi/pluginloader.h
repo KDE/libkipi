@@ -221,6 +221,10 @@ public:
 
 public:
 
+    /** Use this constructor if your application does not use KDE XML GUI technology
+      */
+    PluginLoader();
+
     /** Standard constructor. You must pass the instance of KDE XML GUI application as argument.
      */
     PluginLoader(KXmlGuiWindow* const parent);
