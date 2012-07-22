@@ -4,19 +4,19 @@
     <MenuBar>
 
         <Menu name="Image"><text>&amp;Image</text>
-            <Action name="kxmlhelloworld-actionImage" />
+            <Action name="kxmlhelloworld-actionImage" group="kipi_image_group" />
         </Menu>
 
         <Menu name="Tools"><text>&amp;Tools</text>
-            <Action name="kxmlhelloworld-actionTools" />
+            <Action name="kxmlhelloworld-actionTools" group="kipi_tool_group" />
         </Menu>
 
         <Menu name="Import"><text>I&amp;mport</text>
-            <Action name="kxmlhelloworld-actionImport" />
+            <Action name="kxmlhelloworld-actionImport" group="kipi_import_group" />
         </Menu>
 
         <Menu name="Export"><text>&amp;Export</text>
-            <Action name="kxmlhelloworld-actionExport" />
+            <Action name="kxmlhelloworld-actionExport" group="kipi_export_group" />
         </Menu>
 
     </MenuBar>
