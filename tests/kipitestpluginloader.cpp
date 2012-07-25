@@ -60,13 +60,6 @@ public:
         kipiInterface               = 0;
     }
 
-    static const QString        imagesActionName;
-    static const QString        toolsActionName;
-    static const QString        importActionName;
-    static const QString        exportActionName;
-    static const QString        batchActionName;
-    static const QString        albumsActionName;
-
     PluginLoader*               kipiPluginLoader;
     KipiInterface*              kipiInterface;
     KXmlGuiWindow*              app;
@@ -76,13 +69,6 @@ public:
 };
 
 // -- Static values -------------------------------
-
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::imagesActionName(QString::fromLatin1("image_kipi_actions"));
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::toolsActionName(QString::fromLatin1("tool_kipi_actions"));
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::importActionName(QString::fromLatin1("import_kipi_actions"));
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::exportActionName(QString::fromLatin1("export_kipi_actions"));
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::batchActionName(QString::fromLatin1("batch_kipi_actions"));
-const QString KipiTestPluginLoader::KipiTestPluginLoaderPriv::albumsActionName(QString::fromLatin1("album_kipi_actions"));
 
 KipiTestPluginLoader* KipiTestPluginLoader::m_instance = 0;
 
