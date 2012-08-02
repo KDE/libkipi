@@ -89,7 +89,6 @@ public:
         actionTools  = 0;
         actionExport = 0;
         actionImport = 0;
-        iface        = 0;
     }
 
     /** These plugin actions will pluged into menu KIPI host application.
@@ -98,12 +97,6 @@ public:
     KAction*   actionTools;
     KAction*   actionExport;
     KAction*   actionImport;
-
-    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
-     *  instance of KIPI::PluginLoader singleton which provide a method for that.
-     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
-     */
-    Interface* iface;
 };
 
 /** Macro from KDE KParts to create the factory for this plugin.
@@ -176,11 +169,6 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     addAction(d->actionImages);
 
-    /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
-     */
-    connect(d->iface, SIGNAL(selectionChanged(bool)),
-            d->actionImages, SLOT(setEnabled(bool)));
-
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
     d->actionTools = actionCollection()->addAction("kxmlhelloworld-actionTools");
@@ -223,6 +211,10 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     Plugin::setup(widget);
     setupActions();
 
+    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
+     *  instance of KIPI::PluginLoader singleton which provide a method for that.
+     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
+     */
     if (!interface())
         return;
 
@@ -237,6 +229,11 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
     d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
     d->actionExport->setEnabled(true);
     d->actionImport->setEnabled(true);
+
+    /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
+     */
+    connect(interface(), SIGNAL(selectionChanged(bool)),
+            d->actionImages, SLOT(setEnabled(bool)));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()
