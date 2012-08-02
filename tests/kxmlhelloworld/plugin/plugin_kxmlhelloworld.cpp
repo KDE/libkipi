@@ -143,6 +143,25 @@ Plugin_KXMLHelloWorld::~Plugin_KXMLHelloWorld()
     delete d;
 }
 
+void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
+{
+    /** Each plugin must overload Plugin::setup method.
+     *  We pass the widget which host plugin in KIPI host application
+     */
+    Plugin::setup(widget);
+
+    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
+     *  instance of KIPI::PluginLoader singleton which provide a method for that.
+     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
+     */
+    if (!interface())
+        return;
+
+    /** We will enable plugin actions only if the KIPI interface is not null
+      */
+    setupActions();
+}
+
 void Plugin_KXMLHelloWorld::setupActions()
 {
     /** We define plugin action which will be plug in KIPI host application.
@@ -159,7 +178,6 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImages->setText(i18n("KXML Hello Wolrd Image..."));
     d->actionImages->setIcon(KIcon("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
-    d->actionImages->setEnabled(false);
 
     /** Connect plugin action signal to dedicated slot.
      */
@@ -169,16 +187,26 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     addAction(d->actionImages);
 
+    /** This will get items selection from KIPI host application.
+     */
+    ImageCollection selection = interface()->currentSelection();
+
+    d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
     d->actionTools = actionCollection()->addAction("kxmlhelloworld-actionTools");
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(KIcon("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
-    d->actionTools->setEnabled(false);
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
     addAction(d->actionTools);
+
+    /** We will get current selected album in the digikam tree view
+      */
+    ImageCollection currAlbum = interface()->currentAlbum();
+    bool enable = currAlbum.isValid() && !currAlbum.images().isEmpty();
+    d->actionTools->setEnabled(enable);
 
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
@@ -186,7 +214,6 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(KIcon("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
-    d->actionExport->setEnabled(false);
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
     addAction(d->actionExport);
@@ -197,43 +224,9 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(KIcon("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
-    d->actionImport->setEnabled(false);
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
     addAction(d->actionImport);
-}
-
-void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
-{
-    /** Each plugin must overload Plugin::setup method.
-     *  We pass the widget which host plugin in KIPI host application
-     */
-    Plugin::setup(widget);
-    setupActions();
-
-    /** This is the interface instance to plugin host application. Note that you can get it everywhere in your plugin using
-     *  instance of KIPI::PluginLoader singleton which provide a method for that.
-     *  Since libkipi 2.0.0, KIPI host interface is also available from KIPI::Plugin::interface().
-     */
-    if (!interface())
-        return;
-
-    /** We will enable plugin actions only if the KIPI interface is not null
-      */
-
-    /** We will get current selected album in the digikam tree view
-      */
-    ImageCollection currAlbum = interface()->currentAlbum();
-    bool enable = currAlbum.isValid() && !currAlbum.images().isEmpty();
-    d->actionTools->setEnabled(enable);
-
-    /** This will get items selection from KIPI host application.
-     */
-    ImageCollection selection = interface()->currentSelection();
-
-    d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
-    d->actionExport->setEnabled(true);
-    d->actionImport->setEnabled(true);
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
