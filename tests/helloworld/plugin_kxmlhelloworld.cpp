@@ -220,7 +220,12 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** We will enable plugin actions only if the KIPI interface is not null
       */
-    d->actionTools->setEnabled(true);
+
+    /** We will get current selected album in the digikam tree view
+      */
+    ImageCollection currAlbum = interface()->currentAlbum();
+    bool enable = currAlbum.isValid() && !currAlbum.images().isEmpty();
+    d->actionTools->setEnabled(enable);
 
     /** This will get items selection from KIPI host application.
      */
@@ -234,6 +239,9 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
      */
     connect(interface(), SIGNAL(selectionChanged(bool)),
             d->actionImages, SLOT(setEnabled(bool)));
+
+    connect(interface(), SIGNAL(currentAlbumChanged(bool)),
+            d->actionTools, SLOT(setEnabled(bool)));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImages()
