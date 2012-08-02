@@ -127,7 +127,7 @@ void KipiTestPluginLoader::loadPlugins()
 
     // Comment the following two lines if you want to load the HelloWorld and
     // the KXMLHelloWorld plugins for testing purposes
-    ignores.append("HelloWorld");
+    //ignores.append("HelloWorld");
     //ignores.append("KXMLHelloWorld");
 
     ignores.append("KameraKlient");
