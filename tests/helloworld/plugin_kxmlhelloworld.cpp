@@ -129,16 +129,6 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
 {
     kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
-    /** We will check KIPI host application interface instance validity
-     */
-    d->iface = dynamic_cast<Interface*>(parent);
-    if (!d->iface)
-    {
-       /// No need special debug space outside load plugin area, it will be selected automatically.
-       kError() << "Kipi interface is null!";
-       return;
-    }
-
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui.
      *  The name of the UI file must be: nameofpluginui.rc, where "nameofplugin"
@@ -147,6 +137,10 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      */
     setUiBaseName("kipiplugin_kxmlhelloworldui.rc");
 
+    /** We need to call mergeXMLFile with the host application window as the
+      * argument so the XML file and the GUI of the plugin to be merged with
+      * those of the KIPI host app
+      */
     setupXML();
 }
 
@@ -221,27 +215,15 @@ void Plugin_KXMLHelloWorld::setupActions()
     addAction(d->actionImport);
 }
 
-void Plugin_KXMLHelloWorld::setupXML()
-{
-    /** We need to call mergeXMLFile with the host application window as the
-      * argument so the XML file and the GUI of the plugin to be merged with
-      * those of the KIPI host app
-      */
-    KXMLGUIClient* host = dynamic_cast<KXMLGUIClient*>(d->iface->parent());
-    mergeXMLFile(host);
-}
-
 void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 {
     /** Each plugin must overload Plugin::setup method.
      *  We pass the widget which host plugin in KIPI host application
      */
     Plugin::setup(widget);
-
-    clearActions();
     setupActions();
 
-    if (!d->iface)
+    if (!interface())
         return;
 
     /** We will enable plugin actions only if the KIPI interface is not null
@@ -250,7 +232,7 @@ void Plugin_KXMLHelloWorld::setup(QWidget* const widget)
 
     /** This will get items selection from KIPI host application.
      */
-    ImageCollection selection = d->iface->currentSelection();
+    ImageCollection selection = interface()->currentSelection();
 
     d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
     d->actionExport->setEnabled(true);
@@ -263,7 +245,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
      *  This example show a simple dialog with current items selected in KIPI host application.
      *  You can branch here your dedicated dialog to process items as you want.
      */
-    ImageCollection images = d->iface->currentSelection();
+    ImageCollection images = interface()->currentSelection();
 
     if (images.isValid() && !images.images().isEmpty())
     {
@@ -281,7 +263,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
     QPointer<KDialog> dlg = new KDialog(0);
-    ImageCollectionSelector* selector = d->iface->imageCollectionSelector(dlg);
+    ImageCollectionSelector* selector = interface()->imageCollectionSelector(dlg);
     dlg->setMainWidget(selector);
     dlg->exec();
 
@@ -335,7 +317,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
      *  the first selected item of current selection from kipi host application.
      */
 
-    ImageCollection images = d->iface->currentSelection();
+    ImageCollection images = interface()->currentSelection();
 
     if (images.isValid() && !images.images().isEmpty())
     {
