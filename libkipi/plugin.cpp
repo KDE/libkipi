@@ -362,10 +362,6 @@ void Plugin::clearActions()
     }
 }
 
-void Plugin::setupActions()
-{
-}
-
 void Plugin::setupXML()
 {
     mergeXMLFile(dynamic_cast<KXMLGUIClient*>(interface()->parent()));

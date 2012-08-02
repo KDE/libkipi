@@ -101,8 +101,7 @@ protected:
     QString uiBaseName() const;
     void    mergeXMLFile(KXMLGUIClient* const host);
 
-    void setupXML();
-    virtual void setupActions();
+    void    setupXML();
     void    clearActions();
 
 private:
