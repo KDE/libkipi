@@ -96,9 +96,13 @@ public:
 protected:
 
     void    addAction(KAction* const action);
+
     void    setUiBaseName(const char* name);
     QString uiBaseName() const;
     void    mergeXMLFile(KXMLGUIClient* const host);
+
+    void setupXML();
+    virtual void setupActions();
     void    clearActions();
 
 private:
