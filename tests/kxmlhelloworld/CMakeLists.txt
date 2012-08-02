@@ -21,11 +21,15 @@
 #
 # ============================================================
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../../libkipi
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/plugin
+                    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+                    ${CMAKE_CURRENT_BINARY_DIR}/../../libkipi
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../libkipi
+                    ${CMAKE_CURRENT_BINARY_DIR}
                    )
 
-SET(kipiplugin_kxmlhelloworld_PART_SRCS plugin_kxmlhelloworld.cpp)
+SET(kipiplugin_kxmlhelloworld_PART_SRCS
+    plugin/plugin_kxmlhelloworld.cpp)
 
 KDE4_ADD_PLUGIN(kipiplugin_kxmlhelloworld ${kipiplugin_kxmlhelloworld_PART_SRCS})
 
@@ -37,5 +41,5 @@ TARGET_LINK_LIBRARIES(kipiplugin_kxmlhelloworld
                      )
 
 INSTALL(TARGETS kipiplugin_kxmlhelloworld         DESTINATION ${PLUGIN_INSTALL_DIR}  )
-INSTALL(FILES   kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES   kipiplugin_kxmlhelloworldui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+INSTALL(FILES   plugin/kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_kxmlhelloworldui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)

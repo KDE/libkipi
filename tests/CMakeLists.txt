@@ -49,8 +49,7 @@ TARGET_LINK_LIBRARIES(kxmlkipicmd
                       ${KDE4_KPARTS_LIBS}
                      )
 
-# for now we do not need HelloWorld plugin
-ADD_SUBDIRECTORY(helloworld)
+ADD_SUBDIRECTORY(kxmlhelloworld)
 
 INSTALL(TARGETS kxmlkipicmd               DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 INSTALL(FILES   kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
