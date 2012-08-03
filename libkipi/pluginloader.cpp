@@ -63,11 +63,11 @@
 namespace KIPI
 {
 
-class PluginLoader::Info::InfoPrivate
+class PluginLoader::Info::Private
 {
 public:
 
-    InfoPrivate()
+    Private()
     {
         shouldLoad = false;
         plugin     = 0;
@@ -81,7 +81,7 @@ public:
 };
 
 PluginLoader::Info::Info(KXmlGuiWindow* const parent, const KService::Ptr& service, bool shouldLoad)
-    : d(new InfoPrivate)
+    : d(new Private)
 {
     d->service    = service;
     d->shouldLoad = shouldLoad;
@@ -94,6 +94,7 @@ PluginLoader::Info::~Info()
     {
         d->parent->guiFactory()->removeClient(d->plugin);
     }
+
     delete d->plugin;
     delete d;
 }
@@ -203,7 +204,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 //---------------------------------------------------------------------
 
 static PluginLoader* s_instance = 0;
-static bool s_loaded            = false;
+static bool          s_loaded   = false;
 
 class PluginLoader::Private
 {
@@ -243,8 +244,8 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     {
         kWarning() << "KDE XML application instance is null...";
     }
-    d->parent = parent;
 
+    d->parent = parent;
     KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
 }
 
