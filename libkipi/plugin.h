@@ -9,14 +9,14 @@
  *
  * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2012      by Victor Dodon
+ *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Jesper K. Pedersen
  *         <a href="mailto:blackie at kde dot org">blackie at kde dot org</a>
  * @author Copyright (C) 2004-2005 by Aurelien Gateau
  *         <a href="mailto:aurelien dot gateau at free dot fr">aurelien dot gateau at free dot fr</a>
- * @author Copyright (C) 2012 by Victor Dodon
- *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General

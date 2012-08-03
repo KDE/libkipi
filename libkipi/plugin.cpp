@@ -9,14 +9,14 @@
  *
  * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
+ * @author Copyright (C) 2012      by Victor Dodon
+ *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Jesper K. Pedersen
  *         <a href="mailto:blackie at kde dot org">blackie at kde dot org</a>
  * @author Copyright (C) 2004-2005 by Aurelien Gateau
  *         <a href="mailto:aurelien dot gateau at free dot fr">aurelien dot gateau at free dot fr</a>
- * @author Copyright (C) 2012 by Victor Dodon
- *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -320,10 +320,12 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         if (!current.isNull())
             current.appendChild(n.cloneNode());
     }
+
     newGuiElem.appendChild(newMenuBarElem);
 
     QFile localUIFile(localUI);
     QDomDocument localDomDoc;
+
     if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
     {
         newGuiElem.appendChild(defToolBarElem.cloneNode());
@@ -338,13 +340,16 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         newGuiElem.appendChild(localToolBarElem.cloneNode());
         newGuiElem.appendChild(localActionPropElem.cloneNode());
     }
+
     localUIFile.close();
     QFile writeFile(localUI);
+
     if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
     {
         kError() << "Could not open " << localUI << " for writing!";
         return;
     }
+
     newPluginDoc.appendChild(newGuiElem);
 
     writeFile.write(newPluginDoc.toString().toUtf8());
@@ -356,6 +361,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 void Plugin::clearActions()
 {
     QList<QAction*> actions = actionCollection()->actions();
+
     foreach (QAction* action, actions)
     {
         actionCollection()->removeAction(action);
