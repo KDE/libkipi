@@ -92,6 +92,7 @@ public:
 
     virtual void       setup(QWidget* const widget) = 0;
     virtual Category   category(KAction* const action) const = 0;
+    void    rebuild();
 
 protected:
 

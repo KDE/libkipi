@@ -253,7 +253,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     QDomDocument defaultDomDoc;
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
-        kError() << "Could not open default ui file";
+        kError() << "Could not open default ui file: " << defaultUI;
         return;
     }
     defaultUIFile.close();
@@ -371,6 +371,16 @@ void Plugin::clearActions()
 void Plugin::setupXML()
 {
     mergeXMLFile(dynamic_cast<KXMLGUIClient*>(interface()->parent()));
+}
+
+void Plugin::rebuild()
+{
+    QString file = xmlFile();
+    if (!file.isEmpty())
+    {
+        setXMLGUIBuildDocument(QDomDocument());
+        setXMLFile(file, false);
+    }
 }
 
 } // namespace KIPI
