@@ -33,6 +33,7 @@ SET(kipi_LIB_SRCS pluginloader.cpp
                   imageinfo.cpp
                   uploadwidget.cpp
                   configwidget.cpp
+                  configwidget_p.cpp
                   imagecollectionselector.cpp
                   exportinterface.cpp
    )

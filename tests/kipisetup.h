@@ -97,30 +97,6 @@ private:
     Private* const d;
 };
 
-// -------------------------------------------------------------------
-
-class SetupPlugins : public QScrollArea
-{
-    Q_OBJECT
-
-public:
-
-    SetupPlugins(QWidget* const parent = 0);
-    ~SetupPlugins();
-
-    void apply();
-
-private Q_SLOTS:
-
-    void slotCheckAll();
-    void slotClearList();
-
-private:
-
-    class Private;
-    Private* const d;
-};
-
 } // namespace KXMLKipiCmd
 
 #endif // KIPISETUP_H

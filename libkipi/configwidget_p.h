@@ -9,7 +9,7 @@
  *
  * @author Copyright (C) 2004-2012 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
- * @author Copyright (C) 2012      by Victor Dodon
+ * @author Copyright (C) 2012 by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
@@ -25,35 +25,48 @@
  *
  * ============================================================ */
 
-#ifndef KIPI_CONFIGWIDGET_H
-#define KIPI_CONFIGWIDGET_H
-
 // Qt includes
 
-#include <QtGui/QScrollArea>
+#include <QListWidgetItem>
+#include <QListWidget>
 
 // Local includes
 
-#include "libkipi_export.h"
+#include "pluginloader.h"
 
 namespace KIPI
 {
 
-class LIBKIPI_EXPORT ConfigWidget : public QScrollArea
+class PluginCheckBox : public QListWidgetItem
+{
+public:
+
+    PluginCheckBox(PluginLoader::Info* const info, QListWidget* const parent);
+    ~PluginCheckBox();
+
+public:
+
+    PluginLoader::Info* m_info;
+};
+
+// ----------------------------------------------------------------------------------
+
+class PluginListView : public QListWidget
 {
     Q_OBJECT
 
 public:
 
-    ConfigWidget(QWidget* const parent = 0);
-    ~ConfigWidget();
+    PluginListView(QWidget* const parent);
+    ~PluginListView();
+
+    int actived() const;
+
+public Q_SLOTS:
 
     void apply();
-
-private Q_SLOTS:
-
     void slotCheckAll();
-    void slotClearList();
+    void slotClear();
 
 private:
 
@@ -61,7 +74,4 @@ private:
     Private* const d;
 };
 
-
 } // namespace KIPI
-
-#endif /* KIPI_CONFIGWIDGET_H */
