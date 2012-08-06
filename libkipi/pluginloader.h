@@ -239,7 +239,13 @@ public:
 
     /** Set Plugins ignore list, with name of obsoletes plugins to not load through init().
      */
-    void setIgnoreList(const QStringList& ignores);
+    void setIgnoredPluginsList(const QStringList& ignores);
+
+    /** Set ignored plugin actions that will not be plugged into the gui
+      */
+    void setIgnoredPluginActions(const QStringList& ignores);
+
+    QStringList ignoredPluginActions() const;
 
     /** Set Plugins constraint to pass to the service trader.
      */

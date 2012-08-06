@@ -217,7 +217,8 @@ public:
         parent    = 0;
     };
 
-    QStringList              ignores;
+    QStringList              ignoredPlugins;
+    QStringList              ignoredActions;
     QString                  constraint;
 
     KXmlGuiWindow*           parent;
@@ -255,9 +256,14 @@ void PluginLoader::setInterface(Interface* const interface)
     d->interface = interface;
 }
 
-void PluginLoader::setIgnoreList(const QStringList& ignores)
+void PluginLoader::setIgnoredPluginsList(const QStringList& ignores)
 {
-    d->ignores = ignores;
+    d->ignoredPlugins = ignores;
+}
+
+void PluginLoader::setIgnoredPluginActions(const QStringList& ignores)
+{
+    d->ignoredActions = ignores;
 }
 
 void PluginLoader::setConstraint(const QString& constraint)
@@ -293,7 +299,7 @@ void PluginLoader::init()
             continue;
         }
 
-        if (d->ignores.contains(name))
+        if (d->ignoredPlugins.contains(name))
         {
             kDebug(51001) << "Plugin " << name << " is in the ignore list from host application";
             continue;
@@ -329,6 +335,11 @@ PluginLoader::~PluginLoader()
 {
     qDeleteAll(d->pluginList);
     delete d;
+}
+
+QStringList PluginLoader::ignoredPluginActions() const
+{
+    return d->ignoredActions;
 }
 
 void PluginLoader::loadPlugins()
