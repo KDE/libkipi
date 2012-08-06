@@ -145,7 +145,7 @@ void KipiTestPluginLoader::loadPlugins()
 
     d->kipiPluginLoader = new PluginLoader(d->app);
     d->kipiPluginLoader->setInterface(d->kipiInterface);
-    d->kipiPluginLoader->setIgnoreList(ignores);
+    d->kipiPluginLoader->setIgnoredPluginsList(ignores);
     d->kipiPluginLoader->init();
 
     connect(d->kipiPluginLoader, SIGNAL(replug()),
