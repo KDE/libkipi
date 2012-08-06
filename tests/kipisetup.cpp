@@ -44,7 +44,7 @@
 // Libkipi includes
 
 #include "pluginloader.h"
-#include "version.h"
+#include "configwidget.h"
 
 // Local includes
 
@@ -57,12 +57,12 @@ namespace KXMLKipiCmd
 
 const QString SetupXML::CONFIG_GROUP_NAME = "UI Settings";
 
-class KipiSetup::KipiSetupPriv
+class KipiSetup::Private
 {
 
 public:
 
-    KipiSetupPriv() :
+    Private() :
         page_plugins(0),
         page_xml(0),
         pluginsPage(0),
@@ -78,7 +78,7 @@ public:
 };
 
 KipiSetup::KipiSetup(QWidget* const parent)
-    : KPageDialog(parent), d(new KipiSetupPriv)
+    : KPageDialog(parent), d(new Private)
 {
     setCaption(i18n("Configure"));
     setButtons(Ok | Cancel);
@@ -123,7 +123,7 @@ KipiSetup::~KipiSetup()
     delete d;
 }
 
-bool KipiSetup::exec(QWidget *parent)
+bool KipiSetup::exec(QWidget* const parent)
 {
     QPointer<KipiSetup> setup = new KipiSetup(parent);
     bool success              = (setup->KPageDialog::exec() == QDialog::Accepted);
@@ -168,11 +168,11 @@ int KipiSetup::activePageIndex()
 
 // -------------------------------------------------------------------
 
-class SetupXML::SetupXMLPriv
+class SetupXML::Private
 {
 public:
 
-    SetupXMLPriv()
+    Private()
     {
         xmlFilesCob = 0;
     }
@@ -183,7 +183,7 @@ public:
 };
 
 SetupXML::SetupXML(QWidget* const parent)
-    : QScrollArea(parent), d(new SetupXMLPriv)
+    : QScrollArea(parent), d(new Private)
 {
     QWidget* panel = new QWidget(viewport());
     setWidget(panel);
@@ -237,12 +237,12 @@ void SetupXML::apply()
 
 // -------------------------------------------------------------------
 
-class SetupPlugins::SetupPluginsPriv
+class SetupPlugins::Private
 {
 
 public:
 
-    SetupPluginsPriv() :
+    Private() :
         checkAllBtn(0),
         clearListBtn(0),
         kipiConfig(0)
@@ -254,8 +254,8 @@ public:
     ConfigWidget* kipiConfig;
 };
 
-SetupPlugins::SetupPlugins(QWidget* parent)
-    : QScrollArea(parent), d(new SetupPluginsPriv)
+SetupPlugins::SetupPlugins(QWidget* const parent)
+    : QScrollArea(parent), d(new Private)
 {
     QWidget *panel = new QWidget(viewport());
     setWidget(panel);
@@ -280,10 +280,8 @@ SetupPlugins::SetupPlugins(QWidget* parent)
 
     panel->setLayout(mainLayout);
 
-#if KIPI_VERSION < 0x010400
     d->checkAllBtn->setVisible(false);
     d->clearListBtn->setVisible(false);
-#endif
 
     // --------------------------------------------------------
 
@@ -317,20 +315,15 @@ void SetupPlugins::apply()
 void SetupPlugins::slotCheckAll()
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-#if KIPI_VERSION >= 0x010400
     d->kipiConfig->slotCheckAll();
-#endif
     QApplication::restoreOverrideCursor();
 }
 
 void SetupPlugins::slotClearList()
 {
     QApplication::setOverrideCursor(Qt::WaitCursor);
-#if KIPI_VERSION >= 0x010400
     d->kipiConfig->slotClear();
-#endif
     QApplication::restoreOverrideCursor();
 }
-
 
 } // namespace KXMLKipiCmd

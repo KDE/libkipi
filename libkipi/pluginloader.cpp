@@ -59,6 +59,7 @@
 #include "plugin.h"
 #include "interface.h"
 #include "version.h"
+#include "configwidget.h"
 
 namespace KIPI
 {
@@ -358,108 +359,6 @@ Interface* PluginLoader::interface() const
 ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 {
     return new ConfigWidget(parent);
-}
-
-// ---------------------------------------------------------------------
-
-class PluginCheckBox : public QListWidgetItem
-{
-public:
-
-    PluginCheckBox(PluginLoader::Info* const info, QListWidget* const parent)
-        : QListWidgetItem(parent, QListWidgetItem::UserType),
-          info(info)
-    {
-        setText(QString("%1  (%2)").arg(info->name(), info->comment()));
-        setIcon(info->icon());
-        setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-        setCheckState(info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
-    }
-
-    PluginLoader::Info* info;
-};
-
-// ---------------------------------------------------------------------
-
-class ConfigWidget::Private
-{
-public:
-
-    Private()
-    {
-    };
-
-    QList<PluginCheckBox*> boxes;
-};
-
-ConfigWidget::ConfigWidget(QWidget* const parent)
-    : QListWidget(parent),
-      d(new Private)
-{
-    setAutoFillBackground(false);
-    setSortingEnabled(true);
-    viewport()->setAutoFillBackground(false);
-
-    foreach(PluginLoader::Info* info, PluginLoader::instance()->pluginList())
-    {
-        PluginCheckBox* cb = new PluginCheckBox(info, this);
-        d->boxes.append(cb);
-    }
-}
-
-ConfigWidget::~ConfigWidget()
-{
-    delete d;
-}
-
-void ConfigWidget::apply()
-{
-    KSharedConfigPtr config = KGlobal::config();
-    KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
-
-    for (QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it)
-    {
-        bool orig = (*it)->info->shouldLoad();
-        bool load = ((*it)->checkState() == Qt::Checked);
-
-        if (orig != load)
-        {
-            group.writeEntry((*it)->info->name(), load);
-            (*it)->info->setShouldLoad(load);
-
-            // Bugfix #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
-            // to reload plugins properly when the replug() signal is send.
-            /*
-            if (load)
-            {
-                (*it)->info->reload();
-            }
-            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
-            {
-                emit PluginLoader::instance()->unplug((*it)->info);
-            }
-            */
-            (*it)->info->reload();
-        }
-    }
-
-    emit PluginLoader::instance()->replug();
-}
-
-void ConfigWidget::slotCheckAll()
-{
-    for (int i = 0; i < count(); ++i)
-    {
-        item(i)->setCheckState(Qt::Checked);
-    }
-}
-
-void ConfigWidget::slotClear()
-{
-    for (int i = 0; i < count(); ++i)
-    {
-        item(i)->setCheckState(Qt::Unchecked);
-    }
 }
 
 } // namespace KIPI

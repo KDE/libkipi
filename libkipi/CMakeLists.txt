@@ -32,6 +32,7 @@ SET(kipi_LIB_SRCS pluginloader.cpp
                   plugin.cpp
                   imageinfo.cpp
                   uploadwidget.cpp
+                  configwidget.cpp
                   imagecollectionselector.cpp
                   exportinterface.cpp
    )
@@ -57,6 +58,7 @@ INSTALL(FILES plugin.h
               imagecollectionshared.h
               imagecollectionselector.h
               uploadwidget.h
+              configwidget.h
               exportinterface.h
               extension.h
               libkipi_export.h

@@ -50,7 +50,9 @@ public:
         XmlFilesPage
     };
 
-    static bool exec(QWidget* parent = 0);
+public:
+
+    static bool exec(QWidget* const parent = 0);
 
 private Q_SLOTS:
 
@@ -64,10 +66,12 @@ private:
     void okClicked();
     int activePageIndex();
 
+private:
+
     friend class SetupXML;
 
-    class KipiSetupPriv;
-    KipiSetupPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 // -------------------------------------------------------------------
@@ -89,8 +93,8 @@ public Q_SLOTS:
 
 private:
 
-    class SetupXMLPriv;
-    SetupXMLPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 // -------------------------------------------------------------------
@@ -101,7 +105,7 @@ class SetupPlugins : public QScrollArea
 
 public:
 
-    SetupPlugins(QWidget* parent = 0);
+    SetupPlugins(QWidget* const parent = 0);
     ~SetupPlugins();
 
     void apply();
@@ -113,8 +117,8 @@ private Q_SLOTS:
 
 private:
 
-    class SetupPluginsPriv;
-    SetupPluginsPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KXMLKipiCmd

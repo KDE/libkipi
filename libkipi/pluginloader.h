@@ -37,7 +37,6 @@
 // Qt includes
 
 #include <QtCore/QList>
-#include <QtGui/QListWidget>
 
 // KDE includes
 
@@ -287,29 +286,6 @@ private:
     friend class ConfigWidget;
 };
 
-// ----------------------------------------------------------------------
-
-class LIBKIPI_EXPORT ConfigWidget : public QListWidget
-{
-    Q_OBJECT
-
-public:
-
-    ConfigWidget(QWidget* const parent);
-    ~ConfigWidget();
-
-public Q_SLOTS:
-
-    void apply();
-    void slotCheckAll();
-    void slotClear();
-
-private:
-
-    class Private;
-    Private* const d;
-};
-
 } // namespace KIPI
 
-#endif /* PLUGINLOADER_H */
+#endif /* KIPI_PLUGINLOADER_H */
