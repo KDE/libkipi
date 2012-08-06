@@ -69,7 +69,14 @@ public:
 
     KUrl url() const;
 
-    /** These methods must be re-implemented in your KIPI host application to manage image attributes with plugins
+    /** Convenience methods calling the respective methods in the interface for this item.
+     */
+    bool               reserveForAction(QObject* const reservingObject, const QString& descriptionOfAction) const;
+    void               clearReservation(QObject* const reservingObject);
+    bool               itemIsReserved(QString* const descriptionOfAction = 0) const;
+    FileReadWriteLock* createReadWriteLock() const;
+
+    /** These methods must be re-implemented in your KIPI host application to manage image attributes with plugins.
      */
     virtual QMap<QString, QVariant> attributes() = 0;
     virtual void                    clearAttributes() = 0;
@@ -77,13 +84,6 @@ public:
     virtual void                    delAttributes(const QStringList&) = 0;
 
     virtual void cloneData(ImageInfoShared* const other);
-
-    /** Convenience methods calling the respective methods in the interface for this item.
-     */
-    bool               reserveForAction(QObject* reservingObject, const QString& descriptionOfAction) const;
-    void               clearReservation(QObject* reservingObject);
-    bool               itemIsReserved(QString* descriptionOfAction = 0) const;
-    FileReadWriteLock* createReadWriteLock() const;
 
 protected:
 
@@ -93,6 +93,7 @@ private:
 
     ImageInfoShared();    // Disable
 
+    /// Used by ImageInfo class.
     void addRef();
     void removeRef();
 
