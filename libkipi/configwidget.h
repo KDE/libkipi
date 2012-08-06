@@ -32,11 +32,6 @@
 
 #include <QtGui/QListWidget>
 
-// KDE includes
-
-#include <kservice.h>
-#include <kxmlguiwindow.h>
-
 // Local includes
 
 #include "libkipi_export.h"

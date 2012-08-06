@@ -29,24 +29,13 @@
 
 // Qt include.
 
-#include <QStringList>
-#include <QLayout>
 #include <QList>
-#include <QVariantList>
 
 // KDE includes
 
-#include <kservicetypetrader.h>
-#include <kdebug.h>
-#include <kdialog.h>
 #include <ksharedconfig.h>
+#include <kconfiggroup.h>
 #include <kconfig.h>
-#include <kglobal.h>
-#include <klibloader.h>
-#include <kaction.h>
-#include <kxmlguifactory.h>
-#include <kstandarddirs.h>
-#include <kactioncollection.h>
 
 // Local includes
 
@@ -93,7 +82,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     setSortingEnabled(true);
     viewport()->setAutoFillBackground(false);
 
-    foreach(PluginLoader::Info* info, PluginLoader::instance()->pluginList())
+    foreach(PluginLoader::Info* const info, PluginLoader::instance()->pluginList())
     {
         PluginCheckBox* cb = new PluginCheckBox(info, this);
         d->boxes.append(cb);
