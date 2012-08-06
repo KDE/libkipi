@@ -35,7 +35,6 @@ SET(kipi_LIB_SRCS pluginloader.cpp
                   configwidget.cpp
                   configwidget_p.cpp
                   imagecollectionselector.cpp
-                  exportinterface.cpp
    )
 
 KDE4_ADD_LIBRARY(kipi SHARED ${kipi_LIB_SRCS})
@@ -60,7 +59,6 @@ INSTALL(FILES plugin.h
               imagecollectionselector.h
               uploadwidget.h
               configwidget.h
-              exportinterface.h
               extension.h
               libkipi_export.h
               ${CMAKE_CURRENT_BINARY_DIR}/version.h
