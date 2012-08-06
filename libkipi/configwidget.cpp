@@ -79,7 +79,7 @@ void ConfigWidget::Private::updateInfo()
                                     kipiConfig->count()));
 
     pluginsNumberActivated->setText(i18nc("%1: number of plugins activated",
-                                            "(%1 activated)", kipiConfig->actived()));
+                                          "(%1 activated)", kipiConfig->actived()));
 }
 
 ConfigWidget::ConfigWidget(QWidget* const parent)
@@ -120,7 +120,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     connect(d->clearBtn, SIGNAL(clicked()),
             this, SLOT(slotClearList()));
 
-    connect(d->kipiConfig, SIGNAL(itemClicked(QListWidgetItem*)),
+    connect(d->kipiConfig, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked()));
 
     // --------------------------------------------------------

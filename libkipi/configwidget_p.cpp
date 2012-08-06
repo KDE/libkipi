@@ -30,9 +30,13 @@
 // Qt include.
 
 #include <QList>
+#include <QHeaderView>
+#include <QPalette>
+#include <QFont>
 
 // KDE includes
 
+#include <kapplication.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kconfig.h>
@@ -40,20 +44,71 @@
 namespace KIPI
 {
 
-PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QListWidget* const parent)
-    : QListWidgetItem(parent, QListWidgetItem::UserType),
-        m_info(info)
+PluginCategoryItem::PluginCategoryItem(Category cat, QTreeWidget* const parent)
+    : QTreeWidgetItem(parent),
+      m_cat(cat)
 {
-    setText(QString("%1  (%2)").arg(m_info->name(), m_info->comment()));
-    setIcon(m_info->icon());
+    // Reset all item flags: item is not selectable.
+    setFlags(Qt::ItemIsEnabled);
+    setDisabled(false);
+    setExpanded(true);
+    setFirstColumnSpanned(true);
+
+    setTextAlignment(0, Qt::AlignCenter);
+    QFont fn0(font(0));
+    fn0.setBold(true);
+    fn0.setItalic(false);
+    setFont(0, fn0);
+
+    setBackground(0, QBrush(kapp->palette().color(QPalette::Highlight)));
+    setForeground(0, QBrush(kapp->palette().color(QPalette::HighlightedText)));
+
+    switch(m_cat)
+    {
+        case ToolsPlugin:
+            setText(0, i18n("Tool Plugins"));
+            break;
+        case ImportPlugin:
+            setText(0, i18n("Import Plugins"));
+            break;
+        case ExportPlugin:
+            setText(0, i18n("Export Plugins"));
+            break;
+        case BatchPlugin:
+            setText(0, i18n("Batch Plugins"));
+            break;
+        case CollectionsPlugin:
+            setText(0, i18n("Collection Plugins"));
+            break;
+        default:   // ImagesPlugin
+            setText(0, i18n("Image Plugins"));
+            break;
+    }
+}
+
+PluginCategoryItem::~PluginCategoryItem()
+{
+}
+
+// ---------------------------------------------------------------------
+    
+PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, PluginCategoryItem* const parent)
+    : QTreeWidgetItem(parent),
+      m_info(info)
+{
+    setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+    setDisabled(false);
+
+    setText(0, m_info->name());
+    setText(1, m_info->comment());
+    setIcon(0, m_info->icon());
     setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-    setCheckState(m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
+    setCheckState(0, m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
 }
 
 PluginCheckBox::~PluginCheckBox()
 {
 }
-
 
 // ---------------------------------------------------------------------
 
@@ -65,20 +120,52 @@ public:
     {
     };
 
-    QList<PluginCheckBox*> boxes;
+    QList<PluginCategoryItem*> categories;
+    QList<PluginCheckBox*>     boxes;
 };
 
 PluginListView::PluginListView(QWidget* const parent)
-    : QListWidget(parent),
+    : QTreeWidget(parent),
       d(new Private)
 {
+    setRootIsDecorated(false);
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setAllColumnsShowFocus(true);
+    setColumnCount(2);
+
+    QStringList labels;
+    labels.append( i18n("Name") );
+    labels.append( i18n("Description") );
+    setHeaderLabels(labels);
+    header()->setResizeMode(0, QHeaderView::ResizeToContents);
+    header()->setResizeMode(1, QHeaderView::Stretch);
+    
     setAutoFillBackground(false);
-    setSortingEnabled(true);
     viewport()->setAutoFillBackground(false);
 
     foreach(PluginLoader::Info* const info, PluginLoader::instance()->pluginList())
     {
-        PluginCheckBox* cb = new PluginCheckBox(info, this);
+        Category cat = info->plugin()->category(0);
+
+        PluginCategoryItem* parent = 0;
+        
+        foreach(PluginCategoryItem* const item, d->categories)
+        {
+            if (item->m_cat == cat)
+            {
+                parent = item;
+                break;
+            }
+        }
+
+        if (!parent)
+        {
+            parent = new PluginCategoryItem(cat, this);
+            d->categories.append(parent);
+        }
+        
+        PluginCheckBox* cb = new PluginCheckBox(info, parent);
         d->boxes.append(cb);
     }
 }
@@ -96,7 +183,7 @@ void PluginListView::apply()
     for (QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it)
     {
         bool orig = (*it)->m_info->shouldLoad();
-        bool load = ((*it)->checkState() == Qt::Checked);
+        bool load = ((*it)->checkState(0) == Qt::Checked);
 
         if (orig != load)
         {
@@ -122,27 +209,32 @@ void PluginListView::apply()
 
 void PluginListView::slotCheckAll()
 {
-    for (int i = 0; i < count(); ++i)
+    foreach (PluginCheckBox* const item, d->boxes)
     {
-        item(i)->setCheckState(Qt::Checked);
+        item->setCheckState(0, Qt::Checked);
     }
 }
 
 void PluginListView::slotClear()
 {
-    for (int i = 0; i < count(); ++i)
+    foreach (PluginCheckBox* const item, d->boxes)
     {
-        item(i)->setCheckState(Qt::Unchecked);
+        item->setCheckState(0, Qt::Unchecked);
     }
 }
 
+int PluginListView::count() const
+{
+    return d->boxes.count();
+}
+    
 int PluginListView::actived() const
 {
     int actived = 0;
 
-    for (int i = 0; i < count(); ++i)
+    foreach (PluginCheckBox* const item, d->boxes)
     {
-        if (item(i)->checkState() == Qt::Checked)
+        if (item->checkState(0) == Qt::Checked)
             actived++;
     }
 

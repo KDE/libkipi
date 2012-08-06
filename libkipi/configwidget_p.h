@@ -27,21 +27,36 @@
 
 // Qt includes
 
-#include <QListWidgetItem>
-#include <QListWidget>
+#include <QTreeWidgetItem>
+#include <QTreeWidget>
 
 // Local includes
 
+#include "plugin.h"
 #include "pluginloader.h"
 
 namespace KIPI
 {
 
-class PluginCheckBox : public QListWidgetItem
+class PluginCategoryItem : public QTreeWidgetItem
 {
 public:
 
-    PluginCheckBox(PluginLoader::Info* const info, QListWidget* const parent);
+    PluginCategoryItem(Category cat, QTreeWidget* const parent);
+    ~PluginCategoryItem();
+
+public:
+
+    Category m_cat;
+};
+
+// ----------------------------------------------------------------------------------
+    
+class PluginCheckBox : public QTreeWidgetItem
+{
+public:
+
+    PluginCheckBox(PluginLoader::Info* const info, PluginCategoryItem* const parent);
     ~PluginCheckBox();
 
 public:
@@ -51,7 +66,7 @@ public:
 
 // ----------------------------------------------------------------------------------
 
-class PluginListView : public QListWidget
+class PluginListView : public QTreeWidget
 {
     Q_OBJECT
 
@@ -61,6 +76,7 @@ public:
     ~PluginListView();
 
     int actived() const;
+    int count()   const;
 
 public Q_SLOTS:
 
