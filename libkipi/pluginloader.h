@@ -285,7 +285,6 @@ private:
 private:
 
     friend class ConfigWidget;
-    friend class PluginCheckBox;
 };
 
 // ----------------------------------------------------------------------
