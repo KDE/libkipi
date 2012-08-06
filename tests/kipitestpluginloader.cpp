@@ -182,10 +182,21 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
             continue;
         }
 
-        ++cpt;
         d->app->guiFactory()->removeClient(plugin);
+    }
+
+    for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
+    {
+        Plugin* plugin = (*it)->plugin();
+
+        if (!plugin || !(*it)->shouldLoad())
+        {
+            continue;
+        }
+
+        ++cpt;
         plugin->setup(d->app);
-        d->app->guiFactory()->addClient(plugin);
+        plugin->rebuild();
 
         foreach(KAction* const action, plugin->actions())
         {
@@ -209,6 +220,18 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
                 kDebug() << "Plugin '" << actionName << "' is disabled.";
             }
         }
+    }
+
+    for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
+    {
+        Plugin* plugin = (*it)->plugin();
+
+        if (!plugin || !(*it)->shouldLoad())
+        {
+            continue;
+        }
+
+        d->app->guiFactory()->addClient(plugin);
     }
 
     // load KIPI actions settings
