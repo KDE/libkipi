@@ -54,6 +54,7 @@ private Q_SLOTS:
 
     void slotCheckAll();
     void slotClearList();
+    void slotItemClicked();
 
 private:
 

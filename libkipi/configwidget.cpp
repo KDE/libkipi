@@ -120,6 +120,9 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     connect(d->clearBtn, SIGNAL(clicked()),
             this, SLOT(slotClearList()));
 
+    connect(d->kipiConfig, SIGNAL(itemClicked(QListWidgetItem*)),
+            this, SLOT(slotItemClicked()));
+
     // --------------------------------------------------------
 
     d->updateInfo();
@@ -148,6 +151,11 @@ void ConfigWidget::slotCheckAll()
 void ConfigWidget::slotClearList()
 {
     d->kipiConfig->slotClear();
+    d->updateInfo();
+}
+
+void ConfigWidget::slotItemClicked()
+{
     d->updateInfo();
 }
 
