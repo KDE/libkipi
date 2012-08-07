@@ -76,6 +76,8 @@ public:
         parent     = 0;
     }
 
+    Plugin* createPlugin();
+
     bool           shouldLoad;
     KService::Ptr  service;
     Plugin*        plugin;
@@ -149,7 +151,9 @@ Plugin* PluginLoader::Info::plugin() const
 {
     if (!d->plugin && shouldLoad())
     {
+
         QString error;
+
         Plugin* plugin = d->service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
 
         if (plugin && (dynamic_cast<KXMLGUIClient*>(plugin) != 0))
@@ -175,7 +179,6 @@ Plugin* PluginLoader::Info::plugin() const
                             << " with error: "
                             << error;
         }
-
         d->plugin = plugin;
 
         if (d->plugin)   // Do not emit if we had trouble loading the plugin.
@@ -185,6 +188,11 @@ Plugin* PluginLoader::Info::plugin() const
     }
 
     return d->plugin;
+}
+
+QStringList PluginLoader::Info::pluginCategories() const
+{
+    return d->service->property(QString::fromLatin1("X-KIPI-PluginCategories")).toStringList();
 }
 
 void PluginLoader::Info::reload()

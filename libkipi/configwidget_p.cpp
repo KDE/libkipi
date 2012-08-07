@@ -57,47 +57,10 @@ PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* cons
     setCheckState(0, m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
 
     // Categories
-    QStringList     list;
-    Plugin* const   plugin  = info->plugin();
-
-    if (plugin)
-    {
-        QList<KAction*> actions = plugin->actions();
-
-        if (!actions.isEmpty())
-        {
-            foreach (KAction* const action, actions)
-            {
-                Category cat = plugin->category(action);
-
-                switch(cat)
-                {
-                    case ToolsPlugin:
-                        list << i18n("Tool");
-                        break;
-                    case ImportPlugin:
-                        list << i18n("Import");
-                        break;
-                    case ExportPlugin:
-                        list << i18n("Export");
-                        break;
-                    case BatchPlugin:
-                        list << i18n("Batch");
-                        break;
-                    case CollectionsPlugin:
-                        list << i18n("Collection");
-                        break;
-                    default:   // ImagesPlugin
-                        list << i18n("Image");
-                        break;
-                }
-            }
-
-            list.removeDuplicates();
-            list.sort();
-            setText(1, list.join(", "));
-        }
-    }
+    QStringList list = m_info->pluginCategories();
+    list.removeDuplicates();
+    list.sort();
+    setText(1, list.join(", "));
 
     // Description
     setText(2, m_info->comment());
