@@ -45,7 +45,7 @@ public:
     PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent);
     ~PluginCheckBox();
 
-    bool contains(const QString& txt) const;
+    bool contains(const QString& txt, Qt::CaseSensitivity cs) const;
 
 public:
 
@@ -65,13 +65,14 @@ public:
 
     int actived() const;
     int count()   const;
+    int visible() const;
 
-    void    setFilter(const QString& filter);
+    void    setFilter(const QString& filter, Qt::CaseSensitivity cs);
     QString filter() const;
 
 Q_SIGNALS:
 
-    void signalItemsFiltered(int);
+    void signalSearchResult(bool);
 
 public Q_SLOTS:
 

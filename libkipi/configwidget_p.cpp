@@ -106,11 +106,11 @@ PluginCheckBox::~PluginCheckBox()
 {
 }
 
-bool PluginCheckBox::contains(const QString& txt) const
+bool PluginCheckBox::contains(const QString& txt, Qt::CaseSensitivity cs) const
 {
-    return (text(0).contains(txt, Qt::CaseInsensitive) ||
-            text(1).contains(txt, Qt::CaseInsensitive) ||
-            text(2).contains(txt, Qt::CaseInsensitive));
+    return (text(0).contains(txt, cs) ||
+            text(1).contains(txt, cs) ||
+            text(2).contains(txt, cs));
 }
 
 // ---------------------------------------------------------------------
@@ -236,27 +236,38 @@ int PluginListView::actived() const
     return actived;
 }
 
-void PluginListView::setFilter(const QString& filter)
+int PluginListView::visible() const
 {
-    d->filter    = filter;
-    int filtered = 0;
+    int visible = 0;
 
     foreach (PluginCheckBox* const item, d->boxes)
     {
-        // Reset
-        item->setHidden(false);
+        if (!item->isHidden())
+            visible++;
+    }
 
-        if (!d->filter.isEmpty())
+    return visible;
+}
+
+void PluginListView::setFilter(const QString& filter, Qt::CaseSensitivity cs)
+{
+    d->filter  = filter;
+    bool query = false;
+
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        if (item->contains(filter, cs))
         {
-            if (!item->contains(d->filter))
-            {
-                item->setHidden(true);
-                filtered++;
-            }
+            query = true;
+            item->setHidden(false);
+        }
+        else
+        {
+            item->setHidden(true);
         }
     }
 
-    emit signalItemsFiltered(filtered);
+    emit signalSearchResult(query);
 }
 
 QString PluginListView::filter() const

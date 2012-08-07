@@ -79,17 +79,31 @@ void ConfigWidget::Private::updateInfo()
 {
     if (pluginsList->filter().isEmpty())
     {
-        pluginsNumber->setText(i18np("1 Kipi plugin found",
-                                     "%1 Kipi plugins found",
-                                     pluginsList->count()));
+        // List is not filtered
+        int cnt = pluginsList->count();
 
-        pluginsNumberActivated->setText(i18nc("%1: number of plugins activated",
-                                              "(%1 activated)",
-                                              pluginsList->actived()));
+        if (cnt > 0)
+            pluginsNumber->setText(i18np("1 Kipi plugin installed", "%1 Kipi plugins installed", cnt));
+        else
+            pluginsNumber->setText(i18n("None Kipi plugin installed"));
+
+        int act = pluginsList->actived();
+
+        if (act > 0)
+            pluginsNumberActivated->setText(i18nc("%1: number of plugins activated", "(%1 activated)", act));
+        else
+            pluginsNumberActivated->setText(QString());
     }
     else
     {
-        pluginsNumber->setText(i18n("List filtered..."));
+        // List filtering is active
+        int cnt = pluginsList->visible();
+
+        if (cnt > 0)
+            pluginsNumber->setText(i18np("1 Kipi plugin found", "%1 Kipi plugins found", cnt));
+        else
+            pluginsNumber->setText(i18n("None Kipi plugin found"));
+
         pluginsNumberActivated->setText(QString());
     }
 }
@@ -106,11 +120,11 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
 
-    d->grid->addWidget(d->pluginsNumber,             0, 1, 1, 1);
-    d->grid->addWidget(d->pluginsNumberActivated,    0, 2, 1, 1);
-    d->grid->addWidget(d->checkAllBtn,               0, 4, 1, 1);
-    d->grid->addWidget(d->clearBtn,                  0, 5, 1, 1);
-    d->grid->addWidget(d->pluginsList,               1, 0, 1, -1);
+    d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
+    d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
+    d->grid->addWidget(d->checkAllBtn,            0, 4, 1, 1);
+    d->grid->addWidget(d->clearBtn,               0, 5, 1, 1);
+    d->grid->addWidget(d->pluginsList,            1, 0, 1, -1);
     d->grid->setColumnStretch(3, 5);
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
@@ -134,8 +148,8 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     connect(d->pluginsList, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked()));
 
-    connect(d->pluginsList, SIGNAL(signalItemsFiltered(int)),
-            this, SIGNAL(signalItemsFiltered(int)));
+    connect(d->pluginsList, SIGNAL(signalSearchResult(bool)),
+            this, SIGNAL(signalSearchResult(bool)));
 
     // --------------------------------------------------------
 
@@ -178,9 +192,9 @@ void ConfigWidget::slotItemClicked()
     d->updateInfo();
 }
 
-void ConfigWidget::slotSetFilter(const QString& filter)
+void ConfigWidget::slotSetFilter(const QString& filter, Qt::CaseSensitivity cs)
 {
-    d->pluginsList->setFilter(filter);
+    d->pluginsList->setFilter(filter, cs);
     d->updateInfo();
 }
 

@@ -57,6 +57,7 @@ public:
 private Q_SLOTS:
 
     void slotButtonClicked(int button);
+    void slotFilterChanged(const QString& filter);
 
 private:
 

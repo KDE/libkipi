@@ -53,11 +53,11 @@ public:
 
 Q_SIGNALS:
 
-    void signalItemsFiltered(int);
+    void signalSearchResult(bool);
 
 public Q_SLOTS:
 
-    void slotSetFilter(const QString& filter);
+    void slotSetFilter(const QString& filter, Qt::CaseSensitivity cs);
 
 private Q_SLOTS:
 

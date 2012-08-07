@@ -123,7 +123,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     setCurrentPage(page);
 
     connect(d->pluginFilter, SIGNAL(userTextChanged(QString)),
-            d->pluginsPage, SLOT(slotSetFilter(QString)));
+            this, SLOT(slotFilterChanged(QString)));
 }
 
 KipiSetup::~KipiSetup()
@@ -134,6 +134,11 @@ KipiSetup::~KipiSetup()
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
     delete d;
+}
+
+void KipiSetup::slotFilterChanged(const QString& filter)
+{
+     d->pluginsPage->slotSetFilter(filter, Qt::CaseInsensitive);
 }
 
 bool KipiSetup::exec(QWidget* const parent)
