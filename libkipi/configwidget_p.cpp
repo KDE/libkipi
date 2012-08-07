@@ -56,38 +56,47 @@ PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* cons
     setCheckState(0, m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
 
     // Categories
-    QStringList list;
+    QStringList     list;
+    Plugin* const   plugin  = info->plugin();
 
-    foreach (KAction* const action, info->plugin()->actions())
+    if (plugin)
     {
-        Category cat = info->plugin()->category(action);
+        QList<KAction*> actions = plugin->actions();
 
-        switch(cat)
+        if (!actions.isEmpty())
         {
-            case ToolsPlugin:
-                list << i18n("Tool");
-                break;
-            case ImportPlugin:
-                list << i18n("Import");
-                break;
-            case ExportPlugin:
-                list << i18n("Export");
-                break;
-            case BatchPlugin:
-                list << i18n("Batch");
-                break;
-            case CollectionsPlugin:
-                list << i18n("Collection");
-                break;
-            default:   // ImagesPlugin
-                list << i18n("Image");
-                break;
+            foreach (KAction* const action, actions)
+            {
+                Category cat = plugin->category(action);
+
+                switch(cat)
+                {
+                    case ToolsPlugin:
+                        list << i18n("Tool");
+                        break;
+                    case ImportPlugin:
+                        list << i18n("Import");
+                        break;
+                    case ExportPlugin:
+                        list << i18n("Export");
+                        break;
+                    case BatchPlugin:
+                        list << i18n("Batch");
+                        break;
+                    case CollectionsPlugin:
+                        list << i18n("Collection");
+                        break;
+                    default:   // ImagesPlugin
+                        list << i18n("Image");
+                        break;
+                }
+            }
+
+            list.removeDuplicates();
+            list.sort();
+            setText(1, list.join(", "));
         }
     }
-
-    list.removeDuplicates();
-    list.sort();
-    setText(1, list.join(", "));
 
     // Description
     setText(2, m_info->comment());
@@ -145,8 +154,11 @@ PluginListView::PluginListView(QWidget* const parent)
 
     foreach(PluginLoader::Info* const info, PluginLoader::instance()->pluginList())
     {
-        PluginCheckBox* cb = new PluginCheckBox(info, this);
-        d->boxes.append(cb);
+        if (info)
+        {
+            PluginCheckBox* cb = new PluginCheckBox(info, this);
+            d->boxes.append(cb);
+        }
     }
 
     // Sort items by plugin names.
