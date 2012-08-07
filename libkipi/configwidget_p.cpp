@@ -31,79 +31,66 @@
 
 #include <QList>
 #include <QHeaderView>
-#include <QPalette>
-#include <QFont>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kconfig.h>
+#include <kaction.h>
 
 namespace KIPI
 {
 
-PluginCategoryItem::PluginCategoryItem(Category cat, QTreeWidget* const parent)
-    : QTreeWidgetItem(parent),
-      m_cat(cat)
-{
-    // Reset all item flags: item is not selectable.
-    setFlags(Qt::ItemIsEnabled);
-    setDisabled(false);
-    setExpanded(true);
-    setFirstColumnSpanned(true);
-
-    setTextAlignment(0, Qt::AlignCenter);
-    QFont fn0(font(0));
-    fn0.setBold(true);
-    fn0.setItalic(false);
-    setFont(0, fn0);
-
-    setBackground(0, QBrush(kapp->palette().color(QPalette::Highlight)));
-    setForeground(0, QBrush(kapp->palette().color(QPalette::HighlightedText)));
-
-    switch(m_cat)
-    {
-        case ToolsPlugin:
-            setText(0, i18n("Tool Plugins"));
-            break;
-        case ImportPlugin:
-            setText(0, i18n("Import Plugins"));
-            break;
-        case ExportPlugin:
-            setText(0, i18n("Export Plugins"));
-            break;
-        case BatchPlugin:
-            setText(0, i18n("Batch Plugins"));
-            break;
-        case CollectionsPlugin:
-            setText(0, i18n("Collection Plugins"));
-            break;
-        default:   // ImagesPlugin
-            setText(0, i18n("Image Plugins"));
-            break;
-    }
-}
-
-PluginCategoryItem::~PluginCategoryItem()
-{
-}
-
-// ---------------------------------------------------------------------
-    
-PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, PluginCategoryItem* const parent)
+PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent)
     : QTreeWidgetItem(parent),
       m_info(info)
 {
+    setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
     setDisabled(false);
 
+    // Name + Icon + Selector
     setText(0, m_info->name());
-    setText(1, m_info->comment());
     setIcon(0, m_info->icon());
-    setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
     setCheckState(0, m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
+
+    // Categories
+    QStringList list;
+
+    foreach (KAction* const action, info->plugin()->actions())
+    {
+        Category cat = info->plugin()->category(action);
+
+        switch(cat)
+        {
+            case ToolsPlugin:
+                list << i18n("Tool");
+                break;
+            case ImportPlugin:
+                list << i18n("Import");
+                break;
+            case ExportPlugin:
+                list << i18n("Export");
+                break;
+            case BatchPlugin:
+                list << i18n("Batch");
+                break;
+            case CollectionsPlugin:
+                list << i18n("Collection");
+                break;
+            default:   // ImagesPlugin
+                list << i18n("Image");
+                break;
+        }
+    }
+
+    list.removeDuplicates();
+    list.sort();
+    setText(1, list.join(", "));
+
+    // Description
+    setText(2, m_info->comment());
 }
 
 PluginCheckBox::~PluginCheckBox()
@@ -120,8 +107,7 @@ public:
     {
     };
 
-    QList<PluginCategoryItem*> categories;
-    QList<PluginCheckBox*>     boxes;
+    QList<PluginCheckBox*> boxes;
 };
 
 PluginListView::PluginListView(QWidget* const parent)
@@ -132,42 +118,31 @@ PluginListView::PluginListView(QWidget* const parent)
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setAllColumnsShowFocus(true);
-    setColumnCount(2);
+    setSortingEnabled(true);
+    setColumnCount(3);
 
     QStringList labels;
     labels.append( i18n("Name") );
+    labels.append( i18n("Categories") );
     labels.append( i18n("Description") );
+
     setHeaderLabels(labels);
     header()->setResizeMode(0, QHeaderView::ResizeToContents);
-    header()->setResizeMode(1, QHeaderView::Stretch);
-    
+    header()->setResizeMode(1, QHeaderView::ResizeToContents);
+    header()->setResizeMode(2, QHeaderView::Stretch);
+    header()->setSortIndicatorShown(true);
+
     setAutoFillBackground(false);
     viewport()->setAutoFillBackground(false);
 
     foreach(PluginLoader::Info* const info, PluginLoader::instance()->pluginList())
     {
-        Category cat = info->plugin()->category(0);
-
-        PluginCategoryItem* parent = 0;
-        
-        foreach(PluginCategoryItem* const item, d->categories)
-        {
-            if (item->m_cat == cat)
-            {
-                parent = item;
-                break;
-            }
-        }
-
-        if (!parent)
-        {
-            parent = new PluginCategoryItem(cat, this);
-            d->categories.append(parent);
-        }
-        
-        PluginCheckBox* cb = new PluginCheckBox(info, parent);
+        PluginCheckBox* cb = new PluginCheckBox(info, this);
         d->boxes.append(cb);
     }
+
+    // Sort items by plugin names.
+    sortItems(0, Qt::AscendingOrder);
 }
 
 PluginListView::~PluginListView()
@@ -227,7 +202,7 @@ int PluginListView::count() const
 {
     return d->boxes.count();
 }
-    
+
 int PluginListView::actived() const
 {
     int actived = 0;

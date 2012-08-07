@@ -38,25 +38,11 @@
 namespace KIPI
 {
 
-class PluginCategoryItem : public QTreeWidgetItem
-{
-public:
-
-    PluginCategoryItem(Category cat, QTreeWidget* const parent);
-    ~PluginCategoryItem();
-
-public:
-
-    Category m_cat;
-};
-
-// ----------------------------------------------------------------------------------
-    
 class PluginCheckBox : public QTreeWidgetItem
 {
 public:
 
-    PluginCheckBox(PluginLoader::Info* const info, PluginCategoryItem* const parent);
+    PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent);
     ~PluginCheckBox();
 
 public:
