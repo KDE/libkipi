@@ -38,6 +38,7 @@
 #include <kconfiggroup.h>
 #include <kconfig.h>
 #include <kaction.h>
+#include <kdebug.h>
 
 namespace KIPI
 {
@@ -100,6 +101,9 @@ PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* cons
 
     // Description
     setText(2, m_info->comment());
+
+    // Author
+    setText(3, m_info->author());
 }
 
 PluginCheckBox::~PluginCheckBox()
@@ -110,7 +114,8 @@ bool PluginCheckBox::contains(const QString& txt, Qt::CaseSensitivity cs) const
 {
     return (text(0).contains(txt, cs) ||
             text(1).contains(txt, cs) ||
-            text(2).contains(txt, cs));
+            text(2).contains(txt, cs) ||
+            text(3).contains(txt, cs));
 }
 
 // ---------------------------------------------------------------------
@@ -136,17 +141,19 @@ PluginListView::PluginListView(QWidget* const parent)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     setAllColumnsShowFocus(true);
     setSortingEnabled(true);
-    setColumnCount(3);
+    setColumnCount(4);
 
     QStringList labels;
-    labels.append( i18n("Name") );
-    labels.append( i18n("Categories") );
-    labels.append( i18n("Description") );
+    labels.append(i18n("Name"));
+    labels.append(i18n("Categories"));
+    labels.append(i18n("Description"));
+    labels.append(i18n("Author"));
 
     setHeaderLabels(labels);
     header()->setResizeMode(0, QHeaderView::ResizeToContents);
     header()->setResizeMode(1, QHeaderView::ResizeToContents);
-    header()->setResizeMode(2, QHeaderView::Stretch);
+    header()->setResizeMode(2, QHeaderView::ResizeToContents);
+    header()->setResizeMode(3, QHeaderView::Stretch);
     header()->setSortIndicatorShown(true);
 
     setAutoFillBackground(false);

@@ -39,6 +39,7 @@
 #include <QLayout>
 #include <QList>
 #include <QVariantList>
+#include <QVariant>
 
 // KDE includes
 
@@ -108,6 +109,11 @@ KService::Ptr PluginLoader::Info::service() const
 QString PluginLoader::Info::name() const
 {
     return d->service->name();
+}
+
+QString PluginLoader::Info::author()  const
+{
+    return d->service->property(QString("author"), QVariant::String).toString();
 }
 
 QString PluginLoader::Info::comment() const

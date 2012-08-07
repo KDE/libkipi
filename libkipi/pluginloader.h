@@ -198,6 +198,7 @@ public:
         ~Info();
 
         QString       name()    const;
+        QString       author()  const;
         QString       comment() const;
         QIcon         icon()    const;
         QString       library() const;
