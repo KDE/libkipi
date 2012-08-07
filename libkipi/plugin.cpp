@@ -67,6 +67,7 @@ public:
     QMap<QWidget*, KActionCollection*> actionCollection;
     KComponentData                     instance;
     QMap<QWidget*, QList<KAction*> >   actions;
+    QMap<QWidget*, QMap<KAction*, Category> > actionsCat;
     QWidget*                           defaultWidget;
     QString                            uiBaseName;
 
@@ -178,30 +179,19 @@ Plugin::~Plugin()
     delete d;
 }
 
-KActionCollection* Plugin::widgetActionCollection(QWidget* const widget) const
-{
-    QWidget* w = !widget ? d->defaultWidget : widget;
-
-    if (!d->actions.contains(w))
-    {
-        kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
-                   << "as the very first line when overriding the setup method.";
-    }
-
-    return d->actionCollection[w];
-}
-
 QList<KAction*> Plugin::actions(QWidget* const widget) const
 {
     QWidget* w = !widget ? d->defaultWidget : widget;
 
-    if (!d->actions.contains(w))
+//    if (!d->actions.contains(w))
+    if (!d->actionsCat.contains(w))
     {
         kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
                    << "as the very first line when overriding the setup method.";
     }
 
-    return d->actions[w];
+    return d->actionsCat[w].keys();
+//    return d->actions[w];
 }
 
 void Plugin::addAction(KAction* const action)
@@ -209,12 +199,32 @@ void Plugin::addAction(KAction* const action)
     d->actions[d->defaultWidget].append(action);
 }
 
+void Plugin::addAction(KAction* const action, Category cat)
+{
+    d->actionsCat[d->defaultWidget].insert(action, cat);
+}
+
 void Plugin::setup(QWidget* const widget)
 {
     clearActions();
     d->defaultWidget = widget;
     d->actions.insert(widget, QList<KAction*>());
-    d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
+    d->actionsCat.insert(widget, QMap<KAction*, Category>());
+//    d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
+}
+
+Category Plugin::category(KAction* const action) const
+{
+    QMap<KAction*, Category>::const_iterator it = d->actionsCat[d->defaultWidget].find(action);
+    if (it != d->actionsCat[d->defaultWidget].end())
+    {
+        return it.value();
+    }
+    else
+    {
+        // TODO
+        return ImagesPlugin;
+    }
 }
 
 Interface* Plugin::interface() const

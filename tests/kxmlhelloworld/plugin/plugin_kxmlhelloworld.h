@@ -62,11 +62,6 @@ public:
     Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList& args);
     ~Plugin_KXMLHelloWorld();
 
-    /** This method assign the plugin category for each plugin actions. This plug action to
-     *  right menu in KIPI host application.
-     */
-    Category category(KAction* const action) const;
-
     void setupActions();
 
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.

@@ -185,7 +185,7 @@ void Plugin_KXMLHelloWorld::setupActions()
             this, SLOT(slotActivateActionImages()));
     /** We need to register actions in plugin instance
      */
-    addAction(d->actionImages);
+    addAction(d->actionImages, ImagesPlugin);
 
     /** This will get items selection from KIPI host application.
      */
@@ -200,7 +200,8 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
-    addAction(d->actionTools);
+
+    addAction(d->actionTools, ToolsPlugin);
 
     /** We will get current selected album in the digikam tree view
       */
@@ -216,7 +217,8 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
-    addAction(d->actionExport);
+
+    addAction(d->actionExport, ExportPlugin);
 
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
@@ -226,7 +228,8 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
-    addAction(d->actionImport);
+
+    addAction(d->actionImport, ImportPlugin);
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
@@ -327,27 +330,6 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
         dlg->exec();
         delete dlg;*/
     }
-}
-
-Category Plugin_KXMLHelloWorld::category(KAction* const action) const
-{
-    /** For each plugin actions defined, you can attribute a category which will plug it on right KIPI host application menu.
-     */
-    if (action == d->actionImages)
-       return ImagesPlugin;
-
-    if (action == d->actionTools)
-       return ToolsPlugin;
-
-    if (action == d->actionExport)
-       return ExportPlugin;
-
-    if (action == d->actionImport)
-       return ImportPlugin;
-
-    /// No need special debug space outside load plugin area, it will be selected automatically.
-    kWarning() << "Unrecognized action for plugin category identification";
-    return ImagesPlugin; // no warning from compiler, please
 }
 
 }  // namespace KIPIHelloWorldPlugin
