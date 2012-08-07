@@ -197,13 +197,14 @@ public:
         Info(KXmlGuiWindow* const parent, const KService::Ptr& service, bool shouldLoad);
         ~Info();
 
-        QString       name()    const;
-        QString       author()  const;
-        QString       comment() const;
-        QIcon         icon()    const;
-        QString       library() const;
-        KService::Ptr service() const;
-        Plugin*       plugin()  const;
+        QString       name()             const;
+        QString       author()           const;
+        QString       comment()          const;
+        QIcon         icon()             const;
+        QString       library()          const;
+        KService::Ptr service()          const;
+        Plugin*       plugin()           const;
+        QStringList   pluginCategories() const;
 
         void reload();
         bool shouldLoad() const;

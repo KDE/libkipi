@@ -118,3 +118,6 @@ Type=QString
 
 [PropertyDef::X-KIPI-ReqFeatures]
 Type=QStringList
+
+[PropertyDef::X-KIPI-PluginCategories]
+Type=QStringList
