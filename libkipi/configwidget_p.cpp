@@ -126,8 +126,7 @@ PluginListView::PluginListView(QWidget* const parent)
     {
         if (info)
         {
-            PluginCheckBox* cb = new PluginCheckBox(info, this);
-            d->boxes.append(cb);
+            d->boxes.append(new PluginCheckBox(info, this));
         }
     }
 
@@ -145,29 +144,19 @@ void PluginListView::slotApply()
     KSharedConfigPtr config = KGlobal::config();
     KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
-    for (QList<PluginCheckBox*>::Iterator it = d->boxes.begin(); it != d->boxes.end(); ++it)
+    foreach (PluginCheckBox* const item, d->boxes)
     {
-        bool orig = (*it)->m_info->shouldLoad();
-        bool load = ((*it)->checkState(0) == Qt::Checked);
+        bool orig = item->m_info->shouldLoad();
+        bool load = (item->checkState(0) == Qt::Checked);
 
         if (orig != load)
         {
-            group.writeEntry((*it)->m_info->name(), load);
-            (*it)->m_info->setShouldLoad(load);
+            group.writeEntry(item->m_info->name(), load);
+            item->m_info->setShouldLoad(load);
 
             // Bugfix #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
             // to reload plugins properly when the replug() signal is send.
-            /*
-            if (load)
-            {
-                (*it)->info->reload();
-            }
-            else if ((*it)->info->plugin())   // Do not emit if we had trouble loading plugin.
-            {
-                emit PluginLoader::instance()->unplug((*it)->info);
-            }
-            */
-            (*it)->m_info->reload();
+            item->m_info->reload();
         }
     }
 }
