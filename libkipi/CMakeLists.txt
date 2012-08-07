@@ -59,7 +59,6 @@ INSTALL(FILES plugin.h
               imagecollectionselector.h
               uploadwidget.h
               configwidget.h
-              extension.h
               libkipi_export.h
               ${CMAKE_CURRENT_BINARY_DIR}/version.h
         DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi
