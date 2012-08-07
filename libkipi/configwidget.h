@@ -49,6 +49,15 @@ public:
     ~ConfigWidget();
 
     void apply();
+    void setFilterWidget(QWidget* const wdg);
+
+Q_SIGNALS:
+
+    void signalItemsFiltered(int);
+
+public Q_SLOTS:
+
+    void slotSetFilter(const QString& filter);
 
 private Q_SLOTS:
 

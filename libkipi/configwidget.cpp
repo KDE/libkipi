@@ -55,7 +55,8 @@ public:
         pluginsNumberActivated(0),
         checkAllBtn(0),
         clearBtn(0),
-        kipiConfig(0)
+        grid(0),
+        pluginsList(0)
     {
     }
 
@@ -69,45 +70,55 @@ public:
     QPushButton*    checkAllBtn;
     QPushButton*    clearBtn;
 
-    PluginListView* kipiConfig;
+    QGridLayout*    grid;
+
+    PluginListView* pluginsList;
 };
 
 void ConfigWidget::Private::updateInfo()
 {
-    pluginsNumber->setText(i18np("1 Kipi plugin found",
-                                    "%1 Kipi plugins found",
-                                    kipiConfig->count()));
+    if (pluginsList->filter().isEmpty())
+    {
+        pluginsNumber->setText(i18np("1 Kipi plugin found",
+                                     "%1 Kipi plugins found",
+                                     pluginsList->count()));
 
-    pluginsNumberActivated->setText(i18nc("%1: number of plugins activated",
-                                          "(%1 activated)", kipiConfig->actived()));
+        pluginsNumberActivated->setText(i18nc("%1: number of plugins activated",
+                                              "(%1 activated)",
+                                              pluginsList->actived()));
+    }
+    else
+    {
+        pluginsNumber->setText(i18n("List filtered..."));
+        pluginsNumberActivated->setText(QString());
+    }
 }
 
 ConfigWidget::ConfigWidget(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
-    QWidget* panel = new QWidget(viewport());
-    setWidget(panel);
-    setWidgetResizable(true);
-
-    QGridLayout* mainLayout   = new QGridLayout(panel);
+    QWidget* panel            = new QWidget(viewport());
+    d->grid                   = new QGridLayout(panel);
     d->pluginsNumber          = new QLabel(panel);
     d->pluginsNumberActivated = new QLabel(panel);
     d->checkAllBtn            = new QPushButton(i18n("Check all"), panel);
     d->clearBtn               = new QPushButton(i18n("Clear"), panel);
-    d->kipiConfig             = new PluginListView(panel);
-    d->kipiConfig->setWhatsThis(i18n("List of available Kipi plugins."));
+    d->pluginsList            = new PluginListView(panel);
+    d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
 
-    mainLayout->addWidget(d->pluginsNumber,             0, 0, 1, 1);
-    mainLayout->addWidget(d->pluginsNumberActivated,    0, 1, 1, 1);
-    mainLayout->addWidget(d->checkAllBtn,               0, 3, 1, 1);
-    mainLayout->addWidget(d->clearBtn,                  0, 4, 1, 1);
-    mainLayout->addWidget(d->kipiConfig,                1, 0, 1, -1);
-    mainLayout->setColumnStretch(2, 10);
-    mainLayout->setMargin(KDialog::spacingHint());
-    mainLayout->setSpacing(KDialog::spacingHint());
+    d->grid->addWidget(d->pluginsNumber,             0, 1, 1, 1);
+    d->grid->addWidget(d->pluginsNumberActivated,    0, 2, 1, 1);
+    d->grid->addWidget(d->checkAllBtn,               0, 4, 1, 1);
+    d->grid->addWidget(d->clearBtn,                  0, 5, 1, 1);
+    d->grid->addWidget(d->pluginsList,               1, 0, 1, -1);
+    d->grid->setColumnStretch(3, 5);
+    d->grid->setMargin(KDialog::spacingHint());
+    d->grid->setSpacing(KDialog::spacingHint());
 
     // --------------------------------------------------------
 
+    setWidget(panel);
+    setWidgetResizable(true);
     setAutoFillBackground(false);
     viewport()->setAutoFillBackground(false);
     panel->setAutoFillBackground(false);
@@ -120,8 +131,11 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     connect(d->clearBtn, SIGNAL(clicked()),
             this, SLOT(slotClearList()));
 
-    connect(d->kipiConfig, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+    connect(d->pluginsList, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
             this, SLOT(slotItemClicked()));
+
+    connect(d->pluginsList, SIGNAL(signalItemsFiltered(int)),
+            this, SIGNAL(signalItemsFiltered(int)));
 
     // --------------------------------------------------------
 
@@ -133,29 +147,40 @@ ConfigWidget::~ConfigWidget()
     delete d;
 }
 
+void ConfigWidget::setFilterWidget(QWidget* const wdg)
+{
+    d->grid->addWidget(wdg, 0, 0, 1, 1);
+}
+
 void ConfigWidget::apply()
 {
     if (PluginLoader::instance())
     {
-        d->kipiConfig->apply();
+        d->pluginsList->slotApply();
         emit PluginLoader::instance()->replug();
     }
 }
 
 void ConfigWidget::slotCheckAll()
 {
-    d->kipiConfig->slotCheckAll();
+    d->pluginsList->slotCheckAll();
     d->updateInfo();
 }
 
 void ConfigWidget::slotClearList()
 {
-    d->kipiConfig->slotClear();
+    d->pluginsList->slotClear();
     d->updateInfo();
 }
 
 void ConfigWidget::slotItemClicked()
 {
+    d->updateInfo();
+}
+
+void ConfigWidget::slotSetFilter(const QString& filter)
+{
+    d->pluginsList->setFilter(filter);
     d->updateInfo();
 }
 

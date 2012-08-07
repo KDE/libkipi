@@ -40,6 +40,7 @@
 #include <kdebug.h>
 #include <kcomponentdata.h>
 #include <kcombobox.h>
+#include <klineedit.h>
 
 // Libkipi includes
 
@@ -63,12 +64,15 @@ class KipiSetup::Private
 public:
 
     Private() :
+        pluginFilter(0),
         page_plugins(0),
         page_xml(0),
         pluginsPage(0),
         xmlPage(0)
     {
     }
+
+    KLineEdit*       pluginFilter;
 
     KPageWidgetItem* page_plugins;
     KPageWidgetItem* page_xml;
@@ -90,6 +94,10 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->pluginsPage  = PluginLoader::instance()->configWidget(this);
     d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
     d->page_plugins->setIcon(KIcon("kipi"));
+    d->pluginFilter = new KLineEdit(d->pluginsPage);
+    d->pluginFilter->setClearButtonShown(true);
+    d->pluginFilter->setClickMessage(i18n("filter..."));
+    d->pluginsPage->setFilterWidget(d->pluginFilter);
 
     d->xmlPage  = new SetupXML(this);
     d->page_xml = addPage(d->xmlPage, i18n("UI layouts"));
@@ -113,6 +121,9 @@ KipiSetup::KipiSetup(QWidget* const parent)
     }
 
     setCurrentPage(page);
+
+    connect(d->pluginFilter, SIGNAL(userTextChanged(QString)),
+            d->pluginsPage, SLOT(slotSetFilter(QString)));
 }
 
 KipiSetup::~KipiSetup()

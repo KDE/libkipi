@@ -97,6 +97,13 @@ PluginCheckBox::~PluginCheckBox()
 {
 }
 
+bool PluginCheckBox::contains(const QString& txt) const
+{
+    return (text(0).contains(txt, Qt::CaseInsensitive) ||
+            text(1).contains(txt, Qt::CaseInsensitive) ||
+            text(2).contains(txt, Qt::CaseInsensitive));
+}
+
 // ---------------------------------------------------------------------
 
 class PluginListView::Private
@@ -107,6 +114,7 @@ public:
     {
     };
 
+    QString                filter;
     QList<PluginCheckBox*> boxes;
 };
 
@@ -150,7 +158,7 @@ PluginListView::~PluginListView()
     delete d;
 }
 
-void PluginListView::apply()
+void PluginListView::slotApply()
 {
     KSharedConfigPtr config = KGlobal::config();
     KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
@@ -214,6 +222,34 @@ int PluginListView::actived() const
     }
 
     return actived;
+}
+
+void PluginListView::setFilter(const QString& filter)
+{
+    d->filter    = filter;
+    int filtered = 0;
+
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        // Reset
+        item->setHidden(false);
+
+        if (!d->filter.isEmpty())
+        {
+            if (!item->contains(d->filter))
+            {
+                item->setHidden(true);
+                filtered++;
+            }
+        }
+    }
+
+    emit signalItemsFiltered(filtered);
+}
+
+QString PluginListView::filter() const
+{
+    return d->filter;
 }
 
 } // namespace KIPI

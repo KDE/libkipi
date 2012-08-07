@@ -45,6 +45,8 @@ public:
     PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent);
     ~PluginCheckBox();
 
+    bool contains(const QString& txt) const;
+
 public:
 
     PluginLoader::Info* m_info;
@@ -64,9 +66,16 @@ public:
     int actived() const;
     int count()   const;
 
+    void    setFilter(const QString& filter);
+    QString filter() const;
+
+Q_SIGNALS:
+
+    void signalItemsFiltered(int);
+
 public Q_SLOTS:
 
-    void apply();
+    void slotApply();
     void slotCheckAll();
     void slotClear();
 
