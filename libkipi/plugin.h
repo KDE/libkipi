@@ -85,12 +85,12 @@ public:
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
     virtual ~Plugin();
 
-    QList<KAction*>    actions(QWidget* const widget = 0) const;
-    Interface*         interface() const;
+    QList<KAction*> actions(QWidget* const widget = 0) const;
+    Interface*      interface() const;
 
-    virtual void       setup(QWidget* const widget) = 0;
-    Category           category(KAction* const action) const;
-    void               rebuild();
+    virtual void    setup(QWidget* const widget) = 0;
+    Category        category(KAction* const action) const;
+    void            rebuild();
 
 protected:
 

@@ -67,7 +67,6 @@ public:
 
     QMap<QWidget*, KActionCollection*> actionCollection;
     KComponentData                     instance;
-    QMap<QWidget*, QList<KAction*> >   actions;
     QMap<QWidget*, QMap<KAction*, Category> > actionsCat;
     QWidget*                           defaultWidget;
     QString                            uiBaseName;
@@ -196,11 +195,17 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
 
 void Plugin::addAction(KAction* const action)
 {
-    d->actions[d->defaultWidget].append(action);
+    addAction(action, d->defaultCategory);
 }
 
 void Plugin::addAction(KAction* const action, Category cat)
 {
+    if (cat == InvalidCategory)
+    {
+        kWarning() << "Error in plugin. Action '" << action->objectName() << "has "
+                      "invalid category. You must set default plugin category or "
+                      "to use a valid Category";
+    }
     d->actionsCat[d->defaultWidget].insert(action, cat);
 }
 
@@ -208,7 +213,6 @@ void Plugin::setup(QWidget* const widget)
 {
     clearActions();
     d->defaultWidget = widget;
-    d->actions.insert(widget, QList<KAction*>());
     d->actionsCat.insert(widget, QMap<KAction*, Category>());
 }
 
@@ -223,7 +227,7 @@ Category Plugin::category(KAction* const action) const
     {
         if (d->defaultCategory == InvalidCategory)
         {
-            kWarning() << "Error in plugin. Invalid category."
+            kWarning() << "Error in plugin. Invalid category. "
                           "You must set default plugin category.";
         }
         return d->defaultCategory;
