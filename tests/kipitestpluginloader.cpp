@@ -162,17 +162,6 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
     PluginLoader::PluginList list = d->kipiPluginLoader->pluginList();
     int cpt                       = 0;
 
-    // List of obsolete tool actions to not load
-
-    QStringList pluginActionsDisabled;
-    pluginActionsDisabled << QString("gpssync2");                       // Experimental plugin renamed gpssync during GoSC2010.
-    pluginActionsDisabled << QString("raw_converter_single");           // Obsolete since 0.9.5 and new Raw Import tool.
-    pluginActionsDisabled << QString("batch_rename_images");            // Obsolete since 1.0.0, replaced by AdvancedRename.
-    pluginActionsDisabled << QString("batch_border_images");            // Obsolete since 1.2.0, replaced by BQM border tool.
-    pluginActionsDisabled << QString("batch_convert_images");           // Obsolete since 1.2.0, replaced by BQM convert tool.
-    pluginActionsDisabled << QString("batch_color_images");             // Obsolete since 1.2.0, replaced by BQM color tool.
-    pluginActionsDisabled << QString("batch_filter_images");            // Obsolete since 1.2.0, replaced by BQM enhance tool.
-
     for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
         Plugin* plugin = (*it)->plugin();
@@ -184,6 +173,8 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
         d->app->guiFactory()->removeClient(plugin);
     }
+
+    QStringList disabledActions = d->kipiPluginLoader->disabledPluginActions();
 
     for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
@@ -203,7 +194,13 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
             QString actionName(action->objectName());
             Category cat = plugin->category(action);
 
-            if (!pluginActionsDisabled.contains(actionName))
+            if (cat == InvalidCategory)
+            {
+                kWarning() << "Plugin action '" << actionName << "' has invalid category!";
+                continue;
+            }
+
+            if (!disabledActions.contains(actionName))
             {
                 KActionCategory* category = d->kipiCategoryMap[cat];
 
