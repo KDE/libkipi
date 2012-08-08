@@ -61,7 +61,8 @@ public:
     Private() :
         uiBaseName(QString())
     {
-        defaultWidget = 0;
+        defaultWidget   = 0;
+        defaultCategory = InvalidCategory;
     }
 
     QMap<QWidget*, KActionCollection*> actionCollection;
@@ -70,6 +71,7 @@ public:
     QMap<QWidget*, QMap<KAction*, Category> > actionsCat;
     QWidget*                           defaultWidget;
     QString                            uiBaseName;
+    Category                           defaultCategory;
 
 public:
 
@@ -183,7 +185,6 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
 {
     QWidget* w = !widget ? d->defaultWidget : widget;
 
-//    if (!d->actions.contains(w))
     if (!d->actionsCat.contains(w))
     {
         kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
@@ -191,7 +192,6 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
     }
 
     return d->actionsCat[w].keys();
-//    return d->actions[w];
 }
 
 void Plugin::addAction(KAction* const action)
@@ -210,7 +210,6 @@ void Plugin::setup(QWidget* const widget)
     d->defaultWidget = widget;
     d->actions.insert(widget, QList<KAction*>());
     d->actionsCat.insert(widget, QMap<KAction*, Category>());
-//    d->actionCollection.insert(widget, new KActionCollection(widget, d->instance));
 }
 
 Category Plugin::category(KAction* const action) const
@@ -222,8 +221,12 @@ Category Plugin::category(KAction* const action) const
     }
     else
     {
-        // TODO
-        return ImagesPlugin;
+        if (d->defaultCategory == InvalidCategory)
+        {
+            kWarning() << "Error in plugin. Invalid category."
+                          "You must set default plugin category.";
+        }
+        return d->defaultCategory;
     }
 }
 
@@ -391,6 +394,16 @@ void Plugin::rebuild()
         setXMLGUIBuildDocument(QDomDocument());
         setXMLFile(file, false);
     }
+}
+
+void Plugin::setDefaultCategory(Category cat)
+{
+    d->defaultCategory = cat;
+}
+
+Category Plugin::defaultCategory() const
+{
+    return d->defaultCategory;
 }
 
 } // namespace KIPI

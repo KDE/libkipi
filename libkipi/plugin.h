@@ -62,6 +62,7 @@ class Interface;
 
 enum Category
 {
+    InvalidCategory = -1,
     ImagesPlugin = 0,
     ToolsPlugin,
     ImportPlugin,
@@ -93,15 +94,18 @@ public:
 
 protected:
 
-    void    addAction(KAction* const action);
-    void    addAction(KAction* const action, Category cat);
+    void     addAction(KAction* const action);
+    void     addAction(KAction* const action, Category cat);
 
-    void    setUiBaseName(const char* name);
-    QString uiBaseName() const;
-    void    mergeXMLFile(KXMLGUIClient* const host);
+    void     setDefaultCategory(Category cat);
+    Category defaultCategory() const;
 
-    void    setupXML();
-    void    clearActions();
+    void     setUiBaseName(const char* name);
+    QString  uiBaseName() const;
+    void     mergeXMLFile(KXMLGUIClient* const host);
+
+    void     setupXML();
+    void     clearActions();
 
 private:
 
