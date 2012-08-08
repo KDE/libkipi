@@ -268,7 +268,9 @@ public:
      */
     const PluginList&    pluginList();
 
-    QString kipiPluginsVersion() const;
+    /** Return the kipi-plugins version installed on your computer if it's found through kipiplugins.desktop file.
+     */
+    QString              kipiPluginsVersion() const;
 
     /** Return the config widget with list of plugins to manage.
      */
