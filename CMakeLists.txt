@@ -117,4 +117,5 @@ IF(NOT WIN32)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 ENDIF(NOT WIN32)
 
+# desktop file which define plugin service model, used by tool from kipi-plugins.
 INSTALL(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
