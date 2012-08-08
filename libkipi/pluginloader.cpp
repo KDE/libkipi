@@ -233,7 +233,7 @@ public:
     };
 
     QStringList              ignoredPlugins;
-    QStringList              ignoredActions;
+    QStringList              disabledActions;
     QString                  constraint;
 
     KXmlGuiWindow*           parent;
@@ -276,9 +276,14 @@ void PluginLoader::setIgnoredPluginsList(const QStringList& ignores)
     d->ignoredPlugins = ignores;
 }
 
-void PluginLoader::setIgnoredPluginActions(const QStringList& ignores)
+void PluginLoader::setDisabledPluginActions(const QStringList& disabledActions)
 {
-    d->ignoredActions = ignores;
+    d->disabledActions = disabledActions;
+}
+
+QStringList PluginLoader::disabledPluginActions() const
+{
+    return d->disabledActions;
 }
 
 void PluginLoader::setConstraint(const QString& constraint)
@@ -350,11 +355,6 @@ PluginLoader::~PluginLoader()
 {
     qDeleteAll(d->pluginList);
     delete d;
-}
-
-QStringList PluginLoader::ignoredPluginActions() const
-{
-    return d->ignoredActions;
 }
 
 void PluginLoader::loadPlugins()

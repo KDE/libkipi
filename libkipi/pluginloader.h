@@ -243,11 +243,13 @@ public:
      */
     void setIgnoredPluginsList(const QStringList& ignores);
 
-    /** Set ignored plugin actions that will not be plugged into the gui
+    /** Set disabled plugin actions that will not be plugged into the gui,
       */
-    void setIgnoredPluginActions(const QStringList& ignores);
+    void setDisabledPluginActions(const QStringList& disabledActions);
 
-    QStringList ignoredPluginActions() const;
+    /** Return the list of disabled plugin actions
+      */
+    QStringList disabledPluginActions() const;
 
     /** Set Plugins constraint to pass to the service trader.
      */
@@ -255,7 +257,8 @@ public:
 
     /** Init plugin loader. Call this method to parse relevant plugins installed on your system.
      *  Before to call this method, you must setup KIPI insterface instance.
-     *  Optionally, setup list of plugins to ignore, and the constraint list.
+     *  Optionally, setup list of plugins to ignore, the constraint list, and
+     *  the disabled plugin actions
      */
     void init();
 
