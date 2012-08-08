@@ -41,6 +41,7 @@
 
 #include "configwidget_p.h"
 #include "pluginloader.h"
+#include "version.h"
 
 namespace KIPI
 {
@@ -53,6 +54,8 @@ public:
     Private() :
         pluginsNumber(0),
         pluginsNumberActivated(0),
+        kipipluginsVersion(0),
+        libkipiVersion(0),
         checkAllBtn(0),
         clearBtn(0),
         grid(0),
@@ -66,6 +69,8 @@ public:
 
     QLabel*         pluginsNumber;
     QLabel*         pluginsNumberActivated;
+    QLabel*         kipipluginsVersion;
+    QLabel*         libkipiVersion;
 
     QPushButton*    checkAllBtn;
     QPushButton*    clearBtn;
@@ -117,14 +122,19 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->pluginsNumberActivated = new QLabel(panel);
     d->checkAllBtn            = new QPushButton(i18n("Check all"), panel);
     d->clearBtn               = new QPushButton(i18n("Clear"), panel);
+    d->kipipluginsVersion     = new QLabel(i18n("Kipi-Plugins: %1", PluginLoader::instance()->kipiPluginsVersion()), panel);
+    d->libkipiVersion         = new QLabel(i18n("LibKipi: %1", QString(kipi_version)), panel);
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
+    d->kipipluginsVersion->setAlignment(Qt::AlignRight);
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
     d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
     d->grid->addWidget(d->checkAllBtn,            0, 4, 1, 1);
     d->grid->addWidget(d->clearBtn,               0, 5, 1, 1);
-    d->grid->addWidget(d->pluginsList,            1, 0, 1, -1);
+    d->grid->addWidget(d->kipipluginsVersion,     1, 0, 1, 2);
+    d->grid->addWidget(d->libkipiVersion,         1, 4, 1, 2);
+    d->grid->addWidget(d->pluginsList,            2, 0, 1, -1);
     d->grid->setColumnStretch(3, 5);
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());

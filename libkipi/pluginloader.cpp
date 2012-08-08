@@ -47,6 +47,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <ksharedconfig.h>
+#include <kdesktopfile.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klibloader.h>
@@ -384,6 +385,25 @@ Interface* PluginLoader::interface() const
 ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 {
     return new ConfigWidget(parent);
+}
+
+QString PluginLoader::kipiPluginsVersion() const
+{
+    QString ver = i18n("unavailable");
+    QString path = KGlobal::dirs()->installPath("xdgdata-apps") + "kipiplugins.desktop";
+    KDesktopFile desk(path);
+    QMap<QString, QString> map = desk.entryMap("KipiPlugins Entry");
+
+    if (!map.isEmpty())
+    {
+        QString val = map["Version"];
+
+        if (!val.isEmpty())
+            ver = val;
+    }
+
+    kDebug() << "KipiPlugins Version = " << ver;
+    return ver;
 }
 
 } // namespace KIPI

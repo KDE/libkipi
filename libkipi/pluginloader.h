@@ -268,6 +268,8 @@ public:
      */
     const PluginList&    pluginList();
 
+    QString kipiPluginsVersion() const;
+
     /** Return the config widget with list of plugins to manage.
      */
     ConfigWidget*        configWidget(QWidget* const parent) const;
