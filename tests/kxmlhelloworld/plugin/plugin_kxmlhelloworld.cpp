@@ -172,6 +172,11 @@ void Plugin_KXMLHelloWorld::setupActions()
      *  others tool before to prevent redondancy.
      */
 
+    /** We need to call setDefaultCategory in case the plugin loader cannot
+      * recognize the category of an action
+      */
+    setDefaultCategory(ExportPlugin);
+
     /** An action dedicated to be plugged in digiKam Image menu.
      */
     d->actionImages = actionCollection()->addAction("kxmlhelloworld-actionImage");
