@@ -126,7 +126,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->libkipiVersion         = new QLabel(i18n("LibKipi: %1", QString(kipi_version)), panel);
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
-    d->kipipluginsVersion->setAlignment(Qt::AlignRight);
+    d->libkipiVersion->setAlignment(Qt::AlignRight);
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
     d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
