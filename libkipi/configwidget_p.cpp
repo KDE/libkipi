@@ -115,8 +115,8 @@ PluginListView::PluginListView(QWidget* const parent)
     setHeaderLabels(labels);
     header()->setResizeMode(0, QHeaderView::ResizeToContents);
     header()->setResizeMode(1, QHeaderView::ResizeToContents);
-    header()->setResizeMode(2, QHeaderView::Interactive);
-    header()->setResizeMode(3, QHeaderView::Stretch);
+    header()->setResizeMode(2, QHeaderView::Stretch);
+    header()->setResizeMode(3, QHeaderView::Interactive);
     header()->setSortIndicatorShown(true);
 
     setAutoFillBackground(false);
