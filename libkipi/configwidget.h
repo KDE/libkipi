@@ -45,22 +45,36 @@ class LIBKIPI_EXPORT ConfigWidget : public QScrollArea
 
 public:
 
+    /** Standard constructor.
+     */
     ConfigWidget(QWidget* const parent = 0);
     ~ConfigWidget();
 
+    /** Apply all changes about plugin selected to be hosted in KIPI host application.
+     */
     void apply();
+    
+    /** Set a filter widget (as KLineEdit) to be able to list only wanted plugin using a string query.
+     *  Use slotSetFilter() to apply filetring. signalSearchResult is emitted when it's done.
+     */
     void setFilterWidget(QWidget* const wdg);
 
 Q_SIGNALS:
 
+    /** Signal emitted when filetring is done through slotSetFilter(). True is sent when item relevant of filetring query give items in list.
+     */
     void signalSearchResult(bool);
 
 public Q_SLOTS:
 
+    /** Set plugins list filtetring string properties. signalSearchResult() is emitted when all is done.
+     */
     void slotSetFilter(const QString& filter, Qt::CaseSensitivity cs);
 
 private Q_SLOTS:
 
+    /** For internal uses only.
+     */
     void slotCheckAll();
     void slotClearList();
     void slotItemClicked();
