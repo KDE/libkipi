@@ -234,7 +234,6 @@ public:
 
     QStringList              ignoredPlugins;
     QStringList              disabledActions;
-    QString                  constraint;
 
     KXmlGuiWindow*           parent;
 
@@ -286,11 +285,6 @@ QStringList PluginLoader::disabledPluginActions() const
     return d->disabledActions;
 }
 
-void PluginLoader::setConstraint(const QString& constraint)
-{
-    d->constraint = constraint;
-}
-
 void PluginLoader::init()
 {
     Q_ASSERT((s_instance != 0) && (!s_loaded));
@@ -302,7 +296,7 @@ void PluginLoader::init()
     }
 
     s_loaded                    = true;
-    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin", d->constraint);
+    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
     KSharedConfigPtr config     = KGlobal::config();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 

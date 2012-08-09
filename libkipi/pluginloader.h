@@ -251,10 +251,6 @@ public:
       */
     QStringList disabledPluginActions() const;
 
-    /** Set Plugins constraint to pass to the service trader.
-     */
-    void setConstraint(const QString& constraint);
-
     /** Init plugin loader. Call this method to parse relevant plugins installed on your system.
      *  Before to call this method, you must setup KIPI insterface instance.
      *  Optionally, setup list of plugins to ignore, the constraint list, and
