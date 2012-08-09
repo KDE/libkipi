@@ -36,6 +36,9 @@
 // KDE includes
 
 #include <kdialog.h>
+#include <ktoolinvocation.h>
+#include <kstandarddirs.h>
+#include <kurllabel.h>
 
 // Local includes
 
@@ -59,6 +62,7 @@ public:
         checkAllBtn(0),
         clearBtn(0),
         grid(0),
+        kipiLogoLabel(0),
         pluginsList(0)
     {
     }
@@ -76,6 +80,8 @@ public:
     QPushButton*    clearBtn;
 
     QGridLayout*    grid;
+    
+    KUrlLabel*      kipiLogoLabel;
 
     PluginListView* pluginsList;
 };
@@ -127,6 +133,12 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
+    
+    d->kipiLogoLabel = new KUrlLabel(panel);
+    d->kipiLogoLabel->setText(QString());
+    d->kipiLogoLabel->setScaledContents(true);
+    d->kipiLogoLabel->setUrl("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
+    d->kipiLogoLabel->setPixmap(QPixmap(KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png")));
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
     d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
@@ -134,8 +146,10 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->grid->addWidget(d->clearBtn,               0, 5, 1, 1);
     d->grid->addWidget(d->kipipluginsVersion,     1, 0, 1, 2);
     d->grid->addWidget(d->libkipiVersion,         1, 4, 1, 2);
+    d->grid->addWidget(d->kipiLogoLabel,          0, 6, 2, 1);
     d->grid->addWidget(d->pluginsList,            2, 0, 1, -1);
     d->grid->setColumnStretch(3, 5);
+    d->grid->setColumnStretch(6, 1);
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
 
@@ -160,6 +174,9 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     connect(d->pluginsList, SIGNAL(signalSearchResult(bool)),
             this, SIGNAL(signalSearchResult(bool)));
+    
+    connect(d->kipiLogoLabel, SIGNAL(leftClickedUrl(QString)),
+            this, SLOT(slotProcessUrl(QString)));
 
     // --------------------------------------------------------
 
@@ -169,6 +186,11 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 ConfigWidget::~ConfigWidget()
 {
     delete d;
+}
+
+void ConfigWidget::slotProcessUrl(const QString& url)
+{
+    KToolInvocation::self()->invokeBrowser(url);
 }
 
 void ConfigWidget::setFilterWidget(QWidget* const wdg)
