@@ -32,9 +32,11 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
+#include <QFontMetrics>
 
 // KDE includes
 
+#include <khbox.h>
 #include <kdialog.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
@@ -62,6 +64,7 @@ public:
         checkAllBtn(0),
         clearBtn(0),
         grid(0),
+        hbox(0),
         kipiLogoLabel(0),
         pluginsList(0)
     {
@@ -80,7 +83,8 @@ public:
     QPushButton*    clearBtn;
 
     QGridLayout*    grid;
-    
+
+    KHBox*          hbox;
     KUrlLabel*      kipiLogoLabel;
 
     PluginListView* pluginsList;
@@ -126,30 +130,34 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->grid                   = new QGridLayout(panel);
     d->pluginsNumber          = new QLabel(panel);
     d->pluginsNumberActivated = new QLabel(panel);
-    d->checkAllBtn            = new QPushButton(i18n("Check all"), panel);
-    d->clearBtn               = new QPushButton(i18n("Clear"), panel);
+    d->hbox                   = new KHBox(panel);
+    d->checkAllBtn            = new QPushButton(i18n("Check all"), d->hbox);
+    d->clearBtn               = new QPushButton(i18n("Clear"), d->hbox);
+    QWidget* space            = new QWidget(d->hbox);
     d->kipipluginsVersion     = new QLabel(i18n("Kipi-Plugins: %1", PluginLoader::instance()->kipiPluginsVersion()), panel);
     d->libkipiVersion         = new QLabel(i18n("LibKipi: %1", QString(kipi_version)), panel);
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
+    d->hbox->setStretchFactor(space, 10);
     
     d->kipiLogoLabel = new KUrlLabel(panel);
     d->kipiLogoLabel->setText(QString());
-    d->kipiLogoLabel->setScaledContents(true);
     d->kipiLogoLabel->setUrl("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
-    d->kipiLogoLabel->setPixmap(QPixmap(KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png")));
+
+    QFontMetrics fm(d->kipipluginsVersion->font());
+    QRect r = fm.boundingRect("XX");
+    QPixmap pix(KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png"));
+    d->kipiLogoLabel->setPixmap(pix.scaledToHeight(r.height()*3, Qt::SmoothTransformation));
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
     d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
-    d->grid->addWidget(d->checkAllBtn,            0, 4, 1, 1);
-    d->grid->addWidget(d->clearBtn,               0, 5, 1, 1);
-    d->grid->addWidget(d->kipipluginsVersion,     1, 0, 1, 2);
-    d->grid->addWidget(d->libkipiVersion,         1, 4, 1, 2);
+    d->grid->addWidget(d->kipipluginsVersion,     0, 4, 1, 1);
+    d->grid->addWidget(d->libkipiVersion,         1, 4, 1, 1);
+    d->grid->addWidget(d->hbox,                   1, 0, 1, 2);
     d->grid->addWidget(d->kipiLogoLabel,          0, 6, 2, 1);
     d->grid->addWidget(d->pluginsList,            2, 0, 1, -1);
-    d->grid->setColumnStretch(3, 5);
-    d->grid->setColumnStretch(6, 1);
+    d->grid->setColumnStretch(3, 10);
     d->grid->setMargin(KDialog::spacingHint());
     d->grid->setSpacing(KDialog::spacingHint());
 
