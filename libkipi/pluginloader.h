@@ -66,9 +66,9 @@ class ConfigWidget;
     signals plug() / unplug() or the signal replug(). These signals are
     emitted when a plugin is to be inserted into the menus.
 
-    If your application is use KDE XMLGUI, the easiest way to get the plugins
-    inserted into the menus is by adding an item in your application XML ui.rc file looking
-    like this:
+    If your application is using KDE XMLGUI, the easiest(nicest) way to get the
+    plugins inserted into the menus is by adding an item in your application XML
+    ui.rc file looking like this:
 
     \code
 
@@ -78,18 +78,25 @@ class ConfigWidget;
         <MenuBar>
 
             <Menu name="Image" ><text>&amp;Image</text>
-                <ActionList name="image_kipi_actions"/>
+                <DefineGroup name="kipi_image_group" append="kipi_image_group" />
             </Menu>
 
             <Menu name="Tools"><text>&amp;Tools</text>
-                <ActionList name="tool_kipi_actions"/>
+                <DefineGroup name="kipi_album_group" append="kipi_album_group" />
                 <Separator/>
-                <ActionList name="export_kipi_actions"/>
+                <DefineGroup name="kipi_tool_group" append="kipi_tool_group" />
+                <Separator/>
+                <DefineGroup name="kipi_batch_group" append="kipi_batch_group" />
             </Menu>
 
             <Merge/>
 
         </MenuBar>
+
+        <ToolBar name="mainToolBar">
+            <text>Main Toolbar</text>
+        </Toolbar>
+
         <ActionProperties/>
 
     </gui>
@@ -123,7 +130,9 @@ class ConfigWidget;
     MyKipiApplication::MyKipiApplication() : KXmlGuiWindow(0)
     {
         m_iface  = new KIPI::Interface(this, "MyKipiApplication_KIPI_interface");
-        m_loader = new KIPI::PluginLoader(QStringList(), m_iface);
+        m_loader = new KIPI::PluginLoader(this);
+        m_loader->setInterface(m_iface);
+        m_loader->init();
 
         connect(m_loader, SIGNAL(replug()),
                 this, SLOT(slotKipiPluginPlug()));
@@ -133,12 +142,18 @@ class ConfigWidget;
 
     void MyKipiApplication::slotKipiPluginPlug()
     {
-        unplugActionList("export_kipi_actions");
-        unplugActionList("image_kipi_actions");
-        unplugActionList("tool_kipi_actions");
-
         QList<QAction*> kipiImageActions, kipiExportActions, kipiToolsActions;
         PluginLoader::PluginList list = m_loader->pluginList();
+
+        // We need to remove loaded plugins from the gui factory
+        for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
+        {
+            Plugin* plugin = (*it)->plugin();
+            if ( !plugin || !(*it)->shouldLoad() )
+                continue;
+
+            guiFactory()->removeClient(plugin);
+        }
 
         for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
         {
@@ -147,37 +162,24 @@ class ConfigWidget;
                 continue;
 
             plugin->setup(this);
-
-            // Plugin wrap based on category identification.
-            foreach(KAction* const action, plugin->actions())
-            {
-                switch (plugin->category(action))
-                {
-                    case ExportPlugin:
-                        kipiExportActions.append(action);
-                        break;
-                    case ImagesPlugin:
-                        kipiImageActions.append(action);
-                        break;
-                    case ToolsPlugin:
-                        kipiToolsActions.append(action);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
-        // Create GUI menu in according with plugins.
-        plugActionList("export_kipi_actions", kipiExportActions);
-        plugActionList("image_kipi_actions",  kipiImageActions);
-        plugActionList("tool_kipi_actions",   kipiToolsActions);
+        // We add plugins to the factory
+        for (PluginLoader::PluginList::ConstIterator it = list.constBegin(); it != list.constEnd(); ++it )
+        {
+            Plugin* plugin = (*it)->plugin();
+            if ( !plugin || !(*it)->shouldLoad() )
+                continue;
+
+            guiFactory()->addClient(plugin);
+        }
     }
 
     \endcode
 
     For a complete implementation used to manage Kipi-plugins in digiKam, look <a href="https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/utilities/kipiiface/kipipluginloader.cpp">
-    into this class</a>.
+    into this class</a>, or you can look the code of the kxmlkipicmd test application
+    in the "test" folder from libkipi.
 
     To configure which plugins should be loaded, simply call
     PluginLoader::configWidget(), and insert the widget into your normal
