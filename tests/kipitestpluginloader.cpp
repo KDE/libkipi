@@ -140,9 +140,6 @@ void KipiTestPluginLoader::loadPlugins()
     ignores.append("SimpleViewer");
     ignores.append("KioExport");
 
-    // These plugins have been replaced by digiKam core solution with 2.6.0
-    ignores.append("JPEGLossless");
-
     d->kipiPluginLoader = new PluginLoader(d->app);
     d->kipiPluginLoader->setInterface(d->kipiInterface);
     d->kipiPluginLoader->setIgnoredPluginsList(ignores);
