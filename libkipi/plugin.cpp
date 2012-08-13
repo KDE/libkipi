@@ -50,6 +50,7 @@
 
 #include "version.h"
 #include "interface.h"
+#include "pluginloader.h"
 
 namespace KIPI
 {
@@ -65,7 +66,6 @@ public:
         defaultCategory = InvalidCategory;
     }
 
-    QMap<QWidget*, KActionCollection*> actionCollection;
     KComponentData                     instance;
     QMap<QWidget*, QMap<KAction*, Category> > actionsCat;
     QWidget*                           defaultWidget;
@@ -82,6 +82,7 @@ public:
         static QDomElement makeElement(QDomDocument& domDoc, const QDomElement& from);
         static void        buildPaths(const QDomElement& original, const QDomNodeList& localNodes, QHashPath& paths);
         static int         findByNameAttr(const QDomNodeList& list, const QDomElement& node);
+        static void        removeDisabledActions(QDomElement& elem);
 
     private:
 
@@ -131,6 +132,31 @@ int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const Q
     }
 
     return -1;
+}
+
+void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
+{
+    QDomNodeList actionList = elem.elementsByTagName("Action");
+    QStringList disabledActions = PluginLoader::instance()->disabledPluginActions();
+
+    QDomElemList disabledElements;
+    for(int i = 0; i < actionList.size(); ++i)
+    {
+        QDomElement el = actionList.item(i).toElement();
+        if (el.isNull())
+            continue;
+
+        if (disabledActions.contains(el.attribute("name")))
+        {
+            disabledElements << el;
+        }
+    }
+
+    foreach(QDomElement element, disabledElements)
+    {
+        QDomElement parent = element.parentNode().toElement();
+        parent.removeChild(element);
+    }
 }
 
 void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const QDomNodeList& localNodes,
@@ -287,6 +313,8 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     QDomDocument newPluginDoc(defaultDomDoc.doctype());
     QDomElement defGuiElem        = defaultDomDoc.firstChildElement("gui");
+
+    Private::XMLParser::removeDisabledActions(defGuiElem);
 
     QDomElement newGuiElem        = Private::XMLParser::makeElement(newPluginDoc, defGuiElem);
     QDomElement defMenuBarElem    = defGuiElem.firstChildElement("MenuBar");
