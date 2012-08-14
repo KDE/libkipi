@@ -71,41 +71,143 @@ enum Category
     CollectionsPlugin
 };
 
+/**
+ * @short Base class for the KIPI plugins
+ * @extends QObject, KXMLGUIClient
+ *
+ * //TODO complete the documentation
+ */
 class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
     Q_OBJECT
 
+    typedef QList<QDomElement>                        QDomElemList;
+    typedef QHash<QString, QDomElemList>              QHashPath;
+    typedef QMap<QWidget*, QMap<KAction*, Category> > ActionCategoryMap;
+
 public:
 
-    typedef QList<QDomElement>           QDomElemList;
-    typedef QHash<QString, QDomElemList> QHashPath;
-
-public:
-
+    /**
+     * Constructs a plugin
+     *
+     * @param instance The KComponentData associated with this plugin
+     * @param parent The parent of this object
+     * @param name The name of the plugin
+     */
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
+
+    /**
+     * Standard destructor
+     */
     virtual ~Plugin();
 
+    /**
+     * Returns the plugin actions associated with the widget passed as argument, or with
+     * the default widget if widget is null or not provided. The actions are in
+     * the same order as added to the plugin.
+     */
     QList<KAction*> actions(QWidget* const widget = 0) const;
-    Interface*      interface() const;
 
-    virtual void    setup(QWidget* const widget) = 0;
-    Category        category(KAction* const action) const;
-    void            rebuild();
+    /**
+     * Returns the KIPI::Interface
+     */
+    Interface* interface() const;
+
+    /**
+     * Virtual method that must be overrided by the non abstract descendants and
+     * must be called before any actions are added.
+     */
+    virtual void setup(QWidget* const widget) = 0;
+
+    /**
+     * Returns the category of the specified plugin action, or InvalidCategory
+     * if the action is not recognised
+     */
+    Category category(KAction* const action) const;
+
+    /**
+     * Force the plugin to reread and to reload its xml file
+     */
+    void rebuild();
 
 protected:
 
-    void     addAction(KAction* const action);
-    void     addAction(KAction* const action, Category cat);
+    // TODO make these two methods private, and use those with QString
+    void addAction(KAction* const action);
+    void addAction(KAction* const action, Category cat);
 
-    void     setDefaultCategory(Category cat);
+    /**
+     * Register an action to the plugin instance and add it to the action collection.
+     *
+     * The action is added only if the action name is not in the disabled actions
+     * list of the PluginLoader singleton class.
+     *
+     * @param name The name by which the action will be added to the action collection
+     * @param action The action to add
+     *
+     * @note It just calls addAction with the default category, so the default
+     * category must be set using setDefaultCategory before you use this method
+     */
+    void addAction(const QString& name, KAction* const action);
+
+    /**
+     * Register action to the plugin instance and add it to the action collection
+     *
+     * The action is added only if the action name is not in the disabled actions
+     * list of the PluginLoader singleton class.
+     *
+     * @param name The name by which the action will be added to the action collection
+     * @param action The action to add
+     * @param cat The category of the action
+     */
+    void addAction(const QString& name, KAction* const actions, Category cat);
+
+    /**
+     * Sets the default category of the plugin actions
+     *
+     * \sa defaultCategory()
+     */
+    void setDefaultCategory(Category cat);
+
+    /**
+     * Returns the default category of the plugin actions
+     *
+     * \sa setDefaultCategory()
+     */
     Category defaultCategory() const;
 
-    void     setUiBaseName(const char* name);
-    QString  uiBaseName() const;
-    void     mergeXMLFile(KXMLGUIClient* const host);
+    /**
+     * Sets the name of the xml file associated with this KXMLGUIClient. You must
+     * provide only the filename without slashes.
+     *
+     * The default xml file must be installed in the ${DATA_INSTALL_DIR}/kipi,
+     * modifications are stored in the local config dir of the KGlobal::mainComponent
+     *
+     * \sa uiBaseName()
+     */
+    void setUiBaseName(const char* name);
 
-    void     setupXML();
-    void     clearActions();
+    /**
+     * Return the base name of the xml file associated with this KXMLGUIClient
+     *
+     * \sa setUiBaseName()
+     */
+    QString uiBaseName() const;
+
+    /**
+     * Adapt the xml file of the plugin with the one of the KXmlGuiWindow main window.
+     * It's recommended to call it on every creation of the plugin.
+     *
+     * @note the xml file of the plugin must be set using setUiBaseName()
+     */
+    void setupXML();
+
+private:
+
+    /** For internal uses only
+      */
+    void mergeXMLFile(KXMLGUIClient* const host);
+    void clearActions();
 
 private:
 

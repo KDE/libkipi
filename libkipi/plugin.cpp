@@ -66,11 +66,11 @@ public:
         defaultCategory = InvalidCategory;
     }
 
-    KComponentData                     instance;
-    QMap<QWidget*, QMap<KAction*, Category> > actionsCat;
-    QWidget*                           defaultWidget;
-    QString                            uiBaseName;
-    Category                           defaultCategory;
+    KComponentData    instance;
+    ActionCategoryMap actionsCat;
+    QWidget*          defaultWidget;
+    QString           uiBaseName;
+    Category          defaultCategory;
 
 public:
 
@@ -93,6 +93,9 @@ public:
 
 QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument& domDoc, const QDomElement& from)
 {
+    if (domDoc.isNull() || from.isNull())
+        return QDomElement();
+
     QDomElement elem            = domDoc.createElement(from.tagName());
     QDomNamedNodeMap attributes = from.attributes();
 
@@ -154,6 +157,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 
     foreach(QDomElement element, disabledElements)
     {
+        kDebug() << "Plugin action '" << element.attribute("name") << "' is disabled.";
         QDomElement parent = element.parentNode().toElement();
         parent.removeChild(element);
     }
@@ -219,9 +223,41 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
     return d->actionsCat[w].keys();
 }
 
+void Plugin::addAction(const QString& name, KAction* const action)
+{
+    if (!action || name.isEmpty())
+        return;
+
+    if (!PluginLoader::instance()->disabledPluginActions().contains(name))
+    {
+        actionCollection()->addAction(name, action);
+        addAction(action);
+    }
+    else
+    {
+        kDebug() << "Action '" << name << "' is disabled.";
+    }
+}
+
 void Plugin::addAction(KAction* const action)
 {
     addAction(action, d->defaultCategory);
+}
+
+void Plugin::addAction(const QString& name, KAction* const action, Category cat)
+{
+    if (!action || name.isEmpty())
+        return;
+
+    if (!PluginLoader::instance()->disabledPluginActions().contains(name))
+    {
+        actionCollection()->addAction(name, action);
+        addAction(action, cat);
+    }
+    else
+    {
+        kDebug() << "Action '" << name << "' is disabled.";
+    }
 }
 
 void Plugin::addAction(KAction* const action, Category cat)
@@ -379,6 +415,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     else
     {
         QDomElement localGuiElem = localDomDoc.firstChildElement("gui");
+
+        Private::XMLParser::removeDisabledActions(localGuiElem);
+
         QDomElement localToolBarElem = localGuiElem.firstChildElement("ToolBar");
         QDomElement localActionPropElem = localGuiElem.firstChildElement("ActionProperties");
 
