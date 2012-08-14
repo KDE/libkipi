@@ -130,9 +130,8 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
      */
     setUiBaseName("kipiplugin_kxmlhelloworldui.rc");
 
-    /** We need to call mergeXMLFile with the host application window as the
-      * argument so the XML file and the GUI of the plugin to be merged with
-      * those of the KIPI host app
+    /** We need to call setupXML so the XML file and the GUI of the plugin to
+      * be merged with those of the KIPI host app
       */
     setupXML();
 }
@@ -179,7 +178,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** An action dedicated to be plugged in digiKam Image menu.
      */
-    d->actionImages = actionCollection()->addAction("kxmlhelloworld-actionImage");
+    d->actionImages = new KAction(this);
     d->actionImages->setText(i18n("KXML Hello Wolrd Image..."));
     d->actionImages->setIcon(KIcon("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
@@ -190,23 +189,23 @@ void Plugin_KXMLHelloWorld::setupActions()
             this, SLOT(slotActivateActionImages()));
     /** We need to register actions in plugin instance
      */
-    addAction(d->actionImages, ImagesPlugin);
+    addAction("kxmlhelloworld-actionImage", d->actionImages, ImagesPlugin);
 
     /** This will get items selection from KIPI host application.
      */
     ImageCollection selection = interface()->currentSelection();
-
     d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
+
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
-    d->actionTools = actionCollection()->addAction("kxmlhelloworld-actionTools");
+    d->actionTools = new KAction(this);
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(KIcon("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
 
-    addAction(d->actionTools, ToolsPlugin);
+    addAction("kxmlhelloworld-actionTools", d->actionTools, ToolsPlugin);
 
     /** We will get current selected album in the digikam tree view
       */
@@ -216,25 +215,25 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
-    d->actionExport = actionCollection()->addAction("kxmlhelloworld-actionExport");
+    d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(KIcon("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
 
-    addAction(d->actionExport, ExportPlugin);
+    addAction("kxmlhelloworld-actionExport", d->actionExport, ExportPlugin);
 
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
-    d->actionImport = actionCollection()->addAction("kxmlhelloworld-actionImport");
+    d->actionImport = new KAction(this);
     d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(KIcon("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
 
-    addAction(d->actionImport, ImportPlugin);
+    addAction("kxmlhelloworld-actionImport", d->actionImport, ImportPlugin);
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */

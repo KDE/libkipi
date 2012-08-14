@@ -62,8 +62,6 @@ public:
     Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList& args);
     ~Plugin_KXMLHelloWorld();
 
-    void setupActions();
-
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
      */
     void setup(QWidget* const widget);
@@ -76,6 +74,12 @@ private Q_SLOTS:
     void slotActivateActionTools();
     void slotActivateActionExport();
     void slotActivateActionImport();
+
+private:
+
+    /** Create and setup plugin actions
+      */
+    void setupActions();
 
 private:
 
