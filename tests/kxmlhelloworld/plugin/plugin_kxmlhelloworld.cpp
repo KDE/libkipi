@@ -179,7 +179,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** An action dedicated to be plugged in digiKam Image menu.
      */
     d->actionImages = new KAction(this);
-    d->actionImages->setText(i18n("KXML Hello Wolrd Image..."));
+    d->actionImages->setText(i18n("KXML Hello World Image..."));
     d->actionImages->setIcon(KIcon("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
 
