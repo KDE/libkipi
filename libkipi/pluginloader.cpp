@@ -46,6 +46,7 @@
 #include <kservicetypetrader.h>
 #include <kdebug.h>
 #include <kdialog.h>
+#include <kdeversion.h>
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
 #include <kconfig.h>
@@ -53,6 +54,7 @@
 #include <klibloader.h>
 #include <kaction.h>
 #include <kxmlguifactory.h>
+#include <ktoolbar.h>
 #include <kstandarddirs.h>
 #include <kactioncollection.h>
 
@@ -98,6 +100,12 @@ PluginLoader::Info::~Info()
     if (d->parent)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
+#if KDE_IS_VERSION(4,8,5)
+        foreach(KToolBar* toolbar, d->parent->toolBars())
+        {
+            toolbar->removeXMLGUIClient(d->plugin);
+        }
+#endif
     }
 
     delete d->plugin;
@@ -201,6 +209,12 @@ void PluginLoader::Info::reload()
     if (d->parent)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
+#if KDE_IS_VERSION(4,8,5)
+        foreach(KToolBar* toolbar, d->parent->toolBars())
+        {
+            toolbar->removeXMLGUIClient(d->plugin);
+        }
+#endif
     }
 
     delete d->plugin;
