@@ -73,9 +73,8 @@ enum Category
 
 /**
  * @short Base class for the KIPI plugins
- * @extends QObject, KXMLGUIClient
  *
- * //TODO complete the documentation
+ * TODO complete the documentation
  */
 class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
@@ -133,10 +132,6 @@ public:
     void rebuild();
 
 protected:
-
-    // TODO make these two methods private, and use those with QString
-    void addAction(KAction* const action);
-    void addAction(KAction* const action, Category cat);
 
     /**
      * Register an action to the plugin instance and add it to the action collection.
@@ -208,6 +203,9 @@ private:
 
     /** For internal uses only
       */
+    void addAction(KAction* const action);
+    void addAction(KAction* const action, Category cat);
+
     void mergeXMLFile(KXMLGUIClient* const host);
     void clearActions();
 
