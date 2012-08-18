@@ -28,6 +28,7 @@
 // Local includes
 
 #include "imagecollection.h"
+#include <kdebug.h>
 
 namespace KIPI 
 {
@@ -44,6 +45,10 @@ ImageCollectionSelector::~ImageCollectionSelector()
 QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const
 {
     return QList<ImageCollection>();
+}
+
+void ImageCollectionSelector::enableTags(bool flag)
+{
 }
 
 } // namespace KIPI
