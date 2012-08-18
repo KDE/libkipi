@@ -63,7 +63,7 @@ class Interface;
 enum Category
 {
     InvalidCategory = -1,
-    ImagesPlugin = 0,
+    ImagesPlugin    = 0,
     ToolsPlugin,
     ImportPlugin,
     ExportPlugin,
@@ -73,9 +73,8 @@ enum Category
 
 /**
  * @short Base class for the KIPI plugins
- * @extends QObject, KXMLGUIClient
  *
- * //TODO complete the documentation
+ * TODO complete the documentation
  */
 class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
@@ -134,10 +133,6 @@ public:
 
 protected:
 
-    // TODO make these two methods private, and use those with QString
-    void addAction(KAction* const action);
-    void addAction(KAction* const action, Category cat);
-
     /**
      * Register an action to the plugin instance and add it to the action collection.
      *
@@ -162,7 +157,7 @@ protected:
      * @param action The action to add
      * @param cat The category of the action
      */
-    void addAction(const QString& name, KAction* const actions, Category cat);
+    void addAction(const QString& name, KAction* const action, Category cat);
 
     /**
      * Sets the default category of the plugin actions
@@ -208,6 +203,9 @@ private:
 
     /** For internal uses only
       */
+    void addAction(KAction* const action);
+    void addAction(KAction* const action, Category cat);
+
     void mergeXMLFile(KXMLGUIClient* const host);
     void clearActions();
 

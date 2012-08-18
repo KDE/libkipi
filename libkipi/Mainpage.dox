@@ -5,25 +5,31 @@
    plugin for KIPI, and how to add KIPI support to a new
    application (referred to as host application).
 
-   You can find more information about KIPI at this <a
-   href="http://wwww.digikam.org/docs">url</a>.
+   This documentation has been writen by Gilles Caulier and has been updated
+   and improved by Victor Dodon.
 
-   This documentation has been writen by Gilles Caulier.
+   <h1>General information about libkipi 2.0.0</h1>
 
-   <h1>Developing a New Plugin</h1>
+   Starting with 2.0.0 version of libkipi shared library, Plugin class
+   inherits KXMLGUIClient class, this means that if your application uses
+   KDE-XML GUI, you can add plugin actions to the toolbar(if you add plugins to
+   the guiFactory of you KXMLGuiWindow). For more documentation about KDE-XML
+   GUI you can look <a href="http://techbase.kde.org/Development/Architecture/KDE4/XMLGUI_Technology">here</a>.
 
-   The easiest way to start a new plugin, is to copy the 
-   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/show/tests/helloworld">
-   HelloWorld</a> plugin, which you may find in <a
-   href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins">
-   kipi-plugins</a> project from KDE git repository. Please also read <a
+   <h2>Developing a New Plugin</h2>
+
+   The easiest way to start a new plugin, is to copy the
+   <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests/kxmlhelloworld?rev=development%2F2.0.0">
+   KXMLHelloWorld</a> plugin, which you may find in <a
+   href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi">
+   libkipi</a> project from KDE git repository. Please also read <a
    href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html">
    this tutorial</a> which tells in general about developing a plugin
    structure for an application, but it also gives some background
    information on how plugins are loaded, and especially on the macros
    involved. The tutorial has been written by one of the KIPI authors, so
-   it matches fairly good the model of KIPI (except the part on merging
-   GUI's from plugins).
+   it matches fairly good the model of KIPI.
+
 
 
 
@@ -34,11 +40,14 @@
    <ul>
    <li> Create a class that inherits KIPI::Plugin. In the constructor you
    must create instances of KAction for your application. The topmost
-   actions should be given to the Plugin super class using 
+   actions should be given to the Plugin super class using
    KIPI::Plugin::addAction().
    <li> As described in the tutorial <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#understanding_loading">here</a>, you must call KDE macros
    <tt>K_PLUGIN_FACTORY</tt> and <tt>K_EXPORT_PLUGIN</tt>.
    <li> You also need to create a desktop file, as described <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#makefile_am_client">here</a>
+   <li> You must write a rc file describing the gui of your plugin. For an
+   example look at the <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/entry/tests/kxmlhelloworld/plugin/kipiplugin_kxmlhelloworldui.rc?rev=development%2F2.0.0">rc
+   file</a> of the KXMLHelloWorld plugin.
    </ul>
 
 
@@ -53,7 +62,8 @@
 
    The origin of all your communication with the host application is
    \ref KIPI::Interface. You obtain a pointer to this by casting the parent
-   pointer given to your plugin during construction.
+   pointer given to your plugin during construction, or, beginning with libkipi
+   2.0.0, by calling interface() method from KIPI::Plugin class.
 
    Selection of images can be obtained using
    KIPI::Interface::currentSelection(), KIPI::Interface::currentAlbum() and
@@ -62,17 +72,17 @@
 
    Finally to obtain information about individual images, call
    KIPI::Interface::info(), which returns a KIPI::ImageInfo, with the
-   information. Note that Kipi-plugins provide a dedicated wrapper around KIPI::ImageInfo 
-   to simplify item attribute management with host application. See 
+   information. Note that Kipi-plugins provide a dedicated wrapper around KIPI::ImageInfo
+   to simplify item attribute management with host application. See
    <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpimageinfo.h">
    here</a> for details.
 
    When developing plugins, you should pay special attention to the fact the different
    host applications may have different feature sets they
    support. Information about what the host application support can be
-   obtained from KIPI::Interface::hasFeature(). See also extra settings that can be shared 
-   by KIPI host application. Kipi-plugins provide a dedicated wrapper around KIPI::Interface to 
-   simplify host settings management. See 
+   obtained from KIPI::Interface::hasFeature(). See also extra settings that can be shared
+   by KIPI host application. Kipi-plugins provide a dedicated wrapper around KIPI::Interface to
+   simplify host settings management. See
    <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kphostsettings.h">
    here</a> and <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpmetasettings.h">
    here</a> for details.
@@ -90,9 +100,13 @@
    <li> KIPI::Interface::thumbnail() helps you load thumbnails of images from KIPI host thumbnail manager.
    <li> KIPI::Interface::progress*() helps you dispatch progress information to KIPI host progress manager.
    <li> <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/show/tests">
-   kipicmd command line program</a> helps you to test your plugin without to have a KIPI host application available. 
-   It emule a simplified KIPI interface and can run plugin as stand-alone application. 
+   kipicmd command line program</a> helps you to test your plugin without to have a KIPI host application available.
+   It emulates a simplified KIPI interface and can run plugin as stand-alone application.
    Look kipicmd command line documentation for details.
+   <li> Beginning with libkipi 2.0.0 you have a simple gui program,
+   <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests?rev=development%2F2.0.0">kxmlkipicmd</a>,
+   which emulates a simplified KIPI interface with a menubar and a toolbar. This
+   way you can test the gui of your plugin.
    </ul>
 
 

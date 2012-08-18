@@ -27,7 +27,7 @@
 
 #include "configwidget_p.moc"
 
-// Qt include.
+// Qt include
 
 #include <QList>
 #include <QHeaderView>

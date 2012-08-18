@@ -33,7 +33,7 @@
 
 #include "pluginloader.moc"
 
-// Qt include.
+// Qt includes
 
 #include <QStringList>
 #include <QLayout>
@@ -79,8 +79,6 @@ public:
         parent     = 0;
     }
 
-    Plugin* createPlugin();
-
     bool           shouldLoad;
     KService::Ptr  service;
     Plugin*        plugin;
@@ -101,7 +99,7 @@ PluginLoader::Info::~Info()
     {
         d->parent->guiFactory()->removeClient(d->plugin);
 #if KDE_IS_VERSION(4,8,5)
-        foreach(KToolBar* toolbar, d->parent->toolBars())
+        foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }
@@ -188,6 +186,7 @@ Plugin* PluginLoader::Info::plugin() const
                             << " with error: "
                             << error;
         }
+
         d->plugin = plugin;
 
         if (d->plugin)   // Do not emit if we had trouble loading the plugin.
