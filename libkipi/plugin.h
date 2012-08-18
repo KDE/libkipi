@@ -157,7 +157,7 @@ protected:
      * @param action The action to add
      * @param cat The category of the action
      */
-    void addAction(const QString& name, KAction* const actions, Category cat);
+    void addAction(const QString& name, KAction* const action, Category cat);
 
     /**
      * Sets the default category of the plugin actions
