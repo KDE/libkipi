@@ -56,6 +56,7 @@ class ConfigWidget;
 
 /**
     \author Gilles Caulier
+    \par Maintainer: Victor Dodon (dodonvictor@gmail.com)
     \class PluginLoader
     This is the class that will help host applications to load plugins.
 
@@ -224,60 +225,78 @@ public:
 
 public:
 
-    /** Use this constructor if your application does not use KDE XML GUI technology
-      */
+    /**
+     * Use this constructor if your application does not use KDE XML GUI technology
+     */
     PluginLoader();
 
-    /** Standard constructor. You must pass the instance of KDE XML GUI application as argument.
+    /**
+     * Standard constructor. You must pass the instance of KDE XML GUI application as argument.
+     * @param parent the pointer to the KXmlGuiWindow of your application
      */
     PluginLoader(KXmlGuiWindow* const parent);
+
+    /**
+     * Standard destructor
+     */
     virtual ~PluginLoader();
 
-    /** Set KIPI interface instance form host application.
+    /**
+     * Set KIPI interface instance from host application.
      */
     void setInterface(Interface* const interface);
 
-    /** Return KIPI host interface instance.
+    /**
+     * Return KIPI host interface instance.
      */
     Interface* interface() const;
 
-    /** Set Plugins ignore list, with name of obsoletes plugins to not load through init().
+    /**
+     * Set Plugins ignore list, with name of obsoletes plugins to not load through init().
      */
     void setIgnoredPluginsList(const QStringList& ignores);
 
-    /** Set disabled plugin actions that will not be plugged into the gui,
-      */
+    /**
+     * Set disabled plugin actions that will not be plugged into the gui,
+     */
     void setDisabledPluginActions(const QStringList& disabledActions);
 
-    /** Return the list of disabled plugin actions
-      */
+    /**
+     * Return the list of disabled plugin actions
+     */
     QStringList disabledPluginActions() const;
 
-    /** Init plugin loader. Call this method to parse relevant plugins installed on your system.
-     *  Before to call this method, you must setup KIPI insterface instance.
-     *  Optionally, setup list of plugins to ignore, the constraint list, and
-     *  the disabled plugin actions
+    /**
+     * Init plugin loader. Call this method to parse relevant plugins installed on your system.
+     * Before to call this method, you must setup KIPI insterface instance.
+     * Optionally, setup list of plugins to ignore, the constraint list, and
+     * the disabled plugin actions
      */
     void init();
 
-    /** Call this method to load relevant plugins installed on your system to your KIPI host application
-     *  NOTE: plugins can be loaded through Info item.
+    /**
+     * Call this method to load relevant plugins installed on your system to your KIPI host application
+     * NOTE: plugins can be loaded through Info item.
      */
     void loadPlugins();
 
-    /** Return plugins list loaded
+    /**
+     * Returns the list of loaded plugins
      */
-    const PluginList&    pluginList();
+    const PluginList& pluginList();
 
-    /** Return the kipi-plugins version installed on your computer if it's found through kipiplugins.desktop file.
+    /**
+     * Return the kipi-plugins version installed on your computer if it's found through kipiplugins.desktop file.
      */
-    QString              kipiPluginsVersion() const;
+    QString kipiPluginsVersion() const;
 
-    /** Return the config widget with list of plugins to manage.
+    /**
+     * Return the config widget with list of plugins to manage.
      */
-    ConfigWidget*        configWidget(QWidget* const parent) const;
+    ConfigWidget* configWidget(QWidget* const parent) const;
 
-    /** Return loader instance instance.
+    /**
+     * Returns plugin loader instance.
      */
     static PluginLoader* instance();
 
