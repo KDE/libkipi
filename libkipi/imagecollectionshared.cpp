@@ -67,6 +67,7 @@ void ImageCollectionShared::addRef()
 void ImageCollectionShared::removeRef()
 {
     m_count--;
+
     if ( m_count == 0 )
     {
         // kDebug() << "Deleting!" << endl;
@@ -90,6 +91,7 @@ KUrl ImageCollectionShared::uploadPath()
 KUrl ImageCollectionShared::uploadRoot()
 {
     KUrl path = uploadPath();
+
     if ( path.isValid() )
     {
         path.setPath("/");

@@ -63,7 +63,7 @@ class Interface;
 enum Category
 {
     InvalidCategory = -1,
-    ImagesPlugin = 0,
+    ImagesPlugin    = 0,
     ToolsPlugin,
     ImportPlugin,
     ExportPlugin,

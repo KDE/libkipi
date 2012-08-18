@@ -53,7 +53,7 @@ public:
     /** Apply all changes about plugin selected to be hosted in KIPI host application.
      */
     void apply();
-    
+
     /** Set a filter widget (as KLineEdit) to be able to list only wanted plugin using a string query.
      *  Use slotSetFilter() to apply filetring. signalSearchResult is emitted when it's done.
      */
@@ -85,7 +85,6 @@ private:
     class Private;
     Private* const d;
 };
-
 
 } // namespace KIPI
 

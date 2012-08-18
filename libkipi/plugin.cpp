@@ -139,13 +139,14 @@ int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const Q
 
 void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 {
-    QDomNodeList actionList = elem.elementsByTagName("Action");
-    QStringList disabledActions = PluginLoader::instance()->disabledPluginActions();
-
+    QDomNodeList actionList      = elem.elementsByTagName("Action");
+    QStringList  disabledActions = PluginLoader::instance()->disabledPluginActions();
     QDomElemList disabledElements;
+
     for(int i = 0; i < actionList.size(); ++i)
     {
         QDomElement el = actionList.item(i).toElement();
+
         if (el.isNull())
             continue;
 
@@ -169,6 +170,7 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
     stack.push_back(original.cloneNode(true).toElement());
 
     int idx;
+
     if ((idx = findByNameAttr(localNodes, original)) != -1)
     {
         paths[localNodes.item(idx).toElement().attribute("name")] = stack;
@@ -268,6 +270,7 @@ void Plugin::addAction(KAction* const action, Category cat)
                       "invalid category. You must set default plugin category or "
                       "to use a valid Category";
     }
+
     d->actionsCat[d->defaultWidget].insert(action, cat);
 }
 
@@ -281,6 +284,7 @@ void Plugin::setup(QWidget* const widget)
 Category Plugin::category(KAction* const action) const
 {
     QMap<KAction*, Category>::const_iterator it = d->actionsCat[d->defaultWidget].find(action);
+
     if (it != d->actionsCat[d->defaultWidget].end())
     {
         return it.value();
@@ -292,6 +296,7 @@ Category Plugin::category(KAction* const action) const
             kWarning() << "Error in plugin. Invalid category. "
                           "You must set default plugin category.";
         }
+
         return d->defaultCategory;
     }
 }
@@ -318,6 +323,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         kError() << "Host KXMLGUIClient is null!";
         return;
     }
+
     if (d->uiBaseName.isEmpty())
     {
         kError() << "UI file basename is not set! You must first call setUiBaseName.";
@@ -328,16 +334,18 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     const QString defaultUI     = KGlobal::dirs()->locate("data", QString("kipi/") + d->uiBaseName);
     const QString localUI       = KGlobal::dirs()->locateLocal("data", componentName + "/" + d->uiBaseName);
 
-    QFile defaultUIFile(defaultUI);
+    QFile        defaultUIFile(defaultUI);
     QDomDocument defaultDomDoc;
+
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
         kError() << "Could not open default ui file: " << defaultUI;
         return;
     }
-    defaultUIFile.close();
 
-    const QDomDocument hostDoc = host->domDocument();
+    defaultUIFile.close();
+    const QDomDocument hostDoc    = host->domDocument();
+
     if (hostDoc.isNull() || defaultDomDoc.isNull())
     {
         kError() << "Cannot merge the XML files, at least one is null!";
@@ -375,8 +383,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         {
             for (int i = 1; i < path.size() - 1; ++i)
             {
-                int idx = Private::XMLParser::findByNameAttr(current.childNodes(), path[i]);
+                int idx  = Private::XMLParser::findByNameAttr(current.childNodes(), path[i]);
                 origCurr = path[i];
+
                 if (idx == -1)
                 {
                     if (!path[i].isNull())
@@ -388,6 +397,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
                         {
                             newChild.appendChild(textElem.cloneNode());
                         }
+
                         current.appendChild(newChild);
                         current = newChild;
                     }
@@ -398,13 +408,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
                 }
             }
         }
+
         if (!current.isNull())
             current.appendChild(n.cloneNode());
     }
 
     newGuiElem.appendChild(newMenuBarElem);
-
-    QFile localUIFile(localUI);
+    QFile        localUIFile(localUI);
     QDomDocument localDomDoc;
 
     if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
@@ -446,7 +456,7 @@ void Plugin::clearActions()
 {
     QList<QAction*> actions = actionCollection()->actions();
 
-    foreach (QAction* action, actions)
+    foreach (QAction* const action, actions)
     {
         actionCollection()->removeAction(action);
     }
@@ -460,6 +470,7 @@ void Plugin::setupXML()
 void Plugin::rebuild()
 {
     QString file = xmlFile();
+
     if (!file.isEmpty())
     {
         setXMLGUIBuildDocument(QDomDocument());

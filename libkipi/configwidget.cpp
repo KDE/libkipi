@@ -27,7 +27,7 @@
 
 #include "configwidget.moc"
 
-// Qt include.
+// Qt include
 
 #include <QPushButton>
 #include <QGridLayout>
@@ -140,13 +140,13 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
     d->hbox->setStretchFactor(space, 10);
-    
+
     d->kipiLogoLabel = new KUrlLabel(panel);
     d->kipiLogoLabel->setText(QString());
     d->kipiLogoLabel->setUrl("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
 
     QFontMetrics fm(d->kipipluginsVersion->font());
-    QRect r = fm.boundingRect("XX");
+    QRect r          = fm.boundingRect("XX");
     QPixmap pix(KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png"));
     d->kipiLogoLabel->setPixmap(pix.scaledToHeight(r.height()*3, Qt::SmoothTransformation));
 
@@ -182,7 +182,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     connect(d->pluginsList, SIGNAL(signalSearchResult(bool)),
             this, SIGNAL(signalSearchResult(bool)));
-    
+
     connect(d->kipiLogoLabel, SIGNAL(leftClickedUrl(QString)),
             this, SLOT(slotProcessUrl(QString)));
 
