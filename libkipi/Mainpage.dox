@@ -16,7 +16,7 @@
    the guiFactory of you KXMLGuiWindow). For more documentation about KDE-XML
    GUI you can look <a href="http://techbase.kde.org/Development/Architecture/KDE4/XMLGUI_Technology">here</a>.
 
-   <h2>Developing a New Plugin</h2>
+   <h2>Developing a new KIPI plugin</h2>
 
    The easiest way to start a new plugin, is to copy the
    <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests/kxmlhelloworld?rev=development%2F2.0.0">
@@ -34,7 +34,7 @@
 
 
 
-   <h2>General Things to do to Implement a Plugin</h2>
+   <h2>General things to do to implement a KIPI plugin</h2>
 
    Here is a list of things to do.
    <ul>
@@ -53,7 +53,7 @@
 
 
 
-   <h2>Retrieving Information from the Host Application</h2>
+   <h2>Retrieving information from the KIPI host application</h2>
 
    The above was the required step to build the plugin. The following will
    tell you about the functions with which you communicate with the host

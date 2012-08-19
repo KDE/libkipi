@@ -56,7 +56,7 @@ class ConfigWidget;
 
 /**
     \author Gilles Caulier
-    \par Maintainer: Victor Dodon (dodonvictor@gmail.com)
+    \par Maintainer: Victor Dodon
     \class PluginLoader
     This is the class that will help host applications to load plugins.
 
