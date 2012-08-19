@@ -11,12 +11,12 @@
    <h1>General information about libkipi 2.0.0</h1>
 
    Starting with 2.0.0 version of libkipi shared library, Plugin class
-   inherits KXMLGUIClient class, this means that if your application uses
+   inherits KXMLGUIClient class. This means that if your application uses
    KDE-XML GUI, you can add plugin actions to the toolbar(if you add plugins to
    the guiFactory of you KXMLGuiWindow). For more documentation about KDE-XML
    GUI you can look <a href="http://techbase.kde.org/Development/Architecture/KDE4/XMLGUI_Technology">here</a>.
 
-   <h2>Developing a New Plugin</h2>
+   <h2>Developing a new KIPI plugin</h2>
 
    The easiest way to start a new plugin, is to copy the
    <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests/kxmlhelloworld?rev=development%2F2.0.0">
@@ -34,14 +34,13 @@
 
 
 
-   <h2>General Things to do to Implement a Plugin</h2>
+   <h2>General things to do to implement a KIPI plugin</h2>
 
    Here is a list of things to do.
    <ul>
    <li> Create a class that inherits KIPI::Plugin. In the constructor you
    must create instances of KAction for your application. The topmost
-   actions should be given to the Plugin super class using
-   KIPI::Plugin::addAction().
+   actions should be given to the Plugin super class using KIPI::Plugin::addAction().
    <li> As described in the tutorial <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#understanding_loading">here</a>, you must call KDE macros
    <tt>K_PLUGIN_FACTORY</tt> and <tt>K_EXPORT_PLUGIN</tt>.
    <li> You also need to create a desktop file, as described <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#makefile_am_client">here</a>
@@ -54,7 +53,7 @@
 
 
 
-   <h2>Retrieving Information from the Host Application</h2>
+   <h2>Retrieving information from the KIPI host application</h2>
 
    The above was the required step to build the plugin. The following will
    tell you about the functions with which you communicate with the host
@@ -84,8 +83,8 @@
    by KIPI host application. Kipi-plugins provide a dedicated wrapper around KIPI::Interface to
    simplify host settings management. See
    <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kphostsettings.h">
-   here</a> and <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpmetasettings.h">
-   here</a> for details.
+   KPHostSettings</a> and <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpmetasettings.h">
+   KPMetaSettings</a> for details.
 
 
 

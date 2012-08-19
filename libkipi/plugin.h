@@ -89,20 +89,23 @@ public:
     /**
      * Constructs a plugin
      *
-     * @param instance The KComponentData associated with this plugin
-     * @param parent The parent of this object
-     * @param name The name of the plugin
+     * @param instance the KComponentData associated with this plugin
+     * @param parent the parent of this object
+     * @param name the name of the plugin
      */
     Plugin(const KComponentData& instance, QObject* const parent, const char* name);
 
     /**
      * Standard destructor
+     *
+     * All the actions in the actionCollection are deleted before the plugin is
+     * deleted
      */
     virtual ~Plugin();
 
     /**
      * Returns the plugin actions associated with the widget passed as argument, or with
-     * the default widget if widget is null or not provided. The actions are in
+     * the default widget, if widget is null or not provided. The actions are in
      * the same order as added to the plugin.
      */
     QList<KAction*> actions(QWidget* const widget = 0) const;
@@ -139,8 +142,8 @@ protected:
      * The action is added only if the action name is not in the disabled actions
      * list of the PluginLoader singleton class.
      *
-     * @param name The name by which the action will be added to the action collection
-     * @param action The action to add
+     * @param name the name by which the action will be added to the action collection
+     * @param action the action to add
      *
      * @note It just calls addAction with the default category, so the default
      * category must be set using setDefaultCategory before you use this method
@@ -153,9 +156,9 @@ protected:
      * The action is added only if the action name is not in the disabled actions
      * list of the PluginLoader singleton class.
      *
-     * @param name The name by which the action will be added to the action collection
-     * @param action The action to add
-     * @param cat The category of the action
+     * @param name the name by which the action will be added to the action collection
+     * @param action the action to add
+     * @param cat the category of the action
      */
     void addAction(const QString& name, KAction* const action, Category cat);
 
