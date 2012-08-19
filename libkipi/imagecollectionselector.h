@@ -53,7 +53,7 @@ public:
     virtual ~ImageCollectionSelector();
 
     virtual QList<ImageCollection> selectedImageCollections() const;
-    virtual void enableTags(bool flag = true);
+    virtual void enableVirtualCollections(bool flag = true);
 
 Q_SIGNALS:
 
