@@ -47,7 +47,7 @@ QList<ImageCollection> ImageCollectionSelector::selectedImageCollections() const
     return QList<ImageCollection>();
 }
 
-void ImageCollectionSelector::enableVirtualCollections(bool flag)
+void ImageCollectionSelector::enableVirtualCollections(bool /*flag*/)
 {
 }
 
