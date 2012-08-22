@@ -1,8 +1,0 @@
-Remove "KXMLGUIBuilder::removeContainer: Unhandled container to remove :
-KXMLKipiCmd::KipiTestMainWindow" message.
-
-Changes to the gui of the kipi test app are not persistent
-
-Remove "kxmlkipicmd(23458)/kdeui (kdelibs) KXMLGUIClient::~KXMLGUIClient:
-0x14edf50 deleted without having been removed from the factory first. This will
-leak standalone popupmenus and could lead to crashes." message
