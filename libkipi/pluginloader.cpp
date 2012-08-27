@@ -281,6 +281,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
 void PluginLoader::setInterface(Interface* const interface)
 {
     d->interface = interface;
+    setParent(interface);
 }
 
 void PluginLoader::setIgnoredPluginsList(const QStringList& ignores)
