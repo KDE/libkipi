@@ -320,7 +320,8 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 {
     if (!host)
     {
-        kError() << "Host KXMLGUIClient is null!";
+        // Should we display this message?
+        //kError() << "Host KXMLGUIClient is null!";
         return;
     }
 
