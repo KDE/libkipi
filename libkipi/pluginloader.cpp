@@ -95,7 +95,7 @@ PluginLoader::Info::Info(KXmlGuiWindow* const parent, const KService::Ptr& servi
 
 PluginLoader::Info::~Info()
 {
-    if (d->parent)
+    if (d->parent && d->plugin)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
 #if KDE_IS_VERSION(4,8,5)
@@ -361,7 +361,6 @@ void PluginLoader::init()
 
 PluginLoader::~PluginLoader()
 {
-    qDeleteAll(d->pluginList);
     delete d;
 }
 
