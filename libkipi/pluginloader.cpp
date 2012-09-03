@@ -399,7 +399,7 @@ QString PluginLoader::kipiPluginsVersion() const
     QString ver                = i18n("unavailable");
     QString path               = KGlobal::dirs()->installPath("xdgdata-apps") + QString("kipiplugins.desktop");
     KDesktopFile desk(path);
-    QMap<QString, QString> map = desk.entryMap("KipiPlugins Entry");
+    QMap<QString, QString> map = desk.entryMap("X-KipiPlugins Entry");
 
     if (!map.isEmpty())
     {
