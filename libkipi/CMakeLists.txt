@@ -49,18 +49,22 @@ SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVE
 
 INSTALL(TARGETS kipi ${INSTALL_TARGETS_DEFAULT_ARGS} )
 
-INSTALL(FILES plugin.h
-              pluginloader.h
-              interface.h
-              imageinfo.h
-              imagecollection.h
-              imageinfoshared.h
-              imagecollectionshared.h
-              imagecollectionselector.h
-              uploadwidget.h
-              configwidget.h
-              libkipi_export.h
-              ${CMAKE_CURRENT_BINARY_DIR}/version.h
-        DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi
-        COMPONENT Devel
-       )
+# Check if compilation is done through digiKam SC or not. If yes, do not install header files.
+IF(NOT DIGIKAMSC_USE_PRIVATE_KDEGRAPHICS)
+
+    INSTALL(FILES plugin.h
+                  pluginloader.h
+                  interface.h
+                  imageinfo.h
+                  imagecollection.h
+                  imageinfoshared.h
+                  imagecollectionshared.h
+                  imagecollectionselector.h
+                  uploadwidget.h
+                  configwidget.h
+                  libkipi_export.h
+                  ${CMAKE_CURRENT_BINARY_DIR}/version.h
+            DESTINATION ${INCLUDE_INSTALL_DIR}/libkipi
+            COMPONENT Devel
+           )
+ENDIF()
