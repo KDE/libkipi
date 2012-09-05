@@ -1,7 +1,19 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KXMLHelloWorld
+Name[nl]=KXML-HelloWorld
+Name[pt]=KXMLHelloWorld
+Name[pt_BR]=Olá mundo KXML
+Name[sk]=KXMLHelloWorld
+Name[uk]=KXMLHelloWorld
+Name[x-test]=xxKXMLHelloWorldxx
 Comment=A demo kipi tool using KDE XML-GUI technology
+Comment[nl]=Een demo kipi-hulpmiddel die KDE XML-GUI technologie gebruikt
+Comment[pt]=Uma ferramenta de demonstração do KIPI que usa a tecnologia XML-GUI do KDE
+Comment[pt_BR]=Uma ferramenta do KIPI que usa a tecnologia KDE XML-GUI
+Comment[sk]=Ukážkový kipi nástroj používajúci technológiu KDE XML-GUI
+Comment[uk]=Тестовий інструмент KIPI щодо використання технології XML-GUI KDE
+Comment[x-test]=xxA demo kipi tool using KDE XML-GUI technologyxx
 Type=Service
 Icon=script-error
 ServiceTypes=KIPI/Plugin
