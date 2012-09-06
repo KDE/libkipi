@@ -283,9 +283,9 @@ void Plugin::setup(QWidget* const widget)
 
 Category Plugin::category(KAction* const action) const
 {
-    QMap<KAction*, Category>::const_iterator it = d->actionsCat[d->defaultWidget].find(action);
+    QMap<KAction*, Category>::const_iterator it = d->actionsCat[d->defaultWidget].constFind(action);
 
-    if (it != d->actionsCat[d->defaultWidget].end())
+    if (it != d->actionsCat[d->defaultWidget].constEnd())
     {
         return it.value();
     }
