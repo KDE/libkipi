@@ -1,6 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KXMLHelloWorld
+Name[el]=KXMLHelloWorld
 Name[es]=KXMLHelloWorld
 Name[nl]=KXML-HelloWorld
 Name[pt]=KXMLHelloWorld
@@ -10,6 +11,7 @@ Name[sv]=KXML Hello World
 Name[uk]=KXMLHelloWorld
 Name[x-test]=xxKXMLHelloWorldxx
 Comment=A demo kipi tool using KDE XML-GUI technology
+Comment[el]=Ένα εργαλείο επίδειξης kipi με χρήση τεχνολογίας KDE XML-GUI
 Comment[es]=Una herramienta kipi de demostración que usa la tecnología XML-GUI de KDE
 Comment[nl]=Een demo kipi-hulpmiddel die KDE XML-GUI technologie gebruikt
 Comment[pt]=Uma ferramenta de demonstração do KIPI que usa a tecnologia XML-GUI do KDE
