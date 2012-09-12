@@ -396,7 +396,7 @@ ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 
 QString PluginLoader::kipiPluginsVersion() const
 {
-    QString ver                = i18n("unavailable");
+    QString ver                = i18nc("Version unavailable", "unavailable");
     QString path               = KGlobal::dirs()->installPath("xdgdata-apps") + QString("kipiplugins.desktop");
     KDesktopFile desk(path);
     QMap<QString, QString> map = desk.entryMap("X-KipiPlugins Entry");

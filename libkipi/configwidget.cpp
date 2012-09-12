@@ -100,12 +100,12 @@ void ConfigWidget::Private::updateInfo()
         if (cnt > 0)
             pluginsNumber->setText(i18np("1 Kipi plugin installed", "%1 Kipi plugins installed", cnt));
         else
-            pluginsNumber->setText(i18n("None Kipi plugin installed"));
+            pluginsNumber->setText(i18n("No Kipi plugin installed"));
 
         int act = pluginsList->actived();
 
         if (act > 0)
-            pluginsNumberActivated->setText(i18nc("%1: number of plugins activated", "(%1 activated)", act));
+            pluginsNumberActivated->setText(i18ncp("%1: number of plugins activated", "(%1 activated)", "(%1 activated)", act));
         else
             pluginsNumberActivated->setText(QString());
     }
@@ -117,7 +117,7 @@ void ConfigWidget::Private::updateInfo()
         if (cnt > 0)
             pluginsNumber->setText(i18np("1 Kipi plugin found", "%1 Kipi plugins found", cnt));
         else
-            pluginsNumber->setText(i18n("None Kipi plugin found"));
+            pluginsNumber->setText(i18n("No Kipi plugin found"));
 
         pluginsNumberActivated->setText(QString());
     }
@@ -131,10 +131,10 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->pluginsNumber          = new QLabel(panel);
     d->pluginsNumberActivated = new QLabel(panel);
     d->hbox                   = new KHBox(panel);
-    d->checkAllBtn            = new QPushButton(i18n("Check all"), d->hbox);
+    d->checkAllBtn            = new QPushButton(i18n("Check All"), d->hbox);
     d->clearBtn               = new QPushButton(i18n("Clear"), d->hbox);
     QWidget* space            = new QWidget(d->hbox);
-    d->kipipluginsVersion     = new QLabel(i18n("Kipi-Plugins: %1", PluginLoader::instance()->kipiPluginsVersion()), panel);
+    d->kipipluginsVersion     = new QLabel(i18n("Kipi Plugins: %1", PluginLoader::instance()->kipiPluginsVersion()), panel);
     d->libkipiVersion         = new QLabel(i18n("LibKipi: %1", QString(kipi_version)), panel);
     d->pluginsList            = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
