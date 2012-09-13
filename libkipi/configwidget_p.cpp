@@ -122,11 +122,16 @@ PluginListView::PluginListView(QWidget* const parent)
     setAutoFillBackground(false);
     viewport()->setAutoFillBackground(false);
 
-    foreach(PluginLoader::Info* const info, PluginLoader::instance()->pluginList())
+    PluginLoader* const loader = PluginLoader::instance();
+
+    if (loader)
     {
-        if (info)
+        foreach(PluginLoader::Info* const info, loader->pluginList())
         {
-            d->boxes.append(new PluginCheckBox(info, this));
+            if (info)
+            {
+                d->boxes.append(new PluginCheckBox(info, this));
+            }
         }
     }
 
