@@ -158,7 +158,6 @@ Plugin* PluginLoader::Info::plugin() const
 {
     if (!d->plugin && shouldLoad())
     {
-
         QString error;
 
         Plugin* plugin = d->service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
@@ -269,13 +268,14 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
+    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
+
     if (!parent)
     {
         kWarning() << "KDE XML application instance is null...";
     }
 
     d->parent = parent;
-    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
 }
 
 void PluginLoader::setInterface(Interface* const interface)
