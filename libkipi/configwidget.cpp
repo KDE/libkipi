@@ -135,7 +135,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->clearBtn                 = new QPushButton(i18n("Clear"), d->hbox);
     QWidget* space              = new QWidget(d->hbox);
     PluginLoader* const loader  = PluginLoader::instance();
-    d->kipipluginsVersion       = new QLabel(i18n("Kipi Plugins: %1", loader ? loader->kipiPluginsVersion() : i18n("unavailable")), panel);
+    d->kipipluginsVersion       = new QLabel(i18n("Kipi Plugins: %1", loader ? loader->kipiPluginsVersion() : i18nc("Version unavailable", "unavailable")), panel);
     d->libkipiVersion           = new QLabel(i18n("LibKipi: %1", QString(kipi_version)), panel);
     d->pluginsList              = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
