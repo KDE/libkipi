@@ -209,7 +209,7 @@ void PluginLoader::Info::reload()
     {
         d->parent->guiFactory()->removeClient(d->plugin);
 #if KDE_IS_VERSION(4,8,5)
-        foreach(KToolBar* toolbar, d->parent->toolBars())
+        foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }
@@ -354,7 +354,7 @@ void PluginLoader::init()
             continue;
         }
 
-        Info* info = new Info(d->parent, service, load);
+        Info* const info = new Info(d->parent, service, load);
         d->pluginList.append(info);
     }
 }
