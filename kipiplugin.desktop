@@ -121,3 +121,6 @@ Type=QStringList
 
 [PropertyDef::X-KIPI-PluginCategories]
 Type=QStringList
+
+[PropertyDef::X-KIPI-BinaryVersion]
+Type=int

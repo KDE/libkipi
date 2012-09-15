@@ -320,6 +320,7 @@ void PluginLoader::init()
         QString name            = service->name();
         QString library         = service->library();
         QStringList reqFeatures = service->property(QString::fromLatin1("X-KIPI-ReqFeatures")).toStringList();
+        int binVersion          = service->property(QString::fromLatin1("X-KIPI-BinaryVersion")).toInt();
 
         if (library.isEmpty() || name.isEmpty())
         {
@@ -330,6 +331,15 @@ void PluginLoader::init()
         if (d->ignoredPlugins.contains(name))
         {
             kDebug(51001) << "Plugin " << name << " is in the ignore list from host application";
+            continue;
+        }
+
+        if (binVersion != kipi_binary_version)
+        {
+            kDebug(51001) << "Plugin " << name
+                          << "has a SO version (" << binVersion
+                          << ") which is different than libkipi ABI version (" << kipi_binary_version << "). "
+                          << "Refusing to load.";
             continue;
         }
 
