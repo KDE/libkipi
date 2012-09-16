@@ -160,37 +160,21 @@ Plugin* PluginLoader::Info::plugin() const
     {
         QString error;
 
-        Plugin* plugin = d->service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
+        d->plugin = d->service->createInstance<Plugin>(PluginLoader::instance()->interface(), QVariantList(), &error);
 
-        if (plugin && (dynamic_cast<KXMLGUIClient*>(plugin) != 0))
+        if (d->plugin)
         {
-            kDebug(51001) << "Loaded plugin " << plugin->objectName();
+            kDebug(51001) << "Loaded plugin " << d->plugin->objectName();
 
-            QVariant binaryVersion = plugin->property("KipiBinaryVersion");
-
-            if (!binaryVersion.isValid() || binaryVersion.toInt() != kipi_binary_version)
-            {
-                kDebug(51001) << "Plugin " << plugin->objectName()
-                              << "is compiled for a different libkipi ABI version."
-                              << "Refusing to load.";
-                delete plugin;
-                plugin = 0;
-            }
+            emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
         else
         {
-            kWarning(51001) << "CreateInstance returned 0 for "
+            kWarning(51001) << "Cannot create instance for plugin "
                             << name()
                             << " (" << library() << ")"
                             << " with error: "
                             << error;
-        }
-
-        d->plugin = plugin;
-
-        if (d->plugin)   // Do not emit if we had trouble loading the plugin.
-        {
-            emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
     }
 

@@ -202,8 +202,6 @@ Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char
 {
     d->instance = instance;
     setObjectName(name);
-
-    setProperty("KipiBinaryVersion", kipi_binary_version);
 }
 
 Plugin::~Plugin()
