@@ -38,4 +38,5 @@ ServiceTypes=KIPI/Plugin
 X-KDE-Library=kipiplugin_kxmlhelloworld
 author=Gilles Caulier, caulier dot gilles at gmail dot com
 X-KIPI-ReqFeatures=
+X-KIPI-BinaryVersion=${KIPI_LIB_SO_CUR_VERSION}
 X-KIPI-PluginCategories=Image,Tools,Export,Import

@@ -40,6 +40,8 @@ TARGET_LINK_LIBRARIES(kipiplugin_kxmlhelloworld
                       kipi
                      )
 
-INSTALL(TARGETS kipiplugin_kxmlhelloworld         DESTINATION ${PLUGIN_INSTALL_DIR}  )
-INSTALL(FILES   plugin/kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
-INSTALL(FILES   plugin/kipiplugin_kxmlhelloworldui.rc    DESTINATION ${DATA_INSTALL_DIR}/kipi)
+CONFIGURE_FILE(plugin/kipiplugin_kxmlhelloworld.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop)
+
+INSTALL(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
+INSTALL(TARGETS kipiplugin_kxmlhelloworld                                            DESTINATION ${PLUGIN_INSTALL_DIR})
+INSTALL(FILES   plugin/kipiplugin_kxmlhelloworldui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
