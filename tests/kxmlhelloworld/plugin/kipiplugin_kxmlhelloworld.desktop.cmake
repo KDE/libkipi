@@ -7,6 +7,7 @@ Name[el]=KXMLHelloWorld
 Name[es]=KXMLHelloWorld
 Name[et]=KXMLHelloWorld
 Name[fi]=KXMLHelloWorld
+Name[ga]=KXMLHelloWorld
 Name[gl]=KXMLHelloWorld
 Name[hu]=KXMLHelloWorld
 Name[lt]=KXMLHelloWorld
