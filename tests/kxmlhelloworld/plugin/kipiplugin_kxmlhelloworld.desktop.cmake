@@ -36,6 +36,7 @@ Comment[el]=Ένα εργαλείο επίδειξης kipi με χρήση τε
 Comment[es]=Una herramienta kipi de demostración que usa la tecnología XML-GUI de KDE
 Comment[et]=KIPI demotööriist, mis kasutab KDE XML-GUI tehnoloogiat
 Comment[fi]=KDE:n XML-GUI-teknologiaa käyttävä KIPI-työkaludemo
+Comment[ga]=Taispeántas kipi a úsáideann teicneolaíocht XML-GUI KDE
 Comment[gl]=Unha ferramenta de demostración de kipi que emprega a tecnoloxía XML-GUI de KDE
 Comment[hu]=Egy KDE XML-GUI technológiát használó demó kipi eszköz
 Comment[kk]=KDE XML-GUI технологиясын қолданатың демо kipi құралы
