@@ -65,6 +65,8 @@
 #include "version.h"
 #include "configwidget.h"
 
+static const KCatalogLoader loader("libkipi");
+
 namespace KIPI
 {
 
