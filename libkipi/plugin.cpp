@@ -306,7 +306,8 @@ Interface* Plugin::interface() const
 
 void Plugin::setUiBaseName(const char* name)
 {
-    d->uiBaseName = QString(name);
+    if (name && *name)
+        d->uiBaseName = QString(name);
 }
 
 QString Plugin::uiBaseName() const
