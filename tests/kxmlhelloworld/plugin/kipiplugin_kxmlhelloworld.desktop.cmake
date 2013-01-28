@@ -1,5 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
+UntranslatedGenericName=KXMLHelloWorld
 Name=KXMLHelloWorld
 Name[ca]=KXMLHelloWorld
 Name[da]=KXMLHelloWorld

@@ -15,7 +15,7 @@
  *         <a href="mailto:andi dot clemens at googlemail dot com">andi dot clemens at googlemail dot com</a>
  * @author Copyright (C) 2009      by Aleix Pol Gonzalez
  *         <a href="mailto:aleixpol at kde dot org">aleixpol at kde dot org</a>
- * @author Copyright (C) 2012 by Victor Dodon
+ * @author Copyright (C) 2012-2013 by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
@@ -304,19 +304,20 @@ void PluginLoader::init()
     {
         KService::Ptr service   = *iter;
         QString name            = service->name();
+        QString uname           = service->untranslatedGenericName();
         QString library         = service->library();
         QStringList reqFeatures = service->property(QString::fromLatin1("X-KIPI-ReqFeatures")).toStringList();
         int binVersion          = service->property(QString::fromLatin1("X-KIPI-BinaryVersion")).toInt();
 
-        if (library.isEmpty() || name.isEmpty())
+        if (library.isEmpty() || uname.isEmpty())
         {
             kWarning(51001) << "Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
-        if (d->ignoredPlugins.contains(name))
+        if (d->ignoredPlugins.contains(uname))
         {
-            kDebug(51001) << "Plugin " << name << " is in the ignore list from host application";
+            kDebug(51001) << "Plugin " << name << " (generic name: " << uname << ") is in the ignore list from host application";
             continue;
         }
 
@@ -343,7 +344,7 @@ void PluginLoader::init()
             }
         }
 
-        bool load = group.readEntry(name, true);
+        bool load = group.readEntry(uname, true);
 
         if (!appHasAllReqFeatures)
         {
