@@ -3,6 +3,7 @@ Encoding=UTF-8
 Name=KXMLHelloWorld
 Name[bs]=KXMLHelloWorld
 Name[ca]=KXMLHelloWorld
+Name[cs]=KXMLHelloWorld
 Name[da]=KXMLHelloWorld
 Name[de]=KXMLHelloWorld
 Name[el]=KXMLHelloWorld
