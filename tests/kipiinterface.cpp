@@ -216,8 +216,8 @@ void KipiInterface::thumbnails(const KUrl::List& list, int)
         KIO::PreviewJob *job = KIO::filePreview(KUrl::List() << url, 256);
 #endif
 
-        connect(job, SIGNAL(gotPreview(KFileItem, QPixmap)),
-                this, SLOT(slotGotKDEPreview(KFileItem, QPixmap)));
+        connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
+                this, SLOT(slotGotKDEPreview(KFileItem,QPixmap)));
 
         connect(job, SIGNAL(failed(KFileItem)),
                 this, SLOT(slotFailedKDEPreview(KFileItem)));
