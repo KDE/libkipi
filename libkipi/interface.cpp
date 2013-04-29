@@ -313,6 +313,15 @@ FileReadWriteLock* Interface::createReadWriteLock(const KUrl&) const
     return 0;
 }
 
+void Interface::aboutToEdit(const KUrl&, EditHints)
+{
+}
+
+void Interface::editingFinished(const KUrl&, EditHints)
+{
+}
+
+
 // -----------------------------------------------------------------------------------------------------------
 
 FileReadLocker::FileReadLocker(Interface* const iface, const KUrl& url)
@@ -392,5 +401,30 @@ void FileWriteLocker::unlock()
         d->unlock();
     }
 }
+
+// -----------------------------------------------------------------------------------------------------------
+
+EditHintScope::EditHintScope(Interface* const iface, const KUrl& url, EditHints hints)
+    : iface(iface), url(url), hints(hints)
+{
+    if (iface)
+    {
+        iface->aboutToEdit(url, hints);
+    }
+}
+
+EditHintScope::~EditHintScope()
+{
+    if (iface)
+    {
+        iface->editingFinished(url, hints);
+    }
+}
+
+void EditHintScope::changeAborted()
+{
+    hints |= HintEditAborted;
+}
+
 
 } // namespace KIPI

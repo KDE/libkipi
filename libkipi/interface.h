@@ -36,6 +36,7 @@
 
 // Qt includes
 
+#include <QtCore/QFlags>
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
@@ -95,6 +96,26 @@ enum Features
 };
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
+
+enum EditHint
+{
+    UndefinedEditHint   = 0,
+    /** The image data (pixels) have been edited */
+    HintPixelContentChanged = 1 << 0,
+    /** Metadata have been edited */
+    HintMetadataChanged     = 1 << 1,
+    /** All changes done (typically, to the metadata) are also communicated via image attributes.
+     *  In other words, if the host updates its internal storage from attribute changes
+     *  and ignores changes on disk, it already has all information. */
+    HintChangeReflectedByAttributes
+                            = 1 << 2,
+    /** The operation indicated as "about to be done" has been aborted / did not result in a change. */
+    HintEditAborted         = 1 << 3,
+
+    /** Short name, implies that only metadata changed, and all metadata changes are communicated via attributes. */
+    HintMetadataOnlyChange  = HintMetadataChanged | HintChangeReflectedByAttributes
+};
+Q_DECLARE_FLAGS(EditHints, EditHint)
 
 // ---------------------------------------------------------------------------------------------------------------
 
@@ -327,6 +348,18 @@ public:
     virtual FileReadWriteLock* createReadWriteLock(const KUrl& url) const;
 
     /**
+     * Supported if HostSupportsEditHints
+     *
+     * Before an edit operation starts when it has finished, specify a hint for it.
+     * Change hints are optional and may allow optimizations.
+     *
+     * When aboutToEdit has been called, editingFinished must be called afterwards.
+     * It is strongly recommended to use the EditHintScope instead of these methods.
+     */
+    virtual void aboutToEdit(const KUrl& url, EditHints hints);
+    virtual void editingFinished(const KUrl& url, EditHints hints);
+
+    /**
      * Returns a string version of libkipi release ID.
      */
     static QString version();
@@ -431,6 +464,26 @@ private:
     FileReadWriteLock* const d;
 };
 
+// ---------------------------------------------------------------------------------------------------------------
+
+class LIBKIPI_EXPORT EditHintScope
+{
+public:
+
+    EditHintScope(Interface* const iface, const KUrl& url, EditHints hints);
+    ~EditHintScope();
+
+    void changeAborted();
+
+private:
+
+    Interface* const iface;
+    KUrl const       url;
+    EditHints        hints;
+};
+
 }  // namespace KIPI
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KIPI::EditHints)
 
 #endif /* KIPI_INTERFACE_H */
