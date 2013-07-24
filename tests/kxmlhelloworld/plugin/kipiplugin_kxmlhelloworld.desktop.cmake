@@ -2,6 +2,7 @@
 Encoding=UTF-8
 UntranslatedGenericName=KXMLHelloWorld
 Name=KXMLHelloWorld
+Name[bg]=KXMLHelloWorld
 Name[bs]=KXMLHelloWorld
 Name[ca]=KXMLHelloWorld
 Name[ca@valencia]=KXMLHelloWorld
@@ -43,6 +44,7 @@ Name[x-test]=xxKXMLHelloWorldxx
 Name[zh_CN]=KXMLHelloWorld
 Name[zh_TW]=KXMLHelloWorld
 Comment=A demo kipi tool using KDE XML-GUI technology
+Comment[bg]=Демонстрационен инструмент на kipi с технологията на KDE XML-GUI
 Comment[bs]=Demo kipi alat koji koristi KDE XML-GUI tehnologiju
 Comment[ca]=Una demostració de l'eina kipi que utilitza la tecnologia XML-GUI del KDE
 Comment[ca@valencia]=Una demostració de l'eina kipi que utilitza la tecnologia XML-GUI del KDE
