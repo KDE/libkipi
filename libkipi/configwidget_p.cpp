@@ -164,6 +164,8 @@ void PluginListView::slotApply()
             item->m_info->reload();
         }
     }
+
+    config->sync();
 }
 
 void PluginListView::slotCheckAll()
