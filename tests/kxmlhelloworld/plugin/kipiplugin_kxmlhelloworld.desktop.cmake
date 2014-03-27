@@ -27,6 +27,7 @@ Name[mr]=KXMLहेल्लोवर्ल्ड
 Name[nb]=KXML Hallo_verden
 Name[nds]=KXMLMoinWelt
 Name[nl]=KXML-HelloWorld
+Name[pa]=KXMLHelloWorld
 Name[pl]=KXMLHelloWorld
 Name[pt]=KXMLHelloWorld
 Name[pt_BR]=Olá mundo KXML
