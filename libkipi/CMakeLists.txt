@@ -6,7 +6,7 @@
 # @date   2004-02-01
 # @brief  KDE Image Plugin Interface
 #
-# @author Copyright (C) 2004-2012 by Gilles Caulier
+# @author Copyright (C) 2004-2014 by Gilles Caulier
 #         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
 #
 # This program is free software; you can redistribute it
@@ -22,7 +22,7 @@
 #
 # ============================================================
 
-CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/version.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/version.h)
 
 SET(kipi_LIB_SRCS pluginloader.cpp
                   interface.cpp
@@ -48,6 +48,9 @@ TARGET_LINK_LIBRARIES(kipi
 SET_TARGET_PROPERTIES(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})
 
 INSTALL(TARGETS kipi ${INSTALL_TARGETS_DEFAULT_ARGS} )
+
+# desktop file which define plugin service model, used by tool from kipi-plugins.
+INSTALL(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # Check if compilation is done through digiKam SC or not. If yes, do not install header files.
 IF(NOT DIGIKAMSC_USE_PRIVATE_KDEGRAPHICS)

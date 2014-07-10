@@ -6,7 +6,7 @@
 # @date   2004-02-01
 # @brief  KDE Image Plugin Interface
 #
-# @author Copyright (C) 2004-2012 by Gilles Caulier
+# @author Copyright (C) 2004-2014 by Gilles Caulier
 #         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
 # @author Copyright (C) 2012 by Victor Dodon
 #         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
@@ -113,8 +113,8 @@ IF(KDE4_BUILD_TESTS)
 ENDIF(KDE4_BUILD_TESTS)
 
 IF(NOT WIN32)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libkipi.lsm.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.pc.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 ENDIF(NOT WIN32)
 
