@@ -8,7 +8,7 @@
 #
 # @author Copyright (C) 2004-2014 by Gilles Caulier
 #         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
-# @author Copyright (C) 2012 by Victor Dodon
+# @author Copyright (C) 2012      by Victor Dodon
 #         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
 #
 # This program is free software; you can redistribute it
@@ -57,24 +57,25 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 0.1.4 => 1.0.1
 # 0.1.5 => 1.1.1
 # 0.1.6 => 2.0.0
-# 0.2.0 => 5.0.0  (released with KDE 4.1.0)
-# 0.3.0 => 6.0.0  (released with KDE 4.2.0)
-# 0.4.0 => 6.1.0  (released with KDE 4.3.0)
-# 1.0.0 => 7.0.0  (released with KDE 4.4.0)
-# 1.1.0 => 7.1.0  (released with KDE 4.5.0)
-# 1.2.0 => 8.0.0  (released with KDE 4.6.0)
+# 0.2.0 => 5.0.0  (released with KDE 4.1.0).
+# 0.3.0 => 6.0.0  (released with KDE 4.2.0).
+# 0.4.0 => 6.1.0  (released with KDE 4.3.0).
+# 1.0.0 => 7.0.0  (released with KDE 4.4.0).
+# 1.1.0 => 7.1.0  (released with KDE 4.5.0).
+# 1.2.0 => 8.0.0  (released with KDE 4.6.0).
 # 1.3.0 => 8.0.1  (released with KDE 4.7.1  - Set deprecated ImageInfo::title() and ImageInfo::setTitle(). Add ImageInfo::name() and ImageInfo::setName().
 # 1.4.0 => 8.0.2  (released with KDE 4.8.0  - Add 2 new slots in ConfigWidget class).
 # 1.5.0 => 9.0.0  (released with KDE 4.8.1  - Add Progress Manager feature support from Host application. Remove deprecated methods.
 #                                             Add new deprecated methods in ImageInfo class: description(), setDescription(),
 #                                             angle(), and setAngle()).
-# 1.6.0 => 9.1.0  (released with KDE 4.8.1  - Minor API fix)
-# 2.0.0 => 10.0.0 (released with KDE 4.10.0 - Including GoSC2012)
-# 2.1.0 => 11.0.0 (released with KDE 4.11.0 - Add edit hints)
+# 1.6.0 => 9.1.0  (released with KDE 4.8.1  - Minor API fix).
+# 2.0.0 => 10.0.0 (released with KDE 4.10.0 - Including GoSC2012).
+# 2.1.0 => 11.0.0 (released with KDE 4.11.0 - Add edit hints).
+# 3.0.0 => 12.0.0 (released with KDE 4.14.0 - Apply patch #89165 from bug #340030).
 
 # Library API version
-SET(KIPI_LIB_MAJOR_VERSION "2")
-SET(KIPI_LIB_MINOR_VERSION "1")
+SET(KIPI_LIB_MAJOR_VERSION "3")
+SET(KIPI_LIB_MINOR_VERSION "0")
 SET(KIPI_LIB_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
@@ -88,7 +89,7 @@ SET(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "11")
+SET(KIPI_LIB_SO_CUR_VERSION "12")
 SET(KIPI_LIB_SO_REV_VERSION "0")
 SET(KIPI_LIB_SO_AGE_VERSION "0")
 
@@ -117,4 +118,3 @@ IF(NOT WIN32)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
   INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 ENDIF(NOT WIN32)
-
