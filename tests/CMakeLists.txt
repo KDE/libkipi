@@ -1,34 +1,14 @@
-# ===========================================================
 #
-# This file is a part of digiKam project
-# <a href="http://www.digikam.org">http://www.digikam.org</a>
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
-# @date   2010-06-29
-# @brief  kipi host test application
-#
-# @author Copyright (C) 2009-2010 by Michael G. Hansen
-#         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
-# @author Copyright (C) 2012 by Victor Dodon
-#         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
-#
-# This program is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General
-# Public License as published by the Free Software Foundation;
-# either version 2, or (at your option)
-# any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# ============================================================
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR}/../libkipi
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/../libkipi
                     ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi
                    )
 
-SET(kxmlkipicmd_SRCS
+set(kxmlkipicmd_SRCS
     kipiinterface.cpp
     kipiimagecollectionshared.cpp
     kipiimageinfoshared.cpp
@@ -42,15 +22,15 @@ SET(kxmlkipicmd_SRCS
 
 KDE4_ADD_EXECUTABLE(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
-TARGET_LINK_LIBRARIES(kxmlkipicmd
+target_link_libraries(kxmlkipicmd
                       kipi
                       ${QT_QTGUI_LIBRARY}
                       ${KDE4_UI_LIBS}
                       ${KDE4_KPARTS_LIBS}
                      )
 
-ADD_SUBDIRECTORY(kxmlhelloworld)
+add_subdirectory(kxmlhelloworld)
 
-INSTALL(TARGETS kxmlkipicmd               DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
-INSTALL(FILES   kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
-INSTALL(FILES   kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+install(TARGETS kxmlkipicmd               DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES   kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+install(FILES   kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)

@@ -1,49 +1,29 @@
-# ===========================================================
 #
-# This file is a part of digiKam project
-# <a href="http://www.digikam.org">http://www.digikam.org</a>
+# Copyright (c) 2010-2014, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
-# @date   2004-02-01
-# @brief  KDE Image Plugin Interface
-#
-# @author Copyright (C) 2004-2014 by Gilles Caulier
-#         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
-# @author Copyright (C) 2012      by Victor Dodon
-#         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
-#
-# This program is free software; you can redistribute it
-# and/or modify it under the terms of the GNU General
-# Public License as published by the Free Software Foundation;
-# either version 2, or (at your option)
-# any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# ============================================================
+# Redistribution and use is allowed according to the terms of the BSD license.
+# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-PROJECT(libkipi)
+project(libkipi)
 
-MESSAGE(STATUS "----------------------------------------------------------------------------------")
-MESSAGE(STATUS "Starting CMake configuration for: libkipi")
+message(STATUS "----------------------------------------------------------------------------------")
+message(STATUS "Starting CMake configuration for: libkipi")
 
-FIND_PACKAGE(KDE4 REQUIRED)
+find_package(KDE4 REQUIRED)
 
-INCLUDE(KDE4Defaults)
-INCLUDE(MacroLibrary)
-INCLUDE(MacroOptionalAddSubdirectory)
-INCLUDE(MacroOptionalFindPackage)
-INCLUDE(FindPackageHandleStandardArgs)
+include(KDE4Defaults)
+include(MacroLibrary)
+include(MacroOptionalAddSubdirectory)
+include(MacroOptionalFindPackage)
+include(FindPackageHandleStandardArgs)
 
-ADD_DEFINITIONS(${QT_DEFINITIONS} ${QT_QTDBUS_DEFINITIONS} ${KDE4_DEFINITIONS})
-ADD_DEFINITIONS(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(${QT_DEFINITIONS} ${QT_QTDBUS_DEFINITIONS} ${KDE4_DEFINITIONS})
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
-INCLUDE_DIRECTORIES (${QDBUS_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
+include_directories (${QDBUS_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES})
 
-SET(LIBKIPI_AREA_CODE_GENERAL 51000)
-ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
+set(LIBKIPI_AREA_CODE_GENERAL 51000)
+add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 
 # =======================================================
 # Information to update before to release this library.
@@ -74,9 +54,9 @@ ADD_DEFINITIONS(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
 # 2.2.0 => 11.1.0 (released with KDE 4.14.0 - Apply patch #89165 from bug #340030).
 
 # Library API version
-SET(KIPI_LIB_MAJOR_VERSION "2")
-SET(KIPI_LIB_MINOR_VERSION "2")
-SET(KIPI_LIB_PATCH_VERSION "0")
+set(KIPI_LIB_MAJOR_VERSION "2")
+set(KIPI_LIB_MINOR_VERSION "2")
+set(KIPI_LIB_PATCH_VERSION "0")
 
 # Suffix to add at end of version string. Usual values are:
 # "-git"   : alpha code unstable from git. Do not use in production
@@ -85,36 +65,35 @@ SET(KIPI_LIB_PATCH_VERSION "0")
 # "-beta3" : beta3 release.
 # "-rc"    : release candidate.
 # ""       : final relase. Can be used in production.
-SET(KIPI_LIB_SUFFIX_VERSION "")
+set(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-SET(KIPI_LIB_SO_CUR_VERSION "11")
-SET(KIPI_LIB_SO_REV_VERSION "1")
-SET(KIPI_LIB_SO_AGE_VERSION "0")
+set(KIPI_LIB_SO_CUR_VERSION "11")
+set(KIPI_LIB_SO_REV_VERSION "1")
+set(KIPI_LIB_SO_AGE_VERSION "0")
 
 # =======================================================
 # Set env. variables accordinly.
 
-SET(KIPI_LIB_VERSION_STRING "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}${KIPI_LIB_SUFFIX_VERSION}")
-SET(KIPI_LIB_VERSION_ID "0x0${KIPI_LIB_MAJOR_VERSION}0${KIPI_LIB_MINOR_VERSION}0${KIPI_LIB_PATCH_VERSION}")
-
-SET(KIPI_LIB_SO_VERSION_STRING "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.${KIPI_LIB_SO_AGE_VERSION}")
+set(KIPI_LIB_VERSION_STRING    "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}${KIPI_LIB_SUFFIX_VERSION}")
+set(KIPI_LIB_VERSION_ID        "0x0${KIPI_LIB_MAJOR_VERSION}0${KIPI_LIB_MINOR_VERSION}0${KIPI_LIB_PATCH_VERSION}")
+set(KIPI_LIB_SO_VERSION_STRING "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.${KIPI_LIB_SO_AGE_VERSION}")
 
 # =======================================================
 
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-ADD_SUBDIRECTORY(pics)
-ADD_SUBDIRECTORY(libkipi)
+add_subdirectory(pics)
+add_subdirectory(libkipi)
 
 # kipi host test application to check the plugins
-IF(KDE4_BUILD_TESTS)
-    ADD_SUBDIRECTORY(tests)
-ENDIF(KDE4_BUILD_TESTS)
+if(KDE4_BUILD_TESTS)
+    add_subdirectory(tests)
+endif()
 
-IF(NOT WIN32)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.pc.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
-ENDIF(NOT WIN32)
+if(NOT WIN32)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.pc.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
+endif()
