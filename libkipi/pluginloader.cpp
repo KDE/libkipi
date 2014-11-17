@@ -363,7 +363,6 @@ void PluginLoader::init()
 
 PluginLoader::~PluginLoader()
 {
-    qDeleteAll(d->pluginList);
     delete d;
 }
 
