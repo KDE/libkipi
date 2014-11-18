@@ -28,7 +28,7 @@
 // Local includes
 
 #include "imagecollection.h"
-#include <kdebug.h>
+#include <QDebug>
 
 namespace KIPI 
 {

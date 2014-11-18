@@ -44,7 +44,7 @@
 // KDE includes
 
 #include <kservicetypetrader.h>
-#include <kdebug.h>
+#include <QDebug>
 #include <kdialog.h>
 #include <kdeversion.h>
 #include <ksharedconfig.h>
@@ -157,7 +157,7 @@ QIcon PluginLoader::Info::icon() const
     }
     else
     {
-        return KIcon(d->service->icon());
+        return QIcon::fromTheme(d->service->icon());
     }
 }
 
@@ -263,7 +263,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
 
     if (!parent)
     {
-        kWarning() << "KDE XML application instance is null...";
+        qWarning() << "KDE XML application instance is null...";
     }
 
     d->parent = parent;
@@ -296,13 +296,13 @@ void PluginLoader::init()
 
     if (!d->interface)
     {
-        kWarning() << "KIPI host interface instance is null. No plugin will be loaded...";
+        qWarning() << "KIPI host interface instance is null. No plugin will be loaded...";
         return;
     }
 
     s_loaded                    = true;
     const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
-    KSharedConfigPtr config     = KGlobal::config();
+    KSharedConfigPtr config     = KSharedConfig::openConfig();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
     for (KService::List::ConstIterator iter = offers.begin(); iter != offers.end(); ++iter)

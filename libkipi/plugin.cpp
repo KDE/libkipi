@@ -44,7 +44,7 @@
 #include <kactioncollection.h>
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
-#include <kdebug.h>
+#include <QDebug>
 
 // Local includes
 
@@ -158,7 +158,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 
     foreach(QDomElement element, disabledElements)
     {
-        kDebug() << "Plugin action '" << element.attribute("name") << "' is disabled.";
+        //qDebug() << "Plugin action '" << element.attribute("name") << "' is disabled.";
         QDomElement parent = element.parentNode().toElement();
         parent.removeChild(element);
     }
@@ -216,7 +216,7 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
 
     if (!d->actionsCat.contains(w))
     {
-        kWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
+        qWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
                    << "as the very first line when overriding the setup method.";
     }
 
@@ -235,7 +235,7 @@ void Plugin::addAction(const QString& name, KAction* const action)
     }
     else
     {
-        kDebug() << "Action '" << name << "' is disabled.";
+        //qDebug() << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -256,7 +256,7 @@ void Plugin::addAction(const QString& name, KAction* const action, Category cat)
     }
     else
     {
-        kDebug() << "Action '" << name << "' is disabled.";
+        //qDebug() << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -264,7 +264,7 @@ void Plugin::addAction(KAction* const action, Category cat)
 {
     if (cat == InvalidCategory)
     {
-        kWarning() << "Error in plugin. Action '" << action->objectName() << "has "
+        qWarning() << "Error in plugin. Action '" << action->objectName() << "has "
                       "invalid category. You must set default plugin category or "
                       "to use a valid Category";
     }
@@ -291,7 +291,7 @@ Category Plugin::category(KAction* const action) const
     {
         if (d->defaultCategory == InvalidCategory)
         {
-            kWarning() << "Error in plugin. Invalid category. "
+            qWarning() << "Error in plugin. Invalid category. "
                           "You must set default plugin category.";
         }
 
@@ -320,13 +320,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     if (!host)
     {
         // Should we display this message?
-        //kError() << "Host KXMLGUIClient is null!";
+        //qCritical() << "Host KXMLGUIClient is null!";
         return;
     }
 
     if (d->uiBaseName.isEmpty())
     {
-        kError() << "UI file basename is not set! You must first call setUiBaseName.";
+        qCritical() << "UI file basename is not set! You must first call setUiBaseName.";
         return;
     }
 
@@ -339,7 +339,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
-        kError() << "Could not open default ui file: " << defaultUI;
+        qCritical() << "Could not open default ui file: " << defaultUI;
         return;
     }
 
@@ -348,7 +348,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (hostDoc.isNull() || defaultDomDoc.isNull())
     {
-        kError() << "Cannot merge the XML files, at least one is null!";
+        qCritical() << "Cannot merge the XML files, at least one is null!";
         return;
     }
 
@@ -440,7 +440,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
     {
-        kError() << "Could not open " << localUI << " for writing!";
+        qCritical() << "Could not open " << localUI << " for writing!";
         return;
     }
 

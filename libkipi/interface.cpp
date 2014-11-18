@@ -40,7 +40,7 @@
 // KDE includes
 
 #include <kdeversion.h>
-#include <kdebug.h>
+#include <QDebug>
 #include <kfileitem.h>
 #include <kimageio.h>
 #include <kio/previewjob.h>
@@ -58,12 +58,12 @@
 // Macros
 
 #define PrintWarningMessageFeature(feature)                                           \
-        kWarning() << "This should only be invoked if the host application supports " \
+        qWarning() << "This should only be invoked if the host application supports " \
                       "KIPI::Features (" << feature << "). If host application do "   \
                       "support that, then this function should have been overridden " \
                       "in the KIPI host interface."
 
-#define PrintWarningMessage() kWarning() << "This method should have been overridden in the kipi host interface."
+#define PrintWarningMessage() qWarning() << "This method should have been overridden in the kipi host interface."
 
 namespace KIPI
 {
@@ -129,7 +129,7 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsItemReservation );
     else
     {
-        kWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
+        qWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
         return false;
     }
 }

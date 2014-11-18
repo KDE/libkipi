@@ -38,7 +38,7 @@
 #include <kconfiggroup.h>
 #include <kconfig.h>
 #include <kaction.h>
-#include <kdebug.h>
+#include <QDebug>
 
 namespace KIPI
 {
@@ -146,7 +146,7 @@ PluginListView::~PluginListView()
 
 void PluginListView::slotApply()
 {
-    KSharedConfigPtr config = KGlobal::config();
+    KSharedConfigPtr config = KSharedConfig::openConfig();
     KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
     foreach (PluginCheckBox* const item, d->boxes)

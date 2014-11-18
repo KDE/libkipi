@@ -33,7 +33,7 @@
 
 // KDE Includes
 
-#include <kdebug.h>
+#include <QDebug>
 
 // Local includes
 
@@ -42,7 +42,7 @@
 // Macros
 
 #define PrintWarningMessageFeature(feature)                                           \
-        kWarning() << "This should only be invoked if the host application supports " \
+        qWarning() << "This should only be invoked if the host application supports " \
                       "KIPI::Features (" << feature << "). If host application do "   \
                       "support that, then this function should have been overridden " \
                       "in the KIPI host interface."
@@ -70,14 +70,14 @@ void ImageCollectionShared::removeRef()
 
     if ( m_count == 0 )
     {
-        // kDebug() << "Deleting!" << endl;
+        // //qDebug() << "Deleting!" << endl;
         delete this;
     }
 }
 
 KUrl ImageCollectionShared::path()
 {
-    kWarning() << "This method should only be invoked if this imagecollection is a directory. "
+    qWarning() << "This method should only be invoked if this imagecollection is a directory. "
                << "See KIPI::ImageCollectionShared::isDirectory()";
     return KUrl();
 }

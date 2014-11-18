@@ -19,12 +19,12 @@ set(kipi_LIB_SRCS pluginloader.cpp
                   imagecollectionselector.cpp
    )
 
-KDE4_ADD_LIBRARY(kipi SHARED ${kipi_LIB_SRCS})
+add_library(kipi SHARED ${kipi_LIB_SRCS})
 
 target_link_libraries(kipi
-                      ${KDE4_KPARTS_LIBS}
-                      ${KDE4_KFILE_LIBS}
-                      ${QT_QTGUI_LIBRARY}
+                      KF5::Parts
+                      
+                      Qt5::Gui
                      )
 
 set_target_properties(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})
