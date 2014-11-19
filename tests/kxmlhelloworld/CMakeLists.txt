@@ -17,7 +17,7 @@ set(kipiplugin_kxmlhelloworld_PART_SRCS
 KDE4_ADD_PLUGIN(kipiplugin_kxmlhelloworld ${kipiplugin_kxmlhelloworld_PART_SRCS})
 
 target_link_libraries(kipiplugin_kxmlhelloworld
-                      ${KDE4_KPARTS_LIBS}
+                      KF5::Parts
                       ${QT_AND_KDECORE_LIBS}
                       ${KIPI_LIBRARIES}
                       kipi

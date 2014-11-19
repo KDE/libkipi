@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kipitestmainwindow.moc"
+
 
 // Qt includes
 

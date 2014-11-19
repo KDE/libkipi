@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kipiimagecollectionselector.moc"
+
 
 // Qt includes:
 

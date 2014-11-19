@@ -4,8 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/../libkipi
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../libkipi
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/../src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../src
                    )
 
 set(kxmlkipicmd_SRCS
@@ -20,13 +20,13 @@ set(kxmlkipicmd_SRCS
     main.cpp
    )
 
-KDE4_ADD_EXECUTABLE(kxmlkipicmd ${kxmlkipicmd_SRCS})
+add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 target_link_libraries(kxmlkipicmd
                       kipi
-                      ${QT_QTGUI_LIBRARY}
-                      ${KDE4_UI_LIBS}
-                      ${KDE4_KPARTS_LIBS}
+                      Qt5::Gui
+                      KF5::KDELibs4Support
+                      KF5::Parts
                      )
 
 add_subdirectory(kxmlhelloworld)

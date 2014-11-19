@@ -35,7 +35,7 @@
  */
 
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
-#include "plugin_kxmlhelloworld.moc"
+
 
 // Qt includes
 

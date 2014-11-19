@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-#include "kipitestpluginloader.moc"
+
 
 // Qt includes
 
