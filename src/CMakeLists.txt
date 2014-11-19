@@ -39,27 +39,31 @@ ecm_generate_headers(kipi_CamelCase_HEADERS
                      REQUIRED_HEADERS kipi_HEADERS
 )
 
-install(FILES       ${kipi_CamelCase_HEADERS}
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/KIPI
-        COMPONENT   Devel
-)
-
-install(FILES       ${kipi_HEADERS}
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
-        COMPONENT   Devel
-)
-
 add_library(KF5Kipi SHARED ${kipi_LIB_SRCS})
+add_library(KF5::Kipi ALIAS KF5Kipi)
 
 generate_export_header(KF5Kipi BASE_NAME kipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
-install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/kipi_export.h
-                    ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI
-        COMPONENT   Devel
-)
+# Check if compilation is done through digiKam SC or not. If yes, do not install header files.
+if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
-add_library(KF5::Kipi ALIAS KF5Kipi)
+    install(FILES       ${kipi_CamelCase_HEADERS}
+            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/KIPI
+            COMPONENT   Devel
+    )
+
+    install(FILES       ${kipi_HEADERS}
+            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
+            COMPONENT   Devel
+    )
+
+    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/kipi_export.h
+                        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
+            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI
+            COMPONENT   Devel
+    )
+
+endif()
 
 target_include_directories(KF5Kipi INTERFACE
                            "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
