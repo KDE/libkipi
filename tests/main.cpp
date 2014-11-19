@@ -38,7 +38,7 @@
 
 // LibKipi includes
 
-#include "version.h"
+#include "libkipi_version.h"
 
 // local includes:
 
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     const KAboutData aboutData("kxmlkipicmd",
                                "kipi",
                                ki18n("kxmlkipicmd"),
-                               kipi_version,                   // libkipi version
+                               KIPI_VERSION_STRING,            // libkipi version
                                ki18n("Kipi host test application using KDE XML-GUI"),
                                KAboutData::License_GPL,
                                ki18n("(c) 2009-2010 Michael G. Hansen\n"

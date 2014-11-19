@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-
+#include "kipitestmainwindow.h"
 
 // Qt includes
 
@@ -32,6 +32,7 @@
 
 #include <kdialog.h>
 #include <kconfig.h>
+#include <kglobal.h>
 #include <ksharedconfig.h>
 #include <kaction.h>
 #include <ktoggleaction.h>
@@ -47,7 +48,7 @@
 // LibKIPI includes
 
 #include "pluginloader.h"
-#include "version.h"
+#include "libkipi_version.h"
 
 // Local includes
 

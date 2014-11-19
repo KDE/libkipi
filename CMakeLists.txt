@@ -99,9 +99,7 @@ add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
 add_subdirectory(pics)
 add_subdirectory(src)
-
-# TODO
-#add_subdirectory(tests)
+add_subdirectory(tests)
 
 ############## CMake Config Files ##############
 
@@ -134,6 +132,3 @@ install(FILES
 )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
-
-#set(LIBKIPI_AREA_CODE_GENERAL 51000)
-#add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})

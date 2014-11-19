@@ -4,7 +4,8 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/../src
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
+                    ${CMAKE_CURRENT_BINARY_DIR}/../src
                     ${CMAKE_CURRENT_SOURCE_DIR}/../src
                    )
 
@@ -14,9 +15,9 @@ set(kxmlkipicmd_SRCS
     kipiimageinfoshared.cpp
     kipiimagecollectionselector.cpp
     kipiuploadwidget.cpp
-    kipisetup.cpp
-    kipitestpluginloader.cpp
     kipitestmainwindow.cpp
+    kipitestpluginloader.cpp
+    kipisetup.cpp
     main.cpp
    )
 

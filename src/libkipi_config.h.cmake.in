@@ -22,12 +22,10 @@
  *
  * ============================================================ */
 
-#ifndef KIPI_VERSION_H
-#define KIPI_VERSION_H
+#ifndef KIPI_CONFIG_H
+#define KIPI_CONFIG_H
 
-static const char kipi_version[]     = "${KIPI_LIB_VERSION_STRING}";
-static const int kipi_binary_version =  ${KIPI_LIB_SO_CUR_VERSION};
-#define KIPI_VERSION ${KIPI_LIB_VERSION_ID}
+static const int kipi_binary_version = ${KIPI_LIB_SO_CUR_VERSION};
 
-#endif // KIPI_VERSION_H
+#endif // KIPI_CONFIG_H
 

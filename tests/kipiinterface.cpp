@@ -24,7 +24,7 @@
  *
  * ============================================================ */
 
-
+#include "kipiinterface.h"
 
 // Qt includes
 
@@ -40,7 +40,7 @@
 
 // LibKIPI includes
 
-#include "version.h"
+#include "libkipi_version.h"
 #include "imagecollection.h"
 
 // local includes

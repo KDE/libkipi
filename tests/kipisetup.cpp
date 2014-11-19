@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-
+#include "kipisetup.h"
 
 // Qt includes
 
@@ -37,6 +37,7 @@
 #include <kpagewidget.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
+#include <klocale.h>
 #include <kdebug.h>
 #include <kcomponentdata.h>
 #include <kcombobox.h>

@@ -22,7 +22,7 @@
  *
  * ============================================================ */
 
-
+#include "kipitestpluginloader.h"
 
 // Qt includes
 
@@ -38,6 +38,7 @@
 #include <kdebug.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
+#include <kglobal.h>
 
 // Local includes
 

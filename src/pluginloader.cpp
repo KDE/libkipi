@@ -63,6 +63,7 @@
 #include "plugin.h"
 #include "interface.h"
 #include "libkipi_version.h"
+#include "libkipi_config.h"
 #include "configwidget.h"
 
 static const KCatalogLoader loader("libkipi");
