@@ -49,7 +49,7 @@
 
 // Local includes
 
-#include "version.h"
+#include "libkipi_version.h"
 #include "interface.h"
 #include "pluginloader.h"
 

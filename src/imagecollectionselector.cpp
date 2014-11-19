@@ -23,7 +23,7 @@
  *
  * ============================================================ */
 
-
+#include "imagecollectionselector.h"
 
 // Local includes
 

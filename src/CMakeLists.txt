@@ -6,17 +6,17 @@
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
-set(kipi_LIB_SRCS pluginloader.cpp
-                  interface.cpp
+set(kipi_LIB_SRCS interface.cpp
                   imagecollection.cpp
                   imagecollectionshared.cpp
                   imageinfoshared.cpp
                   plugin.cpp
                   imageinfo.cpp
                   uploadwidget.cpp
+                  imagecollectionselector.cpp
                   configwidget.cpp
                   configwidget_p.cpp
-                  imagecollectionselector.cpp
+                  pluginloader.cpp                  
    )
 
 ecm_generate_headers(kipi_CamelCase_HEADERS

@@ -47,7 +47,7 @@
 
 // Local includes
 
-#include "version.h"
+#include "libkipi_version.h"
 #include "imageinfo.h"
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
@@ -80,7 +80,7 @@ Interface::~Interface()
 
 QString Interface::version()
 {
-    return QString(kipi_version);
+    return QString(KIPI_VERSION_STRING);
 }
 
 void Interface::refreshImages(const KUrl::List&)

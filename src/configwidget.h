@@ -30,7 +30,7 @@
 
 // Qt includes
 
-#include <QtGui/QScrollArea>
+#include <QScrollArea>
 
 // Local includes
 
