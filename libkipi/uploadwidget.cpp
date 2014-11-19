@@ -23,10 +23,10 @@
  *
  * ============================================================ */
 
-#include "uploadwidget.moc"
+
 
 // Local includes
-
+#include "uploadwidget.h"
 #include "imagecollection.h"
 
 namespace KIPI

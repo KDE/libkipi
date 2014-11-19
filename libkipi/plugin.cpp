@@ -31,8 +31,9 @@
  *
  * ============================================================ */
 
-#include "plugin.moc"
 
+#include "plugin.h"
+#include <KGlobal>
 // Qt includes
 
 #include <QWidget>

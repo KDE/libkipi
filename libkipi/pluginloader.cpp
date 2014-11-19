@@ -31,8 +31,8 @@
  *
  * ============================================================ */
 
-#include "pluginloader.moc"
 
+#include "pluginloader.h"
 // Qt includes
 
 #include <QStringList>
@@ -42,7 +42,7 @@
 #include <QVariant>
 
 // KDE includes
-
+#include <KDebug>
 #include <kservicetypetrader.h>
 #include <QDebug>
 #include <kdialog.h>
@@ -100,12 +100,10 @@ PluginLoader::Info::~Info()
     if (d->parent && d->plugin)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
-#if KDE_IS_VERSION(4,8,5)
         foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }
-#endif
     }
 
     delete d->plugin;
@@ -198,12 +196,10 @@ void PluginLoader::Info::reload()
     if (d->parent)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
-#if KDE_IS_VERSION(4,8,5)
         foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }
-#endif
     }
 
     delete d->plugin;
