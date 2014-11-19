@@ -63,6 +63,11 @@ if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
             COMPONENT   Devel
     )
 
+    install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
+            DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
+            COMPONENT   Devel
+    )
+
 endif()
 
 target_include_directories(KF5Kipi INTERFACE

@@ -125,10 +125,4 @@ install(EXPORT      KF5KipiTargets
         NAMESPACE   KF5::
 )
 
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
-        DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
-        COMPONENT   Devel
-)
-
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
