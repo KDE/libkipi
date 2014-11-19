@@ -9,38 +9,12 @@ project(libkipi)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: libkipi")
 
-include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
-
-cmake_minimum_required(VERSION 2.8.12)
-
-# ECM setup
-find_package(ECM 1.1.0 CONFIG REQUIRED)
-set(CMAKE_MODULE_PATH ${libkipi_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
-
-include(GenerateExportHeader)
-include(ECMGenerateHeaders)
-include(ECMGeneratePriFile)
-include(ECMPackageConfigHelpers)
-include(ECMSetupVersion)
-include(FeatureSummary)
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(KDEFrameworkCompilerSettings)
-
-set(KF5_VERSION "5.1.0")
-
-############## Find Packages ##############
+set(CMAKE_MIN_VERSION   "2.8.12")
+set(ECM_MIN_VERSION     "1.1.0")
+set(KF5_VERSION         "5.1.0")
 set(REQUIRED_QT_VERSION "5.2.0")
-find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
-find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Gui)
 
-
-
-#set(LIBKIPI_AREA_CODE_GENERAL 51000)
-#add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
-
-
+cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 
 # =======================================================
 # Information to update before to release this library.
@@ -69,48 +43,101 @@ find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Gui)
 # 2.0.0 => 10.0.0 (released with KDE 4.10.0 - Including GoSC2012).
 # 2.1.0 => 11.0.0 (released with KDE 4.11.0 - Add edit hints).
 # 2.2.0 => 11.1.0 (released with KDE 4.14.0 - Apply patch #89165 from bug #340030).
+# 5.0.0 => 30.0.0 (Released with KDE 5.x)
 
 # Library API version
-set(KIPI_LIB_MAJOR_VERSION "2")
-set(KIPI_LIB_MINOR_VERSION "2")
+set(KIPI_LIB_MAJOR_VERSION "5")
+set(KIPI_LIB_MINOR_VERSION "0")
 set(KIPI_LIB_PATCH_VERSION "0")
-
-# Suffix to add at end of version string. Usual values are:
-# "-git"   : alpha code unstable from git. Do not use in production
-# "-beta1" : beta1 release.
-# "-beta2" : beta2 release.
-# "-beta3" : beta3 release.
-# "-rc"    : release candidate.
-# ""       : final relase. Can be used in production.
-set(KIPI_LIB_SUFFIX_VERSION "")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-set(KIPI_LIB_SO_CUR_VERSION "11")
-set(KIPI_LIB_SO_REV_VERSION "1")
+set(KIPI_LIB_SO_CUR_VERSION "30")
+set(KIPI_LIB_SO_REV_VERSION "0")
 set(KIPI_LIB_SO_AGE_VERSION "0")
 
-# =======================================================
-# Set env. variables accordinly.
+SET(LIBKIPI_LIB_VERSION "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}")
+SET(LIBKIPI_SO_VERSION  "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.${KIPI_LIB_SO_AGE_VERSION}")
 
-set(KIPI_LIB_VERSION_STRING    "${KIPI_LIB_MAJOR_VERSION}.${KIPI_LIB_MINOR_VERSION}.${KIPI_LIB_PATCH_VERSION}${KIPI_LIB_SUFFIX_VERSION}")
-set(KIPI_LIB_VERSION_ID        "0x0${KIPI_LIB_MAJOR_VERSION}0${KIPI_LIB_MINOR_VERSION}0${KIPI_LIB_PATCH_VERSION}")
-set(KIPI_LIB_SO_VERSION_STRING "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.${KIPI_LIB_SO_AGE_VERSION}")
+############## ECM setup ######################
 
-# =======================================================
+find_package(ECM ${ECM_MIN_VERSION} CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${libkkipi_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+include(ECMGeneratePriFile)
+include(ECMPackageConfigHelpers)
+include(ECMSetupVersion)
+include(FeatureSummary)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings)
+
+############## Find Packages ###################
+
+find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
+             Core
+             Widgets
+             Gui
+)
+
+find_package(KF5 REQUIRED COMPONENTS
+             KDELibs4Support
+             Parts
+)
+
+
+ecm_setup_version(${LIBKIPI_LIB_VERSION}
+                  VARIABLE_PREFIX      KIPI
+                  VERSION_HEADER       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
+                  PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5KipiConfigVersion.cmake"
+                  SOVERSION            ${LIBKIPI_SO_VERSION})
+
+############## Targets #########################
+
+add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
 add_subdirectory(pics)
-add_subdirectory(libkipi)
+add_subdirectory(src)
 
-# kipi host test application to check the plugins
-if(KDE4_BUILD_TESTS)
-    add_subdirectory(tests)
-endif()
+# TODO
+#add_subdirectory(tests)
 
-if(NOT WIN32)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.pc.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/libkipi.lsm.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi.lsm)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libkipi.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
-endif()
+############## CMake Config Files ##############
+
+message("${CMAKECONFIG_INSTALL_DIR}")
+set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Kipi")
+
+ecm_configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/KF5KipiConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF5KipiConfig.cmake"
+    INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
+)
+
+install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/KF5KipiConfig.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/KF5KipiConfigVersion.cmake"
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT   Devel
+)
+
+install(EXPORT      KF5KipiTargets
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        FILE        KF5KipiTargets.cmake
+        NAMESPACE   KF5::
+)
+
+install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
+        DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
+        COMPONENT   Devel
+)
+
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+
+#include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
+
+#set(LIBKIPI_AREA_CODE_GENERAL 51000)
+#add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
