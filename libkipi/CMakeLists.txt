@@ -23,8 +23,9 @@ add_library(kipi SHARED ${kipi_LIB_SRCS})
 
 target_link_libraries(kipi
                       KF5::Parts
-                      
+                      KF5::KDELibs4Support
                       Qt5::Gui
+                      KF5::Plasma
                      )
 
 set_target_properties(kipi PROPERTIES VERSION ${KIPI_LIB_SO_VERSION_STRING} SOVERSION ${KIPI_LIB_SO_CUR_VERSION})

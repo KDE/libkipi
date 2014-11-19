@@ -9,21 +9,39 @@ project(libkipi)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: libkipi")
 
-find_package(KDE4 REQUIRED)
+include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
 
-include(KDE4Defaults)
-include(MacroLibrary)
-include(MacroOptionalAddSubdirectory)
-include(MacroOptionalFindPackage)
-include(FindPackageHandleStandardArgs)
+cmake_minimum_required(VERSION 2.8.12)
 
-add_definitions(${QT_DEFINITIONS} ${QT_QTDBUS_DEFINITIONS} ${KDE4_DEFINITIONS})
-add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+# ECM setup
+find_package(ECM 1.3.0 CONFIG REQUIRED)
+set(CMAKE_MODULE_PATH ${libkface_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 
-include_directories (${QDBUS_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
+include(ECMGeneratePriFile)
+include(ECMPackageConfigHelpers)
+include(ECMSetupVersion)
+include(FeatureSummary)
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings)
 
-set(LIBKIPI_AREA_CODE_GENERAL 51000)
-add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
+set(KF5_VERSION "5.3.0")
+
+############## Find Packages ##############
+set(REQUIRED_QT_VERSION "5.2.0")
+find_package(KF5KDELibs4Support ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5Parts ${KF5_VERSION} CONFIG REQUIRED)
+find_package(KF5Plasma ${KF5_VERSION} CONFIG REQUIRED)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Gui)
+
+
+
+#set(LIBKIPI_AREA_CODE_GENERAL 51000)
+#add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
+
+
 
 # =======================================================
 # Information to update before to release this library.
