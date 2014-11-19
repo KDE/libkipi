@@ -42,7 +42,9 @@
 #include <kcomponentdata.h>
 #include <kcombobox.h>
 #include <klineedit.h>
-
+#include <KConfigGroup>
+#include <KGlobal>
+#include <KDialog>
 // Libkipi includes
 
 #include "pluginloader.h"

@@ -173,20 +173,15 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    connect(d->checkAllBtn, SIGNAL(clicked()),
-            this, SLOT(slotCheckAll()));
+    connect(d->checkAllBtn, &QPushButton::clicked, this, &ConfigWidget::slotCheckAll);
 
-    connect(d->clearBtn, SIGNAL(clicked()),
-            this, SLOT(slotClearList()));
+    connect(d->clearBtn, &QPushButton::clicked, this, &ConfigWidget::slotClearList);
 
-    connect(d->pluginsList, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
-            this, SLOT(slotItemClicked()));
+    connect(d->pluginsList, &PluginListView::itemClicked, this, &ConfigWidget::slotItemClicked);
 
-    connect(d->pluginsList, SIGNAL(signalSearchResult(bool)),
-            this, SIGNAL(signalSearchResult(bool)));
+    connect(d->pluginsList, &PluginListView::signalSearchResult, this, &ConfigWidget::signalSearchResult);
 
-    connect(d->kipiLogoLabel, SIGNAL(leftClickedUrl(QString)),
-            this, SLOT(slotProcessUrl(QString)));
+    connect(d->kipiLogoLabel, static_cast<void (KUrlLabel::*)(const QString &)>(&KUrlLabel::leftClickedUrl), this, &ConfigWidget::slotProcessUrl);
 
     // --------------------------------------------------------
 

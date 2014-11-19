@@ -120,7 +120,7 @@ QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(Category cat) const
 
 void KipiTestPluginLoader::loadPlugins()
 {
-    d->kipipluginsActionCollection = new KActionCollection(d->app, KGlobal::mainComponent());
+    d->kipipluginsActionCollection = new KActionCollection(d->app, QLatin1String("kipitest")/*, KGlobal::mainComponent()*/);
 
     QStringList ignores;
 
@@ -241,7 +241,7 @@ void KipiTestPluginLoader::checkEmptyCategory(Category cat)
     {
 //        QAction* action = new QAction(i18n("No tool available"), d->app);
         QString actionName = "emptyCategory" + categoryShortName(cat);
-        KAction* action = d->app->actionCollection()->addAction(actionName);
+        QAction* action = d->app->actionCollection()->addAction(actionName);
         action->setEnabled(false);
         category        = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
         d->kipiCategoryMap.insert(cat, category);

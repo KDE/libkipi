@@ -52,7 +52,6 @@
 #include "libkipi_export.h"
 
 class KAction;
-class KActionCollection;
 class KComponentData;
 
 namespace KIPI

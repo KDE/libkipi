@@ -76,7 +76,7 @@ public:
     }
 
     KSharedConfig::Ptr config;
-    KAction*           quitAction;
+    QAction*           quitAction;
     KToggleAction*     showMenuBarAction;
     KipiInterface*     kipiInterface;
     QString            uiFile;
@@ -170,7 +170,8 @@ void KipiTestMainWindow::slotEditKeys()
 
 void KipiTestMainWindow::slotConfToolbars()
 {
-    saveMainWindowSettings(d->config->group("General Settings"));
+    KConfigGroup grp = d->config->group("General Settings");
+    saveMainWindowSettings(grp);
     KEditToolBar dlg(factory(), this);
 
     connect(&dlg, SIGNAL(newToolBarConfig()),
