@@ -87,7 +87,6 @@ find_package(KF5 REQUIRED COMPONENTS
              Parts
 )
 
-
 ecm_setup_version(${LIBKIPI_LIB_VERSION}
                   VARIABLE_PREFIX      KIPI
                   VERSION_HEADER       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
@@ -135,9 +134,6 @@ install(FILES
 )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
-
-
-#include_directories (${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} )
 
 #set(LIBKIPI_AREA_CODE_GENERAL 51000)
 #add_definitions(-DKDE_DEFAULT_DEBUG_AREA=${LIBKIPI_AREA_CODE_GENERAL})
