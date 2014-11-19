@@ -35,7 +35,7 @@ install(TARGETS kipi ${INSTALL_TARGETS_DEFAULT_ARGS} )
 install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 # Check if compilation is done through digiKam SC or not. If yes, do not install header files.
-if(NOT DIGIKAMSC_USE_PRIVATE_SHAREDLIBS)
+if(NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
     install(FILES plugin.h
                   pluginloader.h
