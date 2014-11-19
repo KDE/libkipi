@@ -25,8 +25,9 @@
  *
  * ============================================================ */
 
-#include "configwidget.moc"
 
+#include "configwidget.h"
+#include <KLocalizedString>
 // Qt include
 
 #include <QPushButton>

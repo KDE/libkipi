@@ -31,7 +31,7 @@
  *
  * ============================================================ */
 
-#include "interface.moc"
+#include "interface.h"
 
 // Qt includes
 
