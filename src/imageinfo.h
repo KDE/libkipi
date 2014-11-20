@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kurl.h>
-#include <kdemacros.h>
 
 // Local includes
 
