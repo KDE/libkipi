@@ -125,7 +125,7 @@ install(FILES
 install(EXPORT      KF5KipiTargets
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         FILE        KF5KipiTargets.cmake
-        NAMESPACE   KF5::
+        NAMESPACE   KIPI::
 )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
