@@ -99,7 +99,10 @@ add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
 add_subdirectory(pics)
 add_subdirectory(src)
-add_subdirectory(tests)
+
+if (BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 
 ############## CMake Config Files ##############
 
