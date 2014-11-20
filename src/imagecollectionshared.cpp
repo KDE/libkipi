@@ -75,22 +75,22 @@ void ImageCollectionShared::removeRef()
     }
 }
 
-KUrl ImageCollectionShared::path()
+QUrl ImageCollectionShared::path()
 {
     qWarning() << "This method should only be invoked if this imagecollection is a directory. "
                << "See KIPI::ImageCollectionShared::isDirectory()";
-    return KUrl();
+    return QUrl();
 }
 
-KUrl ImageCollectionShared::uploadPath()
+QUrl ImageCollectionShared::uploadPath()
 {
     PrintWarningMessageFeature("AcceptNewImages");
-    return KUrl();
+    return QUrl();
 }
 
-KUrl ImageCollectionShared::uploadRoot()
+QUrl ImageCollectionShared::uploadRoot()
 {
-    KUrl path = uploadPath();
+    QUrl path = uploadPath();
 
     if ( path.isValid() )
     {
@@ -99,7 +99,7 @@ KUrl ImageCollectionShared::uploadRoot()
     }
     else
     {
-        return KUrl( "file:/" );
+        return QUrl::fromLocalFile( "file:/" );
     }
 }
 

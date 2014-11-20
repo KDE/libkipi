@@ -67,7 +67,7 @@ ImageInfoShared::ImageInfoShared()
 {
 }
 
-ImageInfoShared::ImageInfoShared(Interface* const interface, const KUrl& url)
+ImageInfoShared::ImageInfoShared(Interface* const interface, const QUrl &url)
     : d(new Private)
 {
     d->interface = interface;
@@ -93,7 +93,7 @@ void ImageInfoShared::removeRef()
     }
 }
 
-KUrl ImageInfoShared::url() const
+QUrl ImageInfoShared::url() const
 {
     return _url;
 }

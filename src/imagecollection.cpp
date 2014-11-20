@@ -162,7 +162,7 @@ QDate ImageCollection::date() const
     }
 }
 
-KUrl::List ImageCollection::images() const
+QList<QUrl> ImageCollection::images() const
 {
     if ( d )
     {
@@ -171,11 +171,11 @@ KUrl::List ImageCollection::images() const
     else
     {
         PrintWarningMessage();
-        return KUrl::List();
+        return QList<QUrl>();
     }
 }
 
-KUrl ImageCollection::path() const
+QUrl ImageCollection::path() const
 {
     if ( d )
     {
@@ -184,11 +184,11 @@ KUrl ImageCollection::path() const
     else
     {
         PrintWarningMessage();
-        return KUrl();
+        return QUrl();
     }
 }
 
-KUrl ImageCollection::uploadPath() const
+QUrl ImageCollection::uploadPath() const
 {
     if ( d )
     {
@@ -197,11 +197,11 @@ KUrl ImageCollection::uploadPath() const
     else
     {
         PrintWarningMessage();
-        return KUrl();
+        return QUrl();
     }
 }
 
-KUrl ImageCollection::uploadRoot() const
+QUrl ImageCollection::uploadRoot() const
 {
     if ( d )
     {
@@ -210,7 +210,7 @@ KUrl ImageCollection::uploadRoot() const
     else
     {
         PrintWarningMessage();
-        return KUrl();
+        return QUrl();
     }
 }
 

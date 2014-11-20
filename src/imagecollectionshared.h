@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -60,15 +60,15 @@ public:
 
     /** These methods must be re-implemented in your KIPI host application to manage collection attributes with plugins.
      */
-    virtual KUrl::List images() = 0;
+    virtual QList<QUrl> images() = 0;
     virtual QString    name() = 0;
 
     virtual QString    comment();
     virtual QString    category();
     virtual QDate      date();
-    virtual KUrl       path();
-    virtual KUrl       uploadPath();
-    virtual KUrl       uploadRoot();
+    virtual QUrl       path();
+    virtual QUrl       uploadPath();
+    virtual QUrl       uploadRoot();
     virtual QString    uploadRootName();
     virtual bool       isDirectory();
 

@@ -43,7 +43,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -63,10 +63,10 @@ class LIBKIPI_EXPORT ImageInfoShared
 
 public:
 
-    ImageInfoShared(Interface* const interface, const KUrl& url);
+    ImageInfoShared(Interface* const interface, const QUrl &url);
     virtual ~ImageInfoShared();
 
-    KUrl url() const;
+    QUrl url() const;
 
     /** Convenience methods calling the respective methods in the interface for this item.
      */
@@ -86,7 +86,7 @@ public:
 
 protected:
 
-    KUrl _url;
+    QUrl _url;
 
 private:
 
