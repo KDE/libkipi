@@ -97,7 +97,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     d->pluginsPage  = PluginLoader::instance()->configWidget(this);
     d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
-    d->page_plugins->setIcon(QIcon("kipi"));
+    d->page_plugins->setIcon(QIcon::fromTheme("kipi"));
     d->pluginFilter = new KLineEdit(d->pluginsPage);
     d->pluginFilter->setClearButtonShown(true);
     d->pluginFilter->setClickMessage(i18n("filter..."));
@@ -105,7 +105,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     d->xmlPage  = new SetupXML(this);
     d->page_xml = addPage(d->xmlPage, i18n("UI layouts"));
-    d->page_xml->setIcon(QIcon("application-xml"));
+    d->page_xml->setIcon(QIcon::fromTheme("application-xml"));
     d->page_xml->setHeader("Configure the UI file for the KXMLKipiCmd application");
 
     KSharedConfig::Ptr config = KGlobal::config();

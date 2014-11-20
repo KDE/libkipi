@@ -180,7 +180,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionImages = new KAction(this);
     d->actionImages->setText(i18n("KXML Hello World Image..."));
-    d->actionImages->setIcon(QIcon("script-error"));
+    d->actionImages->setIcon(QIcon::fromTheme("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
 
     /** Connect plugin action signal to dedicated slot.
@@ -200,7 +200,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionTools = new KAction(this);
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
-    d->actionTools->setIcon(QIcon("script-error"));
+    d->actionTools->setIcon(QIcon::fromTheme("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
@@ -217,7 +217,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionExport = new KAction(this);
     d->actionExport->setText(i18n("KXML Hello World Export..."));
-    d->actionExport->setIcon(QIcon("script-error"));
+    d->actionExport->setIcon(QIcon::fromTheme("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
@@ -228,7 +228,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionImport = new KAction(this);
     d->actionImport->setText(i18n("KXML Hello World Import..."));
-    d->actionImport->setIcon(QIcon("script-error"));
+    d->actionImport->setIcon(QIcon::fromTheme("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
