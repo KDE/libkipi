@@ -46,7 +46,7 @@
 #include <kservicetypetrader.h>
 #include <QDebug>
 #include <kdialog.h>
-#include <kdeversion.h>
+
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
 #include <kconfig.h>

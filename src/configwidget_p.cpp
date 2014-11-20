@@ -37,7 +37,7 @@
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kconfig.h>
-#include <klocale.h>
+#include <KLocalizedString>
 #include <QAction>
 #include <QDebug>
 

@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kdeversion.h>
+
 #include <QDebug>
 #include <kfileitem.h>
 #include <kimageio.h>
