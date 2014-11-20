@@ -52,7 +52,7 @@
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klibloader.h>
-#include <kaction.h>
+#include <QAction>
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
 #include <kstandarddirs.h>

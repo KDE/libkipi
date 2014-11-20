@@ -41,7 +41,7 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
@@ -211,7 +211,7 @@ Plugin::~Plugin()
     delete d;
 }
 
-QList<KAction*> Plugin::actions(QWidget* const widget) const
+QList<QAction *> Plugin::actions(QWidget* const widget) const
 {
     QWidget* w = !widget ? d->defaultWidget : widget;
 
@@ -224,7 +224,7 @@ QList<KAction*> Plugin::actions(QWidget* const widget) const
     return d->actionsCat[w].keys();
 }
 
-void Plugin::addAction(const QString& name, KAction* const action)
+void Plugin::addAction(const QString& name, QAction * const action)
 {
     if (!action || name.isEmpty())
         return;
@@ -240,12 +240,12 @@ void Plugin::addAction(const QString& name, KAction* const action)
     }
 }
 
-void Plugin::addAction(KAction* const action)
+void Plugin::addAction(QAction * const action)
 {
     addAction(action, d->defaultCategory);
 }
 
-void Plugin::addAction(const QString& name, KAction* const action, Category cat)
+void Plugin::addAction(const QString& name, QAction * const action, Category cat)
 {
     if (!action || name.isEmpty())
         return;
@@ -261,7 +261,7 @@ void Plugin::addAction(const QString& name, KAction* const action, Category cat)
     }
 }
 
-void Plugin::addAction(KAction* const action, Category cat)
+void Plugin::addAction(QAction * const action, Category cat)
 {
     if (cat == InvalidCategory)
     {
@@ -277,12 +277,12 @@ void Plugin::setup(QWidget* const widget)
 {
     clearActions();
     d->defaultWidget = widget;
-    d->actionsCat.insert(widget, QMap<KAction*, Category>());
+    d->actionsCat.insert(widget, QMap<QAction *, Category>());
 }
 
-Category Plugin::category(KAction* const action) const
+Category Plugin::category(QAction * const action) const
 {
-    QMap<KAction*, Category>::const_iterator it = d->actionsCat[d->defaultWidget].constFind(action);
+    QMap<QAction *, Category>::const_iterator it = d->actionsCat[d->defaultWidget].constFind(action);
 
     if (it != d->actionsCat[d->defaultWidget].constEnd())
     {
