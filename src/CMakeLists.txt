@@ -44,6 +44,8 @@ add_library(KF5::Kipi ALIAS KF5Kipi)
 
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
+
+
 # Check if compilation is done through digiKam SC or not. If yes, do not install header files.
 if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
@@ -57,9 +59,10 @@ if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
             COMPONENT   Devel
     )
 
-    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/kipi_export.h
+
+    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
                         ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
-            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI
+            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
             COMPONENT   Devel
     )
 
