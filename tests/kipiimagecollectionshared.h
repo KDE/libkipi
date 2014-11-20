@@ -39,25 +39,25 @@ class KipiImageCollectionShared : public ImageCollectionShared
 public:
 
     // re-implemented inherited functions:
-    KipiImageCollectionShared(const KUrl& albumPath);
-    KipiImageCollectionShared(const KUrl::List& images);
+    KipiImageCollectionShared(const QUrl &albumPath);
+    KipiImageCollectionShared(const QList<QUrl>& images);
     virtual ~KipiImageCollectionShared();
 
     virtual QString    name();
-    virtual KUrl::List images();
-    virtual KUrl       path();
-    virtual KUrl       uploadPath();
-    virtual KUrl       uploadRoot();
+    virtual QList<QUrl> images();
+    virtual QUrl       path();
+    virtual QUrl       uploadPath();
+    virtual QUrl       uploadRoot();
     virtual bool       isDirectory();
 
     // functions used internally:
-    void addImages(const KUrl::List& images);
-    void addImage(const KUrl& image);
+    void addImages(const QList<QUrl>& images);
+    void addImage(const QUrl &image);
 
 private:
 
-    KUrl       m_albumPath;
-    KUrl::List m_images;
+    QUrl       m_albumPath;
+    QList<QUrl> m_images;
 };
 
 } // namespace KXMLKipiCmd

@@ -83,9 +83,9 @@ public:
 
 };
 
-KipiTestMainWindow::KipiTestMainWindow(const KUrl::List& selectedImages,
-                                       const KUrl::List& selectedAlbums,
-                                       const KUrl::List& allAlbums)
+KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
+                                       const QList<QUrl>& selectedAlbums,
+                                       const QList<QUrl>& allAlbums)
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
     m_instance           = this;

@@ -33,7 +33,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kurl.h>
+#include <QUrl>
 #include <kdebug.h>
 
 // LibKipi includes
@@ -78,12 +78,12 @@ int main(int argc, char* argv[])
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
-    KUrl::List listSelectedImages;
-    KUrl::List listSelectedAlbums;
-    KUrl::List listAllAlbums;
+    QList<QUrl> listSelectedImages;
+    QList<QUrl> listSelectedAlbums;
+    QList<QUrl> listAllAlbums;
 
     // determine which with list we start:
-    KUrl::List* startList = 0;
+    QList<QUrl>* startList = 0;
 
     if (args->isSet("selectedimages"))
     {

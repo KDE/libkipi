@@ -31,7 +31,7 @@
 namespace KXMLKipiCmd
 {
 
-KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
+KipiImageCollectionShared::KipiImageCollectionShared(const QUrl &albumPath)
     : ImageCollectionShared(),
       m_albumPath(albumPath),
       m_images()
@@ -46,11 +46,11 @@ KipiImageCollectionShared::KipiImageCollectionShared(const KUrl& albumPath)
 
     for (QFileInfoList::const_iterator it = files.constBegin(); it!=files.constEnd(); ++it)
     {
-            m_images.append(KUrl::fromPath(it->absoluteFilePath()));
+            m_images.append(QUrl::fromLocalFile(it->absoluteFilePath()));
     }
 }
 
-KipiImageCollectionShared::KipiImageCollectionShared(const KUrl::List& images)
+KipiImageCollectionShared::KipiImageCollectionShared(const QList<QUrl>& images)
     : ImageCollectionShared(),
       m_images(images)
 {
@@ -65,32 +65,32 @@ QString KipiImageCollectionShared::name()
     return m_albumPath.url();
 }
 
-KUrl::List KipiImageCollectionShared::images()
+QList<QUrl> KipiImageCollectionShared::images()
 {
     return m_images;
 }
 
-void KipiImageCollectionShared::addImages(const KUrl::List& images)
+void KipiImageCollectionShared::addImages(const QList<QUrl>& images)
 {
     m_images.append(images);
 }
 
-void KipiImageCollectionShared::addImage(const KUrl& image)
+void KipiImageCollectionShared::addImage(const QUrl &image)
 {
     m_images.append(image);
 }
 
-KUrl KipiImageCollectionShared::path()
+QUrl KipiImageCollectionShared::path()
 {
     return m_albumPath;
 }
 
-KUrl KipiImageCollectionShared::uploadPath()
+QUrl KipiImageCollectionShared::uploadPath()
 {
     return m_albumPath;
 }
 
-KUrl KipiImageCollectionShared::uploadRoot()
+QUrl KipiImageCollectionShared::uploadRoot()
 {
     return m_albumPath;
 }

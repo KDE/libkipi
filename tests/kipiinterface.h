@@ -56,11 +56,11 @@ public:
     ImageCollection        currentAlbum();
     ImageCollection        currentSelection();
     QList<ImageCollection> allAlbums();
-    ImageInfo              info(const KUrl&);
+    ImageInfo              info(const QUrl&);
 
-    bool addImage(const KUrl& url, QString& errmsg);
-    void delImage(const KUrl& url);
-    void refreshImages(const KUrl::List& urls);
+    bool addImage(const QUrl &url, QString& errmsg);
+    void delImage(const QUrl &url);
+    void refreshImages(const QList<QUrl>& urls);
 
     int      features() const;
     QVariant hostSetting(const QString& settingName);
@@ -68,16 +68,16 @@ public:
     ImageCollectionSelector* imageCollectionSelector(QWidget* parent);
     UploadWidget*            uploadWidget(QWidget* parent);
 
-    void addSelectedImages(const KUrl::List& images);
-    void addSelectedImage(const KUrl& image);
+    void addSelectedImages(const QList<QUrl>& images);
+    void addSelectedImage(const QUrl &image);
 
-    void addSelectedAlbums(const KUrl::List& albums);
-    void addSelectedAlbum(const KUrl& album);
+    void addSelectedAlbums(const QList<QUrl>& albums);
+    void addSelectedAlbum(const QUrl &album);
 
-    void addAlbums(const KUrl::List& albums);
-    void addAlbum(const KUrl& album);
+    void addAlbums(const QList<QUrl>& albums);
+    void addAlbum(const QUrl &album);
 
-    void thumbnails(const KUrl::List& list, int size);
+    void thumbnails(const QList<QUrl>& list, int size);
 
 private Q_SLOTS:
 
@@ -86,9 +86,9 @@ private Q_SLOTS:
 
 private:
 
-    KUrl::List m_selectedImages;
-    KUrl::List m_selectedAlbums;
-    KUrl::List m_albums;
+    QList<QUrl> m_selectedImages;
+    QList<QUrl> m_selectedAlbums;
+    QList<QUrl> m_albums;
 
 private:
 

@@ -40,7 +40,7 @@ class KipiImageInfoShared : public ImageInfoShared
 {
 public:
 
-    KipiImageInfoShared(Interface* const interface, const KUrl& url);
+    KipiImageInfoShared(Interface* const interface, const QUrl &url);
     ~KipiImageInfoShared();
 
     QMap<QString, QVariant> attributes();
