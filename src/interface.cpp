@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kdeversion.h>
+
 #include <QDebug>
 #include <kfileitem.h>
 #include <kimageio.h>
@@ -83,7 +83,7 @@ QString Interface::version()
     return QString(KIPI_VERSION_STRING);
 }
 
-void Interface::refreshImages(const KUrl::List&)
+void Interface::refreshImages(const QList<QUrl>&)
 {
     PrintWarningMessage();
 }
@@ -134,13 +134,13 @@ bool Interface::hasFeature( const QString& feature ) const
     }
 }
 
-bool Interface::addImage(const KUrl&, QString&)
+bool Interface::addImage(const QUrl&, QString&)
 {
     PrintWarningMessageFeature("AcceptNewImages");
     return false;
 }
 
-void Interface::delImage(const KUrl&)
+void Interface::delImage(const QUrl&)
 {
     PrintWarningMessage();
 }
@@ -169,26 +169,22 @@ int Interface::features() const
     return 0;
 }
 
-void Interface::thumbnail(const KUrl& url, int size)
+void Interface::thumbnail(const QUrl &url, int size)
 {
-    thumbnails(KUrl::List() << url, size);
+    thumbnails(QList<QUrl>() << url, size);
 }
 
-void Interface::thumbnails(const KUrl::List& list, int size)
+void Interface::thumbnails(const QList<QUrl>& list, int size)
 {
     PrintWarningMessageFeature("HostSupportsThumbnails");
 
-#if KDE_IS_VERSION(4,7,0)
     KFileItemList items;
-    for (KUrl::List::ConstIterator it = list.begin() ; it != list.end() ; ++it)
+    for (QList<QUrl>::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
     }
     KIO::PreviewJob* job = KIO::filePreview(items, QSize(size, size));
-#else
-    KIO::PreviewJob *job = KIO::filePreview(list, size);
-#endif
 
     connect(job, &KIO::PreviewJob::gotPreview, this, &Interface::gotKDEPreview);
 
@@ -287,42 +283,42 @@ void Interface::progressCompleted(const QString& id)
     Q_UNUSED(id);
 }
 
-bool Interface::reserveForAction(const KUrl&, QObject* const, const QString&) const
+bool Interface::reserveForAction(const QUrl&, QObject* const, const QString&) const
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
 }
 
-void Interface::clearReservation(const KUrl&, QObject* const)
+void Interface::clearReservation(const QUrl&, QObject* const)
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
 }
 
-bool Interface::itemIsReserved(const KUrl&, QString* const) const
+bool Interface::itemIsReserved(const QUrl&, QString* const) const
 {
     PrintWarningMessageFeature("HostSupportsItemReservation");
     return false;
 }
 
-FileReadWriteLock* Interface::createReadWriteLock(const KUrl&) const
+FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
 {
     // Dont print warning as we use the feature from low-level kipi libraries without testing for support
     //PrintWarningMessageFeature("HostSupportsReadWriteLock");
     return 0;
 }
 
-void Interface::aboutToEdit(const KUrl&, EditHints)
+void Interface::aboutToEdit(const QUrl&, EditHints)
 {
 }
 
-void Interface::editingFinished(const KUrl&, EditHints)
+void Interface::editingFinished(const QUrl&, EditHints)
 {
 }
 
 
 // -----------------------------------------------------------------------------------------------------------
 
-FileReadLocker::FileReadLocker(Interface* const iface, const KUrl& url)
+FileReadLocker::FileReadLocker(Interface* const iface, const QUrl &url)
     : d(iface->createReadWriteLock(url))
 {
     relock();
@@ -362,7 +358,7 @@ void FileReadLocker::unlock()
 
 // -----------------------------------------------------------------------------------------------------------
 
-FileWriteLocker::FileWriteLocker(Interface* const iface, const KUrl& url)
+FileWriteLocker::FileWriteLocker(Interface* const iface, const QUrl &url)
     : d(iface->createReadWriteLock(url))
 {
     relock();
@@ -402,7 +398,7 @@ void FileWriteLocker::unlock()
 
 // -----------------------------------------------------------------------------------------------------------
 
-EditHintScope::EditHintScope(Interface* const iface, const KUrl& url, EditHints hints)
+EditHintScope::EditHintScope(Interface* const iface, const QUrl &url, EditHints hints)
     : iface(iface), url(url), hints(hints)
 {
     if (iface)

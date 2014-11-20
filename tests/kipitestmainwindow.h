@@ -28,7 +28,7 @@
 // KDE includes
 
 #include <kxmlguiwindow.h>
-#include <kurl.h>
+#include <QUrl>
 
 namespace KXMLKipiCmd
 {
@@ -39,9 +39,9 @@ class KipiTestMainWindow : public KXmlGuiWindow
 
 public:
 
-    KipiTestMainWindow(const KUrl::List& selectedImages,
-                       const KUrl::List& selectedAlbums,
-                       const KUrl::List& allAlbums);
+    KipiTestMainWindow(const QList<QUrl>& selectedImages,
+                       const QList<QUrl>& selectedAlbums,
+                       const QList<QUrl>& allAlbums);
     ~KipiTestMainWindow();
 
     static KipiTestMainWindow* instance();

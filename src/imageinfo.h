@@ -41,8 +41,7 @@
 
 // KDE includes
 
-#include <kurl.h>
-#include <kdemacros.h>
+#include <QUrl>
 
 // Local includes
 
@@ -232,7 +231,7 @@ public:
 
     /** Return item url.
     */
-    KUrl url() const;
+    QUrl url() const;
 
 private:
 

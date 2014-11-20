@@ -46,13 +46,13 @@
 #include <kservicetypetrader.h>
 #include <QDebug>
 #include <kdialog.h>
-#include <kdeversion.h>
+
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klibloader.h>
-#include <kaction.h>
+#include <QAction>
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
@@ -65,8 +65,6 @@
 #include "libkipi_version.h"
 #include "libkipi_config.h"
 #include "configwidget.h"
-
-static const KCatalogLoader loader("libkipi");
 
 namespace KIPI
 {

@@ -187,7 +187,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
         plugin->setup(d->app);
         plugin->rebuild();
 
-        foreach(KAction* const action, plugin->actions())
+        foreach(QAction* const action, plugin->actions())
         {
             QString actionName(action->objectName());
             Category cat = plugin->category(action);

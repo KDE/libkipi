@@ -35,7 +35,7 @@
  */
 
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
-
+#include "plugin_kxmlhelloworld.h"
 
 // Qt includes
 
@@ -44,9 +44,9 @@
 
 // KDE includes
 
-#include <kaction.h>
+#include <QAction>
 #include <kactioncollection.h>
-#include <kdebug.h>
+#include <QDebug>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -93,10 +93,10 @@ public:
 
     /** These plugin actions will pluged into menu KIPI host application.
      */
-    KAction*   actionImages;
-    KAction*   actionTools;
-    KAction*   actionExport;
-    KAction*   actionImport;
+    QAction *   actionImages;
+    QAction *   actionTools;
+    QAction *   actionExport;
+    QAction *   actionImport;
 };
 
 /** Macro from KDE KParts to create the factory for this plugin.
@@ -120,7 +120,7 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
       /// Private container is allocated here.
       d(new Private)
 {
-    kDebug() << "Plugin_KXMLHelloWorld plugin loaded";
+    //qDebug() << "Plugin_KXMLHelloWorld plugin loaded";
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui.
@@ -178,7 +178,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** An action dedicated to be plugged in digiKam Image menu.
      */
-    d->actionImages = new KAction(this);
+    d->actionImages = new QAction(this);
     d->actionImages->setText(i18n("KXML Hello World Image..."));
     d->actionImages->setIcon(QIcon::fromTheme("script-error"));
     d->actionImages->setShortcut(KShortcut(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
@@ -198,7 +198,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
-    d->actionTools = new KAction(this);
+    d->actionTools = new QAction(this);
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(QIcon::fromTheme("script-error"));
     d->actionTools->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
@@ -215,7 +215,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
-    d->actionExport = new KAction(this);
+    d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(QIcon::fromTheme("script-error"));
     d->actionExport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
@@ -226,7 +226,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
-    d->actionImport = new KAction(this);
+    d->actionImport = new QAction(this);
     d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(QIcon::fromTheme("script-error"));
     d->actionImport->setShortcut(KShortcut(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));

@@ -43,7 +43,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -192,38 +192,38 @@ public:
     /**
      * Returns the image info container for item pointed by url.
      */
-    virtual ImageInfo info(const KUrl&) = 0;
+    virtual ImageInfo info(const QUrl&) = 0;
 
     /**
      * Tells to host application that a new image has been made available to it.
      * Returns true if the host application did accept the new image, otherwise err will be filled with
      * an error description.
      */
-    virtual bool addImage(const KUrl&, QString& err);
+    virtual bool addImage(const QUrl&, QString& err);
 
     /**
      * Tells to host application that a new image has been removed.
      */
-    virtual void delImage(const KUrl&);
+    virtual void delImage(const QUrl&);
 
     /**
      * Tells to host application that the following images has changed on disk
      */
-    virtual void refreshImages(const KUrl::List&);
+    virtual void refreshImages(const QList<QUrl>&);
 
     /**
      * Tells to host application to render a thumbnail for an image. If this method is not
      * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
      * Use gotThumbnail() signal to take thumb.
      */
-    virtual void thumbnail(const KUrl& url, int size);
+    virtual void thumbnail(const QUrl &url, int size);
 
     /**
      * Ask to Kipi host application to render thumbnails for a list of images. If this method is not
      * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
      * Use gotThumbnail() signal to take thumbs.
      */
-    virtual void thumbnails(const KUrl::List& list, int size);
+    virtual void thumbnails(const QList<QUrl>& list, int size);
 
     /**
       Ask to Kipi host application to prepare progress manager for a new entry. This method must return from host 
@@ -319,7 +319,7 @@ public:
      *
      * Returns true if a reservation was made, or false if a reservation could not be made.
      */
-    virtual bool reserveForAction(const KUrl& url, QObject* const reservingObject,
+    virtual bool reserveForAction(const QUrl &url, QObject* const reservingObject,
                                   const QString& descriptionOfAction) const;
     /**
      * Supported if HostSupportsItemReservation
@@ -327,7 +327,7 @@ public:
      * Clears a reservation made previously with reserveForAction for the given reservingObject.
      * You must clear any reservation you made, or, alternatively, delete the reserving object.
      */
-    virtual void clearReservation(const KUrl& url, QObject* const reservingObject);
+    virtual void clearReservation(const QUrl &url, QObject* const reservingObject);
 
     /**
      * Supported if HostSupportsItemReservation
@@ -335,7 +335,7 @@ public:
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
      * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool itemIsReserved(const KUrl& url, QString* const descriptionOfAction = 0) const;
+    virtual bool itemIsReserved(const QUrl &url, QString* const descriptionOfAction = 0) const;
 
     /**
      * Supported if HostSupportsReadWriteLock
@@ -345,7 +345,7 @@ public:
      * The implementation KIPI host application must be thread-safe.
      *
      */
-    virtual FileReadWriteLock* createReadWriteLock(const KUrl& url) const;
+    virtual FileReadWriteLock* createReadWriteLock(const QUrl &url) const;
 
     /**
      * Supported if HostSupportsEditHints
@@ -356,8 +356,8 @@ public:
      * When aboutToEdit has been called, editingFinished must be called afterwards.
      * It is strongly recommended to use the EditHintScope instead of these methods.
      */
-    virtual void aboutToEdit(const KUrl& url, EditHints hints);
-    virtual void editingFinished(const KUrl& url, EditHints hints);
+    virtual void aboutToEdit(const QUrl &url, EditHints hints);
+    virtual void editingFinished(const QUrl &url, EditHints hints);
 
     /**
      * Returns a string version of libkipi release ID.
@@ -381,7 +381,7 @@ Q_SIGNALS:
     /** Emit when host application has redered item thumbnail. See thumbnail() and thumbnails() 
      * methods for details.
      */
-    void gotThumbnail(const KUrl&, const QPixmap&);
+    void gotThumbnail(const QUrl&, const QPixmap&);
 
     /**
      * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.
@@ -393,8 +393,8 @@ Q_SIGNALS:
      *
      * Emitted from reservedForAction and clearReservation, respectively.
      * */
-    void reservedForAction(const KUrl& url, const QString& descriptionOfAction);
-    void reservationCleared(const KUrl& url);
+    void reservedForAction(const QUrl &url, const QString& descriptionOfAction);
+    void reservationCleared(const QUrl &url);
 
 protected:
 
@@ -432,7 +432,7 @@ class LIBKIPI_EXPORT FileReadLocker
 {
 public:
 
-    FileReadLocker(Interface* const iface, const KUrl& url);
+    FileReadLocker(Interface* const iface, const QUrl &url);
     FileReadLocker(ImageInfoShared* const info);
     ~FileReadLocker();
 
@@ -451,7 +451,7 @@ class LIBKIPI_EXPORT FileWriteLocker
 {
 public:
 
-    FileWriteLocker(Interface* const iface, const KUrl& url);
+    FileWriteLocker(Interface* const iface, const QUrl &url);
     FileWriteLocker(ImageInfoShared* const info);
     ~FileWriteLocker();
 
@@ -470,7 +470,7 @@ class LIBKIPI_EXPORT EditHintScope
 {
 public:
 
-    EditHintScope(Interface* const iface, const KUrl& url, EditHints hints);
+    EditHintScope(Interface* const iface, const QUrl &url, EditHints hints);
     ~EditHintScope();
 
     void changeAborted();
@@ -478,7 +478,7 @@ public:
 private:
 
     Interface* const iface;
-    KUrl const       url;
+    QUrl const       url;
     EditHints        hints;
 };
 

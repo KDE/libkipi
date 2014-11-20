@@ -88,6 +88,7 @@ public:
 KipiSetup::KipiSetup(QWidget* const parent)
     : KPageDialog(parent), d(new Private)
 {
+#if 0 //PORT QT5
     setCaption(i18n("Configure"));
     setButtons(Ok | Cancel);
     setDefaultButton(Ok);
@@ -128,13 +129,14 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     connect(d->pluginFilter, SIGNAL(userTextChanged(QString)),
             this, SLOT(slotFilterChanged(QString)));
+#endif
 }
 
 KipiSetup::~KipiSetup()
 {
     KSharedConfig::Ptr config = KGlobal::config();
     KConfigGroup group        = config->group(QString("Setup Dialog"));
-    saveDialogSize(group);
+    //PORT QT5 saveDialogSize(group);
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
     delete d;
@@ -161,7 +163,7 @@ void KipiSetup::slotButtonClicked(int button)
     }
     else
     {
-        KDialog::slotButtonClicked(button);
+        //PORT QT5 KDialog::slotButtonClicked(button);
     }
 }
 

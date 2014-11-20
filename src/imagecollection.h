@@ -39,7 +39,7 @@
 
 // KDE includes
 
-#include <kurl.h>
+#include <QUrl>
 
 // Local includes
 
@@ -96,7 +96,7 @@ public:
     /**
      * Returns a list of image urls hosted by collection.
      */
-    KUrl::List images() const;
+    QList<QUrl> images() const;
 
     /**
      * Returns the directory for the image collection.
@@ -106,7 +106,7 @@ public:
      * of the image collection (in case all images has a common root), or
      * even an empty URL.
      */
-    KUrl       path() const;
+    QUrl       path() const;
 
     /**
      * Returns the directory to place images into.
@@ -120,7 +120,7 @@ public:
      *
      * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
      */
-    KUrl       uploadPath() const;
+    QUrl       uploadPath() const;
 
     /**
      * When a plugin wants to upload images, it may choose to display an upload widget,
@@ -136,7 +136,7 @@ public:
      * 
      * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
      */
-    KUrl       uploadRoot() const;
+    QUrl       uploadRoot() const;
 
     /**
      * This fonction return the name of the upload root path used by the

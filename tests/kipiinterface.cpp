@@ -69,7 +69,7 @@ ImageCollection KipiInterface::currentAlbum()
 {
     kDebug() << "Called by plugins";
 
-    KUrl currentAlbumUrl;
+    QUrl currentAlbumUrl;
     if (!m_selectedAlbums.isEmpty())
     {
         currentAlbumUrl = m_selectedAlbums.at(0);
@@ -87,13 +87,13 @@ ImageCollection KipiInterface::currentSelection()
 QList<ImageCollection> KipiInterface::allAlbums()
 {
     QList<ImageCollection> listAllAlbums;
-    for (KUrl::List::const_iterator it = m_albums.constBegin(); it!=m_albums.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = m_albums.constBegin(); it!=m_albums.constEnd(); ++it)
     {
         listAllAlbums.append(ImageCollection(new KipiImageCollectionShared(*it)));
     }
 
     // make sure albums which have been specified as selectedalbums are also in the allAlbums list:
-    for (KUrl::List::const_iterator it = m_selectedAlbums.constBegin(); it!=m_selectedAlbums.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = m_selectedAlbums.constBegin(); it!=m_selectedAlbums.constEnd(); ++it)
     {
         if (!m_albums.contains(*it))
         {
@@ -104,29 +104,29 @@ QList<ImageCollection> KipiInterface::allAlbums()
     return listAllAlbums;
 }
 
-ImageInfo KipiInterface::info(const KUrl& url)
+ImageInfo KipiInterface::info(const QUrl &url)
 {
     kDebug() << QString( "Plugin wants information about image \"%1\"").arg( url.url() );
 
     return ImageInfo( new KipiImageInfoShared(this, url ) );
 }
 
-bool KipiInterface::addImage(const KUrl& url, QString& errmsg)
+bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
     kDebug() << QString( "Plugin added an image: \"%1\"").arg( url.url() );
     return true;
 }
 
-void KipiInterface::delImage(const KUrl& url)
+void KipiInterface::delImage(const QUrl &url)
 {
     kDebug() << QString( "Plugin deleted an image: \"%1\"").arg( url.url() );
 }
 
-void KipiInterface::refreshImages(const KUrl::List& urls)
+void KipiInterface::refreshImages(const QList<QUrl>& urls)
 {
     kDebug() << QString( "Plugin asks to refresh %1 images:").arg( urls.size() );
-    for (KUrl::List::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
+    for (QList<QUrl>::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
         kDebug() << "  " + (*it).url();
     }
@@ -150,40 +150,40 @@ UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
     return new KipiUploadWidget(this, parent);
 }
 
-void KipiInterface::addSelectedImages(const KUrl::List& images)
+void KipiInterface::addSelectedImages(const QList<QUrl>& images)
 {
     m_selectedImages.append(images);
 }
 
-void KipiInterface::addSelectedImage(const KUrl& image)
+void KipiInterface::addSelectedImage(const QUrl &image)
 {
     m_selectedImages.append(image);
 }
 
-void KipiInterface::addAlbums(const KUrl::List& albums)
+void KipiInterface::addAlbums(const QList<QUrl>& albums)
 {
-    for (KUrl::List::const_iterator it = albums.constBegin(); it!=albums.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = albums.constBegin(); it!=albums.constEnd(); ++it)
     {
         addAlbum(*it);
     }
 }
 
-void KipiInterface::addAlbum(const KUrl& album)
+void KipiInterface::addAlbum(const QUrl &album)
 {
     m_albums.append(album);
 
     // TODO: recurse through sub-directories?
 }
 
-void KipiInterface::addSelectedAlbums(const KUrl::List& albums)
+void KipiInterface::addSelectedAlbums(const QList<QUrl>& albums)
 {
-    for (KUrl::List::const_iterator it = albums.constBegin(); it!=albums.constEnd(); ++it)
+    for (QList<QUrl>::const_iterator it = albums.constBegin(); it!=albums.constEnd(); ++it)
     {
         addSelectedAlbum(*it);
     }
 }
 
-void KipiInterface::addSelectedAlbum(const KUrl& album)
+void KipiInterface::addSelectedAlbum(const QUrl &album)
 {
     m_selectedAlbums.append(album);
 
@@ -204,16 +204,16 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
     return QVariant();
 }
 
-void KipiInterface::thumbnails(const KUrl::List& list, int)
+void KipiInterface::thumbnails(const QList<QUrl>& list, int)
 {
-    foreach(const KUrl& url, list)
+    foreach(const QUrl &url, list)
     {
 #if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
         items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
         KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
 #else
-        KIO::PreviewJob *job = KIO::filePreview(KUrl::List() << url, 256);
+        KIO::PreviewJob *job = KIO::filePreview(QList<QUrl>() << url, 256);
 #endif
 
         connect(job, SIGNAL(gotPreview(KFileItem,QPixmap)),
