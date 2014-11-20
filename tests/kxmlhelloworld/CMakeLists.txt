@@ -6,8 +6,8 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
-                    ${CMAKE_CURRENT_BINARY_DIR}/../../libkipi
-                    ${CMAKE_CURRENT_SOURCE_DIR}/../../libkipi
+                    ${CMAKE_CURRENT_BINARY_DIR}/../../src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/../../src
                     ${CMAKE_CURRENT_BINARY_DIR}
                    )
 
