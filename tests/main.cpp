@@ -29,7 +29,7 @@
 // KDE includes
 
 #include <kapplication.h>
-#include <kaboutdata.h>
+#include <K4AboutData>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -48,12 +48,12 @@ using namespace KXMLKipiCmd;
 
 int main(int argc, char* argv[])
 {
-    const KAboutData aboutData("kxmlkipicmd",
+    const K4AboutData aboutData("kxmlkipicmd",
                                "kipi",
                                ki18n("kxmlkipicmd"),
                                KIPI_VERSION_STRING,            // libkipi version
                                ki18n("Kipi host test application using KDE XML-GUI"),
-                               KAboutData::License_GPL,
+                               K4AboutData::License_GPL,
                                ki18n("(c) 2009-2010 Michael G. Hansen\n"
                                      "(c) 2011-2012 Gilles Caulier\n"
                                      "(c) 2012 Victor Dodon "),
@@ -74,7 +74,6 @@ int main(int argc, char* argv[])
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
 
-    KGlobal::locale()->insertCatalog("libkipi");
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
