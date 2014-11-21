@@ -73,6 +73,8 @@ include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings)
+include(ECMInstallIcons)
+
 
 ############## Find Packages ###################
 
