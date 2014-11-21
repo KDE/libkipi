@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  image collection shared
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -29,23 +29,19 @@
  *
  * ============================================================ */
 
-#include "imagecollectionshared.h"
-
-// KDE Includes
-
-#include <QDebug>
-
 // Local includes
 
+#include "imagecollectionshared.h"
 #include "imagecollection.h"
+#include "libkipi_debug.h"
 
 // Macros
 
-#define PrintWarningMessageFeature(feature)                                           \
-        qWarning() << "This should only be invoked if the host application supports " \
-                      "KIPI::Features (" << feature << "). If host application do "   \
-                      "support that, then this function should have been overridden " \
-                      "in the KIPI host interface."
+#define PrintWarningMessageFeature(feature)                                                       \
+        qCWarning(LIBKIPI_LOG) << "This should only be invoked if the host application supports " \
+                                  "KIPI::Features (" << feature << "). If host application do "   \
+                                  "support that, then this function should have been overridden " \
+                                  "in the KIPI host interface."
 
 namespace KIPI
 {
@@ -70,15 +66,15 @@ void ImageCollectionShared::removeRef()
 
     if ( m_count == 0 )
     {
-        // //qDebug() << "Deleting!" << endl;
+        //qCDebug(LIBKIPI_LOG) << "Deleting!";
         delete this;
     }
 }
 
 QUrl ImageCollectionShared::path()
 {
-    qWarning() << "This method should only be invoked if this imagecollection is a directory. "
-               << "See KIPI::ImageCollectionShared::isDirectory()";
+    qCWarning(LIBKIPI_LOG) << "This method should only be invoked if this imagecollection is a directory. "
+                           << "See KIPI::ImageCollectionShared::isDirectory()";
     return QUrl();
 }
 
@@ -105,7 +101,7 @@ QUrl ImageCollectionShared::uploadRoot()
 
 QString ImageCollectionShared::uploadRootName()
 {
-   return (QString("Images"));   // No i18n here. THis must be done on KIPI host interface.
+   return (QString("Images"));   // No i18n here. This must be done on KIPI host interface.
 }
 
 bool ImageCollectionShared::isDirectory()
@@ -133,7 +129,7 @@ QDate ImageCollectionShared::date()
 
 bool ImageCollectionShared::operator==(ImageCollectionShared& ics)
 {
-    return images() == ics.images();
+    return (images() == ics.images());
 }
 
 } // namespace KIPI

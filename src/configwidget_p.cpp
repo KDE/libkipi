@@ -7,7 +7,7 @@
  * @date   2012-08-06
  * @brief  private implementation of plugin config widget
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2012 by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
@@ -31,15 +31,14 @@
 
 #include <QList>
 #include <QHeaderView>
+#include <QAction>
 
 // KDE includes
 
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kconfig.h>
-#include <KLocalizedString>
-#include <QAction>
-#include <QDebug>
+#include <klocalizedstring.h>
 
 namespace KIPI
 {

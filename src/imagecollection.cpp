@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  image collection
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -29,23 +29,19 @@
  *
  * ============================================================ */
 
-#include "imagecollection.h"
-
-// KDE includes
-
-#include <QDebug>
-
 // Local includes
 
+#include "imagecollection.h"
 #include "imagecollectionshared.h"
+#include "libkipi_debug.h"
 
 // Macros
 
 #define PrintWarningMessage()                                           \
-        qWarning() << "Image collection is invalid - this might be the case if you asked for an album, " \
-                   << "and not album existed. You should check using .isValid() first. "                 \
-                   << "Note: Plugins should never create an instance of ImageCollection, only the "      \
-                   << "host application should do that."
+        qCWarning(LIBKIPI_LOG) << "Image collection is invalid - this might be the case if you asked for an album, " \
+                               << "and not album existed. You should check using .isValid() first. "                 \
+                               << "Note: Plugins should never create an instance of ImageCollection, only the "      \
+                               << "host application should do that."
 
 namespace KIPI
 {

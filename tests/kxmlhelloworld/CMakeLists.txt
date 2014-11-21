@@ -19,7 +19,7 @@ KDE4_ADD_PLUGIN(kipiplugin_kxmlhelloworld ${kipiplugin_kxmlhelloworld_PART_SRCS}
 target_link_libraries(kipiplugin_kxmlhelloworld
                       KF5::Parts
                       KF5::KDELibs4Support
-                      kipi
+                      KF5Kipi
                      )
 
 configure_file(plugin/kipiplugin_kxmlhelloworld.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop)

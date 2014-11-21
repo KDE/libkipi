@@ -25,9 +25,8 @@
  *
  * ============================================================ */
 
-
 #include "configwidget.h"
-#include <KLocalizedString>
+
 // Qt include
 
 #include <QPushButton>
@@ -42,6 +41,7 @@
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kurllabel.h>
+#include <klocalizedstring.h>
 
 // Local includes
 
