@@ -31,8 +31,8 @@
  *
  * ============================================================ */
 
-
 #include "pluginloader.h"
+
 // Qt includes
 
 #include <QStringList>
@@ -40,19 +40,17 @@
 #include <QList>
 #include <QVariantList>
 #include <QVariant>
+#include <QAction>
 
 // KDE includes
-#include <KDebug>
-#include <kservicetypetrader.h>
-#include <QDebug>
-#include <kdialog.h>
 
+#include <kservicetypetrader.h>
+#include <kdialog.h>
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
 #include <kconfig.h>
 #include <kglobal.h>
 #include <klibloader.h>
-#include <QAction>
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
@@ -64,6 +62,7 @@
 #include "interface.h"
 #include "libkipi_version.h"
 #include "libkipi_config.h"
+#include "libkipi_debug.h"
 #include "configwidget.h"
 
 namespace KIPI
@@ -99,6 +98,7 @@ PluginLoader::Info::~Info()
     if (d->parent && d->plugin)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
+
         foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
@@ -168,17 +168,17 @@ Plugin* PluginLoader::Info::plugin() const
 
         if (d->plugin)
         {
-            kDebug(51001) << "Loaded plugin " << d->plugin->objectName();
+            qCDebug(LIBKIPI_LOG) << "Loaded plugin " << d->plugin->objectName();
 
             emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
         else
         {
-            kWarning(51001) << "Cannot create instance for plugin "
-                            << name()
-                            << " (" << library() << ")"
-                            << " with error: "
-                            << error;
+            qCWarning(LIBKIPI_LOG) << "Cannot create instance for plugin "
+                                   << name()
+                                   << " (" << library() << ")"
+                                   << " with error: "
+                                   << error;
         }
     }
 
@@ -195,6 +195,7 @@ void PluginLoader::Info::reload()
     if (d->parent)
     {
         d->parent->guiFactory()->removeClient(d->plugin);
+
         foreach(KToolBar* const toolbar, d->parent->toolBars())
         {
             toolbar->removeXMLGUIClient(d->plugin);
@@ -258,7 +259,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
 
     if (!parent)
     {
-        qWarning() << "KDE XML application instance is null...";
+        qWarning(LIBKIPI_LOG) << "KDE XML application instance is null...";
     }
 
     d->parent = parent;
@@ -291,7 +292,7 @@ void PluginLoader::init()
 
     if (!d->interface)
     {
-        qWarning() << "KIPI host interface instance is null. No plugin will be loaded...";
+        qWarning(LIBKIPI_LOG) << "KIPI host interface instance is null. No plugin will be loaded...";
         return;
     }
 
@@ -311,22 +312,22 @@ void PluginLoader::init()
 
         if (library.isEmpty() || uname.isEmpty())
         {
-            kWarning(51001) << "Plugin had an empty name or library file - this should not happen.";
+            qCWarning(LIBKIPI_LOG) << "Plugin had an empty name or library file - this should not happen.";
             continue;
         }
 
         if (d->ignoredPlugins.contains(uname))
         {
-            kDebug(51001) << "Plugin " << name << " (generic name: " << uname << ") is in the ignore list from host application";
+            qCDebug(LIBKIPI_LOG) << "Plugin " << name << " (generic name: " << uname << ") is in the ignore list from host application";
             continue;
         }
 
         if (binVersion != kipi_binary_version)
         {
-            kDebug(51001) << "Plugin " << name
-                          << "has a SO version (" << binVersion
-                          << ") which is different than libkipi ABI version (" << kipi_binary_version << "). "
-                          << "Refusing to load.";
+            qCDebug(LIBKIPI_LOG) << "Plugin " << name
+                                 << "has a SO version (" << binVersion
+                                 << ") which is different than libkipi ABI version (" << kipi_binary_version << "). "
+                                 << "Refusing to load.";
             continue;
         }
 
@@ -337,8 +338,8 @@ void PluginLoader::init()
         {
             if (!d->interface->hasFeature(*featureIt))
             {
-                kDebug(51001) << "Plugin " << name << " was not loaded because the host application is missing\n"
-                              << "the feature " << *featureIt;
+                qCDebug(LIBKIPI_LOG) << "Plugin " << name << " was not loaded because the host application is missing\n"
+                                     << "the feature " << *featureIt;
                 appHasAllReqFeatures = false;
                 break;
             }
@@ -375,7 +376,7 @@ PluginLoader* PluginLoader::instance()
 {
     if (!s_instance)
     {
-        kDebug(51001) << "Instance is null...";
+        qCDebug(LIBKIPI_LOG) << "Instance is null...";
     }
 
     return s_instance;

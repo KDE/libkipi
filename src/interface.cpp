@@ -128,7 +128,7 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsItemReservation );
     else
     {
-        qWarning() << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
+        qCWarning(LIBKIPI_LOG) << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
         return false;
     }
 }

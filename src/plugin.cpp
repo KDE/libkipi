@@ -159,7 +159,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 
     foreach(QDomElement element, disabledElements)
     {
-        //qDebug(LIBKIPI_LOG) << "Plugin action '" << element.attribute("name") << "' is disabled.";
+        //qCDebug(LIBKIPI_LOG) << "Plugin action '" << element.attribute("name") << "' is disabled.";
         QDomElement parent = element.parentNode().toElement();
         parent.removeChild(element);
     }
@@ -217,8 +217,8 @@ QList<QAction *> Plugin::actions(QWidget* const widget) const
 
     if (!d->actionsCat.contains(w))
     {
-        qWarning() << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
-                   << "as the very first line when overriding the setup method.";
+        qCWarning(LIBKIPI_LOG) << "Error in plugin. It needs to call Plugin::setup(QWidget*) "
+                               << "as the very first line when overriding the setup method.";
     }
 
     return d->actionsCat[w].keys();
@@ -236,7 +236,7 @@ void Plugin::addAction(const QString& name, QAction * const action)
     }
     else
     {
-        //qDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
+        //qCDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -257,7 +257,7 @@ void Plugin::addAction(const QString& name, QAction * const action, Category cat
     }
     else
     {
-        //qDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
+        //qCDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -265,9 +265,9 @@ void Plugin::addAction(QAction * const action, Category cat)
 {
     if (cat == InvalidCategory)
     {
-        qWarning() << "Error in plugin. Action '" << action->objectName() << "has "
-                      "invalid category. You must set default plugin category or "
-                      "to use a valid Category";
+        qCWarning(LIBKIPI_LOG) << "Error in plugin. Action '" << action->objectName() << "has "
+                                  "invalid category. You must set default plugin category or "
+                                  "to use a valid Category";
     }
 
     d->actionsCat[d->defaultWidget].insert(action, cat);
@@ -292,8 +292,8 @@ Category Plugin::category(QAction * const action) const
     {
         if (d->defaultCategory == InvalidCategory)
         {
-            qWarning() << "Error in plugin. Invalid category. "
-                          "You must set default plugin category.";
+            qCWarning(LIBKIPI_LOG) << "Error in plugin. Invalid category. "
+                                      "You must set default plugin category.";
         }
 
         return d->defaultCategory;
@@ -321,13 +321,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     if (!host)
     {
         // Should we display this message?
-        //qCritical(LIBKIPI_LOG) << "Host KXMLGUIClient is null!";
+        //qCCritical(LIBKIPI_LOG) << "Host KXMLGUIClient is null!";
         return;
     }
 
     if (d->uiBaseName.isEmpty())
     {
-        qCritical(LIBKIPI_LOG) << "UI file basename is not set! You must first call setUiBaseName.";
+        qCCritical(LIBKIPI_LOG) << "UI file basename is not set! You must first call setUiBaseName.";
         return;
     }
 
@@ -340,7 +340,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
-        qCritical(LIBKIPI_LOG) << "Could not open default ui file: " << defaultUI;
+        qCCritical(LIBKIPI_LOG) << "Could not open default ui file: " << defaultUI;
         return;
     }
 
@@ -349,7 +349,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (hostDoc.isNull() || defaultDomDoc.isNull())
     {
-        qCritical(LIBKIPI_LOG) << "Cannot merge the XML files, at least one is null!";
+        qCCritical(LIBKIPI_LOG) << "Cannot merge the XML files, at least one is null!";
         return;
     }
 
@@ -441,7 +441,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
     {
-        qCritical(LIBKIPI_LOG) << "Could not open " << localUI << " for writing!";
+        qCCritical(LIBKIPI_LOG) << "Could not open " << localUI << " for writing!";
         return;
     }
 
