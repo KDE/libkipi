@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  plugin interface
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2012      by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
@@ -33,23 +33,23 @@
 
 
 #include "plugin.h"
-#include <KGlobal>
 // Qt includes
 
 #include <QWidget>
 #include <QFile>
+#include <QAction>
 
 // KDE includes
 
-#include <QAction>
 #include <kactioncollection.h>
 #include <kcomponentdata.h>
 #include <kstandarddirs.h>
-#include <QDebug>
+#include <kglobal.h>
 
 // Local includes
 
 #include "libkipi_version.h"
+#include "libkipi_debug.h"
 #include "interface.h"
 #include "pluginloader.h"
 
@@ -159,7 +159,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 
     foreach(QDomElement element, disabledElements)
     {
-        //qDebug() << "Plugin action '" << element.attribute("name") << "' is disabled.";
+        //qDebug(LIBKIPI_LOG) << "Plugin action '" << element.attribute("name") << "' is disabled.";
         QDomElement parent = element.parentNode().toElement();
         parent.removeChild(element);
     }
@@ -213,7 +213,7 @@ Plugin::~Plugin()
 
 QList<QAction *> Plugin::actions(QWidget* const widget) const
 {
-    QWidget* w = !widget ? d->defaultWidget : widget;
+    QWidget* const w = !widget ? d->defaultWidget : widget;
 
     if (!d->actionsCat.contains(w))
     {
@@ -236,7 +236,7 @@ void Plugin::addAction(const QString& name, QAction * const action)
     }
     else
     {
-        //qDebug() << "Action '" << name << "' is disabled.";
+        //qDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -257,7 +257,7 @@ void Plugin::addAction(const QString& name, QAction * const action, Category cat
     }
     else
     {
-        //qDebug() << "Action '" << name << "' is disabled.";
+        //qDebug(LIBKIPI_LOG) << "Action '" << name << "' is disabled.";
     }
 }
 
@@ -321,13 +321,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     if (!host)
     {
         // Should we display this message?
-        //qCritical() << "Host KXMLGUIClient is null!";
+        //qCritical(LIBKIPI_LOG) << "Host KXMLGUIClient is null!";
         return;
     }
 
     if (d->uiBaseName.isEmpty())
     {
-        qCritical() << "UI file basename is not set! You must first call setUiBaseName.";
+        qCritical(LIBKIPI_LOG) << "UI file basename is not set! You must first call setUiBaseName.";
         return;
     }
 
@@ -340,7 +340,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
-        qCritical() << "Could not open default ui file: " << defaultUI;
+        qCritical(LIBKIPI_LOG) << "Could not open default ui file: " << defaultUI;
         return;
     }
 
@@ -349,7 +349,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (hostDoc.isNull() || defaultDomDoc.isNull())
     {
-        qCritical() << "Cannot merge the XML files, at least one is null!";
+        qCritical(LIBKIPI_LOG) << "Cannot merge the XML files, at least one is null!";
         return;
     }
 
@@ -441,7 +441,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!writeFile.open(QFile::WriteOnly | QFile::Truncate))
     {
-        qCritical() << "Could not open " << localUI << " for writing!";
+        qCritical(LIBKIPI_LOG) << "Could not open " << localUI << " for writing!";
         return;
     }
 

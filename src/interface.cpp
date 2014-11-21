@@ -317,7 +317,6 @@ void Interface::editingFinished(const QUrl&, EditHints)
 {
 }
 
-
 // -----------------------------------------------------------------------------------------------------------
 
 FileReadLocker::FileReadLocker(Interface* const iface, const QUrl &url)
