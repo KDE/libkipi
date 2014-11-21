@@ -7,7 +7,7 @@
  * @date   2004-07-22
  * @brief  image info
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2004-2005 by Renchi Raju
  *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
@@ -38,10 +38,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QMap>
 #include <QtCore/QVariant>
-
-// KDE includes
-
-#include <QUrl>
+#include <QtCore/QUrl>
 
 // Local includes
 

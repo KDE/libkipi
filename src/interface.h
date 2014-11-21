@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  main kipi host application interface
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2006-2012 by Marcel Wiesweg
  *         <a href="mailto:marcel dot wiesweg at gmx dot de">marcel dot wiesweg at gmx dot de</a>
@@ -40,10 +40,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 #include <QtCore/QList>
-
-// KDE includes
-
-#include <QUrl>
+#include <QtCore/QUrl>
 
 // Local includes
 
@@ -477,9 +474,8 @@ public:
 
 private:
 
-    Interface* const iface;
-    QUrl const       url;
-    EditHints        hints;
+    class Private;
+    Private* const d;
 };
 
 }  // namespace KIPI

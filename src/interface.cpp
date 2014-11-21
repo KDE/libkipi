@@ -7,7 +7,7 @@
  * @date   2004-02-01
  * @brief  main kipi host application interface
  *
- * @author Copyright (C) 2004-2012 by Gilles Caulier
+ * @author Copyright (C) 2004-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2006-2012 by Marcel Wiesweg
  *         <a href="mailto:marcel dot wiesweg at gmx dot de">marcel dot wiesweg at gmx dot de</a>
@@ -39,8 +39,6 @@
 
 // KDE includes
 
-
-#include <QDebug>
 #include <kfileitem.h>
 #include <kimageio.h>
 #include <kio/previewjob.h>
@@ -48,6 +46,7 @@
 // Local includes
 
 #include "libkipi_version.h"
+#include "libkipi_debug.h"
 #include "imageinfo.h"
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
@@ -57,13 +56,13 @@
 
 // Macros
 
-#define PrintWarningMessageFeature(feature)                                           \
-        qWarning() << "This should only be invoked if the host application supports " \
-                      "KIPI::Features (" << feature << "). If host application do "   \
-                      "support that, then this function should have been overridden " \
-                      "in the KIPI host interface."
+#define PrintWarningMessageFeature(feature)                                                       \
+        qCWarning(LIBKIPI_LOG) << "This should only be invoked if the host application supports " \
+                                  "KIPI::Features (" << feature << "). If host application do "   \
+                                  "support that, then this function should have been overridden " \
+                                  "in the KIPI host interface."
 
-#define PrintWarningMessage() qWarning() << "This method should have been overridden in the kipi host interface."
+#define PrintWarningMessage() qCWarning(LIBKIPI_LOG) << "This method should have been overridden in the kipi host interface."
 
 namespace KIPI
 {
@@ -179,12 +178,14 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     PrintWarningMessageFeature("HostSupportsThumbnails");
 
     KFileItemList items;
+
     for (QList<QUrl>::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
             items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
     }
-    KIO::PreviewJob* job = KIO::filePreview(items, QSize(size, size));
+
+    KIO::PreviewJob* const job = KIO::filePreview(items, QSize(size, size));
 
     connect(job, &KIO::PreviewJob::gotPreview, this, &Interface::gotKDEPreview);
 
@@ -226,6 +227,7 @@ QVariant Interface::hostSetting(const QString& settingName)
         // Return a list of images file extensions supported by KDE.
         QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
         QString imagesFileFilter  = KDEImagetypes.join(" ");
+
         return QString( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
     }
     else if (settingName == QString("RawExtensions"))
@@ -398,27 +400,50 @@ void FileWriteLocker::unlock()
 
 // -----------------------------------------------------------------------------------------------------------
 
-EditHintScope::EditHintScope(Interface* const iface, const QUrl &url, EditHints hints)
-    : iface(iface), url(url), hints(hints)
+
+class EditHintScope::Private
 {
-    if (iface)
+
+public:
+
+    Private() :
+        iface(0)
     {
-        iface->aboutToEdit(url, hints);
+    }
+
+public:
+
+    Interface* iface;
+    QUrl       url;
+    EditHints  hints;
+};
+
+EditHintScope::EditHintScope(Interface* const iface, const QUrl& url, EditHints hints)
+    : d(new Private)
+{
+    d->iface = iface;
+    d->url   = url;
+    d->hints = hints;
+
+    if (d->iface)
+    {
+        d->iface->aboutToEdit(d->url, d->hints);
     }
 }
 
 EditHintScope::~EditHintScope()
 {
-    if (iface)
+    if (d->iface)
     {
-        iface->editingFinished(url, hints);
+        d->iface->editingFinished(d->url, d->hints);
     }
+
+    delete d;
 }
 
 void EditHintScope::changeAborted()
 {
-    hints |= HintEditAborted;
+    d->hints |= HintEditAborted;
 }
-
 
 } // namespace KIPI
