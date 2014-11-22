@@ -52,7 +52,6 @@
 #include "libkipi_export.h"
 
 class QAction;
-class KComponentData;
 
 namespace KIPI
 {
@@ -92,7 +91,7 @@ public:
      * @param parent the parent of this object
      * @param name the name of the plugin
      */
-    Plugin(const KComponentData& instance, QObject* const parent, const char* name);
+    Plugin(QObject* const parent, const char* name);
 
     /**
      * Standard destructor

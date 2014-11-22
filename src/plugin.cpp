@@ -42,8 +42,8 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kcomponentdata.h>
 #include <kstandarddirs.h>
+#include <kcomponentdata.h>
 #include <kglobal.h>
 
 // Local includes
@@ -67,7 +67,6 @@ public:
         defaultCategory = InvalidCategory;
     }
 
-    KComponentData    instance;
     ActionCategoryMap actionsCat;
     QWidget*          defaultWidget;
     QString           uiBaseName;
@@ -198,10 +197,9 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
 
 // --------------------------------------------------------------------------------------------------------------
 
-Plugin::Plugin(const KComponentData& instance, QObject* const parent, const char* name)
+Plugin::Plugin(QObject* const parent, const char* name)
       : QObject(parent), d(new Private)
 {
-    d->instance = instance;
     setObjectName(name);
 }
 
