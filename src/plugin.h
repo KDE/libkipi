@@ -87,7 +87,6 @@ public:
     /**
      * Constructs a plugin
      *
-     * @param instance the KComponentData associated with this plugin
      * @param parent the parent of this object
      * @param name the name of the plugin
      */
