@@ -166,9 +166,6 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     setWidget(panel);
     setWidgetResizable(true);
-    setAutoFillBackground(false);
-    viewport()->setAutoFillBackground(false);
-    panel->setAutoFillBackground(false);
 
     // --------------------------------------------------------
 

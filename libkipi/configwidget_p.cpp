@@ -119,9 +119,6 @@ PluginListView::PluginListView(QWidget* const parent)
     header()->setResizeMode(3, QHeaderView::Interactive);
     header()->setSortIndicatorShown(true);
 
-    setAutoFillBackground(false);
-    viewport()->setAutoFillBackground(false);
-
     PluginLoader* const loader = PluginLoader::instance();
 
     if (loader)
