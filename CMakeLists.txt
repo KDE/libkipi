@@ -7,7 +7,7 @@
 project(libkipi)
 
 message(STATUS "----------------------------------------------------------------------------------")
-message(STATUS "Starting CMake configuration for: libkipi")
+message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
 set(CMAKE_MIN_VERSION   "2.8.12")
 set(ECM_MIN_VERSION     "1.1.0")
