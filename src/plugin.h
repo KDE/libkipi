@@ -81,7 +81,7 @@ class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 
     typedef QList<QDomElement>                        QDomElemList;
     typedef QHash<QString, QDomElemList>              QHashPath;
-    typedef QMap<QWidget*, QMap<QAction *, Category> > ActionCategoryMap;
+    typedef QMap<QWidget*, QMap<QAction*, Category> > ActionCategoryMap;
 
 public:
 
@@ -107,7 +107,7 @@ public:
      * the default widget, if widget is null or not provided. The actions are in
      * the same order as added to the plugin.
      */
-    QList<QAction *> actions(QWidget* const widget = 0) const;
+    QList<QAction*> actions(QWidget* const widget = 0) const;
 
     /**
      * Returns the KIPI::Interface
@@ -126,7 +126,7 @@ public:
      * Returns the category of the specified plugin action, or InvalidCategory
      * if the action is not recognised
      */
-    Category category(QAction * const action) const;
+    Category category(QAction* const action) const;
 
     /**
      * Force the plugin to reread and to reload its xml file
@@ -147,7 +147,7 @@ protected:
      * @note It just calls addAction with the default category, so the default
      * category must be set using setDefaultCategory before you use this method
      */
-    void addAction(const QString& name, QAction * const action);
+    void addAction(const QString& name, QAction* const action);
 
     /**
      * Register action to the plugin instance and add it to the action collection
@@ -159,7 +159,7 @@ protected:
      * @param action the action to add
      * @param cat the category of the action
      */
-    void addAction(const QString& name, QAction * const action, Category cat);
+    void addAction(const QString& name, QAction* const action, Category cat);
 
     /**
      * Sets the default category of the plugin actions
@@ -205,8 +205,8 @@ private:
 
     /** For internal uses only
       */
-    void addAction(QAction * const action);
-    void addAction(QAction * const action, Category cat);
+    void addAction(QAction* const action);
+    void addAction(QAction* const action, Category cat);
 
     void mergeXMLFile(KXMLGUIClient* const host);
     void clearActions();

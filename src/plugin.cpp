@@ -31,8 +31,8 @@
  *
  * ============================================================ */
 
-
 #include "plugin.h"
+
 // Qt includes
 
 #include <QWidget>
@@ -224,7 +224,7 @@ QList<QAction *> Plugin::actions(QWidget* const widget) const
     return d->actionsCat[w].keys();
 }
 
-void Plugin::addAction(const QString& name, QAction * const action)
+void Plugin::addAction(const QString& name, QAction* const action)
 {
     if (!action || name.isEmpty())
         return;
@@ -240,12 +240,12 @@ void Plugin::addAction(const QString& name, QAction * const action)
     }
 }
 
-void Plugin::addAction(QAction * const action)
+void Plugin::addAction(QAction* const action)
 {
     addAction(action, d->defaultCategory);
 }
 
-void Plugin::addAction(const QString& name, QAction * const action, Category cat)
+void Plugin::addAction(const QString& name, QAction* const action, Category cat)
 {
     if (!action || name.isEmpty())
         return;
@@ -261,7 +261,7 @@ void Plugin::addAction(const QString& name, QAction * const action, Category cat
     }
 }
 
-void Plugin::addAction(QAction * const action, Category cat)
+void Plugin::addAction(QAction* const action, Category cat)
 {
     if (cat == InvalidCategory)
     {
@@ -280,7 +280,7 @@ void Plugin::setup(QWidget* const widget)
     d->actionsCat.insert(widget, QMap<QAction *, Category>());
 }
 
-Category Plugin::category(QAction * const action) const
+Category Plugin::category(QAction* const action) const
 {
     QMap<QAction *, Category>::const_iterator it = d->actionsCat[d->defaultWidget].constFind(action);
 
