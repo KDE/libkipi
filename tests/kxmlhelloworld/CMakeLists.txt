@@ -9,10 +9,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/plugin
                     ${CMAKE_CURRENT_BINARY_DIR}/../../src
                     ${CMAKE_CURRENT_SOURCE_DIR}/../../src
                     ${CMAKE_CURRENT_BINARY_DIR}
-                   )
+)
 
 set(kipiplugin_kxmlhelloworld_PART_SRCS
-    plugin/plugin_kxmlhelloworld.cpp)
+    plugin/plugin_kxmlhelloworld.cpp
+)
 
 add_library(kipiplugin_kxmlhelloworld MODULE ${kipiplugin_kxmlhelloworld_PART_SRCS})
 
@@ -20,7 +21,7 @@ target_link_libraries(kipiplugin_kxmlhelloworld
                       KF5::Parts
                       KF5::KDELibs4Support
                       KF5Kipi
-                     )
+)
 
 configure_file(plugin/kipiplugin_kxmlhelloworld.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop)
 

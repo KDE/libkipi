@@ -7,7 +7,7 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
                     ${CMAKE_CURRENT_BINARY_DIR}/../src
                     ${CMAKE_CURRENT_SOURCE_DIR}/../src
-                   )
+)
 
 set(kxmlkipicmd_SRCS
     kipiinterface.cpp
@@ -19,16 +19,16 @@ set(kxmlkipicmd_SRCS
     kipitestpluginloader.cpp
     kipisetup.cpp
     main.cpp
-   )
+)
 
 add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 target_link_libraries(kxmlkipicmd
-                      KF5Kipi
                       Qt5::Gui
                       KF5::KDELibs4Support
                       KF5::Parts
-                     )
+                      KF5Kipi
+)
 
 add_subdirectory(kxmlhelloworld)
 

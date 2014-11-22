@@ -6,8 +6,8 @@
  * Date        : 2012-02-16
  * Description : an Hello World plugin using KDE XML-GUI technology.
  *
- * Copyright (C) 2012 by Gilles Caulier <caulier dot gilles at gmail dot com>
- * Copyright (C) 2012 by Victor Dodon   <dodonvictor at gmail dot com>
+ * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012      by Victor Dodon   <dodonvictor at gmail dot com>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -22,7 +22,7 @@
  * ============================================================ */
 
 /** Take a care about includes order, to prevent compilation problem.
- *  1/ moc file.
+ *  1/ class header file.
  *  2/ C ansi if really necessary.
  *  3/ C++ (always prefered than C ansi.
  *  4/ Extra libraries such as openCV for ex.
@@ -30,8 +30,8 @@
  *  5/ KDE.
  *  6/ Local files.
  *
- *  Also, use C++ classes include header styles with Qt4,
- *  but do not use it with KDE4 header (use C ANSI style instead).
+ *  Also, use C++ classes include header styles with Qt5,
+ *  but do not use it with KF5 headers (use C ANSI style instead).
  */
 
 /// No need to include plugin_helloworld.h, it will be done through Qt moc file.
@@ -41,12 +41,14 @@
 
 #include <QPointer>
 #include <QDomDocument>
+#include <QAction>
+#include <QDebug>
 
 // KDE includes
 
-#include <QAction>
+#include <kurl.h>
+#include <kshortcut.h>
 #include <kactioncollection.h>
-#include <QDebug>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -55,7 +57,7 @@
 #include <kcomponentdata.h>
 #include <kdialog.h>
 
-/// This is all libkipi header includes in this tool.
+/// This is all libkipi headers included in this tool.
 
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
@@ -93,10 +95,10 @@ public:
 
     /** These plugin actions will pluged into menu KIPI host application.
      */
-    QAction *   actionImages;
-    QAction *   actionTools;
-    QAction *   actionExport;
-    QAction *   actionImport;
+    QAction* actionImages;
+    QAction* actionTools;
+    QAction* actionExport;
+    QAction* actionImport;
 };
 
 /** Macro from KDE KParts to create the factory for this plugin.
@@ -210,7 +212,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** We will get current selected album in the digikam tree view
       */
     ImageCollection currAlbum = interface()->currentAlbum();
-    bool enable = currAlbum.isValid() && !currAlbum.images().isEmpty();
+    bool enable               = currAlbum.isValid() && !currAlbum.images().isEmpty();
     d->actionTools->setEnabled(enable);
 
     /** Another action dedicated to be plugged in digiKam Export menu.
@@ -255,6 +257,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
     if (images.isValid() && !images.images().isEmpty())
     {
         QStringList names;
+
         foreach (const KUrl& url, images.images())
             names << url.fileName();
 
@@ -267,8 +270,8 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
-    QPointer<KDialog> dlg = new KDialog(0);
-    ImageCollectionSelector* selector = interface()->imageCollectionSelector(dlg);
+    QPointer<KDialog> dlg                   = new KDialog(0);
+    ImageCollectionSelector* const selector = interface()->imageCollectionSelector(dlg);
     dlg->setMainWidget(selector);
     dlg->exec();
 
@@ -277,6 +280,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     if (!list.isEmpty())
     {
         QStringList names;
+
         foreach (const ImageCollection& col, list)
             names << col.name();
 
@@ -292,8 +296,8 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
      *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
      */
 /*
-    QPointer<KPToolDialog> dlg = new KPToolDialog(0);
-    KPImagesList* listView     = new KPImagesList(dlg);
+    QPointer<KPToolDialog> dlg   = new KPToolDialog(0);
+    KPImagesList* const listView = new KPImagesList(dlg);
     listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
     listView->setAllowRAW(true);
     listView->loadImagesFromCurrentSelection();
@@ -306,6 +310,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
     if (!list.isEmpty())
     {
         QStringList names;
+
         foreach (const KUrl& col, list)
             names << col.fileName();
 
@@ -326,13 +331,15 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 
     if (images.isValid() && !images.images().isEmpty())
     {
-/*        QPointer<KPToolDialog> dlg = new KPToolDialog(0);
-        KPPreviewManager* mng      = new KPPreviewManager(dlg);
+/*
+        QPointer<KPToolDialog> dlg  = new KPToolDialog(0);
+        KPPreviewManager* const mng = new KPPreviewManager(dlg);
         dlg->setMainWidget(mng);
         dlg->setAboutData(new HelloWorldAbout);
         mng->load(images.images().first().path());
         dlg->exec();
-        delete dlg;*/
+        delete dlg;
+*/
     }
 }
 
