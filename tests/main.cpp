@@ -9,7 +9,7 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
- * @author Copyright (C) 2011-2012 by Gilles Caulier
+ * @author Copyright (C) 2011-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  * @author Copyright (C) 2012 by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
@@ -26,15 +26,18 @@
  *
  * ============================================================ */
 
+// Qt includes
+
+#include <QUrl>
+#include <QDebug>
+
 // KDE includes
 
 #include <kapplication.h>
-#include <K4AboutData>
+#include <k4aboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <QUrl>
-#include <kdebug.h>
 
 // LibKipi includes
 
@@ -73,7 +76,6 @@ int main(int argc, char* argv[])
 
     KApplication app;
     app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
-
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
 
@@ -121,7 +123,7 @@ int main(int argc, char* argv[])
         {
             if (startList == 0)
             {
-                kError() << "startList is null";
+                qCritical() << "startList is null";
                 args->usageError(i18n("Please specify how the filenames you provided should be used."));
             }
             else
@@ -131,7 +133,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    KipiTestMainWindow* mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
+    KipiTestMainWindow* const mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
     QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, &app, &KApplication::quit);
 
     app.setTopWidget(mainWindow);
