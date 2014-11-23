@@ -33,10 +33,10 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QFontMetrics>
+#include <QHBoxLayout>
 
 // KDE includes
 
-#include <khbox.h>
 #include <kdialog.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
@@ -85,7 +85,7 @@ public:
 
     QGridLayout*    grid;
 
-    KHBox*          hbox;
+    QWidget*        hbox;
     KUrlLabel*      kipiLogoLabel;
 
     PluginListView* pluginsList;
@@ -127,21 +127,25 @@ void ConfigWidget::Private::updateInfo()
 ConfigWidget::ConfigWidget(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
-    QWidget* panel              = new QWidget(viewport());
+    QWidget* const panel        = new QWidget(viewport());
     d->grid                     = new QGridLayout(panel);
     d->pluginsNumber            = new QLabel(panel);
     d->pluginsNumberActivated   = new QLabel(panel);
-    d->hbox                     = new KHBox(panel);
+    d->hbox                     = new QWidget(panel);
+    QHBoxLayout* const hboxLay  = new QHBoxLayout(d->hbox);
     d->checkAllBtn              = new QPushButton(i18n("Check All"), d->hbox);
     d->clearBtn                 = new QPushButton(i18n("Clear"), d->hbox);
-    QWidget* space              = new QWidget(d->hbox);
+    QWidget* const space        = new QWidget(d->hbox);
+    hboxLay->addWidget(d->checkAllBtn);
+    hboxLay->addWidget(d->clearBtn);
+    hboxLay->addWidget(space);
     PluginLoader* const loader  = PluginLoader::instance();
     d->kipipluginsVersion       = new QLabel(i18n("Kipi Plugins: %1", loader ? loader->kipiPluginsVersion() : i18nc("Version unavailable", "unavailable")), panel);
     d->libkipiVersion           = new QLabel(i18n("LibKipi: %1", QString(KIPI_VERSION_STRING)), panel);
     d->pluginsList              = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
-    d->hbox->setStretchFactor(space, 10);
+    hboxLay->setStretchFactor(space, 10);
 
     d->kipiLogoLabel = new KUrlLabel(panel);
     d->kipiLogoLabel->setText(QString());
