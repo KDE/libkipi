@@ -31,7 +31,6 @@
 
 #include <QList>
 #include <QHeaderView>
-#include <QAction>
 
 // KDE includes
 

@@ -35,7 +35,6 @@
 
 // Qt includes
 
-#include <QFileInfo>
 
 // Local includes
 

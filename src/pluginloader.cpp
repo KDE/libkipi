@@ -36,12 +36,9 @@
 // Qt includes
 
 #include <QStringList>
-#include <QLayout>
-#include <QList>
 #include <QVariantList>
 #include <QVariant>
 #include <QAction>
-
 // KDE includes
 
 #include <kservicetypetrader.h>
