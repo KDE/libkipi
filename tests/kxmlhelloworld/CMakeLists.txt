@@ -23,7 +23,7 @@ target_link_libraries(kipiplugin_kxmlhelloworld
                       KF5Kipi
 )
 
-configure_file(plugin/kipiplugin_kxmlhelloworld.desktop.cmake ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop)
+configure_file(plugin/kipiplugin_kxmlhelloworld.desktop.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop)
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/plugin/kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kxmlhelloworld                                            DESTINATION ${PLUGIN_INSTALL_DIR})
