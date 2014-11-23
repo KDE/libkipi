@@ -109,7 +109,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->page_xml->setIcon(QIcon::fromTheme("application-xml"));
     d->page_xml->setHeader("Configure the UI file for the KXMLKipiCmd application");
 
-    KSharedConfig::Ptr config = KGlobal::config();
+    KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
     restoreDialogSize(group);
 
@@ -133,7 +133,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
 KipiSetup::~KipiSetup()
 {
-    KSharedConfig::Ptr config = KGlobal::config();
+    KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(QString("Setup Dialog"));
     //PORT QT5 saveDialogSize(group);
     group.writeEntry("Setup Page", (int)activePageIndex());
@@ -230,7 +230,7 @@ SetupXML::SetupXML(QWidget* const parent)
     mainLayout->addWidget(d->xmlFilesCob);
     panel->setLayout(mainLayout);
 
-    KSharedConfig::Ptr config = KGlobal::config();
+    KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(CONFIG_GROUP_NAME);
     QString uiFile            = group.readEntry("UiFile", "kxmlkipicmd_defaultui.rc");
     d->xmlFilesCob->setCurrentIndex(d->uiFilesList.indexOf(uiFile));
@@ -247,7 +247,7 @@ void SetupXML::apply()
 {
     QString uiFile            = d->xmlFilesCob->itemData(d->xmlFilesCob->currentIndex()).toString();
 
-    KSharedConfig::Ptr config = KGlobal::config();
+    KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(CONFIG_GROUP_NAME);
     QString oldUiFile         = group.readEntry("UiFile", "kxmlkipicmd_defaultui.rc");
 

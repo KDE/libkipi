@@ -89,7 +89,7 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
     : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
 {
     m_instance           = this;
-    d->config            = KGlobal::config();
+    d->config            = KSharedConfig::openConfig();
     d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
     KConfigGroup uiGroup = d->config->group("UI Settings");
     QString uiFile       = uiGroup.readEntry("UiFile", QString("kxmlkipicmd_defaultui.rc"));
