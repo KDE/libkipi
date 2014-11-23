@@ -146,8 +146,7 @@ void KipiTestPluginLoader::loadPlugins()
     d->kipiPluginLoader->setIgnoredPluginsList(ignores);
     d->kipiPluginLoader->init();
 
-    connect(d->kipiPluginLoader, SIGNAL(replug()),
-            this, SLOT(slotKipiPluginsPlug()));
+    connect(d->kipiPluginLoader, &PluginLoader::replug, this, &KipiTestPluginLoader::slotKipiPluginsPlug);
 
     d->kipiPluginLoader->loadPlugins();
 }

@@ -132,8 +132,7 @@ int main(int argc, char* argv[])
     }
 
     KipiTestMainWindow* mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
-    QObject::connect(mainWindow, SIGNAL(destroyed(QObject*)),
-                     &app, SLOT(quit()));
+    QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, &app, &KApplication::quit);
 
     app.setTopWidget(mainWindow);
 

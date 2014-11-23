@@ -58,8 +58,7 @@ KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* cons
 
     setLayout(layout);
 
-    connect(m_listWidget, SIGNAL(itemSelectionChanged()),
-            this, SLOT(slotItemSelectionChanged()));
+    connect(m_listWidget, &QListWidget::itemSelectionChanged, this, &KipiUploadWidget::slotItemSelectionChanged);
 
     // add all albums to the list widget:
     m_allAlbums = m_interface->allAlbums();

@@ -127,8 +127,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     setCurrentPage(page);
 
-    connect(d->pluginFilter, SIGNAL(userTextChanged(QString)),
-            this, SLOT(slotFilterChanged(QString)));
+    connect(d->pluginFilter, &KLineEdit::userTextChanged, this, &KipiSetup::slotFilterChanged);
 #endif
 }
 

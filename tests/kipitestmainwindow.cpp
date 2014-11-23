@@ -174,8 +174,7 @@ void KipiTestMainWindow::slotConfToolbars()
     saveMainWindowSettings(grp);
     KEditToolBar dlg(factory(), this);
 
-    connect(&dlg, SIGNAL(newToolBarConfig()),
-            this, SLOT(slotNewToolbarConfig()));
+    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KipiTestMainWindow::slotNewToolbarConfig);
 
     dlg.exec();
 }
