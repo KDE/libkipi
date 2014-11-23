@@ -346,3 +346,4 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 }
 
 }  // namespace KIPIHelloWorldPlugin
+#include "plugin_kxmlhelloworld.moc"
