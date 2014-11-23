@@ -29,6 +29,7 @@
  *  4/ Qt.
  *  5/ KDE.
  *  6/ Local files.
+ *  7/ At end of file .moc file of class.
  *
  *  Also, use C++ classes include header styles with Qt5,
  *  but do not use it with KF5 headers (use C ANSI style instead).
@@ -346,4 +347,6 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 }
 
 }  // namespace KIPIHelloWorldPlugin
+
+// Moc file must be included at end because it's a plugin.
 #include "plugin_kxmlhelloworld.moc"
