@@ -89,10 +89,8 @@ public:
 KipiSetup::KipiSetup(QWidget* const parent)
     : KPageDialog(parent), d(new Private)
 {
-#if 0 //PORT QT5
-    setCaption(i18n("Configure"));
-    setButtons(Ok | Cancel);
-    setDefaultButton(Ok);
+    setWindowTitle(i18n("Configure"));
+    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     setFaceType(List);
     setModal(true);
     setMinimumSize(600, 400);
@@ -112,7 +110,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
-    restoreDialogSize(group);
+    //PORT QT5 restoreDialogSize(group);
 
     int pageIndex         = group.readEntry("Setup Page", 0);
     KPageWidgetItem* page = 0;
@@ -129,7 +127,6 @@ KipiSetup::KipiSetup(QWidget* const parent)
     setCurrentPage(page);
 
     connect(d->pluginFilter, &KLineEdit::userTextChanged, this, &KipiSetup::slotFilterChanged);
-#endif
 }
 
 KipiSetup::~KipiSetup()
