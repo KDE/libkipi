@@ -43,9 +43,10 @@
 #include <kcomponentdata.h>
 #include <kcombobox.h>
 #include <klineedit.h>
-#include <KConfigGroup>
-#include <KGlobal>
-#include <KDialog>
+#include <kconfiggroup.h>
+#include <kglobal.h>
+#include <kdialog.h>
+
 // Libkipi includes
 
 #include "pluginloader.h"
@@ -179,7 +180,7 @@ void KipiSetup::okClicked()
 
 int KipiSetup::activePageIndex()
 {
-    KPageWidgetItem* curr = currentPage();
+    KPageWidgetItem* const curr = currentPage();
 
     if (curr == d->page_xml)
     {
@@ -208,7 +209,7 @@ public:
 SetupXML::SetupXML(QWidget* const parent)
     : QScrollArea(parent), d(new Private)
 {
-    QWidget* panel = new QWidget(viewport());
+    QWidget* const panel = new QWidget(viewport());
     setWidget(panel);
     setWidgetResizable(true);
 
@@ -225,7 +226,7 @@ SetupXML::SetupXML(QWidget* const parent)
         d->xmlFilesCob->addItem(uiFile, uiFile);
     }
 
-    QVBoxLayout* mainLayout = new QVBoxLayout;
+    QVBoxLayout* const mainLayout = new QVBoxLayout;
     mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->addWidget(d->xmlFilesCob);
     panel->setLayout(mainLayout);
