@@ -54,8 +54,8 @@ public Q_SLOTS:
 
 private:
 
-    KipiInterface*               m_interface;
-    QListWidget*                 m_listWidget;
+    KipiInterface*         m_interface;
+    QListWidget*           m_listWidget;
     QList<ImageCollection> m_allAlbums;
 };
 
