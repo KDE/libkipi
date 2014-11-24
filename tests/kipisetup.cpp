@@ -110,7 +110,8 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
-    //PORT QT5 restoreDialogSize(group);
+#pragma message "PORT TO QT5"
+    // restoreDialogSize(group);
 
     int pageIndex         = group.readEntry("Setup Page", 0);
     KPageWidgetItem* page = 0;
@@ -133,7 +134,8 @@ KipiSetup::~KipiSetup()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(QString("Setup Dialog"));
-    //PORT QT5 saveDialogSize(group);
+#pragma message "PORT TO QT5"
+    //saveDialogSize(group);
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
     delete d;
