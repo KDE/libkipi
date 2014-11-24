@@ -7,18 +7,20 @@
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
                     ${CMAKE_CURRENT_BINARY_DIR}/../src
                     ${CMAKE_CURRENT_SOURCE_DIR}/../src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/common
+                    ${CMAKE_CURRENT_SOURCE_DIR}/kxmlkipicmd
 )
 
 set(kxmlkipicmd_SRCS
-    kipiinterface.cpp
-    kipiimagecollectionshared.cpp
-    kipiimageinfoshared.cpp
-    kipiimagecollectionselector.cpp
-    kipiuploadwidget.cpp
-    kipitestmainwindow.cpp
-    kipitestpluginloader.cpp
-    kipisetup.cpp
-    main.cpp
+    common/kipiinterface.cpp
+    common/kipiimagecollectionshared.cpp
+    common/kipiimageinfoshared.cpp
+    common/kipiimagecollectionselector.cpp
+    common/kipiuploadwidget.cpp
+    kxmlkipicmd/kipitestmainwindow.cpp
+    kxmlkipicmd/kipitestpluginloader.cpp
+    kxmlkipicmd/kipisetup.cpp
+    kxmlkipicmd/main.cpp
 )
 
 add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
@@ -30,8 +32,8 @@ target_link_libraries(kxmlkipicmd
                       KF5Kipi
 )
 
-add_subdirectory(kxmlhelloworld)
+add_subdirectory(plugins)
 
-install(TARGETS kxmlkipicmd               DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES   kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
-install(FILES   kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+install(TARGETS kxmlkipicmd                           DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
