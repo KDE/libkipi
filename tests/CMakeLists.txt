@@ -11,6 +11,10 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
                     ${CMAKE_CURRENT_SOURCE_DIR}/kxmlkipicmd
 )
 
+add_subdirectory(plugins)
+
+#----------------------------------------------------------------------------------------------------
+
 set(kxmlkipicmd_SRCS
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
@@ -32,8 +36,29 @@ target_link_libraries(kxmlkipicmd
                       KF5Kipi
 )
 
-add_subdirectory(plugins)
 
 install(TARGETS kxmlkipicmd                           DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
 install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+
+#----------------------------------------------------------------------------------------------------
+
+#add_definitions(${KEXIV2_DEFINITIONS})
+
+set(kipicmd_SRCS
+    common/kipiinterface.cpp
+    common/kipiimagecollectionshared.cpp
+    common/kipiimageinfoshared.cpp
+    common/kipiimagecollectionselector.cpp
+    common/kipiuploadwidget.cpp
+    kipicmd/main.cpp
+   )
+
+KDE4_ADD_EXECUTABLE(kipicmd ${kipicmd_SRCS})
+
+target_link_libraries(kipicmd
+                      Qt5::Gui
+                      KF5::KDELibs4Support
+                      KF5::Parts
+                      KF5Kipi
+                     )
