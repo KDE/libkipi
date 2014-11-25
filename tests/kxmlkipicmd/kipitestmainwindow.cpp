@@ -27,6 +27,7 @@
 // Qt includes
 
 #include <QPointer>
+#include <QDebug>
 
 // KDE includes
 
@@ -42,7 +43,6 @@
 #include <kshortcutsdialog.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
-#include <kdebug.h>
 #include <kxmlguifactory.h>
 
 // LibKIPI includes

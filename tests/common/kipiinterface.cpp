@@ -29,12 +29,12 @@
 // Qt includes
 
 #include <QTextStream>
+#include <QDebug>
 
 // KDE includes
 
 #include <klocale.h>
 #include <kdeversion.h>
-#include <kdebug.h>
 #include <kfileitem.h>
 #include <kio/previewjob.h>
 
@@ -67,7 +67,7 @@ KipiInterface::~KipiInterface()
 
 ImageCollection KipiInterface::currentAlbum()
 {
-    kDebug() << "Called by plugins";
+    qDebug() << "Called by plugins";
 
     QUrl currentAlbumUrl;
     if (!m_selectedAlbums.isEmpty())
@@ -80,7 +80,7 @@ ImageCollection KipiInterface::currentAlbum()
 
 ImageCollection KipiInterface::currentSelection()
 {
-    kDebug() << "Called by plugins";
+    qDebug() << "Called by plugins";
     return ImageCollection(new KipiImageCollectionShared(m_selectedImages));
 }
 
@@ -106,7 +106,7 @@ QList<ImageCollection> KipiInterface::allAlbums()
 
 ImageInfo KipiInterface::info(const QUrl &url)
 {
-    kDebug() << QString( "Plugin wants information about image \"%1\"").arg( url.url() );
+    qDebug() << QString( "Plugin wants information about image \"%1\"").arg( url.url() );
 
     return ImageInfo( new KipiImageInfoShared(this, url ) );
 }
@@ -114,39 +114,39 @@ ImageInfo KipiInterface::info(const QUrl &url)
 bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
-    kDebug() << QString( "Plugin added an image: \"%1\"").arg( url.url() );
+    qDebug() << QString( "Plugin added an image: \"%1\"").arg( url.url() );
     return true;
 }
 
 void KipiInterface::delImage(const QUrl &url)
 {
-    kDebug() << QString( "Plugin deleted an image: \"%1\"").arg( url.url() );
+    qDebug() << QString( "Plugin deleted an image: \"%1\"").arg( url.url() );
 }
 
 void KipiInterface::refreshImages(const QList<QUrl>& urls)
 {
-    kDebug() << QString( "Plugin asks to refresh %1 images:").arg( urls.size() );
+    qDebug() << QString( "Plugin asks to refresh %1 images:").arg( urls.size() );
     for (QList<QUrl>::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
-        kDebug() << "  " + (*it).url();
+        qDebug() << "  " + (*it).url();
     }
 }
 
 int KipiInterface::features() const
 {
-    kDebug() << "Called by plugins";
+    qDebug() << "Called by plugins";
     return ImagesHasTime;
 }
 
 ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
 {
-    kDebug() << "Called by plugins";
+    qDebug() << "Called by plugins";
     return new KipiImageCollectionSelector(this, parent);
 }
 
 UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
 {
-    kDebug() << "Called by plugins";
+    qDebug() << "Called by plugins";
     return new KipiUploadWidget(this, parent);
 }
 

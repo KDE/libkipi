@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QDebug>
 
 // KDE includes
 
@@ -39,7 +40,6 @@
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
-#include <kdebug.h>
 #include <kcomponentdata.h>
 #include <kcombobox.h>
 #include <klineedit.h>

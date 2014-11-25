@@ -28,6 +28,7 @@
 
 #include <QMap>
 #include <QAction>
+#include <QDebug>
 
 // KDE includes
 
@@ -35,7 +36,6 @@
 #include <kactioncategory.h>
 #include <kactioncollection.h>
 #include <kaction.h>
-#include <kdebug.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
 #include <kglobal.h>
@@ -193,7 +193,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
             if (cat == InvalidCategory)
             {
-                kWarning() << "Plugin action '" << actionName << "' has invalid category!";
+                qWarning() << "Plugin action '" << actionName << "' has invalid category!";
                 continue;
             }
 
@@ -211,7 +211,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
             }
             else
             {
-                kDebug() << "Plugin '" << actionName << "' is disabled.";
+                qDebug() << "Plugin '" << actionName << "' is disabled.";
             }
         }
     }

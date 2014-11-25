@@ -29,11 +29,11 @@
 #include <QListWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QDebug>
 
 // KDE includes
 
 #include <klocale.h>
-#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -91,7 +91,7 @@ QList< ImageCollection > KipiImageCollectionSelector::selectedImageCollections (
     }
 
     //  result.append(m_interface->currentAlbum());
-    kDebug() << QString("selectedImageCollections: %1 items selected").arg(result.size());
+    qDebug() << QString("selectedImageCollections: %1 items selected").arg(result.size());
     return result;
 }
 

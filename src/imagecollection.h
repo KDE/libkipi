@@ -34,11 +34,8 @@
 
 // Qt includes
 
-#include <QtCore/QString>
-#include <QtCore/QDateTime>
-
-// KDE includes
-
+#include <QString>
+#include <QDateTime>
 #include <QUrl>
 
 // Local includes

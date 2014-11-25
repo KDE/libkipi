@@ -29,11 +29,11 @@
 #include <QListWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QDebug>
 
 // KDE includes
 
 #include <klocale.h>
-#include <kdebug.h>
 
 // LibKIPI includes
 
@@ -85,7 +85,7 @@ ImageCollection KipiUploadWidget::selectedImageCollection() const
     if (selectedItems.isEmpty())
     {
         // this should not happen!!! the calling application will probably crash now...
-        kDebug() << "Nothing selected... impossible!";
+        qDebug() << "Nothing selected... impossible!";
         return ImageCollection(0);
     }
 

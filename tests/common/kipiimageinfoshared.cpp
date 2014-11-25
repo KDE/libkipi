@@ -9,7 +9,7 @@
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
- * @author Copyright (C) 2011-2012 by Gilles Caulier
+ * @author Copyright (C) 2011-2014 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
@@ -30,10 +30,7 @@
 
 #include <QFileInfo>
 #include <QStringList>
-
-// KDE includes
-
-#include <kdebug.h>
+#include <QDebug>
 
 namespace KXMLKipiCmd
 {
@@ -62,7 +59,7 @@ KipiImageInfoShared::~KipiImageInfoShared()
 
 QMap<QString, QVariant> KipiImageInfoShared::attributes()
 {
-    kDebug() << "QMap<QString,QVariant> attributes()";
+    qDebug() << "QMap<QString,QVariant> attributes()";
 
     QMap<QString, QVariant> res;
 
@@ -74,7 +71,7 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
     {
         if ( ! _url.isLocalFile() )
         {
-            kFatal() << "KIPI::ImageInfoShared::time does not yet support non local files, please fix\n";
+            qFatal("KIPI::ImageInfoShared::time does not yet support non local files, please fix\n");
             d->dateTime = QDateTime();
         }
         else
@@ -83,33 +80,35 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
             d->dateTime = QFileInfo( _url.toLocalFile() ).lastModified();
         }
     }
+
     res["date"] = d->dateTime;
 
     return res;
 }
 void KipiImageInfoShared::clearAttributes()
 {
-    kDebug() << "void KipiImageInfoShared::clearAttributes()";
+    qDebug() << "void KipiImageInfoShared::clearAttributes()";
 }
 
 void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attributes)
 {
-    kDebug() << "void KipiImageInfoShared::addAttributes()";
+    qDebug() << "void KipiImageInfoShared::addAttributes()";
 
     QMap<QString, QVariant>::const_iterator it = attributes.constBegin();
+
     while (it != attributes.constEnd())
     {
         QString key = it.key();
         QString val = it.value().toString();
-        kDebug() << QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val);
+        qDebug() << QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val);
         ++it;
     }
 }
 
 void KipiImageInfoShared::delAttributes(const QStringList& attributes)
 {
-    kDebug() << "void KipiImageInfoShared::delAttributes()";
-    kDebug() << QString("attributes : \"%1\"").arg(attributes.join(", "));
+    qDebug() << "void KipiImageInfoShared::delAttributes()";
+    qDebug() << QString("attributes : \"%1\"").arg(attributes.join(", "));
 }
 
 } // namespace KXMLKipiCmd
