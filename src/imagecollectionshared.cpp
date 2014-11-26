@@ -71,22 +71,22 @@ void ImageCollectionShared::removeRef()
     }
 }
 
-QUrl ImageCollectionShared::path()
+QUrl ImageCollectionShared::url()
 {
     qCWarning(LIBKIPI_LOG) << "This method should only be invoked if this imagecollection is a directory. "
                            << "See KIPI::ImageCollectionShared::isDirectory()";
     return QUrl();
 }
 
-QUrl ImageCollectionShared::uploadPath()
+QUrl ImageCollectionShared::uploadUrl()
 {
     PrintWarningMessageFeature("AcceptNewImages");
     return QUrl();
 }
 
-QUrl ImageCollectionShared::uploadRoot()
+QUrl ImageCollectionShared::uploadRootUrl()
 {
-    QUrl path = uploadPath();
+    QUrl path = uploadUrl();
 
     if ( path.isValid() )
     {

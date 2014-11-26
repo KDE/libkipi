@@ -58,16 +58,16 @@ public:
     /** These methods must be re-implemented in your KIPI host application to manage collection attributes with plugins.
      */
     virtual QList<QUrl> images() = 0;
-    virtual QString    name() = 0;
+    virtual QString     name() = 0;
 
-    virtual QString    comment();
-    virtual QString    category();
-    virtual QDate      date();
-    virtual QUrl       path();
-    virtual QUrl       uploadPath();
-    virtual QUrl       uploadRoot();
-    virtual QString    uploadRootName();
-    virtual bool       isDirectory();
+    virtual QString     comment();
+    virtual QString     category();
+    virtual QDate       date();
+    virtual QUrl        url();
+    virtual QUrl        uploadUrl();
+    virtual QUrl        uploadRootUrl();
+    virtual QString     uploadRootName();
+    virtual bool        isDirectory();
 
     virtual bool operator==(ImageCollectionShared&);
 

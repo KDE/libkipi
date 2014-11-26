@@ -171,11 +171,11 @@ QList<QUrl> ImageCollection::images() const
     }
 }
 
-QUrl ImageCollection::path() const
+QUrl ImageCollection::url() const
 {
     if ( d )
     {
-        return d->path();
+        return d->url();
     }
     else
     {
@@ -184,11 +184,11 @@ QUrl ImageCollection::path() const
     }
 }
 
-QUrl ImageCollection::uploadPath() const
+QUrl ImageCollection::uploadUrl() const
 {
     if ( d )
     {
-        return d->uploadPath();
+        return d->uploadUrl();
     }
     else
     {
@@ -197,11 +197,11 @@ QUrl ImageCollection::uploadPath() const
     }
 }
 
-QUrl ImageCollection::uploadRoot() const
+QUrl ImageCollection::uploadRootUrl() const
 {
     if ( d )
     {
-        return d->uploadRoot();
+        return d->uploadRootUrl();
     }
     else
     {

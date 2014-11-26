@@ -103,7 +103,7 @@ public:
      * of the image collection (in case all images has a common root), or
      * even an empty URL.
      */
-    QUrl       path() const;
+    QUrl       url() const;
 
     /**
      * Returns the directory to place images into.
@@ -117,7 +117,7 @@ public:
      *
      * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
      */
-    QUrl       uploadPath() const;
+    QUrl       uploadUrl() const;
 
     /**
      * When a plugin wants to upload images, it may choose to display an upload widget,
@@ -133,7 +133,7 @@ public:
      * 
      * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
      */
-    QUrl       uploadRoot() const;
+    QUrl       uploadRootUrl() const;
 
     /**
      * This fonction return the name of the upload root path used by the

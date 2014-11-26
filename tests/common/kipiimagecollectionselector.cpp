@@ -70,7 +70,7 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
         m_listWidget->addItem(it->name());
 
         // is the album selected?
-        const QUrl itemPath = it->path();
+        const QUrl itemPath = it->url();
         m_listWidget->item(m_listWidget->count()-1)->setSelected(m_interface->m_selectedAlbums.contains(itemPath));
     }
 
