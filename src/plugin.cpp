@@ -38,6 +38,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QAction>
+#include <QStandardPaths>
 
 // KDE includes
 
@@ -330,8 +331,8 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
 
     const QString componentName = KComponentData::mainComponent().componentName();
-    const QString defaultUI     = KGlobal::dirs()->locate("data", QString("kipi/") + d->uiBaseName);
-    const QString localUI       = KGlobal::dirs()->locateLocal("data", componentName + "/" + d->uiBaseName);
+    const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("kipi/") + d->uiBaseName);
+    const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + '/' + componentName + "/" + d->uiBaseName;
 
     QFile        defaultUIFile(defaultUI);
     QDomDocument defaultDomDoc;
