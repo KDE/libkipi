@@ -23,7 +23,7 @@ set(kipi_LIB_SRCS interface.cpp
                   configwidget_p.cpp
                   pluginloader.cpp
                   libkipi_debug.cpp
-   )
+)
 
 ecm_generate_headers(kipi_CamelCase_HEADERS
 
