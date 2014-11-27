@@ -43,8 +43,6 @@ install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL
 
 #----------------------------------------------------------------------------------------------------
 
-#add_definitions(${KEXIV2_DEFINITIONS})
-
 set(kipicmd_SRCS
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
@@ -52,13 +50,13 @@ set(kipicmd_SRCS
     common/kipiimagecollectionselector.cpp
     common/kipiuploadwidget.cpp
     kipicmd/main.cpp
-   )
+)
 
-KDE4_ADD_EXECUTABLE(kipicmd ${kipicmd_SRCS})
+add_executable(kipicmd ${kipicmd_SRCS})
 
 target_link_libraries(kipicmd
                       Qt5::Gui
                       KF5::KDELibs4Support
                       KF5::Parts
                       KF5Kipi
-                     )
+)

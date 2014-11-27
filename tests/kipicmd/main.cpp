@@ -123,7 +123,7 @@ QList<QPair<int, QAction*> > FlattenActionList(const QList<QAction*>& actions, c
         }
 
         QMenu* const menu = (*it)->menu();
-        
+
         if (menu)
         {
             results.append( FlattenActionList(menu->actions(), level+1) );

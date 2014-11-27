@@ -52,18 +52,18 @@ using namespace KXMLKipiCmd;
 int main(int argc, char* argv[])
 {
     const K4AboutData aboutData("kxmlkipicmd",
-                               "kipi",
-                               ki18n("kxmlkipicmd"),
-                               KIPI_VERSION_STRING,            // libkipi version
-                               ki18n("Kipi host test application using KDE XML-GUI"),
-                               K4AboutData::License_GPL,
-                               ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                                     "(c) 2011-2012 Gilles Caulier\n"
-                                     "(c) 2012 Victor Dodon "),
-                               KLocalizedString(),             // optional text
-                               "http://www.digikam.org",       // URI of homepage
-                               "kde-imaging@kde.org"           // bugs e-mail address
-                              );
+                                "kipi",
+                                ki18n("kxmlkipicmd"),
+                                KIPI_VERSION_STRING,            // libkipi version
+                                ki18n("Kipi host test application using KDE XML-GUI"),
+                                K4AboutData::License_GPL,
+                                ki18n("(c) 2009-2010 Michael G. Hansen\n"
+                                      "(c) 2011-2014 Gilles Caulier\n"
+                                      "(c) 2012 Victor Dodon "),
+                                KLocalizedString(),             // optional text
+                                "http://www.digikam.org",       // URI of homepage
+                                "kde-imaging@kde.org"           // bugs e-mail address
+                               );
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineOptions options;
