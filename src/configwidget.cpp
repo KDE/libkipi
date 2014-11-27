@@ -29,6 +29,7 @@
 
 // Qt include
 
+#include <QApplication>
 #include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
@@ -37,7 +38,6 @@
 
 // KDE includes
 
-#include <kdialog.h>
 #include <ktoolinvocation.h>
 #include <kstandarddirs.h>
 #include <kurllabel.h>
@@ -164,8 +164,8 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->grid->addWidget(d->kipiLogoLabel,          0, 6, 2, 1);
     d->grid->addWidget(d->pluginsList,            2, 0, 1, -1);
     d->grid->setColumnStretch(3, 10);
-    d->grid->setMargin(KDialog::spacingHint());
-    d->grid->setSpacing(KDialog::spacingHint());
+    d->grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    d->grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
 
     // --------------------------------------------------------
 
@@ -177,15 +177,20 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     // --------------------------------------------------------
 
-    connect(d->checkAllBtn, &QPushButton::clicked, this, &ConfigWidget::slotCheckAll);
+    connect(d->checkAllBtn, &QPushButton::clicked,
+            this, &ConfigWidget::slotCheckAll);
 
-    connect(d->clearBtn, &QPushButton::clicked, this, &ConfigWidget::slotClearList);
+    connect(d->clearBtn, &QPushButton::clicked, 
+            this, &ConfigWidget::slotClearList);
 
-    connect(d->pluginsList, &PluginListView::itemClicked, this, &ConfigWidget::slotItemClicked);
+    connect(d->pluginsList, &PluginListView::itemClicked, 
+            this, &ConfigWidget::slotItemClicked);
 
-    connect(d->pluginsList, &PluginListView::signalSearchResult, this, &ConfigWidget::signalSearchResult);
+    connect(d->pluginsList, &PluginListView::signalSearchResult, 
+            this, &ConfigWidget::signalSearchResult);
 
-    connect(d->kipiLogoLabel, static_cast<void (KUrlLabel::*)(const QString &)>(&KUrlLabel::leftClickedUrl), this, &ConfigWidget::slotProcessUrl);
+    connect(d->kipiLogoLabel, static_cast<void (KUrlLabel::*)(const QString &)>(&KUrlLabel::leftClickedUrl), 
+            this, &ConfigWidget::slotProcessUrl);
 
     // --------------------------------------------------------
 

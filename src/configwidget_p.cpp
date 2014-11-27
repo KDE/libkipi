@@ -158,7 +158,7 @@ void PluginListView::slotApply()
             group.writeEntry(item->m_info->uname(), load);
             item->m_info->setShouldLoad(load);
 
-            // Bugfix #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
+            // See Bug #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
             // to reload plugins properly when the replug() signal is send.
             item->m_info->reload();
         }
