@@ -285,10 +285,10 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     dlg->setLayout(vbox);
 
     connect(buttons->button(QDialogButtonBox::Ok), &QPushButton::clicked,
-            dlg, &QDialog::accept);
+            dlg.data(), &QDialog::accept);
 
     connect(buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
-            dlg, &QDialog::reject);
+            dlg.data(), &QDialog::reject);
 
     dlg->exec();
 
