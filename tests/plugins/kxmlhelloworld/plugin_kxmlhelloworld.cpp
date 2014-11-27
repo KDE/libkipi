@@ -45,10 +45,14 @@
 #include <QAction>
 #include <QDebug>
 #include <QKeySequence>
+#include <QUrl>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
+#include <QPushButton>
 
 // KDE includes
 
-#include <kurl.h>
 #include <kshortcut.h>
 #include <kactioncollection.h>
 #include <kgenericfactory.h>
@@ -58,7 +62,6 @@
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <kcomponentdata.h>
-#include <kdialog.h>
 
 /// This is all libkipi headers included in this tool.
 
@@ -261,7 +264,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
     {
         QStringList names;
 
-        foreach (const KUrl& url, images.images())
+        foreach (const QUrl& url, images.images())
             names << url.fileName();
 
         KMessageBox::informationList(0, i18n("This is the list of selected items"), names);
@@ -273,9 +276,20 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
-    QPointer<KDialog> dlg                   = new KDialog(0);
+    QPointer<QDialog> dlg                   = new QDialog(0);
     ImageCollectionSelector* const selector = interface()->imageCollectionSelector(dlg);
-    dlg->setMainWidget(selector);
+    QDialogButtonBox* const buttons         = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dlg);
+    QVBoxLayout* const vbox                 = new QVBoxLayout(dlg);
+    vbox->addWidget(selector);
+    vbox->addWidget(buttons);
+    dlg->setLayout(vbox);
+
+    connect(buttons->button(QDialogButtonBox::Ok), &QPushButton::clicked,
+            dlg, &QDialog::accept);
+
+    connect(buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
+            dlg, &QDialog::reject);
+
     dlg->exec();
 
     QList<ImageCollection> list = selector->selectedImageCollections();
@@ -308,13 +322,13 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
     dlg->setAboutData(new HelloWorldAbout);
     dlg->exec();
 
-    KUrl::List list = listView->imageUrls();
+    QList<QUrl> list = listView->imageUrls();
 
     if (!list.isEmpty())
     {
         QStringList names;
 
-        foreach (const KUrl& col, list)
+        foreach (const QUrl& col, list)
             names << col.fileName();
 
         KMessageBox::informationList(0, i18n("This is the list of items to process"), names);
