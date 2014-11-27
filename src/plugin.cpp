@@ -329,7 +329,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         return;
     }
 
-    const QString componentName = KGlobal::mainComponent().componentName();
+    const QString componentName = KComponentData::mainComponent().componentName();
     const QString defaultUI     = KGlobal::dirs()->locate("data", QString("kipi/") + d->uiBaseName);
     const QString localUI       = KGlobal::dirs()->locateLocal("data", componentName + "/" + d->uiBaseName);
 
