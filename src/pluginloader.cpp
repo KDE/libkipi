@@ -39,6 +39,8 @@
 #include <QVariantList>
 #include <QVariant>
 #include <QAction>
+#include <QStandardPaths>
+
 // KDE includes
 
 #include <kservicetypetrader.h>
@@ -243,7 +245,7 @@ PluginLoader::PluginLoader()
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
-    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
+    QStandardPaths::locate(QStandardPaths::GenericDataLocation, KStandardDirs::installPath("data") + QString("kipi"));
 }
 
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
@@ -252,7 +254,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
-    KGlobal::dirs()->addResourceDir("data", KStandardDirs::installPath("data") + QString("kipi"));
+    QStandardPaths::locate(QStandardPaths::GenericDataLocation, KStandardDirs::installPath("data") + QString("kipi"));
 
     if (!parent)
     {
@@ -392,7 +394,7 @@ ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 QString PluginLoader::kipiPluginsVersion() const
 {
     QString ver                = i18nc("Version unavailable", "unavailable");
-    QString path               = KGlobal::dirs()->installPath("xdgdata-apps") + QString("kipiplugins.desktop");
+    QString path               = KStandardDirs::installPath("xdgdata-apps") + QString("kipiplugins.desktop");
     KDesktopFile desk(path);
     QMap<QString, QString> map = desk.entryMap("X-KipiPlugins Entry");
 
