@@ -35,7 +35,8 @@
  *  but do not use it with KF5 headers (use C ANSI style instead).
  */
 
-/// No need to include plugin_helloworld.h, it will be done through Qt moc file.
+// include here header file. See also loc file to plug at end of implementation.
+
 #include "plugin_kxmlhelloworld.h"
 
 // Qt includes
@@ -53,15 +54,11 @@
 
 // KDE includes
 
-#include <kshortcut.h>
-#include <kactioncollection.h>
 #include <kgenericfactory.h>
 #include <klibloader.h>
 #include <kpluginfactory.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kcomponentdata.h>
 
 /// This is all libkipi headers included in this tool.
 
@@ -362,5 +359,6 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 
 }  // namespace KIPIHelloWorldPlugin
 
-// Moc file must be included at end because it's a plugin.
+// Moc file must be included at end because it's a plugin (it's a specific and special case where we need to do it).
+
 #include "plugin_kxmlhelloworld.moc"
