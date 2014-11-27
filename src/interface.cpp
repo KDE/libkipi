@@ -36,11 +36,12 @@
 // Qt includes
 
 #include <QPixmap>
+#include <QImageReader>
+#include <QImageWriter>
 
 // KDE includes
 
 #include <kfileitem.h>
-#include <kimageio.h>
 #include <kio/previewjob.h>
 
 // Local includes
@@ -182,14 +183,16 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     for (QList<QUrl>::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
-            items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, *it, true));
+            items.append(KFileItem(*it));
     }
 
     KIO::PreviewJob* const job = KIO::filePreview(items, QSize(size, size));
 
-    connect(job, &KIO::PreviewJob::gotPreview, this, &Interface::gotKDEPreview);
+    connect(job, &KIO::PreviewJob::gotPreview,
+            this, &Interface::gotKDEPreview);
 
-    connect(job, &KIO::PreviewJob::failed, this, &Interface::failedKDEPreview);
+    connect(job, &KIO::PreviewJob::failed,
+            this, &Interface::failedKDEPreview);
 }
 
 void Interface::gotKDEPreview(const KFileItem& item, const QPixmap& pix)
@@ -224,8 +227,8 @@ QVariant Interface::hostSetting(const QString& settingName)
     }
     else if (settingName == QString("FileExtensions") || settingName == QString("ImagesExtensions"))
     {
-        // Return a list of images file extensions supported by KDE.
-        QStringList KDEImagetypes = KImageIO::mimeTypes( KImageIO::Reading );
+        // Return a list of images file extensions supported by Qt in read mode.
+        QStringList KDEImagetypes = supportedImageMimeTypes();
         QString imagesFileFilter  = KDEImagetypes.join(" ");
 
         return QString( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
@@ -317,6 +320,18 @@ void Interface::editingFinished(const QUrl&, EditHints)
 {
 }
 
+QStringList Interface::supportedImageMimeTypes(bool readWrite)
+{
+    QStringList       mimeTypes;
+    QList<QByteArray> supported = readWrite ? QImageWriter::supportedMimeTypes()
+                                            : QImageReader::supportedMimeTypes();
+
+    Q_FOREACH(QByteArray mimeType, supported)
+        mimeTypes.append(QString(mimeType));
+
+    return mimeTypes;
+}
+
 // -----------------------------------------------------------------------------------------------------------
 
 FileReadLocker::FileReadLocker(Interface* const iface, const QUrl &url)
@@ -398,7 +413,6 @@ void FileWriteLocker::unlock()
 }
 
 // -----------------------------------------------------------------------------------------------------------
-
 
 class EditHintScope::Private
 {

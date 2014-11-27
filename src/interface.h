@@ -361,6 +361,12 @@ public:
      */
     static QString version();
 
+    /**
+     * Return a list of supported image type mimes by Qt image reader.
+     * 'readWrite' query Qt to list type mimes in read mode (false), or in write mode (true).
+     */
+    static QStringList supportedImageMimeTypes(bool readWrite=false);
+
 Q_SIGNALS:
 
     /**
