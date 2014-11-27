@@ -27,13 +27,9 @@
 #ifndef PLUGIN_KXMLHELLOWORLD_H
 #define PLUGIN_KXMLHELLOWORLD_H
 
-// NOTE: Always limit include in header file to speed-up compilation.
+// NOTE: Always limit include in headers file to speed-up compilation.
 
-// Qt includes
-
-#include <QVariant>
-
-// LibKIPI includes
+// Libkipi includes
 
 #include "plugin.h"
 
@@ -83,7 +79,7 @@ private:
 
 private:
 
-    /** We use d private internal container. See implementation for details.
+    /** We use d private internal container everywhere to speed up compilation. See implementation for details.
      */
     class Private;
     Private* const d;

@@ -54,8 +54,6 @@
 
 // KDE includes
 
-#include <kgenericfactory.h>
-#include <klibloader.h>
 #include <kpluginfactory.h>
 #include <klocale.h>
 #include <kmessagebox.h>
