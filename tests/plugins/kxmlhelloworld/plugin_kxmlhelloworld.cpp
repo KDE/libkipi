@@ -51,12 +51,12 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QMessageBox>
 
 // KDE includes
 
-#include <kpluginfactory.h>
 #include <klocale.h>
-#include <kmessagebox.h>
+#include <kpluginfactory.h>
 
 /// This is all libkipi headers included in this tool.
 
@@ -108,12 +108,6 @@ public:
  *  the class for your plugin.
  */
 K_PLUGIN_FACTORY(KXMLHelloWorldFactory, registerPlugin<Plugin_KXMLHelloWorld>();)
-
-/** Macro from KDE KParts to export the symbols for this plugin
- *  NOTE: The plugin library is the name used in CMakeList.txt to link bin file,
- *  and with X-KDE-Library value from .desktop file.
- */
-K_EXPORT_PLUGIN(KXMLHelloWorldFactory("kipiplugin_kxmlhelloworld") )
 
 /** The plugin constructor. Note that plugin name passed as string in 3rd arguement of KIPI::Plugin parent class
  *  is the same than Name value from .desktop file.
@@ -267,7 +261,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
         foreach (const QUrl& url, images.images())
             names << url.fileName();
 
-        KMessageBox::informationList(0, i18n("This is the list of selected items"), names);
+        QMessageBox::information(0, i18n("This is the list of selected items"), names.join("\n"));
     }
 }
 
@@ -301,7 +295,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
         foreach (const ImageCollection& col, list)
             names << col.name();
 
-        KMessageBox::informationList(0, i18n("This is the list of selected albums"), names);
+        QMessageBox::information(0, i18n("This is the list of selected albums"), names.join("\n"));
     }
 
     delete dlg;
@@ -336,6 +330,8 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
 
     delete dlg;
 */
+
+    QMessageBox::information(0, i18n("Information"), i18n("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImport()
@@ -358,6 +354,8 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
         delete dlg;
 */
     }
+
+    QMessageBox::information(0, i18n("Information"), i18n("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
 }
 
 }  // namespace KIPIHelloWorldPlugin

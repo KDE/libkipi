@@ -18,7 +18,6 @@ add_library(kipiplugin_kxmlhelloworld MODULE ${kipiplugin_kxmlhelloworld_PART_SR
 
 target_link_libraries(kipiplugin_kxmlhelloworld
                       KF5::Parts
-                      KF5::KDELibs4Support
                       KF5Kipi
 )
 
