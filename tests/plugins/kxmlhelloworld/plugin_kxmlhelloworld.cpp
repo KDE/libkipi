@@ -125,7 +125,8 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
       /// Private container is allocated here.
       d(new Private)
 {
-    //qDebug() << "Plugin_KXMLHelloWorld plugin loaded";
+    // plugin do not use libkipi debug space. There is a debug space dedicate to kipi-plugins. Use kipiplugins_debug.h
+    //qDebug(KIPIPLUGINS_LOG) << "Plugin_KXMLHelloWorld plugin loaded";
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui.
@@ -192,6 +193,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     connect(d->actionImages, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImages()));
+
     /** We need to register actions in plugin instance
      */
     addAction("kxmlhelloworld-actionImage", d->actionImages, ImagesPlugin);
@@ -207,6 +209,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
     d->actionTools->setIcon(QIcon::fromTheme("script-error"));
     d->actionTools->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
+
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
 
@@ -224,6 +227,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionExport->setText(i18n("KXML Hello World Export..."));
     d->actionExport->setIcon(QIcon::fromTheme("script-error"));
     d->actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
+
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
 
@@ -235,6 +239,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     d->actionImport->setText(i18n("KXML Hello World Import..."));
     d->actionImport->setIcon(QIcon::fromTheme("script-error"));
     d->actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
+
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
 

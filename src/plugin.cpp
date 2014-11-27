@@ -275,7 +275,7 @@ void Plugin::setup(QWidget* const widget)
 {
     clearActions();
     d->defaultWidget = widget;
-    d->actionsCat.insert(widget, QMap<QAction *, Category>());
+    d->actionsCat.insert(widget, QMap<QAction*, Category>());
 }
 
 Category Plugin::category(QAction* const action) const
