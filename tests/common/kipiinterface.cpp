@@ -70,6 +70,7 @@ ImageCollection KipiInterface::currentAlbum()
     qDebug() << "Called by plugins";
 
     QUrl currentAlbumUrl;
+
     if (!m_selectedAlbums.isEmpty())
     {
         currentAlbumUrl = m_selectedAlbums.at(0);
@@ -87,6 +88,7 @@ ImageCollection KipiInterface::currentSelection()
 QList<ImageCollection> KipiInterface::allAlbums()
 {
     QList<ImageCollection> listAllAlbums;
+
     for (QList<QUrl>::const_iterator it = m_albums.constBegin(); it!=m_albums.constEnd(); ++it)
     {
         listAllAlbums.append(ImageCollection(new KipiImageCollectionShared(*it)));
@@ -208,17 +210,15 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
 {
     foreach(const QUrl &url, list)
     {
-#if KDE_IS_VERSION(4,7,0)
         KFileItemList items;
-        items.append(KFileItem(KFileItem::Unknown, KFileItem::Unknown, url, true));
+        items.append(KFileItem(url));
         KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
-#else
-        KIO::PreviewJob *job = KIO::filePreview(QList<QUrl>() << url, 256);
-#endif
 
-        connect(job, &KIO::PreviewJob::gotPreview, this, &KipiInterface::slotGotKDEPreview);
+        connect(job, &KIO::PreviewJob::gotPreview,
+                this, &KipiInterface::slotGotKDEPreview);
 
-        connect(job, &KIO::PreviewJob::failed, this, &KipiInterface::slotFailedKDEPreview);
+        connect(job, &KIO::PreviewJob::failed, this,
+                &KipiInterface::slotFailedKDEPreview);
     }
 }
 
