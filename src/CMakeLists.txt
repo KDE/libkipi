@@ -6,8 +6,7 @@
 
 add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/../libkipi_config.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
@@ -63,7 +62,7 @@ if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
 
     install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
-                        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
+                        ${CMAKE_CURRENT_BINARY_DIR}/../libkipi_config.h
             DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
             COMPONENT   Devel
     )
