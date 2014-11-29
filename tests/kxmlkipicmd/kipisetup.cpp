@@ -110,7 +110,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
-#pragma message "PORT QT5"
+#pragma message("PORT QT5")
     // restoreDialogSize(group);
 
     int pageIndex         = group.readEntry("Setup Page", 0);
@@ -134,7 +134,7 @@ KipiSetup::~KipiSetup()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(QString("Setup Dialog"));
-#pragma message "PORT QT5"
+#pragma message("PORT QT5")
     //saveDialogSize(group);
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
@@ -162,7 +162,7 @@ void KipiSetup::slotButtonClicked(int button)
     }
     else
     {
-#pragma message: PORT QT5
+#pragma message("PORT QT5")
         //KDialog::slotButtonClicked(button);
     }
 }
