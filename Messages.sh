@@ -1,2 +1,2 @@
 #! /bin/sh
-$XGETTEXT libkipi/*.cpp -o $podir/libkipi.pot
+$XGETTEXT src/*.cpp -o $podir/libkipi.pot
