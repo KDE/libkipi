@@ -45,6 +45,31 @@ add_library(KF5::Kipi ALIAS KF5Kipi)
 
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
+target_include_directories(KF5Kipi INTERFACE
+                           "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
+)
+
+target_link_libraries(KF5Kipi
+                      PUBLIC
+                      KF5::Parts
+                      KF5::KDELibs4Support
+                      Qt5::Gui
+)
+
+set_target_properties(KF5Kipi     PROPERTIES
+                      VERSION     ${KIPI_VERSION_STRING}
+                      SOVERSION   ${KIPI_SOVERSION}
+                      EXPORT_NAME Kipi
+)
+
+install(TARGETS KF5Kipi
+        EXPORT  KF5KipiTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
+)
+
+
+# desktop file which define plugin service model, used by tool from kipi-plugins.
+install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+
 # Check if compilation is done through digiKam SC or not. If yes, do not install header files.
 if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
@@ -71,27 +96,3 @@ if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
     )
 
 endif()
-
-target_include_directories(KF5Kipi INTERFACE
-                           "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
-)
-
-target_link_libraries(KF5Kipi
-                      PUBLIC
-                      KF5::Parts
-                      KF5::KDELibs4Support
-                      Qt5::Gui
-)
-
-install(TARGETS KF5Kipi
-        EXPORT  KF5KipiTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
-)
-
-set_target_properties(KF5Kipi     PROPERTIES
-                      VERSION     ${KIPI_VERSION_STRING}
-                      SOVERSION   ${KIPI_SOVERSION}
-                      EXPORT_NAME Kipi
-)
-
-# desktop file which define plugin service model, used by tool from kipi-plugins.
-install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
