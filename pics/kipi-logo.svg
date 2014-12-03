@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -13,9 +14,8 @@
    height="190"
    id="svg2052"
    sodipodi:version="0.32"
-   inkscape:version="0.44.1"
+   inkscape:version="0.48.5 r10040"
    version="1.0"
-   sodipodi:docbase="/home/wally/KDE/src/libs/libkipi/pics"
    sodipodi:docname="kipi-logo.svg"
    inkscape:export-filename="/home/wally/Desktop/kipi-hybrid2.png"
    inkscape:export-xdpi="89.419998"
@@ -111,7 +111,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="148.77854"
+     inkscape:cx="86.27854"
      inkscape:cy="72.624991"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -119,8 +119,10 @@
      height="190px"
      inkscape:window-width="1272"
      inkscape:window-height="950"
-     inkscape:window-x="0"
-     inkscape:window-y="24" />
+     inkscape:window-x="1663"
+     inkscape:window-y="43"
+     showgrid="false"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata2057">
     <rdf:RDF>
@@ -137,29 +139,12 @@
         </dc:creator>
         <dc:rights>
           <cc:Agent>
-            <dc:title></dc:title>
+            <dc:title />
           </cc:Agent>
         </dc:rights>
         <cc:license
-           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.5/" />
+           rdf:resource="" />
       </cc:Work>
-      <cc:License
-         rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.5/">
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/Reproduction" />
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/Distribution" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/Notice" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/Attribution" />
-        <cc:prohibits
-           rdf:resource="http://web.resource.org/cc/CommercialUse" />
-        <cc:permits
-           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
-        <cc:requires
-           rdf:resource="http://web.resource.org/cc/ShareAlike" />
-      </cc:License>
     </rdf:RDF>
   </metadata>
   <g
