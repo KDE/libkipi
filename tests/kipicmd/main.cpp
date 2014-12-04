@@ -34,26 +34,23 @@
 #include <QMenu>
 #include <QDebug>
 #include <QUrl>
+#include <QStandardPaths>
 
 // KDE includes
 
 #include <kapplication.h>
 #include <k4aboutdata.h>
 #include <kcmdlineargs.h>
-#include <kaction.h>
-#include <kactioncollection.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <klocalizedstring.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "libkipi_version.h"
 #include "plugin.h"
 #include "pluginloader.h"
 #include "kipiinterface.h"
 
-// local includes:
+// local includes
 
 #include "kipiinterface.h"
 
@@ -337,7 +334,7 @@ int main(int argc, char* argv[])
     KCmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
-    app.setWindowIcon(QIcon(KStandardDirs::locate("data", "kipi/data/kipi-icon.svg")));
+    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
 
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
@@ -404,9 +401,9 @@ int main(int argc, char* argv[])
         }
     }
 
-//     qDebug()<<"listSelectedImages:"<<listSelectedImages;
-//     qDebug()<<"listSelectedAlbums:"<<listSelectedAlbums;
-//     qDebug()<<"listAllAlbums:"<<listAllAlbums;
+//     qDebug() << "listSelectedImages:" << listSelectedImages;
+//     qDebug() << "listSelectedAlbums:" << listSelectedAlbums;
+//     qDebug() << "listAllAlbums:"      << listAllAlbums;
 
     kipiInterface->addSelectedImages(listSelectedImages);
     kipiInterface->addSelectedAlbums(listSelectedAlbums);
