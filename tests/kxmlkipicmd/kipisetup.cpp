@@ -35,16 +35,14 @@
 #include <QDebug>
 #include <QApplication>
 #include <QComboBox>
+#include <QLineEdit>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kpagewidget.h>
-#include <kstandarddirs.h>
 #include <klocalizedstring.h>
-#include <klineedit.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
-#include <kglobal.h>
 #include <kdialog.h>
 
 // Libkipi includes
@@ -77,7 +75,7 @@ public:
     {
     }
 
-    KLineEdit*       pluginFilter;
+    QLineEdit*       pluginFilter;
 
     KPageWidgetItem* page_plugins;
     KPageWidgetItem* page_xml;
@@ -98,9 +96,9 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->pluginsPage  = PluginLoader::instance()->configWidget(this);
     d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
     d->page_plugins->setIcon(QIcon::fromTheme("kipi"));
-    d->pluginFilter = new KLineEdit(d->pluginsPage);
-    d->pluginFilter->setClearButtonShown(true);
-    d->pluginFilter->setClickMessage(i18n("filter..."));
+    d->pluginFilter = new QLineEdit(d->pluginsPage);
+    d->pluginFilter->setClearButtonEnabled(true);
+    d->pluginFilter->setToolTip(i18n("Plugins list filter."));
     d->pluginsPage->setFilterWidget(d->pluginFilter);
 
     d->xmlPage  = new SetupXML(this);
@@ -127,7 +125,8 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     setCurrentPage(page);
 
-    connect(d->pluginFilter, &KLineEdit::userTextChanged, this, &KipiSetup::slotFilterChanged);
+    connect(d->pluginFilter, &QLineEdit::textChanged,
+            this, &KipiSetup::slotFilterChanged);
 }
 
 KipiSetup::~KipiSetup()
@@ -213,7 +212,8 @@ SetupXML::SetupXML(QWidget* const parent)
     setWidget(panel);
     setWidgetResizable(true);
 
-    d->uiFilesPath = KGlobal::dirs()->findDirs("data", QApplication::applicationName()).last();
+    d->uiFilesPath = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QApplication::applicationName(), QStandardPaths::LocateDirectory).last();
+    qDebug() << d->uiFilesPath;
     QDir dir(d->uiFilesPath);
     QString filter("*ui.rc");
     d->uiFilesList = dir.entryList(QStringList(filter), QDir::Files | QDir::NoSymLinks);
