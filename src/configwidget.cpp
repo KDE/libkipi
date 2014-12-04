@@ -35,12 +35,11 @@
 #include <QLabel>
 #include <QFontMetrics>
 #include <QHBoxLayout>
+#include <QBuffer>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <ktoolinvocation.h>
-#include <kstandarddirs.h>
-#include <kurllabel.h>
 #include <klocalizedstring.h>
 
 // Local includes
@@ -86,7 +85,7 @@ public:
     QGridLayout*    grid;
 
     QWidget*        hbox;
-    KUrlLabel*      kipiLogoLabel;
+    QLabel*         kipiLogoLabel;
 
     PluginListView* pluginsList;
 };
@@ -147,14 +146,20 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->libkipiVersion->setAlignment(Qt::AlignRight);
     hboxLay->setStretchFactor(space, 10);
 
-    d->kipiLogoLabel = new KUrlLabel(panel);
-    d->kipiLogoLabel->setText(QString());
-    d->kipiLogoLabel->setUrl("https://projects.kde.org/projects/extragear/graphics/kipi-plugins");
-
+    d->kipiLogoLabel = new QLabel(panel);
+    d->kipiLogoLabel->setTextFormat(Qt::RichText);
+    d->kipiLogoLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    d->kipiLogoLabel->setOpenExternalLinks(true);
     QFontMetrics fm(d->kipipluginsVersion->font());
     QRect r          = fm.boundingRect("XX");
-    QPixmap pix(KStandardDirs::locate("data", "kipi/data/kipi-plugins_logo.png"));
-    d->kipiLogoLabel->setPixmap(pix.scaledToHeight(r.height()*3, Qt::SmoothTransformation));
+    QByteArray byteArray;
+    QBuffer    buffer(&byteArray);
+    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-plugins_logo.png"))
+                 .scaledToHeight(r.height()*3, Qt::SmoothTransformation);
+    img.save(&buffer, "PNG");
+    d->kipiLogoLabel->setText(QString("<a href=\"https://projects.kde.org/projects/extragear/graphics/kipi-plugins\">%1</a>")
+                              .arg(QString("<img src=\"data:image/png;base64,%1\">")
+                              .arg(QString::fromLatin1(byteArray.toBase64().data()))));
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
     d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
@@ -189,9 +194,6 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     connect(d->pluginsList, &PluginListView::signalSearchResult, 
             this, &ConfigWidget::signalSearchResult);
 
-    connect(d->kipiLogoLabel, static_cast<void (KUrlLabel::*)(const QString &)>(&KUrlLabel::leftClickedUrl), 
-            this, &ConfigWidget::slotProcessUrl);
-
     // --------------------------------------------------------
 
     d->updateInfo();
@@ -200,11 +202,6 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 ConfigWidget::~ConfigWidget()
 {
     delete d;
-}
-
-void ConfigWidget::slotProcessUrl(const QString& url)
-{
-    KToolInvocation::self()->invokeBrowser(url);
 }
 
 void ConfigWidget::setFilterWidget(QWidget* const wdg)

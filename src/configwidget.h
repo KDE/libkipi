@@ -78,7 +78,6 @@ private Q_SLOTS:
     void slotCheckAll();
     void slotClearList();
     void slotItemClicked();
-    void slotProcessUrl(const QString&);
 
 private:
 
