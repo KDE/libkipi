@@ -35,6 +35,7 @@
 
 // Qt includes
 
+#include <QApplication>
 #include <QWidget>
 #include <QFile>
 #include <QAction>
@@ -43,7 +44,6 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kcomponentdata.h>
 
 // Local includes
 
@@ -328,7 +328,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         return;
     }
 
-    const QString componentName = KComponentData::mainComponent().componentName();
+    const QString componentName = QApplication::applicationName();
     const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("kipi/") + d->uiBaseName);
     const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + '/' + componentName + "/" + d->uiBaseName;
 
@@ -422,11 +422,11 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
     else
     {
-        QDomElement localGuiElem = localDomDoc.firstChildElement("gui");
+        QDomElement localGuiElem        = localDomDoc.firstChildElement("gui");
 
         Private::XMLParser::removeDisabledActions(localGuiElem);
 
-        QDomElement localToolBarElem = localGuiElem.firstChildElement("ToolBar");
+        QDomElement localToolBarElem    = localGuiElem.firstChildElement("ToolBar");
         QDomElement localActionPropElem = localGuiElem.firstChildElement("ActionProperties");
 
         newGuiElem.appendChild(localToolBarElem.cloneNode());
