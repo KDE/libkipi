@@ -33,16 +33,16 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDebug>
+#include <QApplication>
+#include <QComboBox>
 
 // KDE includes
 
 #include <kpagewidget.h>
-#include <kapplication.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
-#include <kcomponentdata.h>
-#include <kcombobox.h>
+#include <klocalizedstring.h>
 #include <klineedit.h>
+#include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kglobal.h>
 #include <kdialog.h>
@@ -169,12 +169,12 @@ void KipiSetup::slotButtonClicked(int button)
 
 void KipiSetup::okClicked()
 {
-    kapp->setOverrideCursor(Qt::WaitCursor);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
 
     d->pluginsPage->apply();
     d->xmlPage->apply();
 
-    kapp->restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
     accept();
 }
 
@@ -203,7 +203,7 @@ public:
 
     QString        uiFilesPath;
     QList<QString> uiFilesList;
-    KComboBox*     xmlFilesCob;
+    QComboBox*     xmlFilesCob;
 };
 
 SetupXML::SetupXML(QWidget* const parent)
@@ -213,12 +213,12 @@ SetupXML::SetupXML(QWidget* const parent)
     setWidget(panel);
     setWidgetResizable(true);
 
-    d->uiFilesPath = KGlobal::dirs()->findDirs("data", KGlobal::mainComponent().componentName()).last();
+    d->uiFilesPath = KGlobal::dirs()->findDirs("data", QApplication::applicationName()).last();
     QDir dir(d->uiFilesPath);
     QString filter("*ui.rc");
     d->uiFilesList = dir.entryList(QStringList(filter), QDir::Files | QDir::NoSymLinks);
 
-    d->xmlFilesCob = new KComboBox(panel);
+    d->xmlFilesCob = new QComboBox(panel);
     d->xmlFilesCob->setEditable(false);
 
     foreach(QString uiFile, d->uiFilesList)
