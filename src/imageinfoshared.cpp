@@ -33,9 +33,6 @@
 
 #include "imageinfoshared.h"
 
-// Qt includes
-
-
 // Local includes
 
 #include "interface.h"

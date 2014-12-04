@@ -43,9 +43,7 @@
 // KDE includes
 
 #include <kactioncollection.h>
-#include <kstandarddirs.h>
 #include <kcomponentdata.h>
-#include <kglobal.h>
 
 // Local includes
 
