@@ -43,12 +43,12 @@ public:
     KipiImageCollectionShared(const QList<QUrl>& images);
     virtual ~KipiImageCollectionShared();
 
-    virtual QString    name();
+    virtual QString     name();
     virtual QList<QUrl> images();
-    virtual QUrl       path();
-    virtual QUrl       uploadPath();
-    virtual QUrl       uploadRoot();
-    virtual bool       isDirectory();
+    virtual QUrl        path();
+    virtual QUrl        uploadPath();
+    virtual QUrl        uploadRoot();
+    virtual bool        isDirectory();
 
     // functions used internally:
     void addImages(const QList<QUrl>& images);
@@ -56,7 +56,7 @@ public:
 
 private:
 
-    QUrl       m_albumPath;
+    QUrl        m_albumPath;
     QList<QUrl> m_images;
 };
 

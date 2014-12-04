@@ -27,7 +27,7 @@
 #ifndef __KIPIINTERFACE_H
 #define __KIPIINTERFACE_H
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "interface.h"
 

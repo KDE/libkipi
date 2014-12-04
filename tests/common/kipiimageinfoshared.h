@@ -50,8 +50,8 @@ public:
 
 private:
 
-    class KipiImageInfoSharedPrivate;
-    KipiImageInfoSharedPrivate* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KXMLKipiCmd

@@ -24,7 +24,7 @@
 
 #include "kipiimagecollectionselector.h"
 
-// Qt includes:
+// Qt includes
 
 #include <QListWidget>
 #include <QVBoxLayout>
@@ -33,9 +33,9 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "imagecollection.h"
 

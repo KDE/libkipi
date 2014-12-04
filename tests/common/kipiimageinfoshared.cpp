@@ -35,11 +35,11 @@
 namespace KXMLKipiCmd
 {
 
-class KipiImageInfoShared::KipiImageInfoSharedPrivate
+class KipiImageInfoShared::Private
 {
 public:
 
-    KipiImageInfoSharedPrivate()
+    Private()
     {
     }
 
@@ -48,7 +48,7 @@ public:
 
 KipiImageInfoShared::KipiImageInfoShared(Interface* const interface, const QUrl &url)
     : ImageInfoShared(interface, url),
-      d(new KipiImageInfoSharedPrivate())
+      d(new Private())
 {
 }
 

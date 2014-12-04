@@ -33,12 +33,12 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kdeversion.h>
 #include <kfileitem.h>
 #include <kio/previewjob.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "libkipi_version.h"
 #include "imagecollection.h"

@@ -55,9 +55,9 @@ public Q_SLOTS:
 
 private:
 
-    KipiInterface* const         m_interface;
-    QListWidget*                 m_listWidget;
-    QList<ImageCollection>       m_allAlbums;
+    KipiInterface* const   m_interface;
+    QListWidget*           m_listWidget;
+    QList<ImageCollection> m_allAlbums;
 };
 
 } // namespace KXMLKipiCmd

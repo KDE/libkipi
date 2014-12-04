@@ -33,9 +33,9 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 
-// LibKIPI includes
+// Libkipi includes
 
 #include "imagecollection.h"
 
@@ -51,9 +51,9 @@ KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* cons
       m_interface(interface),
       m_listWidget(0)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* const layout = new QVBoxLayout(this);
     layout->addWidget(new QLabel(i18n("Please select a target album:")));
-    m_listWidget        = new QListWidget(this);
+    m_listWidget              = new QListWidget(this);
     layout->addWidget(m_listWidget);
 
     setLayout(layout);
