@@ -25,10 +25,13 @@
 #ifndef KIPITESTMAINWINDOW_H
 #define KIPITESTMAINWINDOW_H
 
+// Qt includes
+
+#include <QUrl>
+
 // KDE includes
 
 #include <kxmlguiwindow.h>
-#include <QUrl>
 
 namespace KXMLKipiCmd
 {
@@ -61,8 +64,8 @@ private Q_SLOTS:
 
 private:
 
-    class KipiTestMainWindowPriv;
-    KipiTestMainWindowPriv* const d;
+    class Private;
+    Private* const d;
 
     static KipiTestMainWindow* m_instance;
 };

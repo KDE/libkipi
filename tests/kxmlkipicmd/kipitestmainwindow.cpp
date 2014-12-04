@@ -31,19 +31,15 @@
 
 // KDE includes
 
-#include <kdialog.h>
-#include <kconfig.h>
-#include <kglobal.h>
+#include <kconfiggroup.h>
 #include <ksharedconfig.h>
-#include <kaction.h>
 #include <ktoggleaction.h>
 #include <kstandardaction.h>
 #include <kmenubar.h>
 #include <kactioncollection.h>
 #include <kshortcutsdialog.h>
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kedittoolbar.h>
-#include <kxmlguifactory.h>
 
 // LibKIPI includes
 
@@ -61,12 +57,12 @@ namespace KXMLKipiCmd
 
 KipiTestMainWindow* KipiTestMainWindow::m_instance = 0;
 
-class KipiTestMainWindow::KipiTestMainWindowPriv
+class KipiTestMainWindow::Private
 {
 
 public:
 
-    KipiTestMainWindowPriv() :
+    Private() :
         config(0),
         quitAction(0),
         showMenuBarAction(0),
@@ -86,7 +82,7 @@ public:
 KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
                                        const QList<QUrl>& selectedAlbums,
                                        const QList<QUrl>& allAlbums)
-    : KXmlGuiWindow(0), d(new KipiTestMainWindowPriv())
+    : KXmlGuiWindow(0), d(new Private())
 {
     m_instance           = this;
     d->config            = KSharedConfig::openConfig();
