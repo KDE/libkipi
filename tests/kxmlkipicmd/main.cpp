@@ -32,11 +32,12 @@
 #include <QDebug>
 #include <QApplication>
 #include <QStandardPaths>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 
 // KDE includes
 
-#include <k4aboutdata.h>
-#include <kcmdlineargs.h>
+#include <kaboutdata.h>
 #include <klocalizedstring.h>
 
 // LibKipi includes
@@ -51,33 +52,37 @@ using namespace KXMLKipiCmd;
 
 int main(int argc, char* argv[])
 {
-    const K4AboutData aboutData("kxmlkipicmd",
-                                "kipi",
-                                ki18n("kxmlkipicmd"),
-                                KIPI_VERSION_STRING,            // libkipi version
-                                ki18n("Kipi host test application using KDE XML-GUI"),
-                                K4AboutData::License_GPL,
-                                ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                                      "(c) 2011-2014 Gilles Caulier\n"
-                                      "(c) 2012 Victor Dodon "),
-                                KLocalizedString(),             // optional text
-                                "http://www.digikam.org",       // URI of homepage
-                                "kde-imaging@kde.org"           // bugs e-mail address
-                               );
+    KAboutData aboutData("kxmlkipicmd",
+                         ki18n("kxmlkipicmd").toString(),
+                         QString(KIPI_VERSION_STRING),            // libkipi version
+                         ki18n("Kipi host test application using KDE XML-GUI").toString(),
+                         KAboutLicense::GPL,
+                         ki18n("(c) 2009-2010 Michael G. Hansen\n"
+                               "(c) 2011-2014 Gilles Caulier\n"
+                               "(c) 2012 Victor Dodon ").toString(),
+                         QString(),                               // optional text
+                         QString("http://www.digikam.org"),       // URI of homepage
+                         QString("kde-imaging@kde.org")           // bugs e-mail address
+                        );
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineOptions options;
-    options.add("!selectedalbums <album>",  ki18n("Selected albums"));
-    options.add("!selectedimages <images>", ki18n("Selected images"));
-    options.add("!allalbums <albums>",      ki18n("All albums"));
-    options.add("+[images]",                ki18n("List of images"));
-    options.add("+[albums]",                ki18n("Selected albums"));
-    KCmdLineArgs::addCmdLineOptions(options);
 
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
 
-    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    aboutData.setupCommandLine(&parser);
+
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("selectedalbums"), i18n("Selected albums"), QLatin1String("album")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("selectedimages"), i18n("Selected images"), QLatin1String("images")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("allalbums"),      i18n("All albums"),      QLatin1String("albums")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[images]"),      i18n("List of images")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[albums]"),      i18n("Selected albums")));
+
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     QList<QUrl> listSelectedImages;
     QList<QUrl> listSelectedAlbums;
@@ -87,27 +92,29 @@ int main(int argc, char* argv[])
 
     QList<QUrl>* startList = 0;
 
-    if (args->isSet("selectedimages"))
+    if (parser.isSet("selectedimages"))
     {
         startList = &listSelectedImages;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedimages").toUtf8()));
+        startList->append(QUrl(parser.value("selectedimages")));
     }
-    else if (args->isSet("selectedalbums"))
+    else if (parser.isSet("selectedalbums"))
     {
         startList = &listSelectedAlbums;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedalbums").toUtf8()));
+        startList->append(QUrl(parser.value("selectedalbums")));
     }
-    else if (args->isSet("allalbums"))
+    else if (parser.isSet("allalbums"))
     {
         startList = &listAllAlbums;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("allalbums").toUtf8()));
+        startList->append(QUrl(parser.value("allalbums")));
     }
 
     // Append the remaining arguments to the lists
 
-    for (int i = 0; i < args->count(); ++i)
+    const QStringList args = parser.positionalArguments();
+
+    for (int i = 0; i < args.count(); ++i)
     {
-        const QString argValue = args->arg(i);
+        const QString argValue = args.value(i);
 
         if (argValue == "--selectedimages")
         {
@@ -125,12 +132,13 @@ int main(int argc, char* argv[])
         {
             if (startList == 0)
             {
-                qCritical() << "startList is null";
-                args->usageError(i18n("Please specify how the filenames you provided should be used."));
+                qCritical() << "StartList is null. "
+                            << "Please specify how the filenames you provided should be used.";
+                return 0;
             }
             else
             {
-                startList->append(args->url(i));
+                startList->append(QUrl(args.value(i)));
             }
         }
     }
