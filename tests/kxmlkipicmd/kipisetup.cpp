@@ -44,6 +44,7 @@
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kdialog.h>
+#include <kwindowconfig.h>
 
 // Libkipi includes
 
@@ -108,8 +109,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
-#pragma message("PORT QT5")
-    // restoreDialogSize(group);
+    KWindowConfig::restoreWindowSize(windowHandle(), group);
 
     int pageIndex         = group.readEntry("Setup Page", 0);
     KPageWidgetItem* page = 0;
@@ -133,10 +133,10 @@ KipiSetup::~KipiSetup()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(QString("Setup Dialog"));
-#pragma message("PORT QT5")
-    //saveDialogSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
+
     delete d;
 }
 
