@@ -35,12 +35,13 @@
 #include <QDebug>
 #include <QUrl>
 #include <QStandardPaths>
+#include <QApplication>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 
 // KDE includes
 
-#include <kapplication.h>
-#include <k4aboutdata.h>
-#include <kcmdlineargs.h>
+#include <kaboutdata.h>
 #include <klocalizedstring.h>
 
 // Libkipi includes
@@ -306,84 +307,91 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char* argv[])
 {
-    const K4AboutData aboutData("kipiplugins",
-                               "kipi",
-                               ki18n("kipicmd"),
-                               KIPI_VERSION_STRING,            // version
-                               ki18n("Kipi host test application"),
-                               K4AboutData::License_GPL,
-                               ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                                     "(c) 2011-2014 Gilles Caulier "),
-                               KLocalizedString(),             // optional text
-                               "http://www.digikam.org",       // URI of homepage
-                               "kde-imaging@kde.org"           // bugs e-mail address
-                              );
+    KAboutData aboutData("kipicmd",
+                         ki18n("kipicmd").toString(),
+                         QString(KIPI_VERSION_STRING),            // libkipi version
+                         ki18n("Kipi host test application using KDE XML-GUI").toString(),
+                         KAboutLicense::GPL,
+                         ki18n("(c) 2009-2010 Michael G. Hansen\n"
+                               "(c) 2011-2014 Gilles Caulier\n"
+                               "(c) 2012 Victor Dodon ").toString(),
+                         QString(),                               // optional text
+                         QString("http://www.digikam.org"),       // URI of homepage
+                         QString("kde-imaging@kde.org")           // bugs e-mail address
+                        );
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineOptions options;
-    options.add( "listplugins", ki18n("List the available plugins") );
-    options.add( "l" ).add("library <libraryname>", ki18n("Library name of plugin to use") );
-    options.add( "a" ).add( "action <action>", ki18n("Action to call") );
-    options.add( "w" ).add( "wait", ki18n("Wait until non-modal dialogs are closed.") );
-    options.add( "!selectedalbums <album>", ki18n("Selected albums") );
-    options.add( "!selectedimages <images>", ki18n("Selected images") );
-    options.add( "!allalbums <albums>", ki18n("All albums") );
-    options.add( "+[images]", ki18n("List of images") );
-    options.add( "+[albums]", ki18n("List of albums") );
-    options.add( "", ki18n("Exemple : ./kipicmd -w -lkipiplugin_rawconverter -a\"Batch RAW Converter...\"") );
-    KCmdLineArgs::addCmdLineOptions( options );
-
-    KApplication app;
+    QApplication app(argc, argv);
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
+
+    QCommandLineParser parser;
+    KAboutData::setApplicationData(aboutData);
+    parser.addVersionOption();
+    parser.addHelpOption();
+    aboutData.setupCommandLine(&parser);
+
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("list"),           i18n("List the available plugins")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("w"),              i18n("Wait until non-modal dialogs are closed")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              i18n("Library name of plugin to use"),           QLatin1String("library")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("a"),              i18n("Action to call"),                          QLatin1String("action")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("i"),              i18n("Selected images"),                         QLatin1String("selectedimages")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("c"),              i18n("Selected colections"),                     QLatin1String("selectedcollections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("allc"),           i18n("All collections"),                         QLatin1String("allcollections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[images]"),      i18n("List of images")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[collections]"), i18n("List of collections")));
+
+    parser.process(app);
+    aboutData.processCommandLine(&parser);
 
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
-    // create an instance of the plugin loader:
     PluginLoader* const loader = new PluginLoader(0);
     loader->setInterface(kipiInterface);
     loader->init();
 
-    KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
-
-    // handling of selectedimages, selectalbums and otheralbums is complicated
-    // create new lists of these parameters:
     QList<QUrl> listSelectedImages;
     QList<QUrl> listSelectedAlbums;
     QList<QUrl> listAllAlbums;
 
-    // determine which with list we start:
+    // Determine which with list we start
+
     QList<QUrl>* startList = 0;
 
-    if (args->isSet("selectedimages"))
+    if (parser.isSet("i"))
     {
         startList = &listSelectedImages;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedimages").toUtf8()));
+        startList->append(QUrl(parser.value("i")));
     }
-    else if (args->isSet("selectedalbums"))
+    else if (parser.isSet("c"))
     {
         startList = &listSelectedAlbums;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("selectedalbums").toUtf8()));
+        startList->append(QUrl(parser.value("c")));
     }
-    else if (args->isSet("allalbums"))
+    else if (parser.isSet("allc"))
     {
         startList = &listAllAlbums;
-        startList->append(KCmdLineArgs::makeURL(args->getOption("allalbums").toUtf8()));
+        startList->append(QUrl(parser.value("allc")));
     }
 
-    // append the remaining arguments to the lists:
-    for (int i = 0; i < args->count(); ++i)
-    {
-        const QString argValue = args->arg(i);
+    qDebug() << "startList:" << startList;
+    qDebug() << "parser:"    << parser.optionNames();
+    
+    // Append the remaining arguments to the lists
 
-        if (argValue == "--selectedimages")
+    const QStringList args = parser.positionalArguments();
+
+    for (int i = 0; i < args.count(); ++i)
+    {
+        const QString argValue = args.value(i);
+
+        if (argValue == "-i")
         {
             startList = &listSelectedImages;
         }
-        else if (argValue == "--selectedalbums")
+        else if (argValue == "-c")
         {
             startList = &listSelectedAlbums;
         }
-        else if (argValue == "--allalbums")
+        else if (argValue == "-allc")
         {
             startList = &listAllAlbums;
         }
@@ -391,12 +399,13 @@ int main(int argc, char* argv[])
         {
             if (startList == 0)
             {
-                qCritical() << "startList==0";
-                args->usageError(i18n("Please specify how the filenames you provided should be used."));
+                qCritical() << "StartList is null.\n"
+                               "Please specify how the filenames you provided should be used.";
+                return 0;
             }
             else
             {
-                startList->append(args->url(i));
+                startList->append(QUrl(args.value(i)));
             }
         }
     }
@@ -409,21 +418,25 @@ int main(int argc, char* argv[])
     kipiInterface->addSelectedAlbums(listSelectedAlbums);
     kipiInterface->addAlbums(listAllAlbums);
 
-    // determine whether only one plugin should be loaded:
-    const QString nameOfOnlyOnePluginToLoad = args->getOption("library");
+    // determine whether only one plugin should be loaded
 
-    // determine what to do:
+    const QString nameOfOnlyOnePluginToLoad = parser.value("l");
+
+    // determine what to do
+
     int returnValue                         = 0;
     bool startedPlugin                      = false;
 
-    if ( args->isSet("listplugins") )
+    if ( parser.isSet("list") )
     {
         if (!ListPlugins( nameOfOnlyOnePluginToLoad ))
             returnValue = 1;
     }
-    else if ( args->isSet("a") )
+    else if ( parser.isSet("a") )
     {
-        const QString action = args->getOption("action");
+        const QString action = parser.value("a");
+
+        qDebug() << action;
 
         if ( !CallAction( action, nameOfOnlyOnePluginToLoad ) )
         {
@@ -436,11 +449,13 @@ int main(int argc, char* argv[])
     }
     else
     {
-        KCmdLineArgs::usageError( i18n("No argument specified: either use --listplugins, "
-                                       "or specify an action to be called.") );
+        qCritical() << "No argument specified: either use --list,\n"
+                       "or specify an action to be called.\n"
+                       "Exemple : ./kipicmd -w -lkipiplugin_kxmlhelloworld -a\"KXML Hello World Image...\" -i ~/Images/*";
+        return 0;
     }
 
-    if (startedPlugin&&args->isSet("wait"))
+    if (startedPlugin && parser.isSet("w"))
     {
         return app.exec();
     }

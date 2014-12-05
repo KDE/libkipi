@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
                          QString("kde-imaging@kde.org")           // bugs e-mail address
                         );
 
-
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
 
@@ -75,11 +74,11 @@ int main(int argc, char* argv[])
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
 
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("selectedalbums"), i18n("Selected albums"), QLatin1String("album")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("selectedimages"), i18n("Selected images"), QLatin1String("images")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("allalbums"),      i18n("All albums"),      QLatin1String("albums")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("c"),              i18n("Selected collections"), QLatin1String("selectedcollectionss")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("i"),              i18n("Selected images"),      QLatin1String("selectedimages")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("allc"),           i18n("All collections"),      QLatin1String("allcollections")));
     parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[images]"),      i18n("List of images")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[albums]"),      i18n("Selected albums")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[collections]"), i18n("Selected collections")));
 
     parser.process(app);
     aboutData.processCommandLine(&parser);
@@ -92,20 +91,20 @@ int main(int argc, char* argv[])
 
     QList<QUrl>* startList = 0;
 
-    if (parser.isSet("selectedimages"))
+    if (parser.isSet("i"))
     {
         startList = &listSelectedImages;
-        startList->append(QUrl(parser.value("selectedimages")));
+        startList->append(QUrl(parser.value("i")));
     }
-    else if (parser.isSet("selectedalbums"))
+    else if (parser.isSet("c"))
     {
         startList = &listSelectedAlbums;
-        startList->append(QUrl(parser.value("selectedalbums")));
+        startList->append(QUrl(parser.value("c")));
     }
-    else if (parser.isSet("allalbums"))
+    else if (parser.isSet("allc"))
     {
         startList = &listAllAlbums;
-        startList->append(QUrl(parser.value("allalbums")));
+        startList->append(QUrl(parser.value("allc")));
     }
 
     // Append the remaining arguments to the lists
@@ -116,15 +115,15 @@ int main(int argc, char* argv[])
     {
         const QString argValue = args.value(i);
 
-        if (argValue == "--selectedimages")
+        if (argValue == "-i")
         {
             startList = &listSelectedImages;
         }
-        else if (argValue == "--selectedalbums")
+        else if (argValue == "-c")
         {
             startList = &listSelectedAlbums;
         }
-        else if (argValue == "--allalbums")
+        else if (argValue == "-allc")
         {
             startList = &listAllAlbums;
         }
