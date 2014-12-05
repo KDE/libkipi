@@ -32,13 +32,9 @@
 
 // KDE includes
 
-#include <kapplication.h>
 #include <kactioncategory.h>
-#include <kactioncollection.h>
-#include <kaction.h>
-#include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
-#include <kglobal.h>
+#include <klocalizedstring.h>
 
 // Local includes
 
@@ -76,7 +72,8 @@ KipiTestPluginLoader* KipiTestPluginLoader::m_instance = 0;
 // -----------------------------------------------
 
 KipiTestPluginLoader::KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInterface *const interface)
-    : QObject(parent), d(new KipiTestPluginLoaderPriv)
+    : QObject(parent),
+      d(new KipiTestPluginLoaderPriv)
 {
     m_instance       = this;
     d->kipiInterface = interface;
@@ -108,7 +105,7 @@ QList<PluginLoader::Info*> KipiTestPluginLoader::pluginList()
 
 QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(Category cat) const
 {
-    KActionCategory* category = d->kipiCategoryMap[cat];
+    KActionCategory* const category = d->kipiCategoryMap[cat];
 
     if (category)
     {
@@ -218,7 +215,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
     for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
-        Plugin* plugin = (*it)->plugin();
+        Plugin* const plugin = (*it)->plugin();
 
         if (!plugin || !(*it)->shouldLoad())
         {
@@ -238,11 +235,10 @@ void KipiTestPluginLoader::checkEmptyCategory(Category cat)
 
     if (!category)
     {
-//        QAction* action = new QAction(i18n("No tool available"), d->app);
-        QString actionName = "emptyCategory" + categoryShortName(cat);
-        QAction* action = d->app->actionCollection()->addAction(actionName);
+        QString actionName    = "emptyCategory" + categoryShortName(cat);
+        QAction* const action = d->app->actionCollection()->addAction(actionName);
         action->setEnabled(false);
-        category        = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
+        category              = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
         d->kipiCategoryMap.insert(cat, category);
     }
 }

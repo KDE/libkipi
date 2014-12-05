@@ -82,7 +82,8 @@ int main(int argc, char* argv[])
     QList<QUrl> listSelectedAlbums;
     QList<QUrl> listAllAlbums;
 
-    // determine which with list we start:
+    // Determine which with list we start
+
     QList<QUrl>* startList = 0;
 
     if (args->isSet("selectedimages"))
@@ -101,7 +102,8 @@ int main(int argc, char* argv[])
         startList->append(KCmdLineArgs::makeURL(args->getOption("allalbums").toUtf8()));
     }
 
-    // append the remaining arguments to the lists:
+    // Append the remaining arguments to the lists
+
     for (int i = 0; i < args->count(); ++i)
     {
         const QString argValue = args->arg(i);
@@ -133,7 +135,9 @@ int main(int argc, char* argv[])
     }
 
     KipiTestMainWindow* const mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
-    QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, &app, &KApplication::quit);
+
+    QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, 
+                     &app, &KApplication::quit);
 
     app.setTopWidget(mainWindow);
 

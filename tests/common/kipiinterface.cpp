@@ -34,7 +34,6 @@
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kdeversion.h>
 #include <kfileitem.h>
 #include <kio/previewjob.h>
 
@@ -76,13 +75,14 @@ ImageCollection KipiInterface::currentAlbum()
         currentAlbumUrl = m_selectedAlbums.at(0);
     }
 
-    return ImageCollection(new KipiImageCollectionShared(currentAlbumUrl));
+    return (ImageCollection(new KipiImageCollectionShared(currentAlbumUrl)));
 }
 
 ImageCollection KipiInterface::currentSelection()
 {
     qDebug() << "Called by plugins";
-    return ImageCollection(new KipiImageCollectionShared(m_selectedImages));
+
+    return (ImageCollection(new KipiImageCollectionShared(m_selectedImages)));
 }
 
 QList<ImageCollection> KipiInterface::allAlbums()
@@ -110,13 +110,14 @@ ImageInfo KipiInterface::info(const QUrl &url)
 {
     qDebug() << QString( "Plugin wants information about image \"%1\"").arg( url.url() );
 
-    return ImageInfo( new KipiImageInfoShared(this, url ) );
+    return (ImageInfo(new KipiImageInfoShared(this, url)));
 }
 
 bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
     qDebug() << QString( "Plugin added an image: \"%1\"").arg( url.url() );
+
     return true;
 }
 
@@ -128,6 +129,7 @@ void KipiInterface::delImage(const QUrl &url)
 void KipiInterface::refreshImages(const QList<QUrl>& urls)
 {
     qDebug() << QString( "Plugin asks to refresh %1 images:").arg( urls.size() );
+
     for (QList<QUrl>::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
         qDebug() << "  " + (*it).url();
@@ -137,19 +139,22 @@ void KipiInterface::refreshImages(const QList<QUrl>& urls)
 int KipiInterface::features() const
 {
     qDebug() << "Called by plugins";
+
     return ImagesHasTime;
 }
 
 ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
 {
     qDebug() << "Called by plugins";
-    return new KipiImageCollectionSelector(this, parent);
+
+    return (new KipiImageCollectionSelector(this, parent));
 }
 
 UploadWidget* KipiInterface::uploadWidget(QWidget* parent)
 {
     qDebug() << "Called by plugins";
-    return new KipiUploadWidget(this, parent);
+
+    return (new KipiUploadWidget(this, parent));
 }
 
 void KipiInterface::addSelectedImages(const QList<QUrl>& images)
@@ -212,7 +217,7 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
     {
         KFileItemList items;
         items.append(KFileItem(url));
-        KIO::PreviewJob* job = KIO::filePreview(items, QSize(256, 256));
+        KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
 
         connect(job, &KIO::PreviewJob::gotPreview,
                 this, &KipiInterface::slotGotKDEPreview);

@@ -89,7 +89,8 @@ ImageCollection KipiUploadWidget::selectedImageCollection() const
         return ImageCollection(0);
     }
 
-    const int row = m_listWidget->row( selectedItems.at(0) );
+    const int row = m_listWidget->row(selectedItems.at(0));
+
     return m_allAlbums.at(row);
 }
 
