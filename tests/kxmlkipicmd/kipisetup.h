@@ -56,7 +56,7 @@ public:
 
 private Q_SLOTS:
 
-    void slotButtonClicked(int button);
+    void slotOkClicked();
     void slotFilterChanged(const QString& filter);
 
 private:
@@ -65,7 +65,7 @@ private:
     ~KipiSetup();
 
     void okClicked();
-    int activePageIndex();
+    int  activePageIndex();
 
 private:
 

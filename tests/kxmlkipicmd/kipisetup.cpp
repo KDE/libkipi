@@ -127,6 +127,9 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     connect(d->pluginFilter, &QLineEdit::textChanged,
             this, &KipiSetup::slotFilterChanged);
+
+    connect(buttonBox()->button(QDialogButtonBox::Ok), &QPushButton::clicked,
+            this, &KipiSetup::slotOkClicked);
 }
 
 KipiSetup::~KipiSetup()
@@ -154,21 +157,10 @@ bool KipiSetup::runSetupDialog(QWidget* const parent)
     return success;
 }
 
-void KipiSetup::slotButtonClicked(int button)
+void KipiSetup::slotOkClicked()
 {
-    if (button == KDialog::Ok)
-    {
-        okClicked();
-    }
-    else
-    {
-#pragma message("PORT QT5")
-        //KDialog::slotButtonClicked(button);
-    }
-}
+    qDebug() << "Ok clicked";
 
-void KipiSetup::okClicked()
-{
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     d->pluginsPage->apply();
