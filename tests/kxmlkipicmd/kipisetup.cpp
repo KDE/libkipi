@@ -145,11 +145,12 @@ void KipiSetup::slotFilterChanged(const QString& filter)
      d->pluginsPage->slotSetFilter(filter, Qt::CaseInsensitive);
 }
 
-bool KipiSetup::exec(QWidget* const parent)
+bool KipiSetup::runSetupDialog(QWidget* const parent)
 {
     QPointer<KipiSetup> setup = new KipiSetup(parent);
     bool success              = (setup->KPageDialog::exec() == QDialog::Accepted);
     delete setup;
+
     return success;
 }
 

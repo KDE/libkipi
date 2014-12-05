@@ -52,7 +52,7 @@ public:
 
 public:
 
-    static bool exec(QWidget* const parent = 0);
+    static bool runSetupDialog(QWidget* const parent = 0);
 
 private Q_SLOTS:
 

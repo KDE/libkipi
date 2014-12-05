@@ -182,7 +182,7 @@ void KipiTestMainWindow::slotNewToolbarConfig()
 
 void KipiTestMainWindow::slotSetup()
 {
-    KipiSetup::exec(this);
+    KipiSetup::runSetupDialog(this);
 }
 
 } // namespace KXMLKipiCmd
