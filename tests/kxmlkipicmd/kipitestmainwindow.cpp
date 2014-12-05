@@ -28,6 +28,7 @@
 
 #include <QPointer>
 #include <QDebug>
+#include <QMenuBar>
 
 // KDE includes
 
@@ -35,7 +36,6 @@
 #include <ksharedconfig.h>
 #include <ktoggleaction.h>
 #include <kstandardaction.h>
-#include <kmenubar.h>
 #include <kactioncollection.h>
 #include <kshortcutsdialog.h>
 #include <klocalizedstring.h>
