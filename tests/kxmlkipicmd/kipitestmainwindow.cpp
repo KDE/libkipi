@@ -40,6 +40,7 @@
 #include <kshortcutsdialog.h>
 #include <klocalizedstring.h>
 #include <kedittoolbar.h>
+#include <kwindowconfig.h>
 
 // LibKIPI includes
 
@@ -95,7 +96,7 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
 
     setMinimumSize(QSize(800, 600));
     KConfigGroup mainWindowGroup = d->config->group("MainWindow Dialog");
-    restoreWindowSize(mainWindowGroup);
+    KWindowConfig::restoreWindowSize(windowHandle(), mainWindowGroup);
 
     if (!selectedImages.empty())
     {
@@ -121,8 +122,9 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
 KipiTestMainWindow::~KipiTestMainWindow()
 {
     KConfigGroup group = d->config->group("MainWindow Dialog");
-    saveWindowSize(group);
+    KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
+
     delete d;
 }
 
