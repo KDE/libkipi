@@ -30,10 +30,11 @@
 
 #include <QUrl>
 #include <QDebug>
+#include <QApplication>
+#include <QStandardPaths>
 
 // KDE includes
 
-#include <kapplication.h>
 #include <k4aboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocalizedstring.h>
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
     options.add("+[albums]",                ki18n("Selected albums"));
     KCmdLineArgs::addCmdLineOptions(options);
 
-    KApplication app;
+    QApplication app(argc, argv);
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
 
     KCmdLineArgs* const args = KCmdLineArgs::parsedArgs();
@@ -137,9 +138,9 @@ int main(int argc, char* argv[])
     KipiTestMainWindow* const mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
 
     QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, 
-                     &app, &KApplication::quit);
+                     &app, &QApplication::quit);
 
-    app.setTopWidget(mainWindow);
+    app.setActiveWindow(mainWindow);
 
     mainWindow->show();
     return app.exec();
