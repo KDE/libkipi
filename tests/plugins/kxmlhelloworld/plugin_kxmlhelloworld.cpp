@@ -55,7 +55,7 @@
 
 // KDE includes
 
-#include <klocale.h>
+#include <klocalizedstring.h>
 #include <kpluginfactory.h>
 
 /// This is all libkipi headers included in this tool.
@@ -178,7 +178,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionImages = new QAction(this);
     d->actionImages->setText(i18n("KXML Hello World Image..."));
-    d->actionImages->setIcon(QIcon::fromTheme("script-error"));
+    d->actionImages->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionImages->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
 
     /** Connect plugin action signal to dedicated slot.
@@ -188,7 +188,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     /** We need to register actions in plugin instance
      */
-    addAction("kxmlhelloworld-actionImage", d->actionImages, ImagesPlugin);
+    addAction(QString::fromLatin1("kxmlhelloworld-actionImage"), d->actionImages, ImagesPlugin);
 
     /** This will get items selection from KIPI host application.
      */
@@ -199,13 +199,13 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionTools = new QAction(this);
     d->actionTools->setText(i18n("KXML Hello World Tools..."));
-    d->actionTools->setIcon(QIcon::fromTheme("script-error"));
+    d->actionTools->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionTools->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
 
     connect(d->actionTools, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionTools()));
 
-    addAction("kxmlhelloworld-actionTools", d->actionTools, ToolsPlugin);
+    addAction(QString::fromLatin1("kxmlhelloworld-actionTools"), d->actionTools, ToolsPlugin);
 
     /** We will get current selected album in the digikam tree view
       */
@@ -217,25 +217,25 @@ void Plugin_KXMLHelloWorld::setupActions()
      */
     d->actionExport = new QAction(this);
     d->actionExport->setText(i18n("KXML Hello World Export..."));
-    d->actionExport->setIcon(QIcon::fromTheme("script-error"));
+    d->actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
 
     connect(d->actionExport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionExport()));
 
-    addAction("kxmlhelloworld-actionExport", d->actionExport, ExportPlugin);
+    addAction(QString::fromLatin1("kxmlhelloworld-actionExport"), d->actionExport, ExportPlugin);
 
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
     d->actionImport = new QAction(this);
     d->actionImport->setText(i18n("KXML Hello World Import..."));
-    d->actionImport->setIcon(QIcon::fromTheme("script-error"));
+    d->actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
 
     connect(d->actionImport, SIGNAL(triggered(bool)),
             this, SLOT(slotActivateActionImport()));
 
-    addAction("kxmlhelloworld-actionImport", d->actionImport, ImportPlugin);
+    addAction(QString::fromLatin1("kxmlhelloworld-actionImport"), d->actionImport, ImportPlugin);
 
     /** If selection change in KIPI host application, this signal will be fired, and plugin action enabled accordingly.
      */
@@ -261,7 +261,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
         foreach (const QUrl& url, images.images())
             names << url.fileName();
 
-        QMessageBox::information(0, i18n("This is the list of selected items"), names.join("\n"));
+        QMessageBox::information(0, i18n("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
     }
 }
 
@@ -295,7 +295,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
         foreach (const ImageCollection& col, list)
             names << col.name();
 
-        QMessageBox::information(0, i18n("This is the list of selected albums"), names.join("\n"));
+        QMessageBox::information(0, i18n("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));
     }
 
     delete dlg;
