@@ -71,7 +71,7 @@ namespace KIPI
 Interface::Interface(QObject* const parent, const char* name)
     : QObject(parent)
 {
-    setObjectName(name);
+    setObjectName(QString::fromLatin1(name));
 }
 
 Interface::~Interface()
@@ -80,7 +80,7 @@ Interface::~Interface()
 
 QString Interface::version()
 {
-    return QString(KIPI_VERSION_STRING);
+    return QString::fromLatin1(KIPI_VERSION_STRING);
 }
 
 void Interface::refreshImages(const QList<QUrl>&)
@@ -95,37 +95,37 @@ bool Interface::hasFeature(Features feature) const
 
 bool Interface::hasFeature( const QString& feature ) const
 {
-    if       ( feature == "CollectionsHaveComments" )
+    if       ( feature == QString::fromLatin1("CollectionsHaveComments" ))
         return hasFeature( CollectionsHaveComments );
-    else if  ( feature == "CollectionsHaveCategory" )
+    else if  ( feature == QString::fromLatin1("CollectionsHaveCategory" ))
         return hasFeature( CollectionsHaveCategory );
-    else if  ( feature == "CollectionsHaveCreationDate" )
+    else if  ( feature == QString::fromLatin1("CollectionsHaveCreationDate" ))
         return hasFeature( CollectionsHaveCreationDate );
-    else if  ( feature == "ImagesHasComments" )
+    else if  ( feature == QString::fromLatin1("ImagesHasComments" ))
         return hasFeature( ImagesHasComments );
-    else if  ( feature == "ImagesHasTime" )
+    else if  ( feature == QString::fromLatin1("ImagesHasTime" ))
         return hasFeature( ImagesHasTime );
-    else if  ( feature == "ImagesHasTitlesWritable" )
+    else if  ( feature == QString::fromLatin1("ImagesHasTitlesWritable" ))
         return hasFeature( ImagesHasTitlesWritable );
-    else if  ( feature == "HostSupportsThumbnails" )
+    else if  ( feature == QString::fromLatin1("HostSupportsThumbnails" ))
         return hasFeature( HostSupportsThumbnails );
-    else if  ( feature == "HostSupportsReadWriteLock" )
+    else if  ( feature == QString::fromLatin1("HostSupportsReadWriteLock" ))
         return hasFeature( HostSupportsReadWriteLock );
-    else if  ( feature == "HostSupportsDateRanges" )
+    else if  ( feature == QString::fromLatin1("HostSupportsDateRanges" ))
         return hasFeature( HostSupportsDateRanges );
-    else if  ( feature == "HostAcceptNewImages" )
+    else if  ( feature == QString::fromLatin1("HostAcceptNewImages" ))
         return hasFeature( HostAcceptNewImages );
-    else if  ( feature == "HostSupportsProgressBar" )
+    else if  ( feature == QString::fromLatin1("HostSupportsProgressBar" ))
         return hasFeature( HostSupportsProgressBar );
-    else if  ( feature == "HostSupportsTags" )
+    else if  ( feature == QString::fromLatin1("HostSupportsTags" ))
         return hasFeature( HostSupportsTags );
-    else if  ( feature == "HostSupportsRating" )
+    else if  ( feature == QString::fromLatin1("HostSupportsRating" ))
         return hasFeature( HostSupportsRating );
-    else if  ( feature == "HostSupportsPickLabel" )
+    else if  ( feature == QString::fromLatin1("HostSupportsPickLabel" ))
         return hasFeature( HostSupportsPickLabel );
-    else if  ( feature == "HostSupportsColorLabel" )
+    else if  ( feature == QString::fromLatin1("HostSupportsColorLabel" ))
         return hasFeature( HostSupportsColorLabel );
-    else if  ( feature == "HostSupportsItemReservation" )
+    else if  ( feature == QString::fromLatin1("HostSupportsItemReservation" ))
         return hasFeature( HostSupportsItemReservation );
     else
     {
@@ -209,37 +209,37 @@ QVariant Interface::hostSetting(const QString& settingName)
 {
     PrintWarningMessage();
 
-    if (settingName == QString("WriteMetadataUpdateFiletimeStamp"))
+    if (settingName == QString::fromLatin1("WriteMetadataUpdateFiletimeStamp"))
     {
         return false;
     }
-    else if (settingName == QString("WriteMetadataToRAW"))
+    else if (settingName == QString::fromLatin1("WriteMetadataToRAW"))
     {
         return false;
     }
-    if (settingName == QString("UseXMPSidecar4Reading"))
+    if (settingName == QString::fromLatin1("UseXMPSidecar4Reading"))
     {
         return false;
     }
-    if (settingName == QString("MetadataWritingMode"))
+    if (settingName == QString::fromLatin1("MetadataWritingMode"))
     {
         return 0;
     }
-    else if (settingName == QString("FileExtensions") || settingName == QString("ImagesExtensions"))
+    else if (settingName == QString::fromLatin1("FileExtensions") || settingName == QString::fromLatin1("ImagesExtensions"))
     {
         // Return a list of images file extensions supported by Qt in read mode.
         QStringList KDEImagetypes = supportedImageMimeTypes();
-        QString imagesFileFilter  = KDEImagetypes.join(" ");
+        QString imagesFileFilter  = KDEImagetypes.join(QString::fromLatin1(" "));
 
-        return QString( imagesFileFilter.toLower() + ' ' + imagesFileFilter.toUpper() );
+        return QString( imagesFileFilter.toLower() + QString::fromLatin1(" ") + imagesFileFilter.toUpper() );
     }
-    else if (settingName == QString("RawExtensions"))
+    else if (settingName == QString::fromLatin1("RawExtensions"))
     {
     }
-    else if (settingName == QString("VideoExtensions"))
+    else if (settingName == QString::fromLatin1("VideoExtensions"))
     {
     }
-    else if (settingName == QString("AudioExtensions"))
+    else if (settingName == QString::fromLatin1("AudioExtensions"))
     {
     }
 
@@ -327,7 +327,7 @@ QStringList Interface::supportedImageMimeTypes(bool readWrite)
                                             : QImageReader::supportedMimeTypes();
 
     Q_FOREACH(QByteArray mimeType, supported)
-        mimeTypes.append(QString(mimeType));
+        mimeTypes.append(QString::fromLatin1(mimeType));
 
     return mimeTypes;
 }

@@ -90,18 +90,18 @@ QUrl ImageCollectionShared::uploadRootUrl()
 
     if ( path.isValid() )
     {
-        path.setPath("/");
+        path.setPath(QString::fromLatin1("/"));
         return path;
     }
     else
     {
-        return QUrl::fromLocalFile( "file:/" );
+        return QUrl::fromLocalFile( QString::fromLatin1("file:/") );
     }
 }
 
 QString ImageCollectionShared::uploadRootName()
 {
-   return (QString("Images"));   // No i18n here. This must be done on KIPI host interface.
+   return (QString::fromLatin1("Images"));   // No i18n here. This must be done on KIPI host interface.
 }
 
 bool ImageCollectionShared::isDirectory()

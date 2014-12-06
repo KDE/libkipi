@@ -102,7 +102,7 @@ QDomElement Plugin::Private::XMLParser::makeElement(QDomDocument& domDoc, const 
     {
         QDomAttr attr = attributes.item(i).toAttr();
 
-        if (attr.name() != "alreadyVisited")
+        if (attr.name() != QString::fromLatin1("alreadyVisited"))
             elem.setAttributeNode(attr);
     }
 
@@ -122,14 +122,14 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
 
 int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const QDomElement& node)
 {
-    const QString nodeName = node.toElement().attribute("name");
+    const QString nodeName = node.toElement().attribute(QString::fromLatin1("name"));
     const QString nodeTag  = node.toElement().tagName();
 
     for (int i = 0; i < list.size(); ++i)
     {
         QDomElement e = list.at(i).toElement();
 
-        if (e.tagName() == nodeTag && e.attribute("name") == nodeName)
+        if (e.tagName() == nodeTag && e.attribute(QString::fromLatin1("name")) == nodeName)
             return i;
     }
 
@@ -138,7 +138,7 @@ int Plugin::Private::XMLParser::findByNameAttr(const QDomNodeList& list, const Q
 
 void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
 {
-    QDomNodeList actionList      = elem.elementsByTagName("Action");
+    QDomNodeList actionList      = elem.elementsByTagName(QString::fromLatin1("Action"));
     QStringList  disabledActions = PluginLoader::instance()->disabledPluginActions();
     QDomElemList disabledElements;
 
@@ -149,7 +149,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
         if (el.isNull())
             continue;
 
-        if (disabledActions.contains(el.attribute("name")))
+        if (disabledActions.contains(el.attribute(QString::fromLatin1("name"))))
         {
             disabledElements << el;
         }
@@ -172,7 +172,7 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
 
     if ((idx = findByNameAttr(localNodes, original)) != -1)
     {
-        paths[localNodes.item(idx).toElement().attribute("name")] = stack;
+        paths[localNodes.item(idx).toElement().attribute(QString::fromLatin1("name"))] = stack;
     }
 
     if (!original.hasChildNodes())
@@ -185,7 +185,7 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
     {
         QDomElement e = n.toElement();
 
-        if (e.tagName() == "Menu" && e.hasChildNodes())
+        if (e.tagName() == QString::fromLatin1("Menu") && e.hasChildNodes())
         {
             buildPaths(e, localNodes, paths, stack);
         }
@@ -199,7 +199,7 @@ void Plugin::Private::XMLParser::buildPaths(const QDomElement& original, const Q
 Plugin::Plugin(QObject* const parent, const char* name)
       : QObject(parent), d(new Private)
 {
-    setObjectName(name);
+    setObjectName(QString::fromLatin1(name));
 }
 
 Plugin::~Plugin()
@@ -305,7 +305,7 @@ Interface* Plugin::interface() const
 void Plugin::setUiBaseName(const char* name)
 {
     if (name && *name)
-        d->uiBaseName = QString(name);
+        d->uiBaseName = QString::fromLatin1(name);
 }
 
 QString Plugin::uiBaseName() const
@@ -329,8 +329,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
 
     const QString componentName = QApplication::applicationName();
-    const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("kipi/") + d->uiBaseName);
-    const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + '/' + componentName + "/" + d->uiBaseName;
+    const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/") + d->uiBaseName);
+    const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromLatin1("/") + 
+                                                                   componentName + QString::fromLatin1("/") + d->uiBaseName;
 
     QFile        defaultUIFile(defaultUI);
     QDomDocument defaultDomDoc;
@@ -350,26 +351,26 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
         return;
     }
 
-    QDomElement hostGuiElem       = hostDoc.firstChildElement("kpartgui");
-    QDomElement hostMenuBarElem   = hostGuiElem.firstChildElement("MenuBar");
+    QDomElement hostGuiElem       = hostDoc.firstChildElement(QString::fromLatin1("kpartgui"));
+    QDomElement hostMenuBarElem   = hostGuiElem.firstChildElement(QString::fromLatin1("MenuBar"));
 
     QDomDocument newPluginDoc(defaultDomDoc.doctype());
-    QDomElement defGuiElem        = defaultDomDoc.firstChildElement("gui");
+    QDomElement defGuiElem        = defaultDomDoc.firstChildElement(QString::fromLatin1("gui"));
 
     Private::XMLParser::removeDisabledActions(defGuiElem);
 
     QDomElement newGuiElem        = Private::XMLParser::makeElement(newPluginDoc, defGuiElem);
-    QDomElement defMenuBarElem    = defGuiElem.firstChildElement("MenuBar");
+    QDomElement defMenuBarElem    = defGuiElem.firstChildElement(QString::fromLatin1("MenuBar"));
     QDomElement newMenuBarElem    = Private::XMLParser::makeElement(newPluginDoc, defMenuBarElem);
-    QDomElement defToolBarElem    = defGuiElem.firstChildElement("ToolBar");
-    QDomElement defActionPropElem = defGuiElem.firstChildElement("ActionProperties");
+    QDomElement defToolBarElem    = defGuiElem.firstChildElement(QString::fromLatin1("ToolBar"));
+    QDomElement defActionPropElem = defGuiElem.firstChildElement(QString::fromLatin1("ActionProperties"));
 
     QHashPath paths;
     Private::XMLParser::buildPaths(hostMenuBarElem, defMenuBarElem.childNodes(), paths);
 
     for (QDomNode n = defMenuBarElem.firstChild(); !n.isNull(); n = n.nextSibling())
     {
-        QDomElemList path    = paths[n.toElement().attribute("name")];
+        QDomElemList path    = paths[n.toElement().attribute(QString::fromLatin1("name"))];
         QDomElement current  = newMenuBarElem;
         QDomElement origCurr = defMenuBarElem;
 
@@ -389,7 +390,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
                     if (!path[i].isNull())
                     {
                         QDomElement newChild = Private::XMLParser::makeElement(newPluginDoc, path[i]);
-                        QDomElement textElem = origCurr.firstChildElement("text");
+                        QDomElement textElem = origCurr.firstChildElement(QString::fromLatin1("text"));
 
                         if (!textElem.isNull())
                         {
@@ -422,12 +423,12 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
     else
     {
-        QDomElement localGuiElem        = localDomDoc.firstChildElement("gui");
+        QDomElement localGuiElem        = localDomDoc.firstChildElement(QString::fromLatin1("gui"));
 
         Private::XMLParser::removeDisabledActions(localGuiElem);
 
-        QDomElement localToolBarElem    = localGuiElem.firstChildElement("ToolBar");
-        QDomElement localActionPropElem = localGuiElem.firstChildElement("ActionProperties");
+        QDomElement localToolBarElem    = localGuiElem.firstChildElement(QString::fromLatin1("ToolBar"));
+        QDomElement localActionPropElem = localGuiElem.firstChildElement(QString::fromLatin1("ActionProperties"));
 
         newGuiElem.appendChild(localToolBarElem.cloneNode());
         newGuiElem.appendChild(localActionPropElem.cloneNode());
