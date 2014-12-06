@@ -52,21 +52,21 @@ using namespace KXMLKipiCmd;
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData("kxmlkipicmd",
+    KAboutData aboutData(QString::fromLatin1("kxmlkipicmd"),
                          ki18n("kxmlkipicmd").toString(),
-                         QString(KIPI_VERSION_STRING),            // libkipi version
+                         QString::fromLatin1(KIPI_VERSION_STRING),            // libkipi version
                          ki18n("Kipi host test application using KDE XML-GUI").toString(),
                          KAboutLicense::GPL,
                          ki18n("(c) 2009-2010 Michael G. Hansen\n"
                                "(c) 2011-2014 Gilles Caulier\n"
                                "(c) 2012 Victor Dodon ").toString(),
-                         QString(),                               // optional text
-                         QString("http://www.digikam.org"),       // URI of homepage
-                         QString("kde-imaging@kde.org")           // bugs e-mail address
+                         QString(),                                           // optional text
+                         QString::fromLatin1("http://www.digikam.org"),       // URI of homepage
+                         QString::fromLatin1("kde-imaging@kde.org")           // bugs e-mail address
                         );
 
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
+    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/data/kipi-icon.svg"))));
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
@@ -91,20 +91,20 @@ int main(int argc, char* argv[])
 
     QList<QUrl>* startList = 0;
 
-    if (parser.isSet("i"))
+    if (parser.isSet(QString::fromLatin1("i")))
     {
         startList = &listSelectedImages;
-        startList->append(QUrl(parser.value("i")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("i"))));
     }
-    else if (parser.isSet("c"))
+    else if (parser.isSet(QString::fromLatin1("c")))
     {
         startList = &listSelectedAlbums;
-        startList->append(QUrl(parser.value("c")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("c"))));
     }
-    else if (parser.isSet("allc"))
+    else if (parser.isSet(QString::fromLatin1("allc")))
     {
         startList = &listAllAlbums;
-        startList->append(QUrl(parser.value("allc")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("allc"))));
     }
 
     // Append the remaining arguments to the lists
@@ -115,15 +115,15 @@ int main(int argc, char* argv[])
     {
         const QString argValue = args.value(i);
 
-        if (argValue == "-i")
+        if (argValue == QString::fromLatin1("-i"))
         {
             startList = &listSelectedImages;
         }
-        else if (argValue == "-c")
+        else if (argValue == QString::fromLatin1("-c"))
         {
             startList = &listSelectedAlbums;
         }
-        else if (argValue == "-allc")
+        else if (argValue == QString::fromLatin1("-allc"))
         {
             startList = &listAllAlbums;
         }

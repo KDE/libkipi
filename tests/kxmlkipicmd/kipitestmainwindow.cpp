@@ -89,10 +89,10 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
     d->config            = KSharedConfig::openConfig();
     d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
     KConfigGroup uiGroup = d->config->group("UI Settings");
-    QString uiFile       = uiGroup.readEntry("UiFile", QString("kxmlkipicmd_defaultui.rc"));
+    QString uiFile       = uiGroup.readEntry(QString::fromLatin1("UiFile"), QString::fromLatin1("kxmlkipicmd_defaultui.rc"));
 
     d->uiFile = uiFile;
-    setObjectName("kxmlkipicmd");
+    setObjectName(QString::fromLatin1("kxmlkipicmd"));
 
     setMinimumSize(QSize(800, 600));
     KConfigGroup mainWindowGroup = d->config->group("MainWindow Dialog");
@@ -137,7 +137,7 @@ void KipiTestMainWindow::setupActions()
 {
     d->showMenuBarAction = KStandardAction::showMenubar(this, SLOT(slotShowMenuBar()), actionCollection());
     d->quitAction        = KStandardAction::quit(this,        SLOT(close()),           actionCollection());
-    actionCollection()->addAction("app_exit", d->quitAction);
+    actionCollection()->addAction(QString::fromLatin1("app_exit"), d->quitAction);
 
     KStandardAction::keyBindings(this,       SLOT(slotEditKeys()),     actionCollection());
     KStandardAction::configureToolbars(this, SLOT(slotConfToolbars()), actionCollection());

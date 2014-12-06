@@ -43,7 +43,6 @@
 #include <klocalizedstring.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
-#include <kdialog.h>
 #include <kwindowconfig.h>
 
 // Libkipi includes
@@ -60,7 +59,7 @@ using namespace KIPI;
 namespace KXMLKipiCmd
 {
 
-const QString SetupXML::CONFIG_GROUP_NAME = "UI Settings";
+const QString SetupXML::CONFIG_GROUP_NAME = QString::fromLatin1("UI Settings");
 
 class KipiSetup::Private
 {
@@ -96,7 +95,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     d->pluginsPage  = PluginLoader::instance()->configWidget(this);
     d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
-    d->page_plugins->setIcon(QIcon::fromTheme("kipi"));
+    d->page_plugins->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi")));
     d->pluginFilter = new QLineEdit(d->pluginsPage);
     d->pluginFilter->setClearButtonEnabled(true);
     d->pluginFilter->setToolTip(i18n("Plugins list filter."));
@@ -104,8 +103,8 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     d->xmlPage  = new SetupXML(this);
     d->page_xml = addPage(d->xmlPage, i18n("UI layouts"));
-    d->page_xml->setIcon(QIcon::fromTheme("application-xml"));
-    d->page_xml->setHeader("Configure the UI file for the KXMLKipiCmd application");
+    d->page_xml->setIcon(QIcon::fromTheme(QString::fromLatin1("application-xml")));
+    d->page_xml->setHeader(QString::fromLatin1("Configure the UI file for the KXMLKipiCmd application"));
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
@@ -135,7 +134,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 KipiSetup::~KipiSetup()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    KConfigGroup group        = config->group(QString("Setup Dialog"));
+    KConfigGroup group        = config->group(QString::fromLatin1("Setup Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.writeEntry("Setup Page", (int)activePageIndex());
     config->sync();
@@ -208,7 +207,7 @@ SetupXML::SetupXML(QWidget* const parent)
     d->uiFilesPath = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QApplication::applicationName(), QStandardPaths::LocateDirectory).last();
     qDebug() << d->uiFilesPath;
     QDir dir(d->uiFilesPath);
-    QString filter("*ui.rc");
+    QString filter = QString::fromLatin1("*ui.rc");
     d->uiFilesList = dir.entryList(QStringList(filter), QDir::Files | QDir::NoSymLinks);
 
     d->xmlFilesCob = new QComboBox(panel);

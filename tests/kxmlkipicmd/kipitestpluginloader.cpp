@@ -128,15 +128,15 @@ void KipiTestPluginLoader::loadPlugins()
     //ignores.append("HelloWorld");
     //ignores.append("KXMLHelloWorld");
 
-    ignores.append("KameraKlient");
+    ignores.append(QString::fromLatin1("KameraKlient"));
 
     // These plugins have been renamed with 0.2.0-rc1
-    ignores.append("Facebook Exporter");
-    ignores.append("SmugMug Exporter");
-    ignores.append("SlideShow");
-    ignores.append("PrintWizard");
-    ignores.append("SimpleViewer");
-    ignores.append("KioExport");
+    ignores.append(QString::fromLatin1("Facebook Exporter"));
+    ignores.append(QString::fromLatin1("SmugMug Exporter"));
+    ignores.append(QString::fromLatin1("SlideShow"));
+    ignores.append(QString::fromLatin1("PrintWizard"));
+    ignores.append(QString::fromLatin1("SimpleViewer"));
+    ignores.append(QString::fromLatin1("KioExport"));
 
     d->kipiPluginLoader = new PluginLoader(d->app);
     d->kipiPluginLoader->setInterface(d->kipiInterface);
@@ -235,7 +235,7 @@ void KipiTestPluginLoader::checkEmptyCategory(Category cat)
 
     if (!category)
     {
-        QString actionName    = "emptyCategory" + categoryShortName(cat);
+        QString actionName    = QString::fromLatin1("emptyCategory") + categoryShortName(cat);
         QAction* const action = d->app->actionCollection()->addAction(actionName);
         action->setEnabled(false);
         category              = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
