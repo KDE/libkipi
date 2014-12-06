@@ -85,8 +85,10 @@ find_package(Qt5 ${REQUIRED_QT_VERSION} REQUIRED NO_MODULE COMPONENTS
 )
 
 find_package(KF5 REQUIRED COMPONENTS
-             KDELibs4Support
+#             KDELibs4Support
              Parts
+             I18n
+             Config
 )
 
 ecm_setup_version(${LIBKIPI_LIB_VERSION}

@@ -64,7 +64,7 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
     QMap<QString, QVariant> res;
 
     // Comment attribute
-    res["comment"] = QString("Image located at \"%1\"").arg(_url.url());
+    res[QString::fromLatin1("comment")] = QString::fromLatin1("Image located at \"%1\"").arg(_url.url());
 
     // Date attribute
     if (!d->dateTime.isValid())
@@ -81,7 +81,7 @@ QMap<QString, QVariant> KipiImageInfoShared::attributes()
         }
     }
 
-    res["date"] = d->dateTime;
+    res[QString::fromLatin1("date")] = d->dateTime;
 
     return res;
 }
@@ -100,7 +100,7 @@ void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attribute
     {
         QString key = it.key();
         QString val = it.value().toString();
-        qDebug() << QString("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val);
+        qDebug() << QString::fromLatin1("attribute( \"%1\" ), value( \"%2\" )").arg(key).arg(val);
         ++it;
     }
 }
@@ -108,7 +108,7 @@ void KipiImageInfoShared::addAttributes(const QMap<QString, QVariant>& attribute
 void KipiImageInfoShared::delAttributes(const QStringList& attributes)
 {
     qDebug() << "void KipiImageInfoShared::delAttributes()";
-    qDebug() << QString("attributes : \"%1\"").arg(attributes.join(", "));
+    qDebug() << QString::fromLatin1("attributes : \"%1\"").arg(attributes.join(QString::fromLatin1(", ")));
 }
 
 } // namespace KXMLKipiCmd

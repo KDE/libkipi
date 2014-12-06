@@ -135,11 +135,11 @@ QList<QPair<int, QAction*> > FlattenActionList(const QList<QAction*>& actions, c
 * \param libraryName If not empty, only the plugin in library libraryName is loaded and setup
 * \returns False if plugin library libraryName could not be loaded
 */
-bool LoadPlugins(const QString& libraryName = "")
+bool LoadPlugins(const QString& libraryName = QString::fromLatin1(""))
 {
     if (!libraryName.isEmpty())
     {
-        qDebug() << QString("Will only load library \"%1\"").arg(libraryName);
+        qDebug() << QString::fromLatin1("Will only load library \"%1\"").arg(libraryName);
     }
     else
     {
@@ -190,7 +190,7 @@ bool LoadPlugins(const QString& libraryName = "")
 * \param libraryName Load only plugin found in library libraryName
 * \returns False if plugin in library \a libraryName could not be loaded
 */
-bool ListPlugins(const QString& libraryName = "")
+bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
 {
     PluginLoader* const kipiPluginLoader = PluginLoader::instance();
 
@@ -201,7 +201,7 @@ bool ListPlugins(const QString& libraryName = "")
     int pluginNumber                          = 1;
     const int nPlugins                        = pluginList.size();
     const int nDigits                         = QString::number(nPlugins).size();
-    const QString preSpace                    = QString(nDigits+1+1, ' ');
+    const QString preSpace                    = QString(nDigits+1+1, QChar::fromLatin1(' '));
 
     std::auto_ptr<QWidget> dummyWidget( new QWidget() );
 
@@ -210,9 +210,10 @@ bool ListPlugins(const QString& libraryName = "")
     for (PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
          it!= pluginList.constEnd(); ++ it)
     {
-        const QString pluginNumberString = QString("%1").arg(pluginNumber, nDigits); ++pluginNumber;
+        const QString pluginNumberString = QString::fromLatin1("%1").arg(pluginNumber, nDigits);
+        ++pluginNumber;
 
-        qDebug() << QString("%1: %2 - %3").arg(pluginNumberString).arg((*it)->name()).arg((*it)->comment());
+        qDebug() << QString::fromLatin1("%1: %2 - %3").arg(pluginNumberString).arg((*it)->name()).arg((*it)->comment());
         qDebug() << preSpace << i18n("Library: ")<< (*it)->library();
 
         Plugin* const plugin = (*it)->plugin();
@@ -225,15 +226,15 @@ bool ListPlugins(const QString& libraryName = "")
 
         plugin->setup(dummyWidget.get());
         const QList<QPair<int, QAction*> > actionsList = FlattenActionList(plugin->actions());
-        qDebug() << preSpace<<i18n("Actions:");
-        const QString preSpaceActions = preSpace + "  ";
+        qDebug() << preSpace << i18n("Actions:");
+        const QString preSpaceActions = preSpace + QString::fromLatin1("  ");
 
         for (QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin();
              it!=actionsList.constEnd(); ++it)
         {
             const int level             = (*it).first;
             const QAction* const action = (*it).second;
-            qDebug() << preSpaceActions << QString(level*2, ' ') << '"' << action->text() << '"';
+            qDebug() << preSpaceActions << QString(level*2, QChar::fromLatin1(' ')) << '"' << action->text() << '"';
         }
     }
 
@@ -246,9 +247,9 @@ bool ListPlugins(const QString& libraryName = "")
 * \param libraryName Load only the plugin in this library
 * \returns False if the action could not be called
 */
-bool CallAction(const QString& actionText, const QString& libraryName = "")
+bool CallAction(const QString& actionText, const QString& libraryName = QString::fromLatin1(""))
 {
-    qDebug() << QString("Looking for action \"%1\"...").arg(actionText);
+    qDebug() << QString::fromLatin1("Looking for action \"%1\"...").arg(actionText);
 
     PluginLoader* const kipiPluginLoader = PluginLoader::instance();
 
@@ -257,7 +258,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
     PluginLoader::PluginList pluginList = kipiPluginLoader->pluginList();
 
-    /*std::auto_ptr<*/QWidget* dummyWidget( new QWidget() );
+    QWidget* const dummyWidget = new QWidget();
 
     bool foundAction = false;
 
@@ -307,21 +308,21 @@ bool CallAction(const QString& actionText, const QString& libraryName = "")
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData("kipicmd",
+    KAboutData aboutData(QString::fromLatin1("kipicmd"),
                          ki18n("kipicmd").toString(),
-                         QString(KIPI_VERSION_STRING),            // libkipi version
+                         QString::fromLatin1(KIPI_VERSION_STRING),            // libkipi version
                          ki18n("Kipi host test application using KDE XML-GUI").toString(),
                          KAboutLicense::GPL,
                          ki18n("(c) 2009-2010 Michael G. Hansen\n"
                                "(c) 2011-2014 Gilles Caulier\n"
                                "(c) 2012 Victor Dodon ").toString(),
                          QString(),                               // optional text
-                         QString("http://www.digikam.org"),       // URI of homepage
-                         QString("kde-imaging@kde.org")           // bugs e-mail address
+                         QString::fromLatin1("http://www.digikam.org"),       // URI of homepage
+                         QString::fromLatin1("kde-imaging@kde.org")           // bugs e-mail address
                         );
 
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-icon.svg")));
+    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/data/kipi-icon.svg"))));
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
@@ -356,25 +357,25 @@ int main(int argc, char* argv[])
 
     QList<QUrl>* startList = 0;
 
-    if (parser.isSet("i"))
+    if (parser.isSet(QString::fromLatin1("i")))
     {
         startList = &listSelectedImages;
-        startList->append(QUrl(parser.value("i")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("i"))));
     }
-    else if (parser.isSet("c"))
+    else if (parser.isSet(QString::fromLatin1("c")))
     {
         startList = &listSelectedAlbums;
-        startList->append(QUrl(parser.value("c")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("c"))));
     }
-    else if (parser.isSet("allc"))
+    else if (parser.isSet(QString::fromLatin1("allc")))
     {
         startList = &listAllAlbums;
-        startList->append(QUrl(parser.value("allc")));
+        startList->append(QUrl(parser.value(QString::fromLatin1("allc"))));
     }
 
     qDebug() << "startList:" << startList;
     qDebug() << "parser:"    << parser.optionNames();
-    
+
     // Append the remaining arguments to the lists
 
     const QStringList args = parser.positionalArguments();
@@ -383,15 +384,15 @@ int main(int argc, char* argv[])
     {
         const QString argValue = args.value(i);
 
-        if (argValue == "-i")
+        if (argValue == QString::fromLatin1("-i"))
         {
             startList = &listSelectedImages;
         }
-        else if (argValue == "-c")
+        else if (argValue == QString::fromLatin1("-c"))
         {
             startList = &listSelectedAlbums;
         }
-        else if (argValue == "-allc")
+        else if (argValue == QString::fromLatin1("-allc"))
         {
             startList = &listAllAlbums;
         }
@@ -420,21 +421,21 @@ int main(int argc, char* argv[])
 
     // determine whether only one plugin should be loaded
 
-    const QString nameOfOnlyOnePluginToLoad = parser.value("l");
+    const QString nameOfOnlyOnePluginToLoad = parser.value(QString::fromLatin1("l"));
 
     // determine what to do
 
     int returnValue                         = 0;
     bool startedPlugin                      = false;
 
-    if ( parser.isSet("list") )
+    if ( parser.isSet(QString::fromLatin1("list")) )
     {
         if (!ListPlugins( nameOfOnlyOnePluginToLoad ))
             returnValue = 1;
     }
-    else if ( parser.isSet("a") )
+    else if ( parser.isSet(QString::fromLatin1("a")) )
     {
-        const QString action = parser.value("a");
+        const QString action = parser.value(QString::fromLatin1("a"));
 
         qDebug() << action;
 
@@ -455,7 +456,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    if (startedPlugin && parser.isSet("w"))
+    if (startedPlugin && parser.isSet(QString::fromLatin1("w")))
     {
         return app.exec();
     }

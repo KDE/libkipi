@@ -108,7 +108,7 @@ QList<ImageCollection> KipiInterface::allAlbums()
 
 ImageInfo KipiInterface::info(const QUrl &url)
 {
-    qDebug() << QString( "Plugin wants information about image \"%1\"").arg( url.url() );
+    qDebug() << QString::fromLatin1( "Plugin wants information about image \"%1\"").arg( url.url() );
 
     return (ImageInfo(new KipiImageInfoShared(this, url)));
 }
@@ -116,23 +116,23 @@ ImageInfo KipiInterface::info(const QUrl &url)
 bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
-    qDebug() << QString( "Plugin added an image: \"%1\"").arg( url.url() );
+    qDebug() << QString::fromLatin1( "Plugin added an image: \"%1\"").arg( url.url() );
 
     return true;
 }
 
 void KipiInterface::delImage(const QUrl &url)
 {
-    qDebug() << QString( "Plugin deleted an image: \"%1\"").arg( url.url() );
+    qDebug() << QString::fromLatin1( "Plugin deleted an image: \"%1\"").arg( url.url() );
 }
 
 void KipiInterface::refreshImages(const QList<QUrl>& urls)
 {
-    qDebug() << QString( "Plugin asks to refresh %1 images:").arg( urls.size() );
+    qDebug() << QString::fromLatin1( "Plugin asks to refresh %1 images:").arg( urls.size() );
 
     for (QList<QUrl>::ConstIterator it = urls.constBegin(); it!=urls.constEnd(); ++it)
     {
-        qDebug() << "  " + (*it).url();
+        qDebug() << QString::fromLatin1("  ") + (*it).url();
     }
 }
 
@@ -199,11 +199,11 @@ void KipiInterface::addSelectedAlbum(const QUrl &album)
 
 QVariant KipiInterface::hostSetting(const QString& settingName)
 {
-    if (settingName == QString("UseXMPSidecar4Reading"))
+    if (settingName == QString::fromLatin1("UseXMPSidecar4Reading"))
     {
         return (QVariant::fromValue(true));
     }
-    else if (settingName == QString("MetadataWritingMode"))
+    else if (settingName == QString::fromLatin1("MetadataWritingMode"))
     {
         return (QVariant::fromValue(false));
     }

@@ -91,7 +91,7 @@ QList< ImageCollection > KipiImageCollectionSelector::selectedImageCollections (
     }
 
     //  result.append(m_interface->currentAlbum());
-    qDebug() << QString("selectedImageCollections: %1 items selected").arg(result.size());
+    qDebug() << QString::fromLatin1("selectedImageCollections: %1 items selected").arg(result.size());
     return result;
 }
 
