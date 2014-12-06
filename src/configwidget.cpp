@@ -140,7 +140,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     hboxLay->addWidget(space);
     PluginLoader* const loader  = PluginLoader::instance();
     d->kipipluginsVersion       = new QLabel(i18n("Kipi Plugins: %1", loader ? loader->kipiPluginsVersion() : i18nc("Version unavailable", "unavailable")), panel);
-    d->libkipiVersion           = new QLabel(i18n("LibKipi: %1", QString(KIPI_VERSION_STRING)), panel);
+    d->libkipiVersion           = new QLabel(i18n("LibKipi: %1", QString::fromLatin1(KIPI_VERSION_STRING)), panel);
     d->pluginsList              = new PluginListView(panel);
     d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
@@ -151,14 +151,14 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->kipiLogoLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     d->kipiLogoLabel->setOpenExternalLinks(true);
     QFontMetrics fm(d->kipipluginsVersion->font());
-    QRect r          = fm.boundingRect("XX");
+    QRect r          = fm.boundingRect(QString::fromLatin1("XX"));
     QByteArray byteArray;
     QBuffer    buffer(&byteArray);
-    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation, "kipi/data/kipi-plugins_logo.png"))
+    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/data/kipi-plugins_logo.png")))
                  .scaledToHeight(r.height()*3, Qt::SmoothTransformation);
     img.save(&buffer, "PNG");
-    d->kipiLogoLabel->setText(QString("<a href=\"https://projects.kde.org/projects/extragear/graphics/kipi-plugins\">%1</a>")
-                              .arg(QString("<img src=\"data:image/png;base64,%1\">")
+    d->kipiLogoLabel->setText(QString::fromLatin1("<a href=\"https://projects.kde.org/projects/extragear/graphics/kipi-plugins\">%1</a>")
+                              .arg(QString::fromLatin1("<img src=\"data:image/png;base64,%1\">")
                               .arg(QString::fromLatin1(byteArray.toBase64().data()))));
 
     d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);

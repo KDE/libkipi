@@ -51,9 +51,10 @@ target_include_directories(KF5Kipi INTERFACE
 
 target_link_libraries(KF5Kipi
                       PUBLIC
-                      KF5::Parts
-                      KF5::KDELibs4Support
                       Qt5::Gui
+                      KF5::Parts
+                      KF5::I18n
+                      KF5::ConfigCore
 )
 
 set_target_properties(KF5Kipi     PROPERTIES

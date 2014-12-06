@@ -43,12 +43,12 @@
 
 // KDE includes
 
+#include <klocalizedstring.h>
 #include <kservicetypetrader.h>
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <klibloader.h>
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
 #include <kactioncollection.h>
@@ -123,7 +123,7 @@ QString PluginLoader::Info::uname() const
 
 QString PluginLoader::Info::author()  const
 {
-    return d->service->property(QString("author"), QVariant::String).toString();
+    return d->service->property(QString::fromLatin1("author"), QVariant::String).toString();
 }
 
 QString PluginLoader::Info::comment() const
@@ -243,7 +243,7 @@ PluginLoader::PluginLoader()
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
-    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("kipi"));
+    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi"));
 }
 
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
@@ -252,7 +252,7 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
 
-    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString("kipi"));
+    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi"));
 
     if (!parent)
     {
@@ -294,7 +294,7 @@ void PluginLoader::init()
     }
 
     s_loaded                    = true;
-    const KService::List offers = KServiceTypeTrader::self()->query("KIPI/Plugin");
+    const KService::List offers = KServiceTypeTrader::self()->query(QString::fromLatin1("KIPI/Plugin"));
     KSharedConfigPtr config     = KSharedConfig::openConfig();
     KConfigGroup group          = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
@@ -392,14 +392,14 @@ ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 QString PluginLoader::kipiPluginsVersion() const
 {
     QString ver                = i18nc("Version unavailable", "unavailable");
-    QString path               = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QString("kipiplugins.desktop"));
+    QString path               = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QString::fromLatin1("kipiplugins.desktop"));
 
     KDesktopFile desk(path);
-    QMap<QString, QString> map = desk.entryMap("X-KipiPlugins Entry");
+    QMap<QString, QString> map = desk.entryMap(QString::fromLatin1("X-KipiPlugins Entry"));
 
     if (!map.isEmpty())
     {
-        QString val = map["Version"];
+        QString val = map[QString::fromLatin1("Version")];
 
         if (!val.isEmpty())
             ver = val;

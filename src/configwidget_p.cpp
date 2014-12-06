@@ -59,13 +59,13 @@ PluginCheckBox::PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* cons
     QStringList list = m_info->pluginCategories();
     list.removeDuplicates();
     list.sort();
-    setText(1, list.join(", "));
+    setText(1, list.join(QString::fromLatin1(", ")));
 
     // Description
     setText(2, m_info->comment());
 
     // Author
-    setText(3, m_info->author().section(',', 0, 0));
+    setText(3, m_info->author().section(QString::fromLatin1(","), 0, 0));
 }
 
 PluginCheckBox::~PluginCheckBox()
@@ -112,10 +112,10 @@ PluginListView::PluginListView(QWidget* const parent)
     labels.append(i18n("Author"));
 
     setHeaderLabels(labels);
-    header()->setResizeMode(0, QHeaderView::ResizeToContents);
-    header()->setResizeMode(1, QHeaderView::ResizeToContents);
-    header()->setResizeMode(2, QHeaderView::Stretch);
-    header()->setResizeMode(3, QHeaderView::Interactive);
+    header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(2, QHeaderView::Stretch);
+    header()->setSectionResizeMode(3, QHeaderView::Interactive);
     header()->setSortIndicatorShown(true);
 
     setAutoFillBackground(false);
