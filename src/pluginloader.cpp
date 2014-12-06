@@ -47,7 +47,6 @@
 #include <kservicetypetrader.h>
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
-#include <kconfig.h>
 #include <kconfiggroup.h>
 #include <kxmlguifactory.h>
 #include <ktoolbar.h>
@@ -57,10 +56,10 @@
 
 #include "plugin.h"
 #include "interface.h"
+#include "configwidget.h"
 #include "libkipi_version.h"
 #include "libkipi_config.h"
 #include "libkipi_debug.h"
-#include "configwidget.h"
 
 namespace KIPI
 {

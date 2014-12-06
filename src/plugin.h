@@ -72,7 +72,6 @@ enum Category
 /**
  * @short Base class for the KIPI plugins
  *
- * TODO complete the documentation
  */
 class LIBKIPI_EXPORT Plugin : public QObject, public KXMLGUIClient
 {
