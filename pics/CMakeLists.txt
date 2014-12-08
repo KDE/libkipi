@@ -9,7 +9,7 @@ ecm_install_icons(ICONS hi128-apps-kipi.png
                         hi22-apps-kipi.png
                         hi32-apps-kipi.png
                         hi48-apps-kipi.png
-                   DESTINATION
+                  DESTINATION
                         ${ICON_INSTALL_DIR}
 )
 
