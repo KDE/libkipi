@@ -85,8 +85,8 @@ private:
 
     static KipiTestPluginLoader* m_instance;
 
-    class KipiTestPluginLoaderPriv;
-    KipiTestPluginLoaderPriv* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace KXMLKipiCmd

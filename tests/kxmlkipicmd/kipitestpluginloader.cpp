@@ -44,12 +44,12 @@
 namespace KXMLKipiCmd
 {
 
-class KipiTestPluginLoader::KipiTestPluginLoaderPriv
+class KipiTestPluginLoader::Private
 {
 
 public:
 
-    KipiTestPluginLoaderPriv()
+    Private()
     {
         app                         = 0;
         kipipluginsActionCollection = 0;
@@ -73,7 +73,7 @@ KipiTestPluginLoader* KipiTestPluginLoader::m_instance = 0;
 
 KipiTestPluginLoader::KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInterface *const interface)
     : QObject(parent),
-      d(new KipiTestPluginLoaderPriv)
+      d(new Private)
 {
     m_instance       = this;
     d->kipiInterface = interface;
