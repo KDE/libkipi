@@ -143,7 +143,8 @@ void KipiTestPluginLoader::loadPlugins()
     d->kipiPluginLoader->setIgnoredPluginsList(ignores);
     d->kipiPluginLoader->init();
 
-    connect(d->kipiPluginLoader, &PluginLoader::replug, this, &KipiTestPluginLoader::slotKipiPluginsPlug);
+    connect(d->kipiPluginLoader, &PluginLoader::replug,
+            this, &KipiTestPluginLoader::slotKipiPluginsPlug);
 
     d->kipiPluginLoader->loadPlugins();
 }
@@ -286,29 +287,29 @@ QString KipiTestPluginLoader::categoryShortName(Category cat) const
 
     switch (cat)
     {
-    case ExportPlugin:
-        res = i18n("Export");
-        break;
+        case ExportPlugin:
+            res = i18n("Export");
+            break;
 
-    case ImportPlugin:
-        res = i18n("Import");
-        break;
+        case ImportPlugin:
+            res = i18n("Import");
+            break;
 
-    case ToolsPlugin:
-        res = i18n("Tools");
-        break;
+        case ToolsPlugin:
+            res = i18n("Tools");
+            break;
 
-    case BatchPlugin:
-        res = i18n("Batch");
-        break;
+        case BatchPlugin:
+            res = i18n("Batch");
+            break;
 
-    case CollectionsPlugin:
-        res = i18n("Collenctions");
-        break;
+        case CollectionsPlugin:
+            res = i18n("Collenctions");
+            break;
 
-    default:
-        res = i18n("Unknown");
-        break;
+        default:
+            res = i18n("Unknown");
+            break;
     }
 
     return res;
