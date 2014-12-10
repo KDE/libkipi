@@ -63,6 +63,8 @@
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
 #include "interface.h"
+// Special header used to include kipi-plugins debug space.
+//#include "kipiplugins_debug.h"
 
 /** This is all Kipi-plugins common includes used in this tool.
  *  Look into kipi-plugins/common/libkipiplugins/ for details.
@@ -117,8 +119,8 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
       /// Private container is allocated here.
       d(new Private)
 {
-    // plugin do not use libkipi debug space. There is a debug space dedicate to kipi-plugins. Use kipiplugins_debug.h
-    //qDebug(KIPIPLUGINS_LOG) << "Plugin_KXMLHelloWorld plugin loaded";
+    // plugin do not use libkipi debug space. There is a debug space dedicate to kipi-plugins. See kipiplugins_debug.h header.
+    //qCDebug(KIPIPLUGINS_LOG) << "Plugin_KXMLHelloWorld plugin loaded";
 
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui.
