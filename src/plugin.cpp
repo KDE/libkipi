@@ -328,9 +328,11 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     }
 
     const QString componentName = QApplication::applicationName();
-    const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/") + d->uiBaseName);
+    const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kxmlgui5/kipi/") + d->uiBaseName);
     const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromLatin1("/") + 
                                                                    componentName + QString::fromLatin1("/") + d->uiBaseName;
+
+    qCDebug(LIBKIPI_LOG) << "UI file :" << defaultUI;
 
     QFile        defaultUIFile(defaultUI);
     QDomDocument defaultDomDoc;
@@ -354,7 +356,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     QDomElement hostMenuBarElem   = hostGuiElem.firstChildElement(QString::fromLatin1("MenuBar"));
 
     QDomDocument newPluginDoc(defaultDomDoc.doctype());
-    QDomElement defGuiElem        = defaultDomDoc.firstChildElement(QString::fromLatin1("gui"));
+    QDomElement  defGuiElem       = defaultDomDoc.firstChildElement(QString::fromLatin1("gui"));
 
     Private::XMLParser::removeDisabledActions(defGuiElem);
 

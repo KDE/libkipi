@@ -241,8 +241,6 @@ PluginLoader::PluginLoader()
 {
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
-
-    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi"));
 }
 
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
@@ -250,8 +248,6 @@ PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
 {
     Q_ASSERT((s_instance == 0) && (!s_loaded));
     s_instance = this;
-
-    QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi"));
 
     if (!parent)
     {
