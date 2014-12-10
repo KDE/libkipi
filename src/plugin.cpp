@@ -317,8 +317,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 {
     if (!host)
     {
-        // Should we display this message?
-        //qCCritical(LIBKIPI_LOG) << "Host KXMLGUIClient is null!";
+        qCCritical(LIBKIPI_LOG) << "Host KXMLGUIClient is null!";
         return;
     }
 
