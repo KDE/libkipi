@@ -337,7 +337,7 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     if (!defaultUIFile.open(QFile::ReadOnly) || !defaultDomDoc.setContent(&defaultUIFile))
     {
-        qCCritical(LIBKIPI_LOG) << "Could not open default ui file: " << defaultUI;
+        qCCritical(LIBKIPI_LOG) << "Could not open default ui file " << defaultUI << " for ui basename " << d->uiBaseName;
         return;
     }
 
