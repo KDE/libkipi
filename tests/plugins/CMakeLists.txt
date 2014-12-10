@@ -25,4 +25,4 @@ configure_file(kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop.cmake.in ${CMAKE
 
 install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 install(TARGETS kipiplugin_kxmlhelloworld                                                    DESTINATION ${PLUGIN_INSTALL_DIR})
-install(FILES   kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc                                DESTINATION ${DATA_INSTALL_DIR}/kipi)
+install(FILES   kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc                                DESTINATION ${KXMLGUI_INSTALL_DIR}/kipi)
