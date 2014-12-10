@@ -117,7 +117,7 @@ QList<QAction*> KipiTestPluginLoader::kipiActionsByCategory(Category cat) const
 
 void KipiTestPluginLoader::loadPlugins()
 {
-    d->kipipluginsActionCollection = new KActionCollection(d->app, QLatin1String("kipitest")/*, KGlobal::mainComponent()*/);
+    d->kipipluginsActionCollection = new KActionCollection(d->app, QLatin1String("kipitest"));
 
     QStringList ignores;
 
@@ -158,7 +158,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
     for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
-        Plugin* plugin = (*it)->plugin();
+        Plugin* const plugin = (*it)->plugin();
 
         if (!plugin || !(*it)->shouldLoad())
         {
@@ -172,7 +172,7 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
     for (PluginLoader::PluginList::ConstIterator it = list.constBegin() ; it != list.constEnd() ; ++it)
     {
-        Plugin* plugin = (*it)->plugin();
+        Plugin* const plugin = (*it)->plugin();
 
         if (!plugin || !(*it)->shouldLoad())
         {
@@ -231,15 +231,14 @@ void KipiTestPluginLoader::slotKipiPluginsPlug()
 
 void KipiTestPluginLoader::checkEmptyCategory(Category cat)
 {
-    KActionCategory* category = d->kipiCategoryMap[cat];
+    KActionCategory* const category = d->kipiCategoryMap[cat];
 
     if (!category)
     {
         QString actionName    = QString::fromLatin1("emptyCategory") + categoryShortName(cat);
         QAction* const action = d->app->actionCollection()->addAction(actionName);
         action->setEnabled(false);
-        category              = new KActionCategory(categoryName(cat), d->kipipluginsActionCollection);
-        d->kipiCategoryMap.insert(cat, category);
+        d->kipiCategoryMap.insert(cat, new KActionCategory(categoryName(cat), d->kipipluginsActionCollection));
     }
 }
 
