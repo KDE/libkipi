@@ -17,7 +17,6 @@ set(kipiplugin_kxmlhelloworld_PART_SRCS
 add_library(kipiplugin_kxmlhelloworld MODULE ${kipiplugin_kxmlhelloworld_PART_SRCS})
 
 target_link_libraries(kipiplugin_kxmlhelloworld
-                      KF5::Parts
                       KF5Kipi
 )
 

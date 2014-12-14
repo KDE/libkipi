@@ -31,7 +31,6 @@ add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 target_link_libraries(kxmlkipicmd
                       Qt5::Gui
-                      KF5::Parts
                       KF5Kipi
 )
 
@@ -55,6 +54,5 @@ add_executable(kipicmd ${kipicmd_SRCS})
 
 target_link_libraries(kipicmd
                       Qt5::Gui
-                      KF5::Parts
                       KF5Kipi
 )

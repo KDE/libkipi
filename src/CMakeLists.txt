@@ -52,9 +52,11 @@ target_include_directories(KF5Kipi INTERFACE
 target_link_libraries(KF5Kipi
                       PUBLIC
                       Qt5::Gui
+                      Qt5::Widgets
                       KF5::I18n
+                      KF5::XmlGui
+                      KF5::KIOWidgets
                       KF5::ConfigCore
-                      KF5::Parts
 )
 
 set_target_properties(KF5Kipi     PROPERTIES
