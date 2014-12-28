@@ -98,7 +98,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->page_plugins->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi")));
     d->pluginFilter = new QLineEdit(d->pluginsPage);
     d->pluginFilter->setClearButtonEnabled(true);
-    d->pluginFilter->setToolTip(i18n("Plugins list filter."));
+    d->pluginFilter->setPlaceholderText(i18n("Plugins list filter."));
     d->pluginsPage->setFilterWidget(d->pluginFilter);
 
     d->xmlPage  = new SetupXML(this);

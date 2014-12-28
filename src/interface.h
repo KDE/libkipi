@@ -96,7 +96,7 @@ enum Features
 
 enum EditHint
 {
-    UndefinedEditHint   = 0,
+    UndefinedEditHint       = 0,
     /** The image data (pixels) have been edited */
     HintPixelContentChanged = 1 << 0,
     /** Metadata have been edited */
@@ -213,7 +213,7 @@ public:
      * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
      * Use gotThumbnail() signal to take thumb.
      */
-    virtual void thumbnail(const QUrl &url, int size);
+    virtual void thumbnail(const QUrl& url, int size);
 
     /**
      * Ask to Kipi host application to render thumbnails for a list of images. If this method is not
