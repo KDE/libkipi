@@ -19,4 +19,4 @@
 
 #include "libkipi_debug.h"
 
-Q_LOGGING_CATEGORY(LIBKIPI_LOG, "log_libkipi")
+Q_LOGGING_CATEGORY(LIBKIPI_LOG, "kipi.library")
