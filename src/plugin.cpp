@@ -38,6 +38,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <QFile>
+#include <QDir>
 #include <QAction>
 #include <QStandardPaths>
 
@@ -329,8 +330,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
     const QString componentName = QApplication::applicationName();
     const QString defaultUI     = QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kxmlgui5/kipi/") + d->uiBaseName);
-    const QString localUI       = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromLatin1("/") + 
-                                                                   componentName + QString::fromLatin1("/") + d->uiBaseName;
+    const QString localUIdir    = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromLatin1("/kxmlgui5/") +
+                                                                   componentName;
+    const QString localUI       = localUIdir + QString::fromLatin1("/") + d->uiBaseName;
 
     qCDebug(LIBKIPI_LOG) << "UI file :" << defaultUI;
 
@@ -416,8 +418,13 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
     newGuiElem.appendChild(newMenuBarElem);
     QFile        localUIFile(localUI);
     QDomDocument localDomDoc;
-
-    if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
+// be safe rather than sorry
+// create the appname folder in kxmlgui5
+    QDir localUIDir(localUIdir);
+    if (!localUIDir.exists()) 
+        QDir().mkpath(localUIdir);
+ 
+   if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
     {
         newGuiElem.appendChild(defToolBarElem.cloneNode());
         newGuiElem.appendChild(defActionPropElem.cloneNode());
