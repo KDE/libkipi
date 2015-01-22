@@ -47,6 +47,7 @@ generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPOR
 
 target_include_directories(KF5Kipi INTERFACE
                            "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
+                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>"
 )
 
 target_link_libraries(KF5Kipi
