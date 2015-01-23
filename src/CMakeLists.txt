@@ -4,9 +4,9 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/../libkipi_config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 set(kipi_LIB_SRCS interface.cpp
                   imagecollection.cpp
@@ -45,9 +45,11 @@ add_library(KF5::Kipi ALIAS KF5Kipi)
 
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
+set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF) # disable adding of current source directory to interface, as it causes naming clashes
+
 target_include_directories(KF5Kipi INTERFACE
                            "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
-                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/..>"
+                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
 target_link_libraries(KF5Kipi
@@ -89,12 +91,12 @@ if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
 
 
     install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
-                        ${CMAKE_CURRENT_BINARY_DIR}/../libkipi_config.h
+                        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
             DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
             COMPONENT   Devel
     )
 
-    install(FILES       "${CMAKE_BINARY_DIR}/libkipi_version.h"
+    install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
             DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
             COMPONENT   Devel
     )
