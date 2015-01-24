@@ -7,6 +7,7 @@
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
 set(kipi_LIB_SRCS interface.cpp
                   imagecollection.cpp
