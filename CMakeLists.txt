@@ -93,7 +93,7 @@ find_package(KF5 REQUIRED COMPONENTS
 
 ecm_setup_version(${LIBKIPI_LIB_VERSION}
                   VARIABLE_PREFIX      KIPI
-                  VERSION_HEADER       "libkipi_version.h"
+                  VERSION_HEADER       "src/libkipi_version.h"
                   PACKAGE_VERSION_FILE "KF5KipiConfigVersion.cmake"
                   SOVERSION            ${LIBKIPI_SO_VERSION})
 
