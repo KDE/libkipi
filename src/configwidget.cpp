@@ -147,8 +147,9 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     hboxLay->setStretchFactor(space, 10);
 
     d->kipiLogoLabel = new QLabel(panel);
+    d->kipiLogoLabel->setFocusPolicy(Qt::NoFocus);
     d->kipiLogoLabel->setTextFormat(Qt::RichText);
-    d->kipiLogoLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+    d->kipiLogoLabel->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     d->kipiLogoLabel->setOpenExternalLinks(true);
     QFontMetrics fm(d->kipipluginsVersion->font());
     QRect r          = fm.boundingRect(QString::fromLatin1("XX"));
