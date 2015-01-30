@@ -88,7 +88,7 @@ find_package(KF5 REQUIRED COMPONENTS
              I18n
              Config
              XmlGui
-             KIO
+             Service
 )
 
 ecm_setup_version(${LIBKIPI_LIB_VERSION}

@@ -31,8 +31,6 @@
 
 #include "interface.h"
 
-class KFileItem;
-
 namespace KIPI
 {
     class ImageCollection;
@@ -78,11 +76,6 @@ public:
     void addAlbum(const QUrl &album);
 
     void thumbnails(const QList<QUrl>& list, int size);
-
-private Q_SLOTS:
-
-    void slotGotKDEPreview(const KFileItem&, const QPixmap&);
-    void slotFailedKDEPreview(const KFileItem&);
 
 private:
 

@@ -39,11 +39,6 @@
 #include <QImageReader>
 #include <QImageWriter>
 
-// KDE includes
-
-#include <kfileitem.h>
-#include <kio/previewjob.h>
-
 // Local includes
 
 #include "libkipi_version.h"
@@ -169,40 +164,21 @@ int Interface::features() const
     return 0;
 }
 
-void Interface::thumbnail(const QUrl &url, int size)
+void Interface::thumbnail(const QUrl& url, int size)
 {
     thumbnails(QList<QUrl>() << url, size);
 }
 
 void Interface::thumbnails(const QList<QUrl>& list, int size)
 {
+    Q_UNUSED(size);
     PrintWarningMessageFeature("HostSupportsThumbnails");
-
-    KFileItemList items;
 
     for (QList<QUrl>::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
-            items.append(KFileItem(*it));
+            emit gotThumbnail((*it), QPixmap());
     }
-
-    KIO::PreviewJob* const job = KIO::filePreview(items, QSize(size, size));
-
-    connect(job, &KIO::PreviewJob::gotPreview,
-            this, &Interface::gotKDEPreview);
-
-    connect(job, &KIO::PreviewJob::failed,
-            this, &Interface::failedKDEPreview);
-}
-
-void Interface::gotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    emit gotThumbnail(item.url(), pix);
-}
-
-void Interface::failedKDEPreview(const KFileItem& item)
-{
-    emit gotThumbnail(item.url(), QPixmap());
 }
 
 QVariant Interface::hostSetting(const QString& settingName)

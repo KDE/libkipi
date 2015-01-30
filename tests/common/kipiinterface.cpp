@@ -30,12 +30,11 @@
 
 #include <QTextStream>
 #include <QDebug>
+#include <QIcon>
 
 // KDE includes
 
 #include <klocalizedstring.h>
-#include <kfileitem.h>
-#include <kio/previewjob.h>
 
 // Libkipi includes
 
@@ -213,28 +212,11 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
 
 void KipiInterface::thumbnails(const QList<QUrl>& list, int)
 {
-    foreach(const QUrl &url, list)
+    foreach(const QUrl& url, list)
     {
-        KFileItemList items;
-        items.append(KFileItem(url));
-        KIO::PreviewJob* const job = KIO::filePreview(items, QSize(256, 256));
-
-        connect(job, &KIO::PreviewJob::gotPreview,
-                this, &KipiInterface::slotGotKDEPreview);
-
-        connect(job, &KIO::PreviewJob::failed, this,
-                &KipiInterface::slotFailedKDEPreview);
+        QIcon icon(url.url());
+        emit gotThumbnail(url, icon.pixmap(256));
     }
-}
-
-void KipiInterface::slotGotKDEPreview(const KFileItem& item, const QPixmap& pix)
-{
-    emit gotThumbnail(item.url(), pix);
-}
-
-void KipiInterface::slotFailedKDEPreview(const KFileItem& item)
-{
-    emit gotThumbnail(item.url(), QPixmap());
 }
 
 } // namespace KXMLKipiCmd

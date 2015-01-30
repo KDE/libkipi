@@ -50,8 +50,6 @@ class QPixmap;
 class QWidget;
 class QAbstractItemModel;
 
-class KFileItem;
-
 /** @namespace KIPI */
 
 namespace KIPI
@@ -141,13 +139,13 @@ public:
      */
 
     virtual ~FileReadWriteLock() {}
-    virtual void lockForRead() = 0;
-    virtual void lockForWrite() = 0;
-    virtual bool tryLockForRead() = 0;
-    virtual bool tryLockForRead(int timeout) = 0;
-    virtual bool tryLockForWrite() = 0;
+    virtual void lockForRead()                = 0;
+    virtual void lockForWrite()               = 0;
+    virtual bool tryLockForRead()             = 0;
+    virtual bool tryLockForRead(int timeout)  = 0;
+    virtual bool tryLockForWrite()            = 0;
     virtual bool tryLockForWrite(int timeout) = 0;
-    virtual void unlock() = 0;
+    virtual void unlock()                     = 0;
 };
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -209,16 +207,14 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render a thumbnail for an image. If this method is not
-     * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
-     * Use gotThumbnail() signal to take thumb.
+     * Tells to host application to render a thumbnail for one image. This method must be
+     * re-implemented in host application. Use gotThumbnail() signal to take thumb.
      */
     virtual void thumbnail(const QUrl& url, int size);
 
     /**
-     * Ask to Kipi host application to render thumbnails for a list of images. If this method is not
-     * re-implemented in host, standard KIO::filePreview is used to generated a thumbnail.
-     * Use gotThumbnail() signal to take thumbs.
+     * Ask to Kipi host application to render thumbnails for a list of images. This method must be
+     * re-implemented in host application. Use gotThumbnail() signal to take thumbs.
      */
     virtual void thumbnails(const QList<QUrl>& list, int size);
 
@@ -405,11 +401,6 @@ protected:
      * Return a bitwise or of the KIPI::Features that thus application support.
      */
     virtual int features() const = 0;
-
-private Q_SLOTS:
-
-    void gotKDEPreview(const KFileItem& item, const QPixmap& pix);
-    void failedKDEPreview(const KFileItem&);
 
 private:
 
