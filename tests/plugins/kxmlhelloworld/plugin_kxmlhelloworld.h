@@ -6,7 +6,7 @@
  * Date        : 2012-02-16
  * Description : an Hello World plugin using KDE XML-GUI technology.
  *
- * Copyright (C) 2012-2014 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2012-2015 by Gilles Caulier <caulier dot gilles at gmail dot com>
  * Copyright (C) 2012      by Victor Dodon   <dodonvictor at gmail dot com>
  *
  *

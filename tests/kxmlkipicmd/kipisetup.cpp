@@ -9,6 +9,8 @@
  *
  * @author Copyright (C) 2012 by Victor Dodon
  *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
+ * @author Copyright (C) 2012-2015 by Gilles Caulier
+ *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -37,6 +39,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QStandardPaths>
+#include <QDialogButtonBox>
 
 // KDE includes
 
@@ -68,67 +71,63 @@ public:
 
     Private() :
         pluginFilter(0),
-        page_plugins(0),
-        page_xml(0),
+        buttons(0),
+        tabView(0),
         pluginsPage(0),
         xmlPage(0)
     {
     }
 
-    QLineEdit*       pluginFilter;
+    QLineEdit*        pluginFilter;
 
-    KPageWidgetItem* page_plugins;
-    KPageWidgetItem* page_xml;
-
-    ConfigWidget*    pluginsPage;
-    SetupXML*        xmlPage;
+    QDialogButtonBox* buttons;
+    QTabWidget*       tabView;
+    
+    ConfigWidget*     pluginsPage;
+    SetupXML*         xmlPage;
 };
 
 KipiSetup::KipiSetup(QWidget* const parent)
-    : KPageDialog(parent), d(new Private)
+    : QDialog(parent),
+      d(new Private)
 {
     setWindowTitle(i18n("Configure"));
-    setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    setFaceType(List);
     setModal(true);
     setMinimumSize(600, 400);
 
-    d->pluginsPage  = PluginLoader::instance()->configWidget(this);
-    d->page_plugins = addPage(d->pluginsPage, i18n("Kipi Plugins"));
-    d->page_plugins->setIcon(QIcon::fromTheme(QString::fromLatin1("kipi")));
+    d->buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+    d->tabView = new QTabWidget(this);
+    
+    d->pluginsPage  = PluginLoader::instance()->configWidget(d->tabView);
+    d->pluginsPage->setToolTip(i18n("Configure plugins"));
     d->pluginFilter = new QLineEdit(d->pluginsPage);
     d->pluginFilter->setClearButtonEnabled(true);
     d->pluginFilter->setPlaceholderText(i18n("Plugins list filter."));
     d->pluginsPage->setFilterWidget(d->pluginFilter);
-
-    d->xmlPage  = new SetupXML(this);
-    d->page_xml = addPage(d->xmlPage, i18n("UI layouts"));
-    d->page_xml->setIcon(QIcon::fromTheme(QString::fromLatin1("application-xml")));
-    d->page_xml->setHeader(QString::fromLatin1("Configure the UI file for the KXMLKipiCmd application"));
-
+    d->tabView->insertTab(KipiPluginsPage, d->pluginsPage, QIcon::fromTheme(QString::fromLatin1("kipi")), i18n("Kipi Plugins"));
+    
+    d->xmlPage = new SetupXML(d->tabView);
+    d->xmlPage->setToolTip(i18n("Configure the UI file for the KXMLKipiCmd application"));
+    d->tabView->insertTab(XmlFilesPage, d->xmlPage, QIcon::fromTheme(QString::fromLatin1("application-xml")), i18n("UI layouts"));
+    
+    QVBoxLayout* const vbx   = new QVBoxLayout(this);
+    vbx->addWidget(d->tabView);
+    vbx->addWidget(d->buttons);
+    setLayout(vbx);
+    
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group);
-
-    int pageIndex         = group.readEntry("Setup Page", 0);
-    KPageWidgetItem* page = 0;
-
-    if (pageIndex == XmlFilesPage)
-    {
-        page = d->page_xml;
-    }
-    else
-    {
-        page = d->page_plugins;
-    }
-
-    setCurrentPage(page);
+    d->tabView->setCurrentIndex(group.readEntry("Setup Page", 0));
 
     connect(d->pluginFilter, &QLineEdit::textChanged,
             this, &KipiSetup::slotFilterChanged);
 
-    connect(buttonBox()->button(QDialogButtonBox::Ok), &QPushButton::clicked,
+    connect(d->buttons->button(QDialogButtonBox::Ok), &QPushButton::clicked,
             this, &KipiSetup::slotOkClicked);
+    
+    connect(d->buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
+            this, &KipiSetup::close);
 }
 
 KipiSetup::~KipiSetup()
@@ -136,7 +135,7 @@ KipiSetup::~KipiSetup()
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group(QString::fromLatin1("Setup Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group);
-    group.writeEntry("Setup Page", (int)activePageIndex());
+    group.writeEntry("Setup Page", d->tabView->currentIndex());
     config->sync();
 
     delete d;
@@ -150,7 +149,7 @@ void KipiSetup::slotFilterChanged(const QString& filter)
 bool KipiSetup::runSetupDialog(QWidget* const parent)
 {
     QPointer<KipiSetup> setup = new KipiSetup(parent);
-    bool success              = (setup->KPageDialog::exec() == QDialog::Accepted);
+    bool success              = (setup->exec() == QDialog::Accepted);
     delete setup;
 
     return success;
@@ -167,18 +166,6 @@ void KipiSetup::slotOkClicked()
 
     QApplication::restoreOverrideCursor();
     accept();
-}
-
-int KipiSetup::activePageIndex()
-{
-    KPageWidgetItem* const curr = currentPage();
-
-    if (curr == d->page_xml)
-    {
-        return XmlFilesPage;
-    }
-
-    return KipiPluginsPage;
 }
 
 // -------------------------------------------------------------------
