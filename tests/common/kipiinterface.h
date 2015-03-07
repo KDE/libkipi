@@ -48,7 +48,7 @@ class KipiInterface : public Interface
 
 public:
 
-    KipiInterface(QObject* const parent, const char* name=0);
+    KipiInterface(QObject* const parent, const QString& name=QString());
     ~KipiInterface();
 
     ImageCollection        currentAlbum();

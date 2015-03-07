@@ -156,7 +156,7 @@ class LIBKIPI_EXPORT Interface : public QObject
 
 public:
 
-    explicit Interface(QObject* const parent, const char* name=0);
+    explicit Interface(QObject* const parent, const QString& name=QString());
     virtual ~Interface();
 
     /**

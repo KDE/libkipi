@@ -87,15 +87,15 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
 {
     m_instance           = this;
     d->config            = KSharedConfig::openConfig();
-    d->kipiInterface     = new KipiInterface(this, "kxmlkipicmd_KIPI_interface");
-    KConfigGroup uiGroup = d->config->group("UI Settings");
+    d->kipiInterface     = new KipiInterface(this, QLatin1String("kxmlkipicmd_KIPI_interface"));
+    KConfigGroup uiGroup = d->config->group(QLatin1String("UI Settings"));
     QString uiFile       = uiGroup.readEntry(QString::fromLatin1("UiFile"), QString::fromLatin1("kxmlkipicmd_defaultui.rc"));
 
     d->uiFile = uiFile;
     setObjectName(QString::fromLatin1("kxmlkipicmd"));
 
     setMinimumSize(QSize(800, 600));
-    KConfigGroup mainWindowGroup = d->config->group("MainWindow Dialog");
+    KConfigGroup mainWindowGroup = d->config->group(QLatin1String("MainWindow Dialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), mainWindowGroup);
 
     if (!selectedImages.empty())
@@ -121,7 +121,7 @@ KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
 
 KipiTestMainWindow::~KipiTestMainWindow()
 {
-    KConfigGroup group = d->config->group("MainWindow Dialog");
+    KConfigGroup group = d->config->group(QLatin1String("MainWindow Dialog"));
     KWindowConfig::saveWindowSize(windowHandle(), group);
     group.sync();
 
@@ -168,7 +168,7 @@ void KipiTestMainWindow::slotEditKeys()
 
 void KipiTestMainWindow::slotConfToolbars()
 {
-    KConfigGroup grp = d->config->group("General Settings");
+    KConfigGroup grp = d->config->group(QLatin1String("General Settings"));
     saveMainWindowSettings(grp);
     KEditToolBar dlg(factory(), this);
 
@@ -179,7 +179,7 @@ void KipiTestMainWindow::slotConfToolbars()
 
 void KipiTestMainWindow::slotNewToolbarConfig()
 {
-    applyMainWindowSettings(d->config->group("General Settings"));
+    applyMainWindowSettings(d->config->group(QLatin1String("General Settings")));
 }
 
 void KipiTestMainWindow::slotSetup()

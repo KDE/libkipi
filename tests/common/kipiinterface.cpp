@@ -51,7 +51,7 @@
 namespace KXMLKipiCmd
 {
 
-KipiInterface::KipiInterface(QObject* const parent, const char* name)
+KipiInterface::KipiInterface(QObject* const parent, const QString& name)
     : Interface(parent, name),
       m_selectedImages(),
       m_selectedAlbums(),

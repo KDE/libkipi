@@ -63,10 +63,10 @@
 namespace KIPI
 {
 
-Interface::Interface(QObject* const parent, const char* name)
+Interface::Interface(QObject* const parent, const QString& name)
     : QObject(parent)
 {
-    setObjectName(QString::fromLatin1(name));
+    setObjectName(name);
 }
 
 Interface::~Interface()
