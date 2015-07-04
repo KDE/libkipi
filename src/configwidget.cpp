@@ -155,7 +155,8 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     QRect r          = fm.boundingRect(QString::fromLatin1("XX"));
     QByteArray byteArray;
     QBuffer    buffer(&byteArray);
-    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/data/kipi-plugins_logo.png")))
+    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                               QStringLiteral("kf5/kipi/pics/kipi-plugins_logo.png")))
                  .scaledToHeight(r.height()*3, Qt::SmoothTransformation);
     img.save(&buffer, "PNG");
     d->kipiLogoLabel->setText(QString::fromLatin1("<a href=\"https://projects.kde.org/projects/extragear/graphics/kipi-plugins\">%1</a>")

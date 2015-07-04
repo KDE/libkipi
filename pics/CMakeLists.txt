@@ -17,5 +17,5 @@ install(FILES kipi-plugins_logo.png
               kipi-icon.svg
               kipi-logo.svg
         DESTINATION
-              ${DATA_INSTALL_DIR}/kipi/data
+              ${KDE_INSTALL_DATADIR_KF5}/kipi/pics
 )

@@ -322,7 +322,8 @@ int main(int argc, char* argv[])
                         );
 
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation, QString::fromLatin1("kipi/data/kipi-icon.svg"))));
+    app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
+                                                   QStringLiteral("kf5/kipi/pics/kipi-icon.svg"))));
 
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
