@@ -4,13 +4,14 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-ecm_install_icons(ICONS hi128-apps-kipi.png
-                        hi16-apps-kipi.png
-                        hi22-apps-kipi.png
-                        hi32-apps-kipi.png
-                        hi48-apps-kipi.png
-                  DESTINATION
-                        ${ICON_INSTALL_DIR}
+ecm_install_icons(
+    ICONS
+        128-apps-kipi.png
+        16-apps-kipi.png
+        22-apps-kipi.png
+        32-apps-kipi.png
+        48-apps-kipi.png
+    DESTINATION ${ICON_INSTALL_DIR}
 )
 
 install(FILES kipi-plugins_logo.png
