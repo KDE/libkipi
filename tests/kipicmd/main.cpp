@@ -127,6 +127,7 @@ QList<QPair<int, QAction*> > FlattenActionList(const QList<QAction*>& actions, c
             results.append( FlattenActionList(menu->actions(), level+1) );
         }
     }
+
     return results;
 }
 
@@ -166,8 +167,6 @@ bool LoadPlugins(const QString& libraryName = QString::fromLatin1(""))
                 qDebug() << i18n("Can not load plugin \"%1\": Loader says it should not load.", libraryName);
                 return false;
             }
-
-            (*it)->shouldLoad();
 
             if ( !(*it)->plugin() )
             {
