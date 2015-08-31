@@ -56,7 +56,7 @@
 namespace KIPI
 {
 
-class Plugin::Private
+class Q_DECL_HIDDEN Plugin::Private
 {
 public:
 

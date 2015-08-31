@@ -64,7 +64,7 @@
 namespace KIPI
 {
 
-class PluginLoader::Info::Private
+class Q_DECL_HIDDEN PluginLoader::Info::Private
 {
 public:
 
@@ -217,7 +217,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 static PluginLoader* s_instance = 0;
 static bool          s_loaded   = false;
 
-class PluginLoader::Private
+class Q_DECL_HIDDEN PluginLoader::Private
 {
 public:
 

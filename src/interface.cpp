@@ -390,7 +390,7 @@ void FileWriteLocker::unlock()
 
 // -----------------------------------------------------------------------------------------------------------
 
-class EditHintScope::Private
+class Q_DECL_HIDDEN EditHintScope::Private
 {
 
 public:

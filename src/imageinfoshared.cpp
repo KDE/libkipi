@@ -40,7 +40,7 @@
 namespace KIPI
 {
 
-class ImageInfoShared::Private
+class Q_DECL_HIDDEN ImageInfoShared::Private
 {
 public:
 

@@ -51,7 +51,7 @@
 namespace KIPI
 {
 
-class ConfigWidget::Private
+class Q_DECL_HIDDEN ConfigWidget::Private
 {
 
 public:
