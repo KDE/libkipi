@@ -77,29 +77,24 @@ install(TARGETS KF5Kipi
 # desktop file which define plugin service model, used by tool from kipi-plugins.
 install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
-# Check if compilation is done through digiKam SC or not. If yes, do not install header files.
-if (NOT DIGIKAMSC_COMPILE_LIBKIPI)
+install(FILES       ${kipi_CamelCase_HEADERS}
+        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/KIPI
+        COMPONENT   Devel
+)
 
-    install(FILES       ${kipi_CamelCase_HEADERS}
-            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/KIPI
-            COMPONENT   Devel
-    )
-
-    install(FILES       ${kipi_HEADERS}
-            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
-            COMPONENT   Devel
-    )
+install(FILES       ${kipi_HEADERS}
+        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
+        COMPONENT   Devel
+)
 
 
-    install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
-                        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
-            DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
-            COMPONENT   Devel
-    )
+install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
+                    ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
+        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
+        COMPONENT   Devel
+)
 
-    install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
-            DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
-            COMPONENT   Devel
-    )
-
-endif()
+install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
+        DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
+        COMPONENT   Devel
+)
