@@ -183,8 +183,9 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     }
 }
 
-void Interface::preview(const QUrl& url)
+void Interface::preview(const QUrl& url, int minSize)
 {
+    Q_UNUSED(minSize);
     PrintWarningMessageFeature("HostSupportsPreviews");
 
     if (url.isValid())

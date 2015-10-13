@@ -208,10 +208,10 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render a preview image for one item. This method must be
+     * Tells to host application to render a preview image for one item at mininimum size. This method must be
      * re-implemented in host application. Use gotPreview() signal to take relevant image.
      */
-    virtual void preview(const QUrl& url);
+    virtual void preview(const QUrl& url, int minSize);
 
     /**
      * Tells to host application to render a thumbnail for one item. This method must be
