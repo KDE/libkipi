@@ -41,6 +41,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QList>
 #include <QtCore/QUrl>
+#include <QtGui/QImage>
 
 // Local includes
 
@@ -96,19 +97,24 @@ enum Features
 enum EditHint
 {
     UndefinedEditHint       = 0,
-    /** The image data (pixels) have been edited */
+    /** The image data (pixels) have been edited
+     */
     HintPixelContentChanged = 1 << 0,
-    /** Metadata have been edited */
+    /** Metadata have been edited
+     */
     HintMetadataChanged     = 1 << 1,
     /** All changes done (typically, to the metadata) are also communicated via image attributes.
      *  In other words, if the host updates its internal storage from attribute changes
-     *  and ignores changes on disk, it already has all information. */
+     *  and ignores changes on disk, it already has all information.
+     */
     HintChangeReflectedByAttributes
                             = 1 << 2,
-    /** The operation indicated as "about to be done" has been aborted / did not result in a change. */
+    /** The operation indicated as "about to be done" has been aborted / did not result in a change.
+     */
     HintEditAborted         = 1 << 3,
 
-    /** Short name, implies that only metadata changed, and all metadata changes are communicated via attributes. */
+    /** Short name, implies that only metadata changed, and all metadata changes are communicated via attributes.
+     */
     HintMetadataOnlyChange  = HintMetadataChanged | HintChangeReflectedByAttributes
 };
 Q_DECLARE_FLAGS(EditHints, EditHint)
@@ -209,9 +215,9 @@ public:
 
     /**
      * Tells to host application to render a preview image for one item at mininimum size. This method must be
-     * re-implemented in host application. Use gotPreview() signal to take relevant image.
+     * re-implemented in host application.
      */
-    virtual void preview(const QUrl& url, int minSize);
+    virtual QImage preview(const QUrl& url, int minSize);
 
     /**
      * Tells to host application to render a thumbnail for one item. This method must be
@@ -388,10 +394,6 @@ Q_SIGNALS:
      * methods for details.
      */
     void gotThumbnail(const QUrl&, const QPixmap&);
-
-    /** Emit when host application has rendered item preview image. See preview() methods for details.
-     */
-    void gotPreview(const QUrl&, const QImage&);
     
     /**
      * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.

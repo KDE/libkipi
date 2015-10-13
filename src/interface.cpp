@@ -183,13 +183,13 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     }
 }
 
-void Interface::preview(const QUrl& url, int minSize)
+QImage Interface::preview(const QUrl& url, int minSize)
 {
+    Q_UNUSED(url);
     Q_UNUSED(minSize);
     PrintWarningMessageFeature("HostSupportsPreviews");
 
-    if (url.isValid())
-        emit gotPreview(url, QImage());
+    return QImage();
 }
 
 QVariant Interface::hostSetting(const QString& settingName)
