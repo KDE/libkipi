@@ -312,7 +312,7 @@ public:
      *
      * Returns true if a reservation was made, or false if a reservation could not be made.
      */
-    virtual bool reserveForAction(const QUrl &url, QObject* const reservingObject,
+    virtual bool reserveForAction(const QUrl& url, QObject* const reservingObject,
                                   const QString& descriptionOfAction) const;
     /**
      * Supported if HostSupportsItemReservation
@@ -349,8 +349,8 @@ public:
      * When aboutToEdit has been called, editingFinished must be called afterwards.
      * It is strongly recommended to use the EditHintScope instead of these methods.
      */
-    virtual void aboutToEdit(const QUrl &url, EditHints hints);
-    virtual void editingFinished(const QUrl &url, EditHints hints);
+    virtual void aboutToEdit(const QUrl& url, EditHints hints);
+    virtual void editingFinished(const QUrl& url, EditHints hints);
 
     /**
      * Returns a string version of libkipi release ID.
