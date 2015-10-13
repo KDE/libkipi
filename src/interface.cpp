@@ -122,6 +122,8 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsColorLabel );
     else if  ( feature == QString::fromLatin1("HostSupportsItemReservation" ))
         return hasFeature( HostSupportsItemReservation );
+    else if  ( feature == QString::fromLatin1("HostSupportsPreviews" ))
+        return hasFeature( HostSupportsPreviews );
     else
     {
         qCWarning(LIBKIPI_LOG) << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
@@ -179,6 +181,14 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
         if ((*it).isValid())
             emit gotThumbnail((*it), QPixmap());
     }
+}
+
+void Interface::preview(const QUrl& url)
+{
+    PrintWarningMessageFeature("HostSupportsPreviews");
+
+    if (url.isValid())
+        emit gotPreview(url, QImage());
 }
 
 QVariant Interface::hostSetting(const QString& settingName)
@@ -283,8 +293,9 @@ bool Interface::itemIsReserved(const QUrl&, QString* const) const
 
 FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
 {
-    // Dont print warning as we use the feature from low-level kipi libraries without testing for support
-    //PrintWarningMessageFeature("HostSupportsReadWriteLock");
+    /* NOTE: Dont print warning as we use the feature from low-level kipi libraries without testing for support
+    PrintWarningMessageFeature("HostSupportsReadWriteLock");
+    */
     return 0;
 }
 

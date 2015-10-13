@@ -72,22 +72,23 @@ class UploadWidget;
 enum Features
 {
     CollectionsHaveComments     = 1 << 0,  /** This feature specifies that albums have descriptions associated to them.                                                          */
-    ImagesHasComments           = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                 */
-    ImagesHasTime               = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.               */
+    ImagesHasComments           = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                   */
+    ImagesHasTime               = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.                 */
     HostSupportsDateRanges      = 1 << 3,  /** This feature specifies whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
     HostAcceptNewImages         = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
-                                               location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.             */
-    ImagesHasTitlesWritable     = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                     */
+                                               location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.               */
+    ImagesHasTitlesWritable     = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                        */
     CollectionsHaveCategory     = 1 << 6,  /** This feature specifies that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
     CollectionsHaveCreationDate = 1 << 7,  /** This feature specifies that collections are a creation date associated to them.                                                   */
     HostSupportsProgressBar     = 1 << 8,  /** This feature specifies whether the host application has a progress manager available to report progress information from plugins. */
     HostSupportsTags            = 1 << 9,  /** This feature specifies whether the host application supports keywords for images.                                                 */
     HostSupportsRating          = 1 << 10, /** This feature specifies whether the host application supports rating values for images.                                            */
-    HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                      */
-    HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                */
+    HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                        */
+    HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                  */
     HostSupportsPickLabel       = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
     HostSupportsColorLabel      = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
-    HostSupportsItemReservation = 1 << 15  /** This feature specifies whether the host application supports item reservation */
+    HostSupportsItemReservation = 1 << 15, /** This feature specifies whether the host application supports item reservation                                                     */
+    HostSupportsPreviews        = 1 << 16  /** This feature specifies that host application can provide image preview.                                                           */
 };
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
@@ -207,7 +208,13 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render a thumbnail for one image. This method must be
+     * Tells to host application to render a preview image for one item. This method must be
+     * re-implemented in host application. Use gotPreview() signal to take relevant image.
+     */
+    virtual void preview(const QUrl& url);
+
+    /**
+     * Tells to host application to render a thumbnail for one item. This method must be
      * re-implemented in host application. Use gotThumbnail() signal to take thumb.
      */
     virtual void thumbnail(const QUrl& url, int size);
@@ -377,11 +384,15 @@ Q_SIGNALS:
      */
     void currentAlbumChanged(bool hasSelection);
 
-    /** Emit when host application has redered item thumbnail. See thumbnail() and thumbnails() 
+    /** Emit when host application has rendered item thumbnail. See thumbnail() and thumbnails() 
      * methods for details.
      */
     void gotThumbnail(const QUrl&, const QPixmap&);
 
+    /** Emit when host application has rendered item preview image. See preview() methods for details.
+     */
+    void gotPreview(const QUrl&, const QImage&);
+    
     /**
      * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.
      */
