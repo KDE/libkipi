@@ -124,6 +124,8 @@ bool Interface::hasFeature( const QString& feature ) const
         return hasFeature( HostSupportsItemReservation );
     else if  ( feature == QString::fromLatin1("HostSupportsPreviews" ))
         return hasFeature( HostSupportsPreviews );
+    else if  ( feature == QString::fromLatin1("HostSupportsRawProcessing" ))
+        return hasFeature( HostSupportsRawProcessing );
     else
     {
         qCWarning(LIBKIPI_LOG) << "Unknown feature asked for in KIPI::Interface::hasFeature(): " << feature;
@@ -296,6 +298,14 @@ FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
 {
     /* NOTE: Dont print warning as we use the feature from low-level kipi libraries without testing for support
     PrintWarningMessageFeature("HostSupportsReadWriteLock");
+    */
+    return 0;
+}
+
+RawProcessor* Interface::createRawProcessor() const
+{
+    /* NOTE: Dont print warning as we use the feature from low-level kipi libraries without testing for support
+    PrintWarningMessageFeature("HostSupportsRawProcessing");
     */
     return 0;
 }

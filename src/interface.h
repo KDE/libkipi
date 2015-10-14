@@ -88,8 +88,9 @@ enum Features
     HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                  */
     HostSupportsPickLabel       = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
     HostSupportsColorLabel      = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
-    HostSupportsItemReservation = 1 << 15, /** This feature specifies whether the host application supports item reservation                                                     */
-    HostSupportsPreviews        = 1 << 16  /** This feature specifies that host application can provide image preview.                                                           */
+    HostSupportsItemReservation = 1 << 15, /** This feature specifies whether the host application supports item reservation.                                                    */
+    HostSupportsPreviews        = 1 << 16, /** This feature specifies that host application can provide image preview.                                                           */
+    HostSupportsRawProcessing   = 1 << 17  /** This feature specifies that host application can process Raw files.                                                               */
 };
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
@@ -127,7 +128,7 @@ public:
 
     /**
      *  A Kipi FileReadWriteLock refers to application-wide reading/writing
-     *  to a file on disk; it is created with createReadWriteLock for a URL.
+     *  to a file on disk; it is created with createReadWriteLock for an Url.
      *  All semantics are identical to a recursive QReadWriteLock.
      *  You must unlock as often as you locked.
      *
@@ -153,6 +154,37 @@ public:
     virtual bool tryLockForWrite()            = 0;
     virtual bool tryLockForWrite(int timeout) = 0;
     virtual void unlock()                     = 0;
+};
+
+// ---------------------------------------------------------------------------------------------------------------
+
+/**
+ *  A Kipi RawProcessor refers to application-wide to process Raw file 
+ *  about preview extraction or demosicing; it is created with createRawProcessor for an Url.
+ */
+class LIBKIPI_EXPORT RawProcessor
+{
+public:
+
+    RawProcessor()          {};
+    virtual ~RawProcessor() {};
+
+    /// To perform Raw preview extraction.
+    virtual bool loadRawPreview(const QUrl& url, QImage& image) = 0;
+
+    /// To perform demosiacing. Can be cancelled.
+    virtual bool decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax) = 0;
+
+    /// To cancel decodeRawImage() processing.
+    virtual void cancel() = 0;
+    
+    /** Rteun true if url is a Raw file, else false
+     */
+    virtual bool isRawFile(const QUrl& url) = 0;
+    
+    /** Return the list of all RAW file type mime supported by the decoder.
+     */
+    virtual QString rawFiles() = 0;
 };
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -345,13 +377,21 @@ public:
 
     /**
      * Supported if HostSupportsReadWriteLock
-     * Creates a ReadWriteLock for the given URL.
+     * Creates a ReadWriteLock for the given Url.
      * You must unlock the ReadWriteLock as often as you locked.
      * Deleting the object does not unlock it.
-     * The implementation KIPI host application must be thread-safe.
+     * The implementation from KIPI host application must be thread-safe.
      *
      */
-    virtual FileReadWriteLock* createReadWriteLock(const QUrl &url) const;
+    virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const;
+
+    /**
+     * Supported if HostSupportsRawProcessing.
+     * Creates an instance of RawProcessor dedicated to process Raw files.
+     * The implementation from KIPI host application must be thread-safe.
+     *
+     */
+    virtual RawProcessor* createRawProcessor() const;
 
     /**
      * Supported if HostSupportsEditHints
@@ -439,7 +479,7 @@ class LIBKIPI_EXPORT FileReadLocker
 {
 public:
 
-    FileReadLocker(Interface* const iface, const QUrl &url);
+    FileReadLocker(Interface* const iface, const QUrl& url);
     FileReadLocker(ImageInfoShared* const info);
     ~FileReadLocker();
 
@@ -458,7 +498,7 @@ class LIBKIPI_EXPORT FileWriteLocker
 {
 public:
 
-    FileWriteLocker(Interface* const iface, const QUrl &url);
+    FileWriteLocker(Interface* const iface, const QUrl& url);
     FileWriteLocker(ImageInfoShared* const info);
     ~FileWriteLocker();
 
@@ -477,7 +517,7 @@ class LIBKIPI_EXPORT EditHintScope
 {
 public:
 
-    EditHintScope(Interface* const iface, const QUrl &url, EditHints hints);
+    EditHintScope(Interface* const iface, const QUrl& url, EditHints hints);
     ~EditHintScope();
 
     void changeAborted();
