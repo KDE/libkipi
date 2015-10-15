@@ -194,6 +194,14 @@ QImage Interface::preview(const QUrl& url, int minSize)
     return QImage();
 }
 
+void Interface::preview(const QUrl& url, int minSize, int resizedTo)
+{
+    PrintWarningMessageFeature("HostSupportsPreviews");
+
+    if (url.isValid())
+        emit gotPreview(url, QImage());
+}
+
 QVariant Interface::hostSetting(const QString& settingName)
 {
     PrintWarningMessage();

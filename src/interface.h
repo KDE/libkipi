@@ -246,19 +246,27 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render a preview image for one item at mininimum size. This method must be
-     * re-implemented in host application.
+     * Tells to host application to render imediatly a preview image for one item at mininimum size.
+     * This method must be re-implemented in host application and must be thread safe.
      */
     virtual QImage preview(const QUrl& url, int minSize);
 
     /**
-     * Tells to host application to render a thumbnail for one item. This method must be
+     * Tells to host application to render a preview image for one item at mininimum size and resized to a specific
+     * size if preview is largest than. Apsect ratio is preserved while redering. 
+     * This asynchronous method must be re-implemented in host application.
+     * Use gotPreview() signal to take preview.
+     */
+    virtual void preview(const QUrl& url, int minSize, int resizedTo);
+
+    /**
+     * Tells to host application to render a thumbnail for one item. This asynchronous method must be
      * re-implemented in host application. Use gotThumbnail() signal to take thumb.
      */
     virtual void thumbnail(const QUrl& url, int size);
 
     /**
-     * Ask to Kipi host application to render thumbnails for a list of images. This method must be
+     * Ask to Kipi host application to render thumbnails for a list of images. This asynchronous method must be
      * re-implemented in host application. Use gotThumbnail() signal to take thumbs.
      */
     virtual void thumbnails(const QList<QUrl>& list, int size);
@@ -430,10 +438,14 @@ Q_SIGNALS:
      */
     void currentAlbumChanged(bool hasSelection);
 
-    /** Emit when host application has rendered item thumbnail. See thumbnail() and thumbnails() 
-     * methods for details.
+    /** Emit when host application has rendered item thumbnail. See asynchronous thumbnail() and thumbnails() 
+     *  methods for details.
      */
     void gotThumbnail(const QUrl&, const QPixmap&);
+    
+    /** Emit when host application has rendered item preview image. See assynchronous preview() methods for details.
+     */
+    void gotPreview(const QUrl&, const QImage&);
     
     /**
      * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.
