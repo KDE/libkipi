@@ -252,12 +252,13 @@ public:
     virtual QImage preview(const QUrl& url, int minSize);
 
     /**
-     * Tells to host application to render a preview image for one item at mininimum size and resized to a specific
-     * size if preview is largest than. Apsect ratio is preserved while redering. 
+     * Tells to host application to render a preview image for one item at mininimum size.
+     * A resizement to to a specific size will be generated if preview is largest than.
+     * Use a positive resizedTo value in this case. Aspect ratio is preserved while rendering. 
      * This asynchronous method must be re-implemented in host application.
      * Use gotPreview() signal to take preview.
      */
-    virtual void preview(const QUrl& url, int minSize, int resizedTo);
+    virtual void preview(const QUrl& url, int minSize, int resizedTo=-1);
 
     /**
      * Tells to host application to render a thumbnail for one item. This asynchronous method must be
