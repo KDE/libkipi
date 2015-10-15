@@ -162,7 +162,7 @@ public:
  *  A Kipi RawProcessor refers to application-wide to process Raw file 
  *  about preview extraction or demosicing; it is created with createRawProcessor for an Url.
  */
-class LIBKIPI_EXPORT RawProcessor
+class LIBKIPI_EXPORT RawProcessor : public QObject
 {
 public:
 
