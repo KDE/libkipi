@@ -194,8 +194,27 @@ QImage Interface::preview(const QUrl& url, int minSize)
     return QImage();
 }
 
+bool Interface::saveImage(const QUrl& url, const QString& format,
+                          const QByteArray& data, uint width, uint height,
+                          bool  sixteenBit, bool hasAlpha)
+{
+    Q_UNUSED(url);
+    Q_UNUSED(format);
+    Q_UNUSED(data);
+    Q_UNUSED(format);
+    Q_UNUSED(width);
+    Q_UNUSED(height);
+    Q_UNUSED(sixteenBit);
+    Q_UNUSED(hasAlpha);
+    PrintWarningMessageFeature("HostSupportsSaveImages");
+    return false;
+}
+
 void Interface::preview(const QUrl& url, int minSize, int resizedTo)
 {
+    Q_UNUSED(url);
+    Q_UNUSED(minSize);
+    Q_UNUSED(resizedTo);
     PrintWarningMessageFeature("HostSupportsPreviews");
 
     if (url.isValid())
@@ -304,20 +323,22 @@ bool Interface::itemIsReserved(const QUrl&, QString* const) const
 
 FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
 {
-    /* NOTE: Dont print warning as we use the feature from low-level kipi libraries without testing for support
     PrintWarningMessageFeature("HostSupportsReadWriteLock");
-    */
     return 0;
 }
 
 RawProcessor* Interface::createRawProcessor() const
 {
-    /* NOTE: Dont print warning as we use the feature from low-level kipi libraries without testing for support
     PrintWarningMessageFeature("HostSupportsRawProcessing");
-    */
     return 0;
 }
 
+MetadataProcessor* Interface::createMetadataProcessor() const
+{
+    PrintWarningMessageFeature("HostSupportsMetadataProcessing");
+    return 0;
+}
+    
 void Interface::aboutToEdit(const QUrl&, EditHints)
 {
 }

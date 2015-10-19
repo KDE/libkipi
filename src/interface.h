@@ -72,25 +72,27 @@ class UploadWidget;
 */
 enum Features
 {
-    CollectionsHaveComments     = 1 << 0,  /** This feature specifies that albums have descriptions associated to them.                                                          */
-    ImagesHasComments           = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                   */
-    ImagesHasTime               = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.                 */
-    HostSupportsDateRanges      = 1 << 3,  /** This feature specifies whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
-    HostAcceptNewImages         = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
-                                               location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.               */
-    ImagesHasTitlesWritable     = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                        */
-    CollectionsHaveCategory     = 1 << 6,  /** This feature specifies that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
-    CollectionsHaveCreationDate = 1 << 7,  /** This feature specifies that collections are a creation date associated to them.                                                   */
-    HostSupportsProgressBar     = 1 << 8,  /** This feature specifies whether the host application has a progress manager available to report progress information from plugins. */
-    HostSupportsTags            = 1 << 9,  /** This feature specifies whether the host application supports keywords for images.                                                 */
-    HostSupportsRating          = 1 << 10, /** This feature specifies whether the host application supports rating values for images.                                            */
-    HostSupportsThumbnails      = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                        */
-    HostSupportsReadWriteLock   = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                  */
-    HostSupportsPickLabel       = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
-    HostSupportsColorLabel      = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
-    HostSupportsItemReservation = 1 << 15, /** This feature specifies whether the host application supports item reservation.                                                    */
-    HostSupportsPreviews        = 1 << 16, /** This feature specifies that host application can provide image preview.                                                           */
-    HostSupportsRawProcessing   = 1 << 17  /** This feature specifies that host application can process Raw files.                                                               */
+    CollectionsHaveComments        = 1 << 0,  /** This feature specifies that albums have descriptions associated to them.                                                          */
+    ImagesHasComments              = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                   */
+    ImagesHasTime                  = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.                 */
+    HostSupportsDateRanges         = 1 << 3,  /** This feature specifies whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
+    HostAcceptNewImages            = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
+                                                  location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.               */
+    ImagesHasTitlesWritable        = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                        */
+    CollectionsHaveCategory        = 1 << 6,  /** This feature specifies that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
+    CollectionsHaveCreationDate    = 1 << 7,  /** This feature specifies that collections are a creation date associated to them.                                                   */
+    HostSupportsProgressBar        = 1 << 8,  /** This feature specifies whether the host application has a progress manager available to report progress information from plugins. */
+    HostSupportsTags               = 1 << 9,  /** This feature specifies whether the host application supports keywords for images.                                                 */
+    HostSupportsRating             = 1 << 10, /** This feature specifies whether the host application supports rating values for images.                                            */
+    HostSupportsThumbnails         = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                        */
+    HostSupportsReadWriteLock      = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                  */
+    HostSupportsPickLabel          = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
+    HostSupportsColorLabel         = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
+    HostSupportsItemReservation    = 1 << 15, /** This feature specifies whether the host application supports item reservation.                                                    */
+    HostSupportsPreviews           = 1 << 16, /** This feature specifies that host application can provide image preview.                                                           */
+    HostSupportsRawProcessing      = 1 << 17, /** This feature specifies that host application can process Raw files.                                                               */
+    HostSupportsMetadataProcessing = 1 << 18, /** This feature specifies that host application can process Metadata from files.                                                     */
+    HostSupportsSaveImages         = 1 << 19  /** This feature specifies that host application can save image files           .                                                     */
 };
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
@@ -160,7 +162,8 @@ public:
 
 /**
  *  A Kipi RawProcessor refers to application-wide to process Raw file 
- *  about preview extraction or demosicing; it is created with createRawProcessor for an Url.
+ *  about preview extraction or demosicing; it is created with Interface::createRawProcessor()
+ *  You can use libkdcraw to re-implement this class.
  */
 class LIBKIPI_EXPORT RawProcessor : public QObject
 {
@@ -169,13 +172,16 @@ public:
     RawProcessor()          {};
     virtual ~RawProcessor() {};
 
-    /// To perform Raw preview extraction.
+    /** To perform Raw preview extraction.
+     */
     virtual bool loadRawPreview(const QUrl& url, QImage& image) = 0;
 
-    /// To perform demosiacing. Can be cancelled.
+    /** To perform demosiacing. Can be cancelled.
+     */
     virtual bool decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax) = 0;
 
-    /// To cancel decodeRawImage() processing.
+    /** To cancel decodeRawImage() processing.
+     */
     virtual void cancel() = 0;
     
     /** Rteun true if url is a Raw file, else false
@@ -185,6 +191,75 @@ public:
     /** Return the list of all RAW file type mime supported by the decoder.
      */
     virtual QString rawFiles() = 0;
+};
+
+// ---------------------------------------------------------------------------------------------------------------
+
+/**
+ *  A Kipi MetadataProcessor refers to application-wide to process file metadata
+ *  about Exif/Iptc/Xmp management; it is created with Interface::createMetadataProcessor().
+ *  You can use libkexiv2 to re-implement this class.
+ */
+class LIBKIPI_EXPORT MetadataProcessor : public QObject
+{
+public:
+
+    MetadataProcessor()          {};
+    virtual ~MetadataProcessor() {};
+
+    virtual bool load(const QUrl& url) const = 0;
+    /** NOTE: writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
+     */
+    virtual bool save(const QUrl& url, bool writeToFileOnly) const = 0;
+    virtual bool applyChanges() const = 0;
+
+    virtual QSize getPixelSize() const = 0;
+    
+    virtual bool  setImageProgramId(const QString& program, const QString& version) const = 0;
+    
+    virtual QSize getImageDimensions() const = 0;
+    virtual bool  setImageDimensions(const QSize& size) const = 0;
+
+    /** NOTE: orientation is standard value from Exif orientation tag.
+     */
+    virtual int  getImageOrientation() const = 0;
+    virtual bool setImageOrientation(int orientation) const = 0;
+    virtual bool rotateExifQImage(QImage& img, int orientation) const = 0;
+
+    virtual QDateTime getImageDateTime() const = 0;
+    virtual bool      setImageDateTime(const QDateTime& dt) const = 0;
+
+    virtual bool getImagePreview(QImage& img) const = 0;
+    virtual bool setImagePreview(const QImage& img) const = 0;
+    
+    virtual bool hasExif() const = 0;
+    virtual bool hasIptc() const = 0;
+    virtual bool hasXmp() const  = 0;
+    
+    virtual bool supportXmp() const = 0;
+    virtual bool canWriteXmp(const QUrl& url) const = 0;
+    
+    virtual bool removeExifTag(const QString& tag) const = 0;
+    virtual bool removeIptcTag(const QString& tag) const = 0;
+    virtual bool removeXmpTag(const QString& tag) const  = 0;
+    
+    virtual bool getGPSInfo(double& altitude, double& latitude, double& longitude) const = 0;
+    virtual bool setGPSInfo(const double altitude, const double latitude, const double longitude) const = 0;
+    virtual bool removeGPSInfo() const = 0;
+   
+    virtual QString getExifTagString(const QString& tag) const = 0;
+    virtual bool    setExifTagString(const QString& tag, const QString& val) const = 0;
+    
+    virtual bool getExifTagRational(const QString& tag, long int& num, long int& den) const = 0;
+    virtual bool setExifTagRational(const QString& tag, long int num, long int den)   const = 0;
+
+    virtual QString getXmpTagString(const QString& tag) const = 0;
+    virtual bool    setXmpTagString(const QString& tag, const QString& val) const = 0;
+
+    virtual QStringList getXmpKeywords() const = 0;
+    virtual bool        setXmpKeywords(const QStringList& keywords) const = 0;
+
+    virtual QVariant getXmpTagVariant(const QString& tag) const = 0;
 };
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -247,9 +322,19 @@ public:
 
     /**
      * Tells to host application to render imediatly a preview image for one item at mininimum size.
-     * This method must be re-implemented in host application and must be thread safe.
+     * This method re-implemented in host application and be thread safe.
      */
     virtual QImage preview(const QUrl& url, int minSize);
+
+    /**
+     * Tell to host application to save image at url in specific format (JPG, PNG, TIF, etc).
+     * Pixels image data must be in ARGB, with image size (width,height).
+     * Pixels can be in siwteen bits per color per pixels and can have an alpha chanel.
+     * This method re-implemented in host application must be thread safe.
+     */
+    virtual bool saveImage(const QUrl& url, const QString& format,
+                           const QByteArray& data, uint width, uint height,
+                           bool  sixteenBit, bool hasAlpha);
 
     /**
      * Tells to host application to render a preview image for one item at mininimum size.
@@ -392,7 +477,7 @@ public:
      * The implementation from KIPI host application must be thread-safe.
      *
      */
-    virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const;
+    virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const = 0;
 
     /**
      * Supported if HostSupportsRawProcessing.
@@ -400,8 +485,16 @@ public:
      * The implementation from KIPI host application must be thread-safe.
      *
      */
-    virtual RawProcessor* createRawProcessor() const;
+    virtual RawProcessor* createRawProcessor() const = 0;
 
+    /**
+     * Supported if HostSupportsMetadataProcessing.
+     * Creates an instance of MetadataProcessor dedicated to manage file metadata.
+     * The implementation from KIPI host application must be thread-safe.
+     *
+     */
+    virtual MetadataProcessor* createMetadataProcessor() const = 0;
+    
     /**
      * Supported if HostSupportsEditHints
      *
