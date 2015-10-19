@@ -207,59 +207,59 @@ public:
     MetadataProcessor()          {};
     virtual ~MetadataProcessor() {};
 
-    virtual bool load(const QUrl& url) const = 0;
+    virtual bool load(const QUrl& url) = 0;
     /** NOTE: writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
      */
-    virtual bool save(const QUrl& url, bool writeToFileOnly) const = 0;
-    virtual bool applyChanges() const = 0;
+    virtual bool save(const QUrl& url, bool writeToFileOnly) = 0;
+    virtual bool applyChanges() = 0;
 
-    virtual QSize getPixelSize() const = 0;
+    virtual QSize getPixelSize() = 0;
     
-    virtual bool  setImageProgramId(const QString& program, const QString& version) const = 0;
+    virtual bool  setImageProgramId(const QString& program, const QString& version) = 0;
     
-    virtual QSize getImageDimensions() const = 0;
-    virtual bool  setImageDimensions(const QSize& size) const = 0;
+    virtual QSize getImageDimensions() = 0;
+    virtual bool  setImageDimensions(const QSize& size) = 0;
 
     /** NOTE: orientation is standard value from Exif orientation tag.
      */
-    virtual int  getImageOrientation() const = 0;
-    virtual bool setImageOrientation(int orientation) const = 0;
-    virtual bool rotateExifQImage(QImage& img, int orientation) const = 0;
+    virtual int  getImageOrientation() = 0;
+    virtual bool setImageOrientation(int orientation) = 0;
+    virtual bool rotateExifQImage(QImage& img, int orientation) = 0;
 
-    virtual QDateTime getImageDateTime() const = 0;
-    virtual bool      setImageDateTime(const QDateTime& dt) const = 0;
+    virtual QDateTime getImageDateTime() = 0;
+    virtual bool      setImageDateTime(const QDateTime& dt) = 0;
 
-    virtual bool getImagePreview(QImage& img) const = 0;
-    virtual bool setImagePreview(const QImage& img) const = 0;
+    virtual bool getImagePreview(QImage& img) = 0;
+    virtual bool setImagePreview(const QImage& img) = 0;
     
-    virtual bool hasExif() const = 0;
-    virtual bool hasIptc() const = 0;
-    virtual bool hasXmp() const  = 0;
+    virtual bool hasExif() = 0;
+    virtual bool hasIptc() = 0;
+    virtual bool hasXmp()  = 0;
     
-    virtual bool supportXmp() const = 0;
-    virtual bool canWriteXmp(const QUrl& url) const = 0;
+    virtual bool supportXmp() = 0;
+    virtual bool canWriteXmp(const QUrl& url) = 0;
     
-    virtual bool removeExifTag(const QString& tag) const = 0;
-    virtual bool removeIptcTag(const QString& tag) const = 0;
-    virtual bool removeXmpTag(const QString& tag) const  = 0;
+    virtual bool removeExifTag(const QString& tag) = 0;
+    virtual bool removeIptcTag(const QString& tag) = 0;
+    virtual bool removeXmpTag(const QString& tag)  = 0;
     
-    virtual bool getGPSInfo(double& altitude, double& latitude, double& longitude) const = 0;
-    virtual bool setGPSInfo(const double altitude, const double latitude, const double longitude) const = 0;
-    virtual bool removeGPSInfo() const = 0;
+    virtual bool getGPSInfo(double& altitude, double& latitude, double& longitude) = 0;
+    virtual bool setGPSInfo(const double altitude, const double latitude, const double longitude) = 0;
+    virtual bool removeGPSInfo() = 0;
    
-    virtual QString getExifTagString(const QString& tag) const = 0;
-    virtual bool    setExifTagString(const QString& tag, const QString& val) const = 0;
+    virtual QString getExifTagString(const QString& tag) = 0;
+    virtual bool    setExifTagString(const QString& tag, const QString& val) = 0;
     
-    virtual bool getExifTagRational(const QString& tag, long int& num, long int& den) const = 0;
-    virtual bool setExifTagRational(const QString& tag, long int num, long int den)   const = 0;
+    virtual bool getExifTagRational(const QString& tag, long int& num, long int& den) = 0;
+    virtual bool setExifTagRational(const QString& tag, long int num, long int den)   = 0;
 
-    virtual QString getXmpTagString(const QString& tag) const = 0;
-    virtual bool    setXmpTagString(const QString& tag, const QString& val) const = 0;
+    virtual QString getXmpTagString(const QString& tag) = 0;
+    virtual bool    setXmpTagString(const QString& tag, const QString& val) = 0;
 
-    virtual QStringList getXmpKeywords() const = 0;
-    virtual bool        setXmpKeywords(const QStringList& keywords) const = 0;
+    virtual QStringList getXmpKeywords() = 0;
+    virtual bool        setXmpKeywords(const QStringList& keywords) = 0;
 
-    virtual QVariant getXmpTagVariant(const QString& tag) const = 0;
+    virtual QVariant getXmpTagVariant(const QString& tag) = 0;
 };
 
 // ---------------------------------------------------------------------------------------------------------------
