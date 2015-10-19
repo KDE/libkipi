@@ -77,9 +77,9 @@ public:
 
     void thumbnails(const QList<QUrl>& list, int size);
     
-    FileReadWriteLock* createReadWriteLock(const QUrl& url) const { return 0; };
-    RawProcessor* createRawProcessor() const                      { return 0; };
-    MetadataProcessor* createMetadataProcessor() const            { return 0; };
+    FileReadWriteLock* createReadWriteLock(const QUrl& url) const { return 0; }; // TODO
+    RawProcessor* createRawProcessor() const                      { return 0; }; // TODO
+    MetadataProcessor* createMetadataProcessor() const            { return 0; }; // TODO
 
 private:
 
