@@ -196,7 +196,8 @@ QImage Interface::preview(const QUrl& url, int minSize)
 
 bool Interface::saveImage(const QUrl& url, const QString& format,
                           const QByteArray& data, uint width, uint height,
-                          bool  sixteenBit, bool hasAlpha)
+                          bool  sixteenBit, bool hasAlpha,
+                          bool* cancel)
 {
     Q_UNUSED(url);
     Q_UNUSED(format);
@@ -206,6 +207,7 @@ bool Interface::saveImage(const QUrl& url, const QString& format,
     Q_UNUSED(height);
     Q_UNUSED(sixteenBit);
     Q_UNUSED(hasAlpha);
+    Q_UNUSED(cancel);
     PrintWarningMessageFeature("HostSupportsSaveImages");
     return false;
 }

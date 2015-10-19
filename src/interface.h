@@ -330,11 +330,13 @@ public:
      * Tell to host application to save image at url in specific format (JPG, PNG, TIF, etc).
      * Pixels image data must be in ARGB, with image size (width,height).
      * Pixels can be in siwteen bits per color per pixels and can have an alpha chanel.
+     * If cancel flag is passed it permit to cancel save operation.
      * This method re-implemented in host application must be thread safe.
      */
     virtual bool saveImage(const QUrl& url, const QString& format,
                            const QByteArray& data, uint width, uint height,
-                           bool  sixteenBit, bool hasAlpha);
+                           bool  sixteenBit, bool hasAlpha,
+                           bool* cancel=0);
 
     /**
      * Tells to host application to render a preview image for one item at mininimum size.
