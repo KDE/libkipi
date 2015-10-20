@@ -208,15 +208,16 @@ public:
     virtual ~MetadataProcessor() {};
 
     virtual bool load(const QUrl& url) = 0;
-    /** NOTE: writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
-     */
-    virtual bool save(const QUrl& url, bool writeToFileOnly) = 0;
     virtual bool applyChanges() = 0;
 
+    /** NOTE: writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
+     */
+    virtual bool save(const QUrl& url, bool writeToFileOnly=false) = 0;
+
     virtual QSize getPixelSize() = 0;
-    
+
     virtual bool  setImageProgramId(const QString& program, const QString& version) = 0;
-    
+
     virtual QSize getImageDimensions() = 0;
     virtual bool  setImageDimensions(const QSize& size) = 0;
 
@@ -231,25 +232,25 @@ public:
 
     virtual bool getImagePreview(QImage& img) = 0;
     virtual bool setImagePreview(const QImage& img) = 0;
-    
+
     virtual bool hasExif() = 0;
     virtual bool hasIptc() = 0;
     virtual bool hasXmp()  = 0;
-    
+
     virtual bool supportXmp() = 0;
     virtual bool canWriteXmp(const QUrl& url) = 0;
-    
+
     virtual bool removeExifTag(const QString& tag) = 0;
     virtual bool removeIptcTag(const QString& tag) = 0;
     virtual bool removeXmpTag(const QString& tag)  = 0;
-    
+
     virtual bool getGPSInfo(double& altitude, double& latitude, double& longitude) = 0;
     virtual bool setGPSInfo(const double altitude, const double latitude, const double longitude) = 0;
     virtual bool removeGPSInfo() = 0;
-   
+
     virtual QString getExifTagString(const QString& tag) = 0;
     virtual bool    setExifTagString(const QString& tag, const QString& val) = 0;
-    
+
     virtual bool getExifTagRational(const QString& tag, long int& num, long int& den) = 0;
     virtual bool setExifTagRational(const QString& tag, long int num, long int den)   = 0;
 
