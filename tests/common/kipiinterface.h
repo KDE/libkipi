@@ -76,10 +76,10 @@ public:
     void addAlbum(const QUrl &album);
 
     void thumbnails(const QList<QUrl>& list, int size);
-    
-    FileReadWriteLock* createReadWriteLock(const QUrl& url) const { return 0; }; // TODO
-    RawProcessor* createRawProcessor() const                      { return 0; }; // TODO
-    MetadataProcessor* createMetadataProcessor() const            { return 0; }; // TODO
+
+    FileReadWriteLock* createReadWriteLock(const QUrl&) const { return 0; }; // TODO
+    RawProcessor* createRawProcessor() const                  { return 0; }; // TODO
+    MetadataProcessor* createMetadataProcessor() const        { return 0; }; // TODO
 
 private:
 
