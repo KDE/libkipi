@@ -202,6 +202,23 @@ public:
  */
 class LIBKIPI_EXPORT MetadataProcessor : public QObject
 {
+public: 
+    
+    /** Image orientation values from Exif tag.
+    */
+    enum ExifOrientation
+    {
+        UNSPECIFIED  = 0,
+        NORMAL       = 1,
+        HFLIP        = 2,
+        ROT_180      = 3,
+        VFLIP        = 4,
+        ROT_90_HFLIP = 5,
+        ROT_90       = 6,
+        ROT_90_VFLIP = 7,
+        ROT_270      = 8
+    };
+
 public:
 
     MetadataProcessor()          {};
@@ -221,7 +238,7 @@ public:
     virtual QSize getImageDimensions() = 0;
     virtual bool  setImageDimensions(const QSize& size) = 0;
 
-    /** NOTE: orientation is standard value from Exif orientation tag.
+    /** NOTE: orientation is standard value from Exif orientation tag. See ExifOrientation values.
      */
     virtual int  getImageOrientation() = 0;
     virtual bool setImageOrientation(int orientation) = 0;
