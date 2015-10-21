@@ -99,7 +99,7 @@ public:
         </tr><tr>
             <th>"orientation"</th>
             <td>integer value</td>
-            <td>Returns orientation information. See KExiv2::ImageOrientation value from libkexiv2 for details).</td>
+            <td>Returns orientation information. See ExifOrientation values for details).</td>
         </tr><tr>
             <th>"title"</th>
             <td>QString</td>

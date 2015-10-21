@@ -203,8 +203,8 @@ public:
  */
 class LIBKIPI_EXPORT MetadataProcessor : public QObject
 {
-public: 
-    
+public:
+
     /** Image orientation values from Exif tag.
     */
     enum ExifOrientation
@@ -418,22 +418,6 @@ public:
             <th>SETTING NAME</th>
             <th>VALUE RETURNED</th>
             <th>COMMENTS</th>
-        </tr><tr>
-            <th>"WriteMetadataUpdateFiletimeStamp"</th>
-            <td>bool value</td>
-            <td>Returns true if file timestamp are updated when metadata are saved.</td>
-        </tr><tr>
-            <th>"WriteMetadataToRAW"</th>
-            <td>bool value</td>
-            <td>Returns true if RAW files metadata can be writted to image.</td>
-        </tr><tr>
-            <th>"UseXMPSidecar4Reading"</th>
-            <td>bool value</td>
-            <td>Returns true if XMP sidecar is used to read metadata from item.</td>
-        </tr><tr>
-            <th>"MetadataWritingMode"</th>
-            <td>integer</td>
-            <td>Returns mode to write metadata to item. See KExiv2::MetadataWritingMode for details.</td>
         </tr><tr>
             <th>"FileExtensions"</th>
             <td>QString</td>
