@@ -81,11 +81,7 @@
    support. Information about what the host application support can be
    obtained from KIPI::Interface::hasFeature(). See also extra settings that can be shared
    by KIPI host application. Kipi-plugins provide a dedicated wrapper around KIPI::Interface to
-   simplify host settings management. See
-   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kphostsettings.h">
-   KPHostSettings</a> and <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpmetasettings.h">
-   KPMetaSettings</a> for details.
-
+   simplify host settings management.
 
 
 

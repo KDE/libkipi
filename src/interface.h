@@ -184,11 +184,11 @@ public:
     /** To cancel decodeRawImage() processing.
      */
     virtual void cancel() = 0;
-    
+
     /** Rteun true if url is a Raw file, else false
      */
     virtual bool isRawFile(const QUrl& url) = 0;
-    
+
     /** Return the list of all RAW file type mime supported by the decoder.
      */
     virtual QString rawFiles() = 0;
@@ -258,13 +258,13 @@ public:
     virtual QByteArray getExif() = 0;
     virtual QByteArray getIptc() = 0;
     virtual QByteArray getXmp()  = 0;
-    
+
     virtual bool setExif(const QByteArray& data) = 0;
     virtual bool setIptc(const QByteArray& data) = 0;
     virtual bool setXmp(const QByteArray& data) = 0;
-    
+
     virtual bool registerXmpNameSpace(const QString& uri, const QString& prefix) = 0;
-    
+
     virtual bool supportXmp() = 0;
     virtual bool canWriteXmp(const QUrl& url) = 0;
 
@@ -551,11 +551,11 @@ Q_SIGNALS:
      *  methods for details.
      */
     void gotThumbnail(const QUrl&, const QPixmap&);
-    
+
     /** Emit when host application has rendered item preview image. See assynchronous preview() methods for details.
      */
     void gotPreview(const QUrl&, const QImage&);
-    
+
     /**
      * This signal is emit from kipi host when a progress item is canceled. id is identification string of progress item.
      */
@@ -649,7 +649,7 @@ private:
     Private* const d;
 };
 
-}  // namespace KIPI
+} // namespace KIPI
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KIPI::EditHints)
 

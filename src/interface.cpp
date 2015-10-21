@@ -227,23 +227,7 @@ QVariant Interface::hostSetting(const QString& settingName)
 {
     PrintWarningMessage();
 
-    if (settingName == QString::fromLatin1("WriteMetadataUpdateFiletimeStamp"))
-    {
-        return false;
-    }
-    else if (settingName == QString::fromLatin1("WriteMetadataToRAW"))
-    {
-        return false;
-    }
-    if (settingName == QString::fromLatin1("UseXMPSidecar4Reading"))
-    {
-        return false;
-    }
-    if (settingName == QString::fromLatin1("MetadataWritingMode"))
-    {
-        return 0;
-    }
-    else if (settingName == QString::fromLatin1("FileExtensions") || settingName == QString::fromLatin1("ImagesExtensions"))
+    if (settingName == QString::fromLatin1("FileExtensions") || settingName == QString::fromLatin1("ImagesExtensions"))
     {
         // Return a list of images file extensions supported by Qt in read mode.
         QStringList KDEImagetypes = supportedImageMimeTypes();
@@ -363,7 +347,7 @@ QStringList Interface::supportedImageMimeTypes(bool readWrite)
 
 // -----------------------------------------------------------------------------------------------------------
 
-FileReadLocker::FileReadLocker(Interface* const iface, const QUrl &url)
+FileReadLocker::FileReadLocker(Interface* const iface, const QUrl& url)
     : d(iface->createReadWriteLock(url))
 {
     relock();
@@ -403,7 +387,7 @@ void FileReadLocker::unlock()
 
 // -----------------------------------------------------------------------------------------------------------
 
-FileWriteLocker::FileWriteLocker(Interface* const iface, const QUrl &url)
+FileWriteLocker::FileWriteLocker(Interface* const iface, const QUrl& url)
     : d(iface->createReadWriteLock(url))
 {
     relock();
