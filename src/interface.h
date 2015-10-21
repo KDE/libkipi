@@ -263,6 +263,8 @@ public:
     virtual bool setIptc(const QByteArray& data) = 0;
     virtual bool setXmp(const QByteArray& data) = 0;
     
+    virtual bool registerXmpNameSpace(const QString& uri, const QString& prefix) = 0;
+    
     virtual bool supportXmp() = 0;
     virtual bool canWriteXmp(const QUrl& url) = 0;
 
