@@ -41,6 +41,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QList>
 #include <QtCore/QUrl>
+#include <QtCore/QByteArray>
 #include <QtGui/QImage>
 
 // Local includes
@@ -254,6 +255,14 @@ public:
     virtual bool hasIptc() = 0;
     virtual bool hasXmp()  = 0;
 
+    virtual QByteArray getExif() = 0;
+    virtual QByteArray getIptc() = 0;
+    virtual QByteArray getXmp()  = 0;
+    
+    virtual bool setExif(const QByteArray& data) = 0;
+    virtual bool setIptc(const QByteArray& data) = 0;
+    virtual bool setXmp(const QByteArray& data) = 0;
+    
     virtual bool supportXmp() = 0;
     virtual bool canWriteXmp(const QUrl& url) = 0;
 
