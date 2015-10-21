@@ -268,9 +268,9 @@ public:
     virtual bool supportXmp() = 0;
     virtual bool canWriteXmp(const QUrl& url) = 0;
 
-    virtual bool removeExifTag(const QString& tag) = 0;
-    virtual bool removeIptcTag(const QString& tag) = 0;
-    virtual bool removeXmpTag(const QString& tag)  = 0;
+    virtual bool removeExifTags(const QStringList& tagFilters) = 0;
+    virtual bool removeIptcTags(const QStringList& tagFilters) = 0;
+    virtual bool removeXmpTags(const QStringList& tagFilters)  = 0;
 
     virtual bool getGPSInfo(double& altitude, double& latitude, double& longitude) = 0;
     virtual bool setGPSInfo(const double altitude, const double latitude, const double longitude) = 0;
