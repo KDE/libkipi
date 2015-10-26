@@ -201,8 +201,7 @@ bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
     const int nPlugins                        = pluginList.size();
     const int nDigits                         = QString::number(nPlugins).size();
     const QString preSpace                    = QString(nDigits+1+1, QChar::fromLatin1(' '));
-
-    std::auto_ptr<QWidget> dummyWidget( new QWidget() );
+    QWidget* const dummyWidget                = new QWidget();
 
     qDebug() << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins);
 
@@ -223,7 +222,7 @@ bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
             continue;
         }
 
-        plugin->setup(dummyWidget.get());
+        plugin->setup(dummyWidget);
         const QList<QPair<int, QAction*> > actionsList = FlattenActionList(plugin->actions());
         qDebug() << preSpace << i18n("Actions:");
         const QString preSpaceActions = preSpace + QString::fromLatin1("  ");
