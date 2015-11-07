@@ -207,4 +207,19 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
     }
 }
 
+FileReadWriteLock* KipiInterface::createReadWriteLock(const QUrl&) const
+{
+    return 0;  // TODO
+}
+
+RawProcessor* KipiInterface::createRawProcessor() const
+{
+    return 0;  // TODO
+}
+
+MetadataProcessor* KipiInterface::createMetadataProcessor() const
+{
+    return 0;  // TODO
+}
+
 } // namespace KXMLKipiCmd
