@@ -4,7 +4,6 @@ A plugin is at least constituate of these files :
 
 - CMakeLists.txt                   : a rules to compile tool.
 - kipiplugin_helloworld.desktop    : a KDE desktop file to make visible this tool from KIPI host applications.
-- Messages.sh                      : a script to extract internationalization strings for translations purpose.
 - plugin_kxmlhelloworld.h          : the definition of tool based on KIPI::Plugin class.
 - plugin_kxmlhelloworld.cpp        : the implemention of tool. Usually we name plugin entry class file as plugin_*.h/.cpp with * the name of tool.
 

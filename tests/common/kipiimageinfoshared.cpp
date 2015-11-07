@@ -46,7 +46,7 @@ public:
     QDateTime dateTime;
 };
 
-KipiImageInfoShared::KipiImageInfoShared(Interface* const interface, const QUrl &url)
+KipiImageInfoShared::KipiImageInfoShared(Interface* const interface, const QUrl& url)
     : ImageInfoShared(interface, url),
       d(new Private())
 {

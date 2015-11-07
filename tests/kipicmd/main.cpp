@@ -42,7 +42,6 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <klocalizedstring.h>
 
 // Libkipi includes
 
@@ -70,31 +69,31 @@ QString PluginCategoriesToString(const Category& category)
     switch(category)
     {
         case ImagesPlugin:
-            categorystring = i18n("Images");
+            categorystring = QLatin1String("Images");
             break;
 
         case ToolsPlugin:
-            categorystring = i18n("Tool");
+            categorystring = QLatin1String("Tool");
             break;
 
         case ImportPlugin:
-            categorystring = i18n("Import");
+            categorystring = QLatin1String("Import");
             break;
 
         case ExportPlugin:
-            categorystring = i18n("Export");
+            categorystring = QLatin1String("Export");
             break;
 
         case BatchPlugin:
-            categorystring = i18n("Batch");
+            categorystring = QLatin1String("Batch");
             break;
 
         case CollectionsPlugin:
-            categorystring = i18n("Collections");
+            categorystring = QLatin1String("Collections");
             break;
 
         default:
-            categorystring = i18n("Unknown");
+            categorystring = QLatin1String("Unknown");
             break;
     };
 
@@ -164,22 +163,22 @@ bool LoadPlugins(const QString& libraryName = QString::fromLatin1(""))
         {
             if ( !(*it)->shouldLoad() )
             {
-                qDebug() << i18n("Can not load plugin \"%1\": Loader says it should not load.", libraryName);
+                qDebug() << QString::fromLatin1("Can not load plugin \"%1\": Loader says it should not load.").arg(libraryName);
                 return false;
             }
 
             if ( !(*it)->plugin() )
             {
-                qDebug() << i18n("Plugin \"%1\" failed to load.", libraryName);
+                qDebug() << QString::fromLatin1("Plugin \"%1\" failed to load.").arg(libraryName);
                 return false;
             }
 
-            qDebug() << i18n("Plugin \"%1\" loaded.", libraryName);
+            qDebug() << QString::fromLatin1("Plugin \"%1\" loaded.").arg(libraryName);
             return true;
         }
     }
 
-    qDebug() << i18n("Plugin \"%1\" not found.", libraryName);
+    qDebug() << QString::fromLatin1("Plugin \"%1\" not found.").arg(libraryName);
 
     return false;
 }
@@ -203,7 +202,7 @@ bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
     const QString preSpace                    = QString(nDigits+1+1, QChar::fromLatin1(' '));
     QWidget* const dummyWidget                = new QWidget();
 
-    qDebug() << i18np("Found 1 plugin:", "Found %1 plugins:", nPlugins);
+    qDebug() << QString::fromLatin1("Found %1 plugin(s):").arg(nPlugins);
 
     for (PluginLoader::PluginList::ConstIterator it = pluginList.constBegin();
          it!= pluginList.constEnd(); ++ it)
@@ -212,19 +211,21 @@ bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
         ++pluginNumber;
 
         qDebug() << QString::fromLatin1("%1: %2 - %3").arg(pluginNumberString).arg((*it)->name()).arg((*it)->comment());
-        qDebug() << preSpace << i18n("Library: ")<< (*it)->library();
+        qDebug() << preSpace << QString::fromLatin1("Library: ") << (*it)->library();
 
         Plugin* const plugin = (*it)->plugin();
 
         if (plugin == 0)
         {
-            qDebug() << preSpace << i18n( "Plugin not loaded." );
+            qDebug() << preSpace << QString::fromLatin1( "Plugin not loaded.");
             continue;
         }
 
         plugin->setup(dummyWidget);
         const QList<QPair<int, QAction*> > actionsList = FlattenActionList(plugin->actions());
-        qDebug() << preSpace << i18n("Actions:");
+
+        qDebug() << preSpace << QString::fromLatin1("Actions:");
+
         const QString preSpaceActions = preSpace + QString::fromLatin1("  ");
 
         for (QList<QPair<int, QAction*> >::ConstIterator it = actionsList.constBegin();
@@ -271,7 +272,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
 
         if (plugin == 0)
         {
-            qDebug() << i18n("Plugin \"%1\" failed to load.", (*info)->library());
+            qDebug() << QString::fromLatin1("Plugin \"%1\" failed to load.").arg((*info)->library());
             continue;
         }
 
@@ -287,11 +288,11 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
             if ( pluginAction->text() != actionText )
                 continue;
 
-            qDebug() << i18n("Found action \"%1\" in library \"%2\", will now call it.", actionText, (*info)->library());
+            qDebug() << QString::fromLatin1("Found action \"%1\" in library \"%2\", will now call it.").arg(actionText).arg((*info)->library());
 
             // call the action:
             pluginAction->trigger();
-            qDebug() << i18n("Plugin is done.");
+            qDebug() << QString::fromLatin1("Plugin is done.");
             foundAction = true;
 
             break;
@@ -299,7 +300,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
     }
 
     if (!foundAction)
-        qDebug() << i18n("Could not find action \"%1\".", actionText);
+        qDebug() << QString::fromLatin1("Could not find action \"%1\".").arg(actionText);
 
     return foundAction;
 }
@@ -307,16 +308,16 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
 int main(int argc, char* argv[])
 {
     KAboutData aboutData(QString::fromLatin1("kipicmd"),
-                         ki18n("kipicmd").toString(),
-                         QString::fromLatin1(KIPI_VERSION_STRING),            // libkipi version
-                         ki18n("Kipi host test application using KDE XML-GUI").toString(),
+                         QLatin1String("kipicmd"),
+                         QString::fromLatin1(KIPI_VERSION_STRING),                          // libkipi version
+                         QLatin1String("Kipi host test application using KDE XML-GUI"),
                          KAboutLicense::GPL,
-                         ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                               "(c) 2011-2014 Gilles Caulier\n"
-                               "(c) 2012 Victor Dodon ").toString(),
-                         QString(),                               // optional text
-                         QString::fromLatin1("http://www.digikam.org"),       // URI of homepage
-                         QString::fromLatin1("kde-imaging@kde.org")           // bugs e-mail address
+                         QLatin1String("(c) 2009-2010 Michael G. Hansen\n"
+                               "(c) 2011-2015 Gilles Caulier\n"
+                               "(c) 2012 Victor Dodon "),
+                         QString(),                                                         // optional text
+                         QString::fromLatin1("http://www.digikam.org"),                     // URI of homepage
+                         QString::fromLatin1("kde-imaging@kde.org")                         // bugs e-mail address
                         );
 
     QApplication app(argc, argv);
@@ -329,15 +330,15 @@ int main(int argc, char* argv[])
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
 
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("list"),           i18n("List the available plugins")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("w"),              i18n("Wait until non-modal dialogs are closed")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              i18n("Library name of plugin to use"),           QLatin1String("library")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("a"),              i18n("Action to call"),                          QLatin1String("action")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("i"),              i18n("Selected images"),                         QLatin1String("selectedimages")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("c"),              i18n("Selected colections"),                     QLatin1String("selectedcollections")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("allc"),           i18n("All collections"),                         QLatin1String("allcollections")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[images]"),      i18n("List of images")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[collections]"), i18n("List of collections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("list"),           QLatin1String("List the available plugins")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("w"),              QLatin1String("Wait until non-modal dialogs are closed")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              QLatin1String("Library name of plugin to use"),             QLatin1String("library")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("a"),              QLatin1String("Action to call"),                            QLatin1String("action")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("i"),              QLatin1String("Selected images"),                           QLatin1String("selectedimages")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("c"),              QLatin1String("Selected colections"),                       QLatin1String("selectedcollections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("allc"),           QLatin1String("All collections"),                           QLatin1String("allcollections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[images]"),      QLatin1String("List of images")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[collections]"), QLatin1String("List of collections")));
 
     parser.process(app);
     aboutData.processCommandLine(&parser);

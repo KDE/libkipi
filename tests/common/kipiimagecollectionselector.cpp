@@ -31,10 +31,6 @@
 #include <QLabel>
 #include <QDebug>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Libkipi includes
 
 #include "imagecollection.h"
@@ -51,9 +47,9 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
       m_interface(interface),
       m_listWidget(0)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(new QLabel(i18n("Please select albums:")));
-    m_listWidget        = new QListWidget(this);
+    QVBoxLayout* const layout = new QVBoxLayout(this);
+    layout->addWidget(new QLabel(QString::fromLatin1("Please select albums:")));
+    m_listWidget              = new QListWidget(this);
     m_listWidget->setSelectionMode(QAbstractItemView::MultiSelection);
     layout->addWidget(m_listWidget);
 

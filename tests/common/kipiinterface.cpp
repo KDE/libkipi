@@ -32,10 +32,6 @@
 #include <QDebug>
 #include <QIcon>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Libkipi includes
 
 #include "libkipi_version.h"
@@ -105,14 +101,14 @@ QList<ImageCollection> KipiInterface::allAlbums()
     return listAllAlbums;
 }
 
-ImageInfo KipiInterface::info(const QUrl &url)
+ImageInfo KipiInterface::info(const QUrl& url)
 {
     qDebug() << QString::fromLatin1( "Plugin wants information about image \"%1\"").arg( url.url() );
 
     return (ImageInfo(new KipiImageInfoShared(this, url)));
 }
 
-bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
+bool KipiInterface::addImage(const QUrl& url, QString& errmsg)
 {
     Q_UNUSED(errmsg);
     qDebug() << QString::fromLatin1( "Plugin added an image: \"%1\"").arg( url.url() );
@@ -120,7 +116,7 @@ bool KipiInterface::addImage(const QUrl &url, QString& errmsg)
     return true;
 }
 
-void KipiInterface::delImage(const QUrl &url)
+void KipiInterface::delImage(const QUrl& url)
 {
     qDebug() << QString::fromLatin1( "Plugin deleted an image: \"%1\"").arg( url.url() );
 }
@@ -161,7 +157,7 @@ void KipiInterface::addSelectedImages(const QList<QUrl>& images)
     m_selectedImages.append(images);
 }
 
-void KipiInterface::addSelectedImage(const QUrl &image)
+void KipiInterface::addSelectedImage(const QUrl& image)
 {
     m_selectedImages.append(image);
 }
@@ -174,7 +170,7 @@ void KipiInterface::addAlbums(const QList<QUrl>& albums)
     }
 }
 
-void KipiInterface::addAlbum(const QUrl &album)
+void KipiInterface::addAlbum(const QUrl& album)
 {
     m_albums.append(album);
 
@@ -189,7 +185,7 @@ void KipiInterface::addSelectedAlbums(const QList<QUrl>& albums)
     }
 }
 
-void KipiInterface::addSelectedAlbum(const QUrl &album)
+void KipiInterface::addSelectedAlbum(const QUrl& album)
 {
     m_selectedAlbums.append(album);
 
@@ -198,15 +194,6 @@ void KipiInterface::addSelectedAlbum(const QUrl &album)
 
 QVariant KipiInterface::hostSetting(const QString& settingName)
 {
-    if (settingName == QString::fromLatin1("UseXMPSidecar4Reading"))
-    {
-        return (QVariant::fromValue(true));
-    }
-    else if (settingName == QString::fromLatin1("MetadataWritingMode"))
-    {
-        return (QVariant::fromValue(false));
-    }
-
     return QVariant();
 }
 

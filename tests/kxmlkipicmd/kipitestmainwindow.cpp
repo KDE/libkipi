@@ -38,7 +38,6 @@
 #include <kstandardaction.h>
 #include <kactioncollection.h>
 #include <kshortcutsdialog.h>
-#include <klocalizedstring.h>
 #include <kedittoolbar.h>
 #include <kwindowconfig.h>
 
@@ -160,9 +159,9 @@ void KipiTestMainWindow::slotEditKeys()
 {
     KShortcutsDialog dialog(KShortcutsEditor::AllActions,
                             KShortcutsEditor::LetterShortcutsAllowed, this);
-    dialog.addCollection(actionCollection(), i18nc("general keyboard shortcuts", "General"));
+    dialog.addCollection(actionCollection(), QLatin1String("General"));
     dialog.addCollection(KipiTestPluginLoader::instance()->pluginsActionCollection(),
-                         i18nc("KIPI-Plugins keyboard shortcuts", "KIPI-Plugins"));
+                         QLatin1String("KIPI-Plugins"));
     dialog.configure();
 }
 

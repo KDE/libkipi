@@ -31,7 +31,7 @@
 namespace KXMLKipiCmd
 {
 
-KipiImageCollectionShared::KipiImageCollectionShared(const QUrl &albumPath)
+KipiImageCollectionShared::KipiImageCollectionShared(const QUrl& albumPath)
     : ImageCollectionShared(),
       m_albumPath(albumPath),
       m_images()

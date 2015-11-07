@@ -31,10 +31,6 @@
 #include <QList>
 #include <QString>
 
-// KDE includes
-
-#include <kxmlguiwindow.h>
-
 // Libkipi includes
 
 #include "plugin.h"
@@ -43,6 +39,7 @@
 class QAction;
 
 class KActionCollection;
+class KXmlGuiWindow;
 
 using namespace KIPI;
 

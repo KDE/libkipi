@@ -31,10 +31,6 @@
 #include <QLabel>
 #include <QDebug>
 
-// KDE includes
-
-#include <klocalizedstring.h>
-
 // Libkipi includes
 
 #include "imagecollection.h"
@@ -52,7 +48,7 @@ KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* cons
       m_listWidget(0)
 {
     QVBoxLayout* const layout = new QVBoxLayout(this);
-    layout->addWidget(new QLabel(i18n("Please select a target album:")));
+    layout->addWidget(new QLabel(QString::fromLatin1("Please select a target album:")));  // no need i18n.
     m_listWidget              = new QListWidget(this);
     layout->addWidget(m_listWidget);
 

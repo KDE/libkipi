@@ -34,7 +34,7 @@
 
 #include <kactioncategory.h>
 #include <kxmlguifactory.h>
-#include <klocalizedstring.h>
+#include <kxmlguiwindow.h>
 
 // Local includes
 
@@ -250,31 +250,31 @@ QString KipiTestPluginLoader::categoryName(Category cat) const
     switch (cat)
     {
         case ExportPlugin:
-            res = i18n("Export Tools");
+            res = QLatin1String("Export Tools");
             break;
 
         case ImportPlugin:
-            res = i18n("Import Tools");
+            res = QLatin1String("Import Tools");
             break;
 
         case ImagesPlugin:
-            res = i18n("Images Tools");
+            res = QLatin1String("Images Tools");
             break;
 
         case ToolsPlugin:
-            res = i18n("Miscellaneous Tools");
+            res = QLatin1String("Miscellaneous Tools");
             break;
 
         case BatchPlugin:
-            res = i18n("Batch Tools");
+            res = QLatin1String("Batch Tools");
             break;
 
         case CollectionsPlugin:
-            res = i18n("Albums Tools");
+            res = QLatin1String("Albums Tools");
             break;
 
         default:
-            res = i18n("Unknown Tools");
+            res = QLatin1String("Unknown Tools");
             break;
     }
 
@@ -288,27 +288,27 @@ QString KipiTestPluginLoader::categoryShortName(Category cat) const
     switch (cat)
     {
         case ExportPlugin:
-            res = i18n("Export");
+            res = QLatin1String("Export");
             break;
 
         case ImportPlugin:
-            res = i18n("Import");
+            res = QLatin1String("Import");
             break;
 
         case ToolsPlugin:
-            res = i18n("Tools");
+            res = QLatin1String("Tools");
             break;
 
         case BatchPlugin:
-            res = i18n("Batch");
+            res = QLatin1String("Batch");
             break;
 
         case CollectionsPlugin:
-            res = i18n("Collenctions");
+            res = QLatin1String("Collenctions");
             break;
 
         default:
-            res = i18n("Unknown");
+            res = QLatin1String("Unknown");
             break;
     }
 

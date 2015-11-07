@@ -43,7 +43,6 @@
 
 // KDE includes
 
-#include <klocalizedstring.h>
 #include <ksharedconfig.h>
 #include <kconfiggroup.h>
 #include <kwindowconfig.h>
@@ -91,7 +90,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     : QDialog(parent),
       d(new Private)
 {
-    setWindowTitle(i18n("Configure"));
+    setWindowTitle(QLatin1String("Configure"));
     setModal(true);
     setMinimumSize(600, 400);
 
@@ -99,16 +98,16 @@ KipiSetup::KipiSetup(QWidget* const parent)
     d->tabView = new QTabWidget(this);
     
     d->pluginsPage  = PluginLoader::instance()->configWidget(d->tabView);
-    d->pluginsPage->setToolTip(i18n("Configure plugins"));
+    d->pluginsPage->setToolTip(QLatin1String("Configure plugins"));
     d->pluginFilter = new QLineEdit(d->pluginsPage);
     d->pluginFilter->setClearButtonEnabled(true);
-    d->pluginFilter->setPlaceholderText(i18n("Plugins list filter."));
+    d->pluginFilter->setPlaceholderText(QLatin1String("Plugins list filter."));
     d->pluginsPage->setFilterWidget(d->pluginFilter);
-    d->tabView->insertTab(KipiPluginsPage, d->pluginsPage, QIcon::fromTheme(QString::fromLatin1("kipi")), i18n("Kipi Plugins"));
+    d->tabView->insertTab(KipiPluginsPage, d->pluginsPage, QIcon::fromTheme(QString::fromLatin1("kipi")), QLatin1String("Kipi Plugins"));
     
     d->xmlPage = new SetupXML(d->tabView);
-    d->xmlPage->setToolTip(i18n("Configure the UI file for the KXMLKipiCmd application"));
-    d->tabView->insertTab(XmlFilesPage, d->xmlPage, QIcon::fromTheme(QString::fromLatin1("application-xml")), i18n("UI layouts"));
+    d->xmlPage->setToolTip(QLatin1String("Configure the UI file for the KXMLKipiCmd application"));
+    d->tabView->insertTab(XmlFilesPage, d->xmlPage, QIcon::fromTheme(QString::fromLatin1("application-xml")), QLatin1String("UI layouts"));
     
     QVBoxLayout* const vbx   = new QVBoxLayout(this);
     vbx->addWidget(d->tabView);
@@ -185,7 +184,8 @@ public:
 };
 
 SetupXML::SetupXML(QWidget* const parent)
-    : QScrollArea(parent), d(new Private)
+    : QScrollArea(parent),
+      d(new Private)
 {
     QWidget* const panel = new QWidget(viewport());
     setWidget(panel);

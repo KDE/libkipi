@@ -55,7 +55,6 @@
 
 // KDE includes
 
-#include <klocalizedstring.h>
 #include <kpluginfactory.h>
 
 /// This is all libkipi headers included in this tool.
@@ -63,7 +62,8 @@
 #include "imagecollection.h"
 #include "imagecollectionselector.h"
 #include "interface.h"
-// Special header used to include kipi-plugins debug space.
+
+// Special header used to include kipi-plugins debug space when plugin is includes in Kipi-plugins project.
 //#include "kipiplugins_debug.h"
 
 /** This is all Kipi-plugins common includes used in this tool.
@@ -179,7 +179,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** An action dedicated to be plugged in digiKam Image menu.
      */
     d->actionImages = new QAction(this);
-    d->actionImages->setText(i18n("KXML Hello World Image..."));
+    d->actionImages->setText(QLatin1String("KXML Hello World Image..."));
     d->actionImages->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionImages->setShortcut(QKeySequence(Qt::ALT + Qt::SHIFT + Qt::CTRL + Qt::Key_F1));
 
@@ -200,7 +200,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** Another action dedicated to be plugged in digiKam Tool menu.
      */
     d->actionTools = new QAction(this);
-    d->actionTools->setText(i18n("KXML Hello World Tools..."));
+    d->actionTools->setText(QLatin1String("KXML Hello World Tools..."));
     d->actionTools->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionTools->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F2));
 
@@ -218,7 +218,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** Another action dedicated to be plugged in digiKam Export menu.
      */
     d->actionExport = new QAction(this);
-    d->actionExport->setText(i18n("KXML Hello World Export..."));
+    d->actionExport->setText(QLatin1String("KXML Hello World Export..."));
     d->actionExport->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionExport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F3));
 
@@ -230,7 +230,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     /** Another action dedicated to be plugged in digiKam Import menu.
      */
     d->actionImport = new QAction(this);
-    d->actionImport->setText(i18n("KXML Hello World Import..."));
+    d->actionImport->setText(QLatin1String("KXML Hello World Import..."));
     d->actionImport->setIcon(QIcon::fromTheme(QString::fromLatin1("script-error")));
     d->actionImport->setShortcut(QKeySequence(Qt::ALT+Qt::SHIFT+Qt::CTRL+Qt::Key_F4));
 
@@ -263,7 +263,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
         foreach (const QUrl& url, images.images())
             names << url.fileName();
 
-        QMessageBox::information(0, i18n("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
+        QMessageBox::information(0, QLatin1String("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
     }
 }
 
@@ -297,7 +297,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
         foreach (const ImageCollection& col, list)
             names << col.name();
 
-        QMessageBox::information(0, i18n("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));
+        QMessageBox::information(0, QLatin1String("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));
     }
 
     delete dlg;
@@ -333,7 +333,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
     delete dlg;
 */
 
-    QMessageBox::information(0, i18n("Information"), i18n("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
+    QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImport()
@@ -357,7 +357,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 */
     }
 
-    QMessageBox::information(0, i18n("Information"), i18n("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
+    QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
 }
 
 }  // namespace KIPIHelloWorldPlugin

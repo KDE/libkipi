@@ -25,7 +25,7 @@
 #ifndef __KIPIIMAGECOLLECTIONSHARED_H
 #define __KIPIIMAGECOLLECTIONSHARED_H
 
-// libkipi includes
+// Libkipi includes
 
 #include "imagecollectionshared.h"
 
@@ -39,7 +39,7 @@ class KipiImageCollectionShared : public ImageCollectionShared
 public:
 
     // re-implemented inherited functions:
-    KipiImageCollectionShared(const QUrl &albumPath);
+    KipiImageCollectionShared(const QUrl& albumPath);
     KipiImageCollectionShared(const QList<QUrl>& images);
     virtual ~KipiImageCollectionShared();
 
@@ -52,7 +52,7 @@ public:
 
     // functions used internally:
     void addImages(const QList<QUrl>& images);
-    void addImage(const QUrl &image);
+    void addImage(const QUrl& image);
 
 private:
 

@@ -38,7 +38,6 @@
 // KDE includes
 
 #include <kaboutdata.h>
-#include <klocalizedstring.h>
 
 // LibKipi includes
 
@@ -52,17 +51,17 @@ using namespace KXMLKipiCmd;
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData(QString::fromLatin1("kxmlkipicmd"),
-                         ki18n("kxmlkipicmd").toString(),
-                         QString::fromLatin1(KIPI_VERSION_STRING),            // libkipi version
-                         ki18n("Kipi host test application using KDE XML-GUI").toString(),
+    KAboutData aboutData(QLatin1String("kxmlkipicmd"),
+                         QLatin1String("kxmlkipicmd"),
+                         QLatin1String(KIPI_VERSION_STRING),                            // libkipi version
+                         QLatin1String("Kipi host test application using KDE XML-GUI"),
                          KAboutLicense::GPL,
-                         ki18n("(c) 2009-2010 Michael G. Hansen\n"
-                               "(c) 2011-2014 Gilles Caulier\n"
-                               "(c) 2012 Victor Dodon ").toString(),
-                         QString(),                                           // optional text
-                         QString::fromLatin1("http://www.digikam.org"),       // URI of homepage
-                         QString::fromLatin1("kde-imaging@kde.org")           // bugs e-mail address
+                         QLatin1String("(c) 2009-2010 Michael G. Hansen\n"
+                                       "(c) 2011-2014 Gilles Caulier\n"
+                                       "(c) 2012 Victor Dodon "),
+                         QString(),                                                     // optional text
+                         QLatin1String("http://www.digikam.org"),                       // URI of homepage
+                         QLatin1String("kde-imaging@kde.org")                           // bugs e-mail address
                         );
 
     QApplication app(argc, argv);
@@ -75,11 +74,11 @@ int main(int argc, char* argv[])
     parser.addHelpOption();
     aboutData.setupCommandLine(&parser);
 
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("c"),              i18n("Selected collections"), QLatin1String("selectedcollectionss")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("i"),              i18n("Selected images"),      QLatin1String("selectedimages")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("allc"),           i18n("All collections"),      QLatin1String("allcollections")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[images]"),      i18n("List of images")));
-    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[collections]"), i18n("Selected collections")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("c"),              QLatin1String("Selected collections"), QLatin1String("selectedcollectionss")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("i"),              QLatin1String("Selected images"),      QLatin1String("selectedimages")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("allc"),           QLatin1String("All collections"),      QLatin1String("allcollections")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[images]"),      QLatin1String("List of images")));
+    parser.addOption(QCommandLineOption(QStringList() <<  QLatin1String("+[collections]"), QLatin1String("Selected collections")));
 
     parser.process(app);
     aboutData.processCommandLine(&parser);
