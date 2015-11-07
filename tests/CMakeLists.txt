@@ -22,7 +22,7 @@ if(KF5KExiv2_FOUND)
     message(STATUS "libkexiv2 detected : test Kipi interface will support Metadata processing")
     add_definitions(-DHAVE_KDEXIV2)
 else()
-    message(STATUS "libkdkexiv2 not detected : test Kipi interface will not support Metadata processing")
+    message(STATUS "libkkexiv2 not detected : test Kipi interface will not support Metadata processing")
 endif()
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
