@@ -43,7 +43,6 @@
 
 // KDE includes
 
-#include <klocalizedstring.h>
 #include <kservicetypetrader.h>
 #include <ksharedconfig.h>
 #include <kdesktopfile.h>
@@ -386,8 +385,8 @@ ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 
 QString PluginLoader::kipiPluginsVersion() const
 {
-    QString ver                = i18nc("Version unavailable", "unavailable");
-    QString path               = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QString::fromLatin1("kipiplugins.desktop"));
+    QString ver  = QLatin1String("???");
+    QString path = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QString::fromLatin1("kipiplugins.desktop"));
 
     KDesktopFile desk(path);
     QMap<QString, QString> map = desk.entryMap(QString::fromLatin1("X-KipiPlugins Entry"));
