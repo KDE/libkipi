@@ -56,8 +56,8 @@ public:
     QList<ImageCollection> allAlbums();
     ImageInfo              info(const QUrl&);
 
-    bool addImage(const QUrl &url, QString& errmsg);
-    void delImage(const QUrl &url);
+    bool addImage(const QUrl& url, QString& errmsg);
+    void delImage(const QUrl& url);
     void refreshImages(const QList<QUrl>& urls);
 
     int      features() const;
@@ -67,13 +67,13 @@ public:
     UploadWidget*            uploadWidget(QWidget* parent);
 
     void addSelectedImages(const QList<QUrl>& images);
-    void addSelectedImage(const QUrl &image);
+    void addSelectedImage(const QUrl& image);
 
     void addSelectedAlbums(const QList<QUrl>& albums);
-    void addSelectedAlbum(const QUrl &album);
+    void addSelectedAlbum(const QUrl& album);
 
     void addAlbums(const QList<QUrl>& albums);
-    void addAlbum(const QUrl &album);
+    void addAlbum(const QUrl& album);
 
     void thumbnails(const QList<QUrl>& list, int size);
 

@@ -45,12 +45,12 @@ class KipiImageCollectionSelector : public ImageCollectionSelector
 
 public:
 
-    KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent = 0);
-    virtual QList< ImageCollection > selectedImageCollections () const;
+    KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent=0);
+    virtual QList<ImageCollection> selectedImageCollections() const;
 
 public Q_SLOTS:
 
-    void on_m_listWidget_itemSelectionChanged();
+    void slotItemSelectionChanged();
 
 private:
 

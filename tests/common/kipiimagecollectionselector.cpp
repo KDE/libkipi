@@ -73,7 +73,7 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
     //TODO: select albums specified on the command line
 }
 
-QList< ImageCollection > KipiImageCollectionSelector::selectedImageCollections () const
+QList<ImageCollection> KipiImageCollectionSelector::selectedImageCollections() const
 {
     // return the selected albums:
     QList<ImageCollection> result;
@@ -91,7 +91,7 @@ QList< ImageCollection > KipiImageCollectionSelector::selectedImageCollections (
     return result;
 }
 
-void KipiImageCollectionSelector::on_m_listWidget_itemSelectionChanged()
+void KipiImageCollectionSelector::slotItemSelectionChanged()
 {
     emit(selectionChanged());
 }
