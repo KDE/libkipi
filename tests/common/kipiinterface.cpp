@@ -31,11 +31,18 @@
 #include <QTextStream>
 #include <QDebug>
 #include <QIcon>
+#include <QFileInfo>
 
 // Libkipi includes
 
 #include "libkipi_version.h"
 #include "imagecollection.h"
+
+// KDE includes
+
+#ifdef HAVE_KDCRAW
+#   include <kdcraw/kdcraw.h>
+#endif
 
 // local includes
 
@@ -135,7 +142,11 @@ int KipiInterface::features() const
 {
     qDebug() << "Called by plugins";
 
-    return ImagesHasTime;
+    return   ImagesHasTime
+#ifdef HAVE_KDCRAW
+           | HostSupportsRawProcessing
+#endif
+    ;
 }
 
 ImageCollectionSelector* KipiInterface::imageCollectionSelector(QWidget* parent)
@@ -207,17 +218,76 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
     }
 }
 
-FileReadWriteLock* KipiInterface::createReadWriteLock(const QUrl&) const
+// ---------------------------------------------------------------------------------------
+
+#ifdef HAVE_KDCRAW
+
+class KipiRawProcessor : public RawProcessor
 {
-    return 0;  // TODO
-}
+public:
+
+    KipiRawProcessor()          {};
+    virtual ~KipiRawProcessor() {};
+
+    bool loadRawPreview(const QUrl& url, QImage& image)
+    {
+        return m_decoder.loadRawPreview(image, url.toLocalFile());
+    }
+
+    bool decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax)
+    {
+        return m_decoder.decodeRAWImage(url.toLocalFile(), KDcrawIface::RawDecodingSettings(),
+                                        imageData, width, height, rgbmax);
+    }
+
+    void cancel()
+    {
+        m_decoder.cancel();
+    }
+
+    bool isRawFile(const QUrl& url)
+    {
+        QString   rawFilesExt = QLatin1String(m_decoder.rawFiles());
+        QFileInfo fileInfo(url.toLocalFile());
+
+        return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));
+    }
+
+    QString rawFiles()
+    {
+        return QLatin1String(m_decoder.rawFiles());
+    }
+
+private:
+    
+    KDcrawIface::KDcraw m_decoder;
+};
 
 RawProcessor* KipiInterface::createRawProcessor() const
 {
+    return (new KipiRawProcessor);
+}
+
+#else // HAVE_KDCRAW
+
+RawProcessor* KipiInterface::createRawProcessor() const
+{
+    qDebug() << "This interface was not compiled with libkdcraw to support Raw Decoding";
+    return 0;
+}
+
+#endif // HAVE_KDCRAW
+
+// ---------------------------------------------------------------------------------------
+
+MetadataProcessor* KipiInterface::createMetadataProcessor() const
+{
     return 0;  // TODO
 }
 
-MetadataProcessor* KipiInterface::createMetadataProcessor() const
+// ---------------------------------------------------------------------------------------
+
+FileReadWriteLock* KipiInterface::createReadWriteLock(const QUrl&) const
 {
     return 0;  // TODO
 }

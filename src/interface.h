@@ -164,7 +164,7 @@ public:
 /**
  *  A Kipi RawProcessor refers to application-wide to process Raw file 
  *  about preview extraction or demosicing; it is created with Interface::createRawProcessor()
- *  You can use libkdcraw to re-implement this class.
+ *  You can use libkdcraw to re-implement this class as it's implemented in tests/common/kipiinterface.cpp.
  */
 class LIBKIPI_EXPORT RawProcessor : public QObject
 {

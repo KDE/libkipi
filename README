@@ -20,6 +20,10 @@ ECM             >= 1.1.0                    https://projects.kde.org/projects/kd
 libqt           >= 5.2.0                    http://qt-project.org
 libkde          >= 5.0.0                    http://www.kde.org
 
+Optionals (for tests implementations):
+
+libkdcraw       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
+
 -- INSTALL ------------------------------------------------------------
 
 Usual CMake options:
