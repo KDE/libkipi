@@ -194,6 +194,7 @@ void KipiInterface::addSelectedAlbum(const QUrl& album)
 
 QVariant KipiInterface::hostSetting(const QString& settingName)
 {
+    Q_UNUSED(settingName);
     return QVariant();
 }
 

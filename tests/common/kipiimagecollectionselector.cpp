@@ -55,7 +55,8 @@ KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const in
 
     setLayout(layout);
 
-    connect(m_listWidget, &QListWidget::itemSelectionChanged, this, &KipiImageCollectionSelector::on_m_listWidget_itemSelectionChanged);
+    connect(m_listWidget, &QListWidget::itemSelectionChanged,
+            this, &KipiImageCollectionSelector::slotItemSelectionChanged);
 
     // add all albums to the list widget:
     m_allAlbums = m_interface->allAlbums();
