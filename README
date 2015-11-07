@@ -23,6 +23,7 @@ libkde          >= 5.0.0                    http://www.kde.org
 Optionals (for tests implementations):
 
 libkdcraw       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
+libkexiv2       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
 
 -- INSTALL ------------------------------------------------------------
 

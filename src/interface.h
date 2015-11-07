@@ -199,7 +199,7 @@ public:
 /**
  *  A Kipi MetadataProcessor refers to application-wide to process file metadata
  *  about Exif/Iptc/Xmp management; it is created with Interface::createMetadataProcessor().
- *  You can use libkexiv2 to re-implement this class.
+ *  You can use libkexiv2 to re-implement this class as it's implemented in tests/common/kipiinterface.cpp.
  */
 class LIBKIPI_EXPORT MetadataProcessor : public QObject
 {

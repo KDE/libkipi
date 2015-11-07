@@ -44,6 +44,10 @@
 #   include <kdcraw/kdcraw.h>
 #endif
 
+#ifdef HAVE_KEXIV2
+#   include <kexiv2/kexiv2.h>
+#endif
+
 // local includes
 
 #include "kipiimageinfoshared.h"
@@ -146,6 +150,10 @@ int KipiInterface::features() const
 #ifdef HAVE_KDCRAW
            | HostSupportsRawProcessing
 #endif
+#ifdef HAVE_KEXIV2
+           | HostSupportsMetadataProcessing
+#endif
+
     ;
 }
 
@@ -227,7 +235,7 @@ class KipiRawProcessor : public RawProcessor
 public:
 
     KipiRawProcessor()          {};
-    virtual ~KipiRawProcessor() {};
+    ~KipiRawProcessor() {};
 
     bool loadRawPreview(const QUrl& url, QImage& image)
     {
@@ -272,7 +280,7 @@ RawProcessor* KipiInterface::createRawProcessor() const
 
 RawProcessor* KipiInterface::createRawProcessor() const
 {
-    qDebug() << "This interface was not compiled with libkdcraw to support Raw Decoding";
+    qDebug() << "This interface was not compiled with libkdcraw to support Raw processing";
     return 0;
 }
 
@@ -280,10 +288,272 @@ RawProcessor* KipiInterface::createRawProcessor() const
 
 // ---------------------------------------------------------------------------------------
 
+#ifdef HAVE_KEXIV2
+
+class KipiMetadataProcessor : public KIPI::MetadataProcessor
+{
+public:
+
+    KipiMetadataProcessor()  {};
+    ~KipiMetadataProcessor() {};
+
+    bool load(const QUrl& url)
+    {
+        return m_meta.load(url.toLocalFile());
+    }
+
+    bool save(const QUrl& url, bool writeToFileOnly)
+    {
+        if (writeToFileOnly)
+            m_meta.setMetadataWritingMode((int)DMetadata::WRITETOIMAGEONLY);
+
+        return m_meta.save(url.toLocalFile());
+    }
+
+    bool applyChanges()
+    {
+        return m_meta.applyChanges();
+    }
+
+    QSize getPixelSize()
+    {
+        return m_meta.getPixelSize();
+    }
+
+    bool setImageProgramId(const QString& program, const QString& version)
+    {
+        return m_meta.setImageProgramId(program, version);
+    }
+
+    QSize getImageDimensions()
+    {
+        return m_meta.getImageDimensions();
+    }
+
+    bool setImageDimensions(const QSize& size)
+    {
+        return m_meta.setImageDimensions(size);
+    }
+
+    int getImageOrientation()
+    {
+        return m_meta.getImageOrientation();
+    }
+
+    bool setImageOrientation(int orientation)
+    {
+        return m_meta.setImageOrientation((DMetadata::ImageOrientation)orientation);
+    }
+
+    bool rotateExifQImage(QImage& img, int orientation)
+    {
+        return m_meta.rotateExifQImage(img, (DMetadata::ImageOrientation)orientation);
+    }
+
+    QDateTime getImageDateTime()
+    {
+        return m_meta.getImageDateTime();
+    }
+
+    bool setImageDateTime(const QDateTime& dt)
+    {
+        return m_meta.setImageDateTime(dt);
+    }
+
+    bool getImagePreview(QImage& img)
+    {
+        return m_meta.getImagePreview(img);
+    }
+
+    bool setImagePreview(const QImage& img)
+    {
+        return m_meta.setImagePreview(img);
+    }
+
+    bool hasExif()
+    {
+        return m_meta.hasExif();
+    }
+
+    bool hasIptc()
+    {
+        return m_meta.hasIptc();
+    }
+
+    bool hasXmp()
+    {
+        return m_meta.hasXmp();
+    }
+
+    QByteArray getExif()
+    {
+        return m_meta.getExifEncoded();
+    }
+
+    QByteArray getIptc()
+    {
+        return m_meta.getIptc();
+    }
+
+    QByteArray getXmp()
+    {
+        return m_meta.getXmp();
+    }
+
+    bool setExif(const QByteArray& data)
+    {
+        return m_meta.setExif(data);
+    }
+
+    bool setIptc(const QByteArray& data)
+    {
+        return m_meta.setIptc(data);
+    }
+
+    bool setXmp(const QByteArray& data)
+    {
+        return m_meta.setXmp(data);
+    }
+
+    bool registerXmpNameSpace(const QString& uri, const QString& prefix)
+    {
+        return m_meta.registerXmpNameSpace(uri, prefix);
+    }
+
+    bool supportXmp()
+    {
+        return m_meta.supportXmp();
+    }
+
+    bool canWriteXmp(const QUrl& url)
+    {
+        return m_meta.canWriteXmp(url.toLocalFile());
+    }
+
+    bool removeExifTags(const QStringList& tagFilters)
+    {
+        DMetadata::MetaDataMap m = m_meta.getExifTagsDataList(tagFilters);
+
+        if (m.isEmpty())
+            return false;
+
+        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        {
+            m_meta.removeExifTag(it.key().toLatin1().constData());
+        }
+
+        return true;
+    }
+
+    bool removeIptcTags(const QStringList& tagFilters)
+    {
+        DMetadata::MetaDataMap m = m_meta.getIptcTagsDataList(tagFilters);
+
+        if (m.isEmpty())
+            return false;
+
+        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        {
+            m_meta.removeIptcTag(it.key().toLatin1().constData());
+        }
+
+        return true;
+    }
+
+    bool removeXmpTags(const QStringList& tagFilters)
+    {
+        DMetadata::MetaDataMap m = m_meta.getXmpTagsDataList(tagFilters);
+
+        if (m.isEmpty())
+            return false;
+
+        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        {
+            m_meta.removeXmpTag(it.key().toLatin1().constData());
+        }
+
+        return true;
+    }
+
+    bool getGPSInfo(double& alt, double& lat, double& lon)
+    {
+        return m_meta.getGPSInfo(alt, lat, lon);
+    }
+
+    bool setGPSInfo(const double alt, const double lat, const double lon)
+    {
+        return m_meta.setGPSInfo(alt, lat, lon);
+    }
+
+    bool removeGPSInfo()
+    {
+        return m_meta.removeGPSInfo();
+    }
+
+    QString getExifTagString(const QString& tag)
+    {
+        return m_meta.getExifTagString(tag.toLatin1().constData());
+    }
+
+    bool setExifTagString(const QString& tag, const QString& val)
+    {
+        return m_meta.setExifTagString(tag.toLatin1().constData(), val);
+    }
+
+    bool getExifTagRational(const QString& tag, long int& num, long int& den)
+    {
+        return m_meta.getExifTagRational(tag.toLatin1().constData(), num, den);
+    }
+
+    bool setExifTagRational(const QString& tag, long int num, long int den)
+    {
+        return m_meta.setExifTagRational(tag.toLatin1().constData(), num, den);
+    }
+
+    QString getXmpTagString(const QString& tag)
+    {
+        return m_meta.getXmpTagString(tag.toLatin1().constData());
+    }
+
+    bool setXmpTagString(const QString& tag, const QString& val)
+    {
+        return m_meta.setXmpTagString(tag.toLatin1().constData(), val);
+    }
+
+    QStringList getXmpKeywords()
+    {
+        return m_meta.getXmpKeywords();
+    }
+
+    bool  setXmpKeywords(const QStringList& keywords)
+    {
+        return m_meta.setXmpKeywords(keywords);
+    }
+
+    QVariant getXmpTagVariant(const QString& tag)
+    {
+        return m_meta.getXmpTagVariant(tag.toLatin1().constData());
+    }
+
+private:
+
+    KExiv2Iface::KExiv2 m_meta;
+};
+
 MetadataProcessor* KipiInterface::createMetadataProcessor() const
 {
-    return 0;  // TODO
+    return (new KipiMetadataProcessor);
 }
+
+#else // HAVE_KEXIV2
+
+MetadataProcessor* KipiInterface::createMetadataProcessor() const
+{
+    qDebug() << "This interface was not compiled with libkexiv2 to support Metadata processing";
+    return 0;
+}
+
+#endif // HAVE_KEXIV2
 
 // ---------------------------------------------------------------------------------------
 
