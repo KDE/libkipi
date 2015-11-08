@@ -5,7 +5,7 @@
  * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
  * @date   2009-11-21
- * @brief  kipi host test application
+ * @brief  kipi CLI host test application to run kipi tool as stand alone.
  *
  * @author Copyright (C) 2009-2010 by Michael G. Hansen
  *         <a href="mailto:mike at mghansen dot de">mike at mghansen dot de</a>
@@ -38,10 +38,6 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
-
-// KDE includes
-
-#include <kaboutdata.h>
 
 // Libkipi includes
 
@@ -307,29 +303,18 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
 
 int main(int argc, char* argv[])
 {
-    KAboutData aboutData(QString::fromLatin1("kipicmd"),
-                         QLatin1String("kipicmd"),
-                         QString::fromLatin1(KIPI_VERSION_STRING),                          // libkipi version
-                         QLatin1String("Kipi host test application using KDE XML-GUI"),
-                         KAboutLicense::GPL,
-                         QLatin1String("(c) 2009-2010 Michael G. Hansen\n"
-                               "(c) 2011-2015 Gilles Caulier\n"
-                               "(c) 2012 Victor Dodon "),
-                         QString(),                                                         // optional text
-                         QString::fromLatin1("http://www.digikam.org"),                     // URI of homepage
-                         QString::fromLatin1("kde-imaging@kde.org")                         // bugs e-mail address
-                        );
-
     QApplication app(argc, argv);
+    app.setApplicationName(QLatin1String("kipicmd"));
+    app.setApplicationVersion(QLatin1String(KIPI_VERSION_STRING));
+    app.setOrganizationName(QLatin1String("http://www.digikam.org"));
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                    QStringLiteral("kf5/kipi/pics/kipi-icon.svg"))));
 
     QCommandLineParser parser;
-    KAboutData::setApplicationData(aboutData);
     parser.addVersionOption();
     parser.addHelpOption();
-    aboutData.setupCommandLine(&parser);
-
+    parser.setApplicationDescription(QLatin1String("kipi CLI host test application to run kipi tool as stand alone"));
+    
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("list"),           QLatin1String("List the available plugins")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("w"),              QLatin1String("Wait until non-modal dialogs are closed")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              QLatin1String("Library name of plugin to use"),             QLatin1String("library")));
@@ -339,9 +324,7 @@ int main(int argc, char* argv[])
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("allc"),           QLatin1String("All collections"),                           QLatin1String("allcollections")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[images]"),      QLatin1String("List of images")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[collections]"), QLatin1String("List of collections")));
-
     parser.process(app);
-    aboutData.processCommandLine(&parser);
 
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
