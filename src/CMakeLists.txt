@@ -46,7 +46,8 @@ add_library(KF5::Kipi ALIAS KF5Kipi)
 
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
-set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF) # disable adding of current source directory to interface, as it causes naming clashes
+# disable adding of current source directory to interface, as it causes naming clashes
+set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
 
 target_include_directories(KF5Kipi INTERFACE
                            "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
@@ -57,6 +58,7 @@ target_link_libraries(KF5Kipi
                       PUBLIC
                       Qt5::Gui
                       Qt5::Widgets
+
                       KF5::I18n
                       KF5::XmlGui
                       KF5::Service
@@ -74,7 +76,7 @@ install(TARGETS KF5Kipi
 )
 
 
-# desktop file which define plugin service model, used by tool from kipi-plugins.
+# desktop file which define plugin service model, used by tools from kipi-plugins.
 install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
 
 install(FILES       ${kipi_CamelCase_HEADERS}

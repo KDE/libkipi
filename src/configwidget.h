@@ -54,8 +54,8 @@ public:
      */
     void apply();
 
-    /** Set a filter widget (as KLineEdit) to be able to list only wanted plugin using a string query.
-     *  Use slotSetFilter() to apply filetring. signalSearchResult is emitted when it's done.
+    /** Set a filter widget (as QLineEdit) to be able to list only wanted plugin using a string query.
+     *  Use slotSetFilter() to apply filetring. signalSearchResult() is emitted when it's done.
      */
     void setFilterWidget(QWidget* const wdg);
 

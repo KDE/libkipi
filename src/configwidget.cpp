@@ -124,7 +124,8 @@ void ConfigWidget::Private::updateInfo()
 }
 
 ConfigWidget::ConfigWidget(QWidget* const parent)
-    : QScrollArea(parent), d(new Private)
+    : QScrollArea(parent),
+      d(new Private)
 {
     QWidget* const panel        = new QWidget(viewport());
     d->grid                     = new QGridLayout(panel);
@@ -133,16 +134,15 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     d->hbox                     = new QWidget(panel);
     QHBoxLayout* const hboxLay  = new QHBoxLayout(d->hbox);
     d->checkAllBtn              = new QPushButton(i18n("Check All"), d->hbox);
-    d->clearBtn                 = new QPushButton(i18n("Clear"), d->hbox);
+    d->clearBtn                 = new QPushButton(i18n("Clear"),     d->hbox);
     QWidget* const space        = new QWidget(d->hbox);
     hboxLay->addWidget(d->checkAllBtn);
     hboxLay->addWidget(d->clearBtn);
     hboxLay->addWidget(space);
     PluginLoader* const loader  = PluginLoader::instance();
-    d->kipipluginsVersion       = new QLabel(i18n("Kipi Plugins: %1", loader ? loader->kipiPluginsVersion() : i18nc("Version unavailable", "unavailable")), panel);
-    d->libkipiVersion           = new QLabel(i18n("LibKipi: %1", QString::fromLatin1(KIPI_VERSION_STRING)), panel);
+    d->kipipluginsVersion       = new QLabel(QString::fromLatin1("Kipi-plugins: %1").arg(loader ? loader->kipiPluginsVersion() : QString()), panel);
+    d->libkipiVersion           = new QLabel(QString::fromLatin1("Libkipi: %1").arg(QLatin1String(KIPI_VERSION_STRING)), panel);
     d->pluginsList              = new PluginListView(panel);
-    d->pluginsList->setWhatsThis(i18n("List of available Kipi plugins."));
     d->libkipiVersion->setAlignment(Qt::AlignRight);
     hboxLay->setStretchFactor(space, 10);
 
