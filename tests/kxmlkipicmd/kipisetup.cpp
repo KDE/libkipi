@@ -35,9 +35,11 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDebug>
+#include <QScrollArea>
 #include <QApplication>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QStyle>
 #include <QStandardPaths>
 #include <QDialogButtonBox>
 
@@ -72,7 +74,7 @@ public:
         pluginFilter(0),
         buttons(0),
         tabView(0),
-        pluginsPage(0),
+        pluginsList(0),
         xmlPage(0)
     {
     }
@@ -81,8 +83,8 @@ public:
 
     QDialogButtonBox* buttons;
     QTabWidget*       tabView;
-    
-    ConfigWidget*     pluginsPage;
+
+    ConfigWidget*     pluginsList;
     SetupXML*         xmlPage;
 };
 
@@ -96,24 +98,45 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     d->buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     d->tabView = new QTabWidget(this);
-    
-    d->pluginsPage  = PluginLoader::instance()->configWidget(d->tabView);
-    d->pluginsPage->setToolTip(QLatin1String("Configure plugins"));
-    d->pluginFilter = new QLineEdit(d->pluginsPage);
+
+    QScrollArea* const sv   = new QScrollArea(this);
+    QWidget* const panel    = new QWidget(sv->viewport());
+    QGridLayout* const grid = new QGridLayout(panel);
+
+    d->pluginFilter = new QLineEdit(panel);
     d->pluginFilter->setClearButtonEnabled(true);
     d->pluginFilter->setPlaceholderText(QLatin1String("Plugins list filter."));
-    d->pluginsPage->setFilterWidget(d->pluginFilter);
-    d->tabView->insertTab(KipiPluginsPage, d->pluginsPage, QIcon::fromTheme(QString::fromLatin1("kipi")), QLatin1String("Kipi Plugins"));
-    
+
+    d->pluginsList  = PluginLoader::instance()->configWidget(d->tabView);
+    d->pluginsList->setToolTip(QLatin1String("Configure plugins"));
+
+    QStringList labels;
+    labels.append(QLatin1String("Name"));
+    labels.append(QLatin1String("Categories"));
+    labels.append(QLatin1String("Description"));
+    labels.append(QLatin1String("Author"));
+    d->pluginsList->setHeaderLabels(labels);
+
+    grid->addWidget(d->pluginFilter, 0, 0, 1, 1);
+    grid->addWidget(d->pluginsList,  1, 0, 1, 1);
+    grid->setRowStretch(1, 10);
+    grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+    grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
+
+    sv->setWidget(panel);
+    sv->setWidgetResizable(true);
+
+    d->tabView->insertTab(KipiPluginsPage, sv, QIcon::fromTheme(QString::fromLatin1("kipi")), QLatin1String("Kipi Plugins"));
+
     d->xmlPage = new SetupXML(d->tabView);
     d->xmlPage->setToolTip(QLatin1String("Configure the UI file for the KXMLKipiCmd application"));
     d->tabView->insertTab(XmlFilesPage, d->xmlPage, QIcon::fromTheme(QString::fromLatin1("application-xml")), QLatin1String("UI layouts"));
-    
-    QVBoxLayout* const vbx   = new QVBoxLayout(this);
+
+    QVBoxLayout* const vbx = new QVBoxLayout(this);
     vbx->addWidget(d->tabView);
     vbx->addWidget(d->buttons);
     setLayout(vbx);
-    
+
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
     KConfigGroup group        = config->group("Setup Dialog");
     KWindowConfig::restoreWindowSize(windowHandle(), group);
@@ -124,7 +147,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
 
     connect(d->buttons->button(QDialogButtonBox::Ok), &QPushButton::clicked,
             this, &KipiSetup::slotOkClicked);
-    
+
     connect(d->buttons->button(QDialogButtonBox::Cancel), &QPushButton::clicked,
             this, &KipiSetup::close);
 }
@@ -142,7 +165,7 @@ KipiSetup::~KipiSetup()
 
 void KipiSetup::slotFilterChanged(const QString& filter)
 {
-     d->pluginsPage->slotSetFilter(filter, Qt::CaseInsensitive);
+     d->pluginsList->setFilter(filter, Qt::CaseInsensitive);
 }
 
 bool KipiSetup::runSetupDialog(QWidget* const parent)
@@ -160,7 +183,7 @@ void KipiSetup::slotOkClicked()
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    d->pluginsPage->apply();
+    d->pluginsList->apply();
     d->xmlPage->apply();
 
     QApplication::restoreOverrideCursor();

@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
                          QLatin1String("Kipi host test application using KDE XML-GUI"),
                          KAboutLicense::GPL,
                          QLatin1String("(c) 2009-2010 Michael G. Hansen\n"
-                                       "(c) 2011-2014 Gilles Caulier\n"
+                                       "(c) 2011-2015 Gilles Caulier\n"
                                        "(c) 2012 Victor Dodon "),
                          QString(),                                                     // optional text
                          QLatin1String("http://www.digikam.org"),                       // URI of homepage

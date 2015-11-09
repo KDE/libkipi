@@ -5,7 +5,7 @@
  * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
  * @date   2012-08-06
- * @brief  plugin config widget
+ * @brief  Plugins config widget.
  *
  * @author Copyright (C) 2004-2015 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
@@ -30,54 +30,67 @@
 
 // Qt includes
 
-#include <QScrollArea>
+#include <QTreeWidgetItem>
+#include <QTreeWidget>
 
 // Local includes
 
+#include "plugin.h"
+#include "pluginloader.h"
 #include "libkipi_export.h"
 
 namespace KIPI
 {
 
-class LIBKIPI_EXPORT ConfigWidget : public QScrollArea
+class LIBKIPI_EXPORT ConfigWidget : public QTreeWidget
 {
     Q_OBJECT
 
 public:
 
-    /** Standard constructor.
+    /** Default constructor.
      */
-    ConfigWidget(QWidget* const parent = 0);
+    ConfigWidget(QWidget* const parent=0);
     ~ConfigWidget();
 
-    /** Apply all changes about plugin selected to be hosted in KIPI host application.
+    /** Apply all changes about plugins selected to be hosted in KIPI host application.
      */
     void apply();
-
-    /** Set a filter widget (as QLineEdit) to be able to list only wanted plugin using a string query.
-     *  Use slotSetFilter() to apply filetring. signalSearchResult() is emitted when it's done.
+    
+    /** Return the number of plugins actived in the list.
      */
-    void setFilterWidget(QWidget* const wdg);
+    int actived() const;
+    
+    /** Return the total number of plugins in the list.
+     */
+    int count()   const;
+    
+    /** Return the number of visible plugins in the list.
+     */
+    int visible() const;
+
+    /** Select all plugins in the list.
+     */
+    void selectAll();
+
+    /** Clear all selected plugins in the list.
+     */
+    void clearAll();
+    
+    /** Set the string used to filter the plugins list. signalSearchResult() is emitted when all is done.
+     */
+    void setFilter(const QString& filter, Qt::CaseSensitivity cs);
+
+    /** Return the current string used to filter the plugins list.
+     */
+    QString filter() const;
 
 Q_SIGNALS:
 
-    /** Signal emitted when filetring is done through slotSetFilter(). True is sent when item relevant of filetring query give items in list.
+    /** Signal emitted when filetring is done through slotSetFilter().
+     *  Number of plugins found is sent when item relevant of filetring match the query.
      */
-    void signalSearchResult(bool);
-
-public Q_SLOTS:
-
-    /** Set plugins list filtetring string properties. signalSearchResult() is emitted when all is done.
-     */
-    void slotSetFilter(const QString& filter, Qt::CaseSensitivity cs);
-
-private Q_SLOTS:
-
-    /** For internal uses only.
-     */
-    void slotCheckAll();
-    void slotClearList();
-    void slotItemClicked();
+    void signalSearchResult(int);
 
 private:
 
@@ -86,5 +99,6 @@ private:
 };
 
 } // namespace KIPI
+
 
 #endif /* KIPI_CONFIGWIDGET_H */

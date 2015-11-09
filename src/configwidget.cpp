@@ -5,7 +5,7 @@
  * <a href="http://www.digikam.org">http://www.digikam.org</a>
  *
  * @date   2012-08-06
- * @brief  plugin config widget
+ * @brief  Plugins config widget.
  *
  * @author Copyright (C) 2004-2015 by Gilles Caulier
  *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
@@ -29,176 +29,113 @@
 
 // Qt include
 
-#include <QApplication>
-#include <QPushButton>
-#include <QGridLayout>
-#include <QLabel>
-#include <QFontMetrics>
-#include <QHBoxLayout>
-#include <QBuffer>
-#include <QStandardPaths>
+#include <QList>
+#include <QHeaderView>
 
 // KDE includes
 
-#include <klocalizedstring.h>
-
-// Local includes
-
-#include "configwidget_p.h"
-#include "pluginloader.h"
-#include "libkipi_version.h"
+#include <ksharedconfig.h>
+#include <kconfiggroup.h>
 
 namespace KIPI
 {
 
-class Q_DECL_HIDDEN ConfigWidget::Private
+class PluginCheckBox : public QTreeWidgetItem
 {
-
 public:
 
-    Private() :
-        pluginsNumber(0),
-        pluginsNumberActivated(0),
-        kipipluginsVersion(0),
-        libkipiVersion(0),
-        checkAllBtn(0),
-        clearBtn(0),
-        grid(0),
-        hbox(0),
-        kipiLogoLabel(0),
-        pluginsList(0)
+    PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent)
+        : QTreeWidgetItem(parent), 
+          m_info(info)
     {
-    }
+        setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+        setChildIndicatorPolicy(QTreeWidgetItem::DontShowIndicator);
+        setDisabled(false);
 
-    void updateInfo();
+        // Name + Icon + Selector
+        setText(0, m_info->name());
+        setIcon(0, m_info->icon());
+        setCheckState(0, m_info->shouldLoad() ? Qt::Checked : Qt::Unchecked);
+
+        // Categories
+        QStringList list = m_info->pluginCategories();
+        list.removeDuplicates();
+        list.sort();
+        setText(1, list.join(QString::fromLatin1(", ")));
+
+        // Description
+        setText(2, m_info->comment());
+
+        // Author
+        setText(3, m_info->author().section(QString::fromLatin1(","), 0, 0));
+    };
+
+    ~PluginCheckBox()
+    {
+    };
+
+    bool contains(const QString& txt, Qt::CaseSensitivity cs) const
+    {
+        return (text(0).contains(txt, cs) ||
+                text(1).contains(txt, cs) ||
+                text(2).contains(txt, cs) ||
+                text(3).contains(txt, cs));
+    };
 
 public:
 
-    QLabel*         pluginsNumber;
-    QLabel*         pluginsNumberActivated;
-    QLabel*         kipipluginsVersion;
-    QLabel*         libkipiVersion;
-
-    QPushButton*    checkAllBtn;
-    QPushButton*    clearBtn;
-
-    QGridLayout*    grid;
-
-    QWidget*        hbox;
-    QLabel*         kipiLogoLabel;
-
-    PluginListView* pluginsList;
+    PluginLoader::Info* m_info;
 };
 
-void ConfigWidget::Private::updateInfo()
+// ---------------------------------------------------------------------
+
+class ConfigWidget::Private
 {
-    if (pluginsList->filter().isEmpty())
+public:
+
+    Private()
     {
-        // List is not filtered
-        int cnt = pluginsList->count();
+    };
 
-        if (cnt > 0)
-            pluginsNumber->setText(i18np("1 Kipi plugin installed", "%1 Kipi plugins installed", cnt));
-        else
-            pluginsNumber->setText(i18n("No Kipi plugin installed"));
-
-        int act = pluginsList->actived();
-
-        if (act > 0)
-            pluginsNumberActivated->setText(i18ncp("%1: number of plugins activated", "(%1 activated)", "(%1 activated)", act));
-        else
-            pluginsNumberActivated->setText(QString());
-    }
-    else
-    {
-        // List filtering is active
-        int cnt = pluginsList->visible();
-
-        if (cnt > 0)
-            pluginsNumber->setText(i18np("1 Kipi plugin found", "%1 Kipi plugins found", cnt));
-        else
-            pluginsNumber->setText(i18n("No Kipi plugin found"));
-
-        pluginsNumberActivated->setText(QString());
-    }
-}
+    QString                filter;
+    QList<PluginCheckBox*> boxes;
+};
 
 ConfigWidget::ConfigWidget(QWidget* const parent)
-    : QScrollArea(parent),
+    : QTreeWidget(parent),
       d(new Private)
 {
-    QWidget* const panel        = new QWidget(viewport());
-    d->grid                     = new QGridLayout(panel);
-    d->pluginsNumber            = new QLabel(panel);
-    d->pluginsNumberActivated   = new QLabel(panel);
-    d->hbox                     = new QWidget(panel);
-    QHBoxLayout* const hboxLay  = new QHBoxLayout(d->hbox);
-    d->checkAllBtn              = new QPushButton(i18n("Check All"), d->hbox);
-    d->clearBtn                 = new QPushButton(i18n("Clear"),     d->hbox);
-    QWidget* const space        = new QWidget(d->hbox);
-    hboxLay->addWidget(d->checkAllBtn);
-    hboxLay->addWidget(d->clearBtn);
-    hboxLay->addWidget(space);
-    PluginLoader* const loader  = PluginLoader::instance();
-    d->kipipluginsVersion       = new QLabel(QString::fromLatin1("Kipi-plugins: %1").arg(loader ? loader->kipiPluginsVersion() : QString()), panel);
-    d->libkipiVersion           = new QLabel(QString::fromLatin1("Libkipi: %1").arg(QLatin1String(KIPI_VERSION_STRING)), panel);
-    d->pluginsList              = new PluginListView(panel);
-    d->libkipiVersion->setAlignment(Qt::AlignRight);
-    hboxLay->setStretchFactor(space, 10);
+    setRootIsDecorated(false);
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setAllColumnsShowFocus(true);
+    setSortingEnabled(true);
+    setColumnCount(4);
 
-    d->kipiLogoLabel = new QLabel(panel);
-    d->kipiLogoLabel->setFocusPolicy(Qt::NoFocus);
-    d->kipiLogoLabel->setTextFormat(Qt::RichText);
-    d->kipiLogoLabel->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
-    d->kipiLogoLabel->setOpenExternalLinks(true);
-    QFontMetrics fm(d->kipipluginsVersion->font());
-    QRect r          = fm.boundingRect(QString::fromLatin1("XX"));
-    QByteArray byteArray;
-    QBuffer    buffer(&byteArray);
-    QImage img = QImage(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
-                                               QStringLiteral("kf5/kipi/pics/kipi-plugins_logo.png")))
-                 .scaledToHeight(r.height()*3, Qt::SmoothTransformation);
-    img.save(&buffer, "PNG");
-    d->kipiLogoLabel->setText(QString::fromLatin1("<a href=\"https://projects.kde.org/projects/extragear/graphics/kipi-plugins\">%1</a>")
-                              .arg(QString::fromLatin1("<img src=\"data:image/png;base64,%1\">")
-                              .arg(QString::fromLatin1(byteArray.toBase64().data()))));
+    header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    header()->setSectionResizeMode(2, QHeaderView::Stretch);
+    header()->setSectionResizeMode(3, QHeaderView::Interactive);
+    header()->setSortIndicatorShown(true);
 
-    d->grid->addWidget(d->pluginsNumber,          0, 1, 1, 1);
-    d->grid->addWidget(d->pluginsNumberActivated, 0, 2, 1, 1);
-    d->grid->addWidget(d->kipipluginsVersion,     0, 4, 1, 1);
-    d->grid->addWidget(d->libkipiVersion,         1, 4, 1, 1);
-    d->grid->addWidget(d->hbox,                   1, 0, 1, 2);
-    d->grid->addWidget(d->kipiLogoLabel,          0, 6, 2, 1);
-    d->grid->addWidget(d->pluginsList,            2, 0, 1, -1);
-    d->grid->setColumnStretch(3, 10);
-    d->grid->setMargin(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-    d->grid->setSpacing(QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing));
-
-    // --------------------------------------------------------
-
-    setWidget(panel);
-    setWidgetResizable(true);
     setAutoFillBackground(false);
     viewport()->setAutoFillBackground(false);
-    panel->setAutoFillBackground(false);
 
-    // --------------------------------------------------------
+    PluginLoader* const loader = PluginLoader::instance();
 
-    connect(d->checkAllBtn, &QPushButton::clicked,
-            this, &ConfigWidget::slotCheckAll);
+    if (loader)
+    {
+        foreach(PluginLoader::Info* const info, loader->pluginList())
+        {
+            if (info)
+            {
+                d->boxes.append(new PluginCheckBox(info, this));
+            }
+        }
+    }
 
-    connect(d->clearBtn, &QPushButton::clicked, 
-            this, &ConfigWidget::slotClearList);
-
-    connect(d->pluginsList, &PluginListView::itemClicked, 
-            this, &ConfigWidget::slotItemClicked);
-
-    connect(d->pluginsList, &PluginListView::signalSearchResult, 
-            this, &ConfigWidget::signalSearchResult);
-
-    // --------------------------------------------------------
-
-    d->updateInfo();
+    // Sort items by plugin names.
+    sortItems(0, Qt::AscendingOrder);
 }
 
 ConfigWidget::~ConfigWidget()
@@ -206,41 +143,106 @@ ConfigWidget::~ConfigWidget()
     delete d;
 }
 
-void ConfigWidget::setFilterWidget(QWidget* const wdg)
-{
-    d->grid->addWidget(wdg, 0, 0, 1, 1);
-}
-
 void ConfigWidget::apply()
 {
     if (PluginLoader::instance())
     {
-        d->pluginsList->slotApply();
+        KSharedConfigPtr config = KSharedConfig::openConfig();
+        KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
+
+        foreach (PluginCheckBox* const item, d->boxes)
+        {
+            bool orig = item->m_info->shouldLoad();
+            bool load = (item->checkState(0) == Qt::Checked);
+
+            if (orig != load)
+            {
+                group.writeEntry(item->m_info->uname(), load);
+                item->m_info->setShouldLoad(load);
+
+                // See Bug #289779 - Plugins are not really freed / unplugged when disabled in the kipi setup dialog, always call reload()
+                // to reload plugins properly when the replug() signal is send.
+                item->m_info->reload();
+            }
+        }
+
+        config->sync();
+
         emit PluginLoader::instance()->replug();
     }
 }
 
-void ConfigWidget::slotCheckAll()
+void ConfigWidget::selectAll()
 {
-    d->pluginsList->slotCheckAll();
-    d->updateInfo();
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        item->setCheckState(0, Qt::Checked);
+    }
 }
 
-void ConfigWidget::slotClearList()
+void ConfigWidget::clearAll()
 {
-    d->pluginsList->slotClear();
-    d->updateInfo();
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        item->setCheckState(0, Qt::Unchecked);
+    }
 }
 
-void ConfigWidget::slotItemClicked()
+int ConfigWidget::count() const
 {
-    d->updateInfo();
+    return d->boxes.count();
 }
 
-void ConfigWidget::slotSetFilter(const QString& filter, Qt::CaseSensitivity cs)
+int ConfigWidget::actived() const
 {
-    d->pluginsList->setFilter(filter, cs);
-    d->updateInfo();
+    int actived = 0;
+
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        if (item->checkState(0) == Qt::Checked)
+            actived++;
+    }
+
+    return actived;
+}
+
+int ConfigWidget::visible() const
+{
+    int visible = 0;
+
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        if (!item->isHidden())
+            visible++;
+    }
+
+    return visible;
+}
+
+void ConfigWidget::setFilter(const QString& filter, Qt::CaseSensitivity cs)
+{
+    d->filter  = filter;
+    bool query = false;
+
+    foreach (PluginCheckBox* const item, d->boxes)
+    {
+        if (item->contains(filter, cs))
+        {
+            query = true;
+            item->setHidden(false);
+        }
+        else
+        {
+            item->setHidden(true);
+        }
+    }
+
+    emit signalSearchResult(query);
+}
+
+QString ConfigWidget::filter() const
+{
+    return d->filter;
 }
 
 } // namespace KIPI

@@ -18,7 +18,6 @@ set(kipi_LIB_SRCS interface.cpp
                   uploadwidget.cpp
                   imagecollectionselector.cpp
                   configwidget.cpp
-                  configwidget_p.cpp
                   pluginloader.cpp
                   libkipi_debug.cpp
 )
@@ -59,7 +58,6 @@ target_link_libraries(KF5Kipi
                       Qt5::Gui
                       Qt5::Widgets
 
-                      KF5::I18n
                       KF5::XmlGui
                       KF5::Service
                       KF5::ConfigCore
