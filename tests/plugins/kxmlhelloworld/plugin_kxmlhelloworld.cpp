@@ -66,15 +66,15 @@
 // Special header used to include kipi-plugins debug space when plugin is includes in Kipi-plugins project.
 //#include "kipiplugins_debug.h"
 
-/** This is all Kipi-plugins common includes used in this tool.
- *  Look into kipi-plugins/common/libkipiplugins/ for details.
+/** Put here all Kipi-plugins common includes used to create a new tool.
+ *  Look into kipi-plugins/common/libkipiplugins/ API documentation for details.
  */
 
 /// You must wrap all your plugin code to a dedicated namespace
 namespace KIPIKXMLHelloWorldPlugin
 {
 
-/** We will use KPToolDialog class from kipi-plugins to display plugin dialogs. It offers some facilities to
+/** Under Kipi-plugins, you can use KPToolDialog class from kipi-plugins to display plugin dialogs. It offers some facilities to
     set data and rules about plugins, especially to wrap properlly tool with KDE bugilla. We use KPAboutData container
     for that.
 */
@@ -210,7 +210,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     addAction(QString::fromLatin1("kxmlhelloworld-actionTools"), d->actionTools, ToolsPlugin);
 
     /** We will get current selected album in the digikam tree view
-      */
+     */
     ImageCollection currAlbum = interface()->currentAlbum();
     bool enable               = currAlbum.isValid() && !currAlbum.images().isEmpty();
     d->actionTools->setEnabled(enable);
@@ -305,56 +305,23 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
 
 void Plugin_KXMLHelloWorld::slotActivateActionExport()
 {
-    /** When actionExport is actived, we display a dedicated widget from libkipiplugins which will show
+    /** When actionExport is actived, we can display a dedicated widget from libkipiplugins which will show
      *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
      */
-/*
-    QPointer<KPToolDialog> dlg   = new KPToolDialog(0);
-    KPImagesList* const listView = new KPImagesList(dlg);
-    listView->setControlButtonsPlacement(KPImagesList::ControlButtonsRight);
-    listView->setAllowRAW(true);
-    listView->loadImagesFromCurrentSelection();
-    dlg->setMainWidget(listView);
-    dlg->setAboutData(new HelloWorldAbout);
-    dlg->exec();
-
-    QList<QUrl> list = listView->imageUrls();
-
-    if (!list.isEmpty())
-    {
-        QStringList names;
-
-        foreach (const QUrl& col, list)
-            names << col.fileName();
-
-        KMessageBox::informationList(0, i18n("This is the list of items to process"), names);
-    }
-
-    delete dlg;
-*/
 
     QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImport()
 {
-    /** When actionImport is actived, we display a dedicated widget from libkipiplugins which will preview
-     *  the first selected item of current selection from kipi host application.
-     */
 
     ImageCollection images = interface()->currentSelection();
 
     if (images.isValid() && !images.images().isEmpty())
     {
-/*
-        QPointer<KPToolDialog> dlg  = new KPToolDialog(0);
-        KPPreviewManager* const mng = new KPPreviewManager(dlg);
-        dlg->setMainWidget(mng);
-        dlg->setAboutData(new HelloWorldAbout);
-        mng->load(images.images().first().path());
-        dlg->exec();
-        delete dlg;
-*/
+        /** When actionImport is actived, we can display a dedicated widget from libkipiplugins which will preview
+         *  the first selected item of current selection from kipi host application.
+         */
     }
 
     QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
