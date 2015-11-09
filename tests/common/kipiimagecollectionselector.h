@@ -27,7 +27,7 @@
 #ifndef __KIPIIMAGECOLLECTIONSELECTOR_H
 #define __KIPIIMAGECOLLECTIONSELECTOR_H
 
-// libkipi includes
+// Libkipi includes
 
 #include "imagecollection.h"
 #include "imagecollectionselector.h"

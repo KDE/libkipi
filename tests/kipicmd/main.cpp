@@ -46,7 +46,7 @@
 #include "pluginloader.h"
 #include "kipiinterface.h"
 
-// local includes
+// Local includes
 
 #include "kipiinterface.h"
 
@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
     parser.addVersionOption();
     parser.addHelpOption();
     parser.setApplicationDescription(QLatin1String("kipi CLI host test application to run kipi tool as stand alone"));
-    
+
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("list"),           QLatin1String("List the available plugins")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("w"),              QLatin1String("Wait until non-modal dialogs are closed")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              QLatin1String("Library name of plugin to use"),             QLatin1String("library")));

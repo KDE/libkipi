@@ -27,7 +27,7 @@
 #ifndef KIPIIMAGEINFOSHARED_H
 #define KIPIIMAGEINFOSHARED_H
 
-// libkipi includes
+// Libkipi includes
 
 #include "imageinfoshared.h"
 

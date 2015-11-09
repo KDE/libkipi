@@ -37,7 +37,7 @@
 
 #include "imagecollection.h"
 
-// local includes:
+// Local includes:
 
 #include "kipiinterface.h"
 

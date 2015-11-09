@@ -78,13 +78,13 @@ public:
     KToggleAction*     showMenuBarAction;
     KipiInterface*     kipiInterface;
     QString            uiFile;
-
 };
 
 KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
                                        const QList<QUrl>& selectedAlbums,
                                        const QList<QUrl>& allAlbums)
-    : KXmlGuiWindow(0), d(new Private())
+    : KXmlGuiWindow(0),
+      d(new Private())
 {
     m_instance           = this;
     d->config            = KSharedConfig::openConfig();
@@ -173,7 +173,8 @@ void KipiTestMainWindow::slotConfToolbars()
     saveMainWindowSettings(grp);
     KEditToolBar dlg(factory(), this);
 
-    connect(&dlg, &KEditToolBar::newToolBarConfig, this, &KipiTestMainWindow::slotNewToolbarConfig);
+    connect(&dlg, &KEditToolBar::newToolBarConfig,
+            this, &KipiTestMainWindow::slotNewToolbarConfig);
 
     dlg.exec();
 }

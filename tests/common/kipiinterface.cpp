@@ -48,7 +48,7 @@
 #   include <kexiv2/kexiv2.h>
 #endif
 
-// local includes
+// Local includes
 
 #include "kipiimageinfoshared.h"
 #include "kipiimagecollectionselector.h"
