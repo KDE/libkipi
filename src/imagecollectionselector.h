@@ -28,8 +28,8 @@
 
 // Qt includes
 
-#include <QWidget>
-#include <QList>
+#include <QtWidgets/QWidget>
+#include <QtCore/QList>
 
 // KIPI includes
 

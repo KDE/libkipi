@@ -28,7 +28,7 @@
 
 // Qt includes
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 
 // Local includes
 
