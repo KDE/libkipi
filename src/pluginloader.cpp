@@ -385,7 +385,7 @@ ConfigWidget* PluginLoader::configWidget(QWidget* const parent) const
 
 QString PluginLoader::kipiPluginsVersion() const
 {
-    QString ver  = QLatin1String("???");
+    QString ver;
     QString path = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, QString::fromLatin1("kipiplugins.desktop"));
 
     KDesktopFile desk(path);
