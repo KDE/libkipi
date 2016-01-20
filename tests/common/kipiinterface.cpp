@@ -305,7 +305,7 @@ public:
     bool save(const QUrl& url, bool writeToFileOnly)
     {
         if (writeToFileOnly)
-            m_meta.setMetadataWritingMode((int)DMetadata::WRITETOIMAGEONLY);
+            m_meta.setMetadataWritingMode((int) KExiv2Iface::KExiv2::WRITETOIMAGEONLY);
 
         return m_meta.save(url.toLocalFile());
     }
@@ -342,12 +342,12 @@ public:
 
     bool setImageOrientation(int orientation)
     {
-        return m_meta.setImageOrientation((DMetadata::ImageOrientation)orientation);
+        return m_meta.setImageOrientation((KExiv2Iface::KExiv2::ImageOrientation)orientation);
     }
 
     bool rotateExifQImage(QImage& img, int orientation)
     {
-        return m_meta.rotateExifQImage(img, (DMetadata::ImageOrientation)orientation);
+        return m_meta.rotateExifQImage(img, (KExiv2Iface::KExiv2::ImageOrientation)orientation);
     }
 
     QDateTime getImageDateTime()
@@ -432,12 +432,12 @@ public:
 
     bool removeExifTags(const QStringList& tagFilters)
     {
-        DMetadata::MetaDataMap m = m_meta.getExifTagsDataList(tagFilters);
+        KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getExifTagsDataList(tagFilters);
 
         if (m.isEmpty())
             return false;
 
-        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        for (KExiv2Iface::KExiv2::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
         {
             m_meta.removeExifTag(it.key().toLatin1().constData());
         }
@@ -447,12 +447,12 @@ public:
 
     bool removeIptcTags(const QStringList& tagFilters)
     {
-        DMetadata::MetaDataMap m = m_meta.getIptcTagsDataList(tagFilters);
+        KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getIptcTagsDataList(tagFilters);
 
         if (m.isEmpty())
             return false;
 
-        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        for (KExiv2Iface::KExiv2::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
         {
             m_meta.removeIptcTag(it.key().toLatin1().constData());
         }
@@ -462,12 +462,12 @@ public:
 
     bool removeXmpTags(const QStringList& tagFilters)
     {
-        DMetadata::MetaDataMap m = m_meta.getXmpTagsDataList(tagFilters);
+        KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getXmpTagsDataList(tagFilters);
 
         if (m.isEmpty())
             return false;
 
-        for (DMetadata::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
+        for (KExiv2Iface::KExiv2::MetaDataMap::iterator it = m.begin(); it != m.end(); ++it)
         {
             m_meta.removeXmpTag(it.key().toLatin1().constData());
         }
