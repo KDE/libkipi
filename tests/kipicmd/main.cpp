@@ -343,20 +343,20 @@ int main(int argc, char* argv[])
     if (parser.isSet(QString::fromLatin1("i")))
     {
         startList = &listSelectedImages;
-        startList->append(QUrl(parser.value(QString::fromLatin1("i"))));
+        startList->append(QUrl::fromLocalFile(parser.value(QString::fromLatin1("i"))));
     }
     else if (parser.isSet(QString::fromLatin1("c")))
     {
         startList = &listSelectedAlbums;
-        startList->append(QUrl(parser.value(QString::fromLatin1("c"))));
+        startList->append(QUrl::fromLocalFile(parser.value(QString::fromLatin1("c"))));
     }
     else if (parser.isSet(QString::fromLatin1("allc")))
     {
         startList = &listAllAlbums;
-        startList->append(QUrl(parser.value(QString::fromLatin1("allc"))));
+        startList->append(QUrl::fromLocalFile(parser.value(QString::fromLatin1("allc"))));
     }
 
-    qDebug() << "startList:" << startList;
+    qDebug() << "startList:" << *startList;
     qDebug() << "parser:"    << parser.optionNames();
 
     // Append the remaining arguments to the lists
@@ -389,7 +389,7 @@ int main(int argc, char* argv[])
             }
             else
             {
-                startList->append(QUrl(args.value(i)));
+                startList->append(QUrl::fromLocalFile(args.value(i)));
             }
         }
     }
