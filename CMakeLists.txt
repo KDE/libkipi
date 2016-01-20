@@ -86,7 +86,6 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
 
 find_package(KF5 ${KF5_MIN_VERSION}
              REQUIRED COMPONENTS
-             I18n
              Config
              XmlGui
              Service
