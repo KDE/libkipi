@@ -46,6 +46,10 @@
 #include "pluginloader.h"
 #include "kipiinterface.h"
 
+#ifdef HAVE_KEXIV2
+#   include <kexiv2/kexiv2.h>
+#endif
+
 // Local includes
 
 #include "kipiinterface.h"
@@ -303,6 +307,10 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
 
 int main(int argc, char* argv[])
 {
+#ifdef HAVE_KEXIV2
+    KExiv2Iface::KExiv2::initializeExiv2();
+#endif
+
     QApplication app(argc, argv);
     app.setApplicationName(QLatin1String("kipicmd"));
     app.setApplicationVersion(QLatin1String(KIPI_VERSION_STRING));
@@ -408,8 +416,8 @@ int main(int argc, char* argv[])
 
     // determine what to do
 
-    int returnValue                         = 0;
-    bool startedPlugin                      = false;
+    int returnValue    = 0;
+    bool startedPlugin = false;
 
     if ( parser.isSet(QString::fromLatin1("list")) )
     {
@@ -439,12 +447,16 @@ int main(int argc, char* argv[])
         return 0;
     }
 
+    int ret = returnValue;
+
     if (startedPlugin && parser.isSet(QString::fromLatin1("w")))
     {
-        return app.exec();
+        ret = app.exec();
     }
-    else
-    {
-        return returnValue;
-    }
+
+#ifdef HAVE_KEXIV2
+    KExiv2Iface::KExiv2::cleanupExiv2();
+#endif
+
+    return ret;
 }

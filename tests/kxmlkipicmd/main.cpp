@@ -39,7 +39,11 @@
 
 #include "libkipi_version.h"
 
-// Local includes:
+#ifdef HAVE_KEXIV2
+#   include <kexiv2/kexiv2.h>
+#endif
+
+// Local includes
 
 #include "kipitestmainwindow.h"
 
@@ -47,6 +51,10 @@ using namespace KXMLKipiCmd;
 
 int main(int argc, char* argv[])
 {
+#ifdef HAVE_KEXIV2
+    KExiv2Iface::KExiv2::initializeExiv2();
+#endif
+
     QApplication app(argc, argv);
     app.setApplicationName(QLatin1String("kxmlkipicmd"));
     app.setApplicationVersion(QLatin1String(KIPI_VERSION_STRING));
@@ -133,5 +141,11 @@ int main(int argc, char* argv[])
     app.setActiveWindow(mainWindow);
     mainWindow->show();
 
-    return app.exec();
+    int ret = app.exec();
+
+#ifdef HAVE_KEXIV2
+    KExiv2Iface::KExiv2::cleanupExiv2();
+#endif
+
+    return ret;
 }
