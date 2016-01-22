@@ -38,6 +38,7 @@
 #include <QPixmap>
 #include <QImageReader>
 #include <QImageWriter>
+#include <QDir>
 
 // Local includes
 
@@ -60,12 +61,19 @@
 
 #define PrintWarningMessage() qCWarning(LIBKIPI_LOG) << "This method should have been overridden in the kipi host interface."
 
+inline void initLibkipiResource()
+{
+    Q_INIT_RESOURCE(libkipi);
+}
+
 namespace KIPI
 {
 
 Interface::Interface(QObject* const parent, const QString& name)
     : QObject(parent)
 {
+    initLibkipiResource();
+
     setObjectName(name);
 }
 

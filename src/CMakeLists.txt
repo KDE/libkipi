@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -8,6 +8,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CUR
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
+
+qt5_add_resources(libkipiresources_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../pics/libkipi.qrc)
 
 set(kipi_LIB_SRCS interface.cpp
                   imagecollection.cpp
@@ -20,6 +22,8 @@ set(kipi_LIB_SRCS interface.cpp
                   configwidget.cpp
                   pluginloader.cpp
                   libkipi_debug.cpp
+
+                  ${libkipiresources_SRCS}
 )
 
 ecm_generate_headers(kipi_CamelCase_HEADERS
