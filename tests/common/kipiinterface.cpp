@@ -234,7 +234,7 @@ class KipiRawProcessor : public RawProcessor
 {
 public:
 
-    KipiRawProcessor()          {};
+    KipiRawProcessor()  {};
     ~KipiRawProcessor() {};
 
     bool loadRawPreview(const QUrl& url, QImage& image)
@@ -242,10 +242,18 @@ public:
         return m_decoder.loadRawPreview(image, url.toLocalFile());
     }
 
-    bool decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax)
+    uint decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax)
     {
-        return m_decoder.decodeRAWImage(url.toLocalFile(), KDcrawIface::RawDecodingSettings(),
-                                        imageData, width, height, rgbmax);
+        // Default settings. TODO : add an option to customize settings in kipi test host application.
+        KDcrawIface::RawDecodingSetting prm;
+
+        if (m_decoder.decodeRAWImage(url.toLocalFile(), prm,
+                                    imageData, width, height, rgbmax))
+        {
+            return prm.sixteenBitsImage;
+        }
+
+        return false;
     }
 
     void cancel()
