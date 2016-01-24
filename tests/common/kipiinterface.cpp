@@ -245,7 +245,7 @@ public:
     uint decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax)
     {
         // Default settings. TODO : add an option to customize settings in kipi test host application.
-        KDcrawIface::RawDecodingSetting prm;
+        KDcrawIface::RawDecodingSettings prm;
 
         if (m_decoder.decodeRAWImage(url.toLocalFile(), prm,
                                     imageData, width, height, rgbmax))
