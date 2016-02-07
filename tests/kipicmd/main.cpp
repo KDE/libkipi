@@ -364,8 +364,16 @@ int main(int argc, char* argv[])
         startList->append(QUrl::fromLocalFile(parser.value(QString::fromLatin1("allc"))));
     }
 
-    qDebug() << "startList:" << *startList;
-    qDebug() << "parser:"    << parser.optionNames();
+    if (startList)
+    {
+        qDebug() << "startList: " << *startList;
+    }
+    else
+    {
+        qDebug() << "startList: is null";
+    }
+
+    qDebug() << "parser: "    << parser.optionNames();
 
     // Append the remaining arguments to the lists
 
@@ -402,9 +410,9 @@ int main(int argc, char* argv[])
         }
     }
 
-//     qDebug() << "listSelectedImages:" << listSelectedImages;
-//     qDebug() << "listSelectedAlbums:" << listSelectedAlbums;
-//     qDebug() << "listAllAlbums:"      << listAllAlbums;
+    qDebug() << "listSelectedImages:" << listSelectedImages;
+    qDebug() << "listSelectedAlbums:" << listSelectedAlbums;
+    qDebug() << "listAllAlbums:"      << listAllAlbums;
 
     kipiInterface->addSelectedImages(listSelectedImages);
     kipiInterface->addSelectedAlbums(listSelectedAlbums);
@@ -422,7 +430,9 @@ int main(int argc, char* argv[])
     if ( parser.isSet(QString::fromLatin1("list")) )
     {
         if (!ListPlugins( nameOfOnlyOnePluginToLoad ))
+        {
             returnValue = 1;
+        }
     }
     else if ( parser.isSet(QString::fromLatin1("a")) )
     {
