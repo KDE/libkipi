@@ -226,6 +226,13 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
     }
 }
 
+bool saveImage(const QUrl& url, const QString& format,
+               const QByteArray& data, uint width, uint height,
+               bool  sixteenBit, bool hasAlpha, bool* cancel)
+{
+    
+}
+
 // ---------------------------------------------------------------------------------------
 
 #ifdef HAVE_KDCRAW

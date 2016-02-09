@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2015, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -7,6 +7,12 @@
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif (POLICY CMP0063)
+
+find_package(JPEG REQUIRED)
+find_package(PNG  REQUIRED)
+find_package(TIFF REQUIRED)
+
+include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
 find_package(KF5KDcraw 5.0.0)
 find_package(KF5KExiv2 5.0.0)
@@ -28,6 +34,7 @@ endif()
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
                     ${CMAKE_CURRENT_BINARY_DIR}/../src
                     ${CMAKE_CURRENT_SOURCE_DIR}/../src
+                    ${CMAKE_CURRENT_SOURCE_DIR}/imageio
                     ${CMAKE_CURRENT_SOURCE_DIR}/common
                     ${CMAKE_CURRENT_SOURCE_DIR}/kxmlkipicmd
 )
@@ -37,6 +44,9 @@ add_subdirectory(plugins)
 #----------------------------------------------------------------------------------------------------
 
 set(kxmlkipicmd_SRCS
+#    imageio/iccjpeg.c
+#    imageio/kipiwritehelp.cpp
+#    imageio/kipiwriteimage.cpp
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
     common/kipiimageinfoshared.cpp
@@ -51,6 +61,9 @@ set(kxmlkipicmd_SRCS
 add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 target_link_libraries(kxmlkipicmd
+                      ${JPEG_LIBRARIES}
+                      ${TIFF_LIBRARIES}
+                      ${PNG_LIBRARIES}
                       Qt5::Core
                       Qt5::Gui
                       KF5Kipi
@@ -71,6 +84,9 @@ install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL
 #----------------------------------------------------------------------------------------------------
 
 set(kipicmd_SRCS
+#    imageio/iccjpeg.c
+#    imageio/kipiwritehelp.cpp
+#    imageio/kipiwriteimage.cpp
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
     common/kipiimageinfoshared.cpp
@@ -82,6 +98,9 @@ set(kipicmd_SRCS
 add_executable(kipicmd ${kipicmd_SRCS})
 
 target_link_libraries(kipicmd
+                      ${JPEG_LIBRARIES}
+                      ${TIFF_LIBRARIES}
+                      ${PNG_LIBRARIES}
                       Qt5::Core
                       Qt5::Gui
                       KF5Kipi

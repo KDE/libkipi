@@ -77,9 +77,14 @@ public:
 
     void thumbnails(const QList<QUrl>& list, int size);
 
+    bool saveImage(const QUrl& url, const QString& format,
+                   const QByteArray& data, uint width, uint height,
+                   bool  sixteenBit, bool hasAlpha,
+                   bool* cancel=0);
+
     FileReadWriteLock* createReadWriteLock(const QUrl&) const;
-    RawProcessor* createRawProcessor() const;
-    MetadataProcessor* createMetadataProcessor() const;
+    RawProcessor*      createRawProcessor()             const;
+    MetadataProcessor* createMetadataProcessor()        const;
 
 private:
 
