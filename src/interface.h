@@ -93,7 +93,7 @@ enum Features
     HostSupportsPreviews           = 1 << 16, /** This feature specifies that host application can provide image preview.                                                           */
     HostSupportsRawProcessing      = 1 << 17, /** This feature specifies that host application can process Raw files.                                                               */
     HostSupportsMetadataProcessing = 1 << 18, /** This feature specifies that host application can process Metadata from files.                                                     */
-    HostSupportsSaveImages         = 1 << 19  /** This feature specifies that host application can save image files           .                                                     */
+    HostSupportsSaveImages         = 1 << 19  /** This feature specifies that host application can save image files.                                                                */
 };
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
@@ -475,7 +475,7 @@ public:
      * Clears a reservation made previously with reserveForAction for the given reservingObject.
      * You must clear any reservation you made, or, alternatively, delete the reserving object.
      */
-    virtual void clearReservation(const QUrl &url, QObject* const reservingObject);
+    virtual void clearReservation(const QUrl& url, QObject* const reservingObject);
 
     /**
      * Supported if HostSupportsItemReservation
@@ -483,7 +483,7 @@ public:
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
      * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool itemIsReserved(const QUrl &url, QString* const descriptionOfAction = 0) const;
+    virtual bool itemIsReserved(const QUrl& url, QString* const descriptionOfAction = 0) const;
 
     /**
      * Supported if HostSupportsReadWriteLock
@@ -510,7 +510,7 @@ public:
      *
      */
     virtual MetadataProcessor* createMetadataProcessor() const = 0;
-    
+
     /**
      * Supported if HostSupportsEditHints
      *
@@ -567,8 +567,8 @@ Q_SIGNALS:
      *
      * Emitted from reservedForAction and clearReservation, respectively.
      * */
-    void reservedForAction(const QUrl &url, const QString& descriptionOfAction);
-    void reservationCleared(const QUrl &url);
+    void reservedForAction(const QUrl& url, const QString& descriptionOfAction);
+    void reservationCleared(const QUrl& url);
 
 protected:
 
