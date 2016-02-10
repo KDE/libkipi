@@ -70,18 +70,7 @@ public:
 
 private:
 
-    void   writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,
-                           char* const profile_data, png_uint_32 length);
-
-    size_t concatenateString(char* const destination, const char* source, const size_t length);
-    size_t copyString(char* const destination, const char* source, const size_t length);
-    long   formatString(char* const string, const size_t length, const char* format, ...);
-    long   formatStringList(char* const string, const size_t length, const char* format, va_list operands);
-
     int bytesDepth() const;
-
-    static void kipi_tiff_warning(const char* module, const char* format, va_list warnings);
-    static void kipi_tiff_error(const char* module, const char* format, va_list errors);
 
 private:
 

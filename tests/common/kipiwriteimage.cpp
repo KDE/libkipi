@@ -21,8 +21,6 @@
  *
  * ============================================================ */
 
-//#define ENABLE_DEBUG_MESSAGES 1
-
 #include "kipiwriteimage.h"
 #include "kipiwritehelp.h"
 
@@ -139,7 +137,7 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
     // Init JPEG compressor.
     cinfo.err              = jpeg_std_error(&jerr);
     jpeg_create_compress(&cinfo);
-    kp_jpeg_qiodevice_dest(&cinfo, &file);
+    kipi_jpeg_qiodevice_dest(&cinfo, &file);
     cinfo.image_width      = d->width;
     cinfo.image_height     = d->height;
     cinfo.input_components = 3;
@@ -332,7 +330,7 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
     png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
 
-    png_set_write_fn(png_ptr, (void*)&file, kp_png_write_fn, kp_png_flush_fn);
+    png_set_write_fn(png_ptr, (void*)&file, kipi_png_write_fn, kipi_png_flush_fn);
 
     if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)      // Intel
         png_set_bgr(png_ptr);
@@ -626,34 +624,6 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
     TIFFClose(tif);
 
     return true;
-}
-
-// To manage Errors/Warnings handling provide by libtiff
-
-void KIPIWriteImage::kipi_tiff_warning(const char* module, const char* format, va_list warnings)
-{
-#ifdef ENABLE_DEBUG_MESSAGES
-    char message[4096];
-    vsnprintf(message, 4096, format, warnings);
-    qDebug() << module << "::" << message ;
-#else
-    Q_UNUSED(module);
-    Q_UNUSED(format);
-    Q_UNUSED(warnings);
-#endif
-}
-
-void KIPIWriteImage::kipi_tiff_error(const char* module, const char* format, va_list errors)
-{
-#ifdef ENABLE_DEBUG_MESSAGES
-    char message[4096];
-    vsnprintf(message, 4096, format, errors);
-    qDebug() << module << "::" << message ;
-#else
-    Q_UNUSED(module);
-    Q_UNUSED(format);
-    Q_UNUSED(errors);
-#endif
 }
 
 }  // namespace KXMLKipiCmd

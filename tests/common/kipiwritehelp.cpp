@@ -7,7 +7,7 @@
  * Date        : 2009-13-11
  * Description : Helper functions for writing images
  *
- * Copyright (C) 1994-1996, Thomas G. Lane.
+ * Copyright (C) 1994-1996 by Thomas G. Lane.
  * Copyright (C) 2009-2010 by Patrick Spendrin <ps_ml@gmx.de>
  * Copyright (C) 2007-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
@@ -24,6 +24,8 @@
  * GNU General Public License for more details.
  *
  * ============================================================ */
+
+//#define ENABLE_DEBUG_MESSAGES 1
 
 #include "kipiwritehelp.h"
 
@@ -44,6 +46,8 @@ extern "C"
 
 namespace KXMLKipiCmd
 {
+
+//-- JPG helper methods ---------------------------------------------------------------------
 
 /**
  Expanded data destination object for input/output for jpeg
@@ -119,7 +123,7 @@ void term_destination (j_compress_ptr cinfo)
     }
 }
 
-void kp_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* const outDevice)
+void kipi_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* const outDevice)
 {
     my_dest_ptr dest;
 
@@ -196,7 +200,7 @@ void term_source(j_decompress_ptr)
 {
 }
 
-void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
+void kipi_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 {
     Q_ASSERT(!cinfo->src);
     my_source_mgr* src         = (my_source_mgr*)
@@ -212,11 +216,9 @@ void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
     src->inDevice              = ioDevice;
 }
 
-/*
- * png stuff
- */
+//-- PNG helper methods ---------------------------------------------------------------------
 
-void kp_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
+void kipi_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     QIODevice* out = (QIODevice*)png_get_io_ptr(png_ptr);
     uint nr        = out->write((char*)data, length);
@@ -228,9 +230,37 @@ void kp_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
     }
 }
 
-void kp_png_flush_fn(png_structp png_ptr)
+void kipi_png_flush_fn(png_structp png_ptr)
 {
     Q_UNUSED(png_ptr);
+}
+
+//-- TIF helper methods ---------------------------------------------------------------------
+
+void kipi_tiff_warning(const char* module, const char* format, va_list warnings)
+{
+#ifdef ENABLE_DEBUG_MESSAGES
+    char message[4096];
+    vsnprintf(message, 4096, format, warnings);
+    qDebug() << module << "::" << message ;
+#else
+    Q_UNUSED(module);
+    Q_UNUSED(format);
+    Q_UNUSED(warnings);
+#endif
+}
+
+void kipi_tiff_error(const char* module, const char* format, va_list errors)
+{
+#ifdef ENABLE_DEBUG_MESSAGES
+    char message[4096];
+    vsnprintf(message, 4096, format, errors);
+    qDebug() << module << "::" << message ;
+#else
+    Q_UNUSED(module);
+    Q_UNUSED(format);
+    Q_UNUSED(errors);
+#endif
 }
 
 }  // namespace KXMLKipiCmd

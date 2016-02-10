@@ -31,7 +31,7 @@
  
 // Qt includes 
  
-#include <QtCore/QIODevice>
+#include <QIODevice>
 
 // C ANSI includes
 
@@ -53,7 +53,7 @@ namespace KXMLKipiCmd
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing compression.
   */
-void kp_jpeg_qiodevice_dest(j_compress_ptr cinfo, QIODevice* const outfile);
+void kipi_jpeg_qiodevice_dest(j_compress_ptr cinfo, QIODevice* const outfile);
 
 /**
   * a replacement function for jpeg_stdio_src
@@ -64,17 +64,23 @@ void kp_jpeg_qiodevice_dest(j_compress_ptr cinfo, QIODevice* const outfile);
   * The caller must have already opened the device, and is responsible
   * for closing it after finishing reading.
   */
-void kp_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const infile);
+void kipi_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const infile);
 
 /**
   * a callback function for writing a png image
   */
-void kp_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length);
+void kipi_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length);
 
 /**
   * a callback function for flushing the buffers, currently unused, since no buffering happens
   */
-void kp_png_flush_fn(png_structp png_ptr);
+void kipi_png_flush_fn(png_structp png_ptr);
+
+/**
+ * To manage Errors/Warnings handling provide by libtiff
+ */
+void kipi_tiff_warning(const char* module, const char* format, va_list warnings);
+void kipi_tiff_error(const char* module, const char* format, va_list errors);
 
 }  // namespace KXMLKipiCmd
 
