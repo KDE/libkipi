@@ -39,19 +39,23 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
                     ${CMAKE_CURRENT_SOURCE_DIR}/kxmlkipicmd
 )
 
-add_subdirectory(plugins)
-
-#----------------------------------------------------------------------------------------------------
-
-set(kxmlkipicmd_SRCS
-    imageio/iccjpeg.c
-    imageio/kipiwritehelp.cpp
-    imageio/kipiwriteimage.cpp
+set(kipicommon_SRCS
+    common/iccjpeg.c
+    common/kipiwritehelp.cpp
+    common/kipiwriteimage.cpp
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
     common/kipiimageinfoshared.cpp
     common/kipiimagecollectionselector.cpp
     common/kipiuploadwidget.cpp
+)
+
+add_subdirectory(plugins)
+
+#----------------------------------------------------------------------------------------------------
+
+set(kxmlkipicmd_SRCS
+    ${kipicommon_SRCS}
     kxmlkipicmd/kipitestmainwindow.cpp
     kxmlkipicmd/kipitestpluginloader.cpp
     kxmlkipicmd/kipisetup.cpp
@@ -84,14 +88,7 @@ install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL
 #----------------------------------------------------------------------------------------------------
 
 set(kipicmd_SRCS
-    imageio/iccjpeg.c
-    imageio/kipiwritehelp.cpp
-    imageio/kipiwriteimage.cpp
-    common/kipiinterface.cpp
-    common/kipiimagecollectionshared.cpp
-    common/kipiimageinfoshared.cpp
-    common/kipiimagecollectionselector.cpp
-    common/kipiuploadwidget.cpp
+    ${kipicommon_SRCS}
     kipicmd/main.cpp
 )
 
