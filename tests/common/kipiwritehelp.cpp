@@ -150,9 +150,10 @@ void kipi_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* const outDevice)
 
 boolean fill_input_buffer(j_decompress_ptr cinfo)
 {
-    my_source_mgr* src = (my_source_mgr*)cinfo->src;
+    my_source_mgr* const src = (my_source_mgr*)cinfo->src;
     Q_ASSERT(src->inDevice);
-    int readSize       = src->inDevice->read((char*)src->buffer, BUFFER_SIZE);
+    int readSize             = src->inDevice->read((char*)src->buffer, BUFFER_SIZE);
+
     if (readSize > 0)
     {
         src->pub.next_input_byte = src->buffer;
@@ -169,6 +170,7 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
         src->pub.next_input_byte = fakeEOI;
         src->pub.bytes_in_buffer = 2;
     }
+    
     return true;
 }
 
@@ -179,7 +181,8 @@ void init_source(j_decompress_ptr cinfo)
 
 void skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
-    my_source_mgr* src = (my_source_mgr*)cinfo->src;
+    my_source_mgr* const src = (my_source_mgr*)cinfo->src;
+
     if (num_bytes > 0)
     {
         while (num_bytes > (long) src->pub.bytes_in_buffer)
@@ -203,7 +206,7 @@ void term_source(j_decompress_ptr)
 void kipi_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 {
     Q_ASSERT(!cinfo->src);
-    my_source_mgr* src         = (my_source_mgr*)
+    my_source_mgr* const src   = (my_source_mgr*)
                                  (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT,
                                  sizeof(my_source_mgr));
     cinfo->src                 = (jpeg_source_mgr*)src;
@@ -220,8 +223,8 @@ void kipi_jpeg_qiodevice_src(j_decompress_ptr cinfo, QIODevice* const ioDevice)
 
 void kipi_png_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-    QIODevice* out = (QIODevice*)png_get_io_ptr(png_ptr);
-    uint nr        = out->write((char*)data, length);
+    QIODevice* const out = (QIODevice*)png_get_io_ptr(png_ptr);
+    uint nr              = out->write((char*)data, length);
 
     if (nr != length)
     {
