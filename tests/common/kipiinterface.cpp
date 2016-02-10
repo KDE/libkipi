@@ -231,7 +231,7 @@ bool saveImage(const QUrl& url, const QString& format,
                bool  sixteenBit, bool hasAlpha, bool* cancel)
 {
     // TODO
-    return false
+    return false;
 }
 
 // ---------------------------------------------------------------------------------------
