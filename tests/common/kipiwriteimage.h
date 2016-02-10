@@ -58,8 +58,7 @@ public:
     ~KIPIWriteImage();
 
     void setImageData(const QByteArray& data, uint width, uint height,
-                      bool  sixteenBit, bool hasAlpha,
-                      const QByteArray& iccProfile);
+                      bool  sixteenBit, bool hasAlpha);
 
     void setCancel(bool* const cancel);
     bool cancel() const;

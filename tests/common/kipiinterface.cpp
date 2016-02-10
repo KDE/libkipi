@@ -232,15 +232,17 @@ bool KipiInterface::saveImage(const QUrl& url, const QString& format,
                               bool  sixteenBit, bool hasAlpha, bool* cancel)
 {
     KIPIWriteImage writer;
-    writer.setImageData(data, width, height, sixteenBit, hasAlpha, QByteArray());
+    writer.setImageData(data, width, height, sixteenBit, hasAlpha);
     writer.setCancel(cancel);
 
-    if (format.toUpper() == QLatin1String("JPG"))
+    if (format.toUpper() == QLatin1String("JPG") ||
+        format.toUpper() == QLatin1String("JPEG"))
     {
         return writer.write2JPEG(url.toLocalFile());
     }
 
-    if (format.toUpper() == QLatin1String("TIF"))
+    if (format.toUpper() == QLatin1String("TIF") ||
+        format.toUpper() == QLatin1String("TIFF"))
     {
         return writer.write2TIFF(url.toLocalFile());
     }
@@ -248,6 +250,11 @@ bool KipiInterface::saveImage(const QUrl& url, const QString& format,
     if (format.toUpper() == QLatin1String("PNG"))
     {
         return writer.write2PNG(url.toLocalFile());
+    }
+
+    if (format.toUpper() == QLatin1String("PPM"))
+    {
+        return writer.write2PPM(url.toLocalFile());
     }
 
     return false;

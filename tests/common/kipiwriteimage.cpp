@@ -73,7 +73,6 @@ public:
 
     QByteArray           data;         // BGR(A) image data
                                        // data[0] = blue, data[1] = green, data[2] = red, data[3] = alpha.
-    QByteArray           iccProfile;   // ICC color profile data.
 };
 
 KIPIWriteImage::KIPIWriteImage()
@@ -116,15 +115,13 @@ bool KIPIWriteImage::cancel() const
 }
 
 void KIPIWriteImage::setImageData(const QByteArray& data, uint width, uint height,
-                                bool  sixteenBit, bool hasAlpha,
-                                const QByteArray& iccProfile)
+                                bool  sixteenBit, bool hasAlpha)
 {
     d->data       = data;
     d->width      = width;
     d->height     = height;
     d->sixteenBit = sixteenBit;
     d->hasAlpha   = hasAlpha;
-    d->iccProfile = iccProfile;
 }
 
 bool KIPIWriteImage::write2JPEG(const QString& destPath)
@@ -164,13 +161,9 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
     jpeg_set_quality(&cinfo, 99, true);
     jpeg_start_compress(&cinfo, true);
 
-    // Write ICC color profile.
-    if (!d->iccProfile.isEmpty())
-        write_icc_profile (&cinfo, (JOCTET *)d->iccProfile.data(), d->iccProfile.size());
-
     // Write image data
-    uchar* line = new uchar[d->width*3];
-    uchar* dstPtr     = 0;
+    uchar* line   = new uchar[d->width*3];
+    uchar* dstPtr = 0;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
@@ -377,21 +370,6 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
     png_set_sBIT(png_ptr, info_ptr, &sig_bit);
     png_set_compression_level(png_ptr, 9);
 
-    // Write ICC profile.
-    if (!d->iccProfile.isEmpty())
-    {
-        // In libpng 1.5, the icc profile data changed from png_charp to png_bytep
-        // BUG: 264184
-
-#if PNG_LIBPNG_VER_MAJOR >= 1 && PNG_LIBPNG_VER_MINOR >= 5
-        png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
-                     (png_bytep)d->iccProfile.data(), d->iccProfile.size());
-#else
-        png_set_iCCP(png_ptr, info_ptr, (png_charp)"icc", PNG_COMPRESSION_TYPE_BASE,
-                     d->iccProfile.data(), d->iccProfile.size());
-#endif
-    }
-
     // Write Software info.
     QString libpngver(QLatin1String(PNG_HEADER_VERSION_STRING));
     libpngver.replace(QLatin1Char('\n'), QLatin1Char(' '));
@@ -541,14 +519,6 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
     libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
     TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)libtiffver.toLatin1().data());
 
-    // Write ICC profile.
-    if (!d->iccProfile.isEmpty())
-    {
-#if defined(TIFFTAG_ICCPROFILE)
-        TIFFSetField(tif, TIFFTAG_ICCPROFILE, (uint32)d->iccProfile.size(),
-                     (uchar *)d->iccProfile.data());
-#endif
-    }
 
     // Write full image data in tiff directory IFD0
 
@@ -657,162 +627,6 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
     TIFFClose(tif);
 
     return true;
-}
-
-void KIPIWriteImage::writeRawProfile(png_struct* const ping, png_info* const ping_info, char* const profile_type,
-                                   char* const profile_data, png_uint_32 length)
-{
-    png_textp      text;
-    long           i;
-    uchar*         sp = 0;
-    png_charp      dp;
-    png_uint_32    allocated_length, description_length;
-
-    const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
-
-    qDebug() << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
-
-    text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
-    description_length = strlen((const char *) profile_type);
-    allocated_length   = (png_uint_32) (length*2 + (length >> 5) + 20 + description_length);
-
-    text[0].text       = (png_charp) png_malloc(ping, allocated_length);
-    text[0].key        = (png_charp) png_malloc(ping, (png_uint_32) 80);
-    text[0].key[0]     = '\0';
-
-    concatenateString(text[0].key, "Raw profile type ", 4096);
-    concatenateString(text[0].key, (const char *) profile_type, 62);
-
-    sp = (uchar*)profile_data;
-    dp = text[0].text;
-    *dp++='\n';
-
-    copyString(dp, (const char *) profile_type, allocated_length);
-
-    dp += description_length;
-    *dp++='\n';
-
-    formatString(dp, allocated_length-strlen(text[0].text), "%8lu ", length);
-
-    dp += 8;
-
-    for (i=0; i < (long) length; ++i)
-    {
-        if (i%36 == 0)
-            *dp++='\n';
-
-        *(dp++)=(char) hex[((*sp >> 4) & 0x0f)];
-        *(dp++)=(char) hex[((*sp++ ) & 0x0f)];
-    }
-
-    *dp++='\n';
-    *dp='\0';
-    text[0].text_length = (png_size_t) (dp-text[0].text);
-    text[0].compression = -1;
-
-    if (text[0].text_length <= allocated_length)
-        png_set_text(ping, ping_info,text, 1);
-
-    png_free(ping, text[0].text);
-    png_free(ping, text[0].key);
-    png_free(ping, text);
-}
-
-size_t KIPIWriteImage::concatenateString(char* const destination, const char* source, const size_t length)
-{
-    char*       q = 0;
-    const char* p = 0;
-    size_t      i;
-    size_t      count;
-
-    if ( !destination || !source || length == 0 )
-        return 0;
-
-    p = source;
-    q = destination;
-    i = length;
-
-    while ((i-- != 0) && (*q != '\0'))
-        q++;
-
-    count = (size_t) (q-destination);
-    i     = length-count;
-
-    if (i == 0)
-        return(count+strlen(p));
-
-    while (*p != '\0')
-    {
-        if (i != 1)
-        {
-            *q++=(*p);
-            i--;
-        }
-        p++;
-    }
-
-    *q='\0';
-
-    return(count+(p-source));
-}
-
-size_t KIPIWriteImage::copyString(char* const destination, const char* source, const size_t length)
-{
-    char*       q = 0;
-    const char* p = 0;
-    size_t      i;
-
-    if ( !destination || !source || length == 0 )
-        return 0;
-
-    p = source;
-    q = destination;
-    i = length;
-
-    if ((i != 0) && (--i != 0))
-    {
-        do
-        {
-            if ((*q++=(*p++)) == '\0')
-                break;
-        }
-        while (--i != 0);
-    }
-
-    if (i == 0)
-    {
-        if (length != 0)
-            *q='\0';
-
-        do
-        {
-        }
-        while (*p++ != '\0');
-    }
-
-    return((size_t) (p-source-1));
-}
-
-long KIPIWriteImage::formatString(char* const string, const size_t length, const char* format, ...)
-{
-    long n;
-
-    va_list operands;
-
-    va_start(operands,format);
-    n = (long) formatStringList(string, length, format, operands);
-    va_end(operands);
-    return(n);
-}
-
-long KIPIWriteImage::formatStringList(char* const string, const size_t length, const char* format, va_list operands)
-{
-    int n = vsnprintf(string, length, format, operands);
-
-    if (n < 0)
-        string[length-1] = '\0';
-
-    return((long) n);
 }
 
 // To manage Errors/Warnings handling provide by libtiff

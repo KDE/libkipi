@@ -40,7 +40,6 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/..
 )
 
 set(kipicommon_SRCS
-    common/iccjpeg.c
     common/kipiwritehelp.cpp
     common/kipiwriteimage.cpp
     common/kipiinterface.cpp
