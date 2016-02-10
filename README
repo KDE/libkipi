@@ -16,7 +16,7 @@ The library documentation is available on header files.
 -- DEPENDENCIES -------------------------------------------------------
 
 CMake           >= 2.8.12                   http://www.cmake.org
-ECM             >= 1.1.0                    https://projects.kde.org/projects/kdesupport/extra-cmake-modules
+ECM             >= 1.7.0                    https://projects.kde.org/projects/kdesupport/extra-cmake-modules
 libqt           >= 5.2.0                    http://qt-project.org
 libkde          >= 5.0.0                    http://www.kde.org
 
