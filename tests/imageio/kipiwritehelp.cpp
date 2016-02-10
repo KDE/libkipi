@@ -30,6 +30,7 @@
 // Qt includes
 
 #include <QIODevice>
+#include <QDebug>
 
 // LibJPEG includes
 
@@ -160,7 +161,7 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
         * in the libjpeg documentation.
         */
         static JOCTET fakeEOI[2] = { JOCTET(0xFF), JOCTET(JPEG_EOI)};
-        qCWarning(KIPIPLUGINS_LOG) << "Image is incomplete";
+        qWarning() << "Image is incomplete";
         src->pub.next_input_byte = fakeEOI;
         src->pub.bytes_in_buffer = 2;
     }

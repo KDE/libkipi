@@ -42,6 +42,11 @@ extern "C"
 #include <png.h>
 }
 
+// Qt includes
+
+#include <QByteArray>
+#include <QString>
+
 namespace KXMLKipiCmd
 {
 
@@ -54,8 +59,7 @@ public:
 
     void setImageData(const QByteArray& data, uint width, uint height,
                       bool  sixteenBit, bool hasAlpha,
-                      const QByteArray& iccProfile,
-                      const KPMetadata& metadata);
+                      const QByteArray& iccProfile);
 
     void setCancel(bool* const cancel);
     bool cancel() const;
@@ -74,9 +78,6 @@ private:
     size_t copyString(char* const destination, const char* source, const size_t length);
     long   formatString(char* const string, const size_t length, const char* format, ...);
     long   formatStringList(char* const string, const size_t length, const char* format, va_list operands);
-
-    void tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
-    void tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag, const KPMetadata& metadata, const char* exifTagName);
 
     int bytesDepth() const;
 

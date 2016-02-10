@@ -54,6 +54,7 @@
 #include "kipiimagecollectionselector.h"
 #include "kipiuploadwidget.h"
 #include "kipiimagecollectionshared.h"
+#include "kipiwriteimage.h"
 
 namespace KXMLKipiCmd
 {
@@ -226,11 +227,29 @@ void KipiInterface::thumbnails(const QList<QUrl>& list, int)
     }
 }
 
-bool saveImage(const QUrl& url, const QString& format,
-               const QByteArray& data, uint width, uint height,
-               bool  sixteenBit, bool hasAlpha, bool* cancel)
+bool KipiInterface::saveImage(const QUrl& url, const QString& format,
+                              const QByteArray& data, uint width, uint height,
+                              bool  sixteenBit, bool hasAlpha, bool* cancel)
 {
-    // TODO
+    KIPIWriteImage writer;
+    writer.setImageData(data, width, height, sixteenBit, hasAlpha, QByteArray());
+    writer.setCancel(cancel);
+
+    if (format.toUpper() == QLatin1String("JPG"))
+    {
+        return writer.write2JPEG(url.toLocalFile());
+    }
+
+    if (format.toUpper() == QLatin1String("TIF"))
+    {
+        return writer.write2TIFF(url.toLocalFile());
+    }
+
+    if (format.toUpper() == QLatin1String("PNG"))
+    {
+        return writer.write2PNG(url.toLocalFile());
+    }
+
     return false;
 }
 
@@ -284,7 +303,7 @@ public:
     }
 
 private:
-    
+
     KDcrawIface::KDcraw m_decoder;
 };
 

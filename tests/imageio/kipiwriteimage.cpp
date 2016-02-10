@@ -42,8 +42,8 @@ extern "C"
 
 // Qt includes
 
-#include <QByteArray>
 #include <QFile>
+#include <QDebug>
 #include <QDataStream>
 #include <QStandardPaths>
 
@@ -61,7 +61,6 @@ public:
         width          = 0;
         height         = 0;
         cancel         = 0;
-        kipipluginsVer = QStringLiteral("Kipi-plugins v.%1").arg(kipipluginsVersion());
     }
 
     bool*                cancel;
@@ -75,10 +74,6 @@ public:
     QByteArray           data;         // BGR(A) image data
                                        // data[0] = blue, data[1] = green, data[2] = red, data[3] = alpha.
     QByteArray           iccProfile;   // ICC color profile data.
-
-    QString              kipipluginsVer;
-
-    KPMetadata           metadata;
 };
 
 KIPIWriteImage::KIPIWriteImage()
@@ -122,8 +117,7 @@ bool KIPIWriteImage::cancel() const
 
 void KIPIWriteImage::setImageData(const QByteArray& data, uint width, uint height,
                                 bool  sixteenBit, bool hasAlpha,
-                                const QByteArray& iccProfile,
-                                const KPMetadata& metadata)
+                                const QByteArray& iccProfile)
 {
     d->data       = data;
     d->width      = width;
@@ -131,8 +125,6 @@ void KIPIWriteImage::setImageData(const QByteArray& data, uint width, uint heigh
     d->sixteenBit = sixteenBit;
     d->hasAlpha   = hasAlpha;
     d->iccProfile = iccProfile;
-    d->metadata   = metadata;
-    d->metadata.setSettings(metadata.settings());
 }
 
 bool KIPIWriteImage::write2JPEG(const QString& destPath)
@@ -141,7 +133,7 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
 
     if (!file.open(QIODevice::ReadWrite))
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open JPEG file for writing" ;
+        qDebug() << "Failed to open JPEG file for writing" ;
         return false;
     }
 
@@ -245,8 +237,6 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
     jpeg_destroy_compress(&cinfo);
     file.close();
 
-    d->metadata.save(destPath);
-
     return true;
 }
 
@@ -256,7 +246,7 @@ bool KIPIWriteImage::write2PPM(const QString& destPath)
 
     if (!file)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open ppm file for writing" ;
+        qDebug() << "Failed to open ppm file for writing" ;
         return false;
     }
 
@@ -326,8 +316,6 @@ bool KIPIWriteImage::write2PPM(const QString& destPath)
     delete [] line;
     fclose(file);
 
-    d->metadata.save(destPath);
-
     return true;
 }
 
@@ -341,7 +329,7 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
 
     if (!file.open(QIODevice::ReadWrite))
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open PNG file for writing" ;
+        qDebug() << "Failed to open PNG file for writing" ;
         return false;
     }
 
@@ -405,30 +393,14 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
     }
 
     // Write Software info.
-    QString libpngver(QStringLiteral(PNG_HEADER_VERSION_STRING));
+    QString libpngver(QLatin1String(PNG_HEADER_VERSION_STRING));
     libpngver.replace(QLatin1Char('\n'), QLatin1Char(' '));
-    QString soft     = d->kipipluginsVer;
-    soft.append(QStringLiteral(" (%1)").arg(libpngver));
-    QByteArray softAscii = soft.toLatin1();
+    QByteArray softAscii = libpngver.toLatin1();
     png_text text;
     text.key         = (png_charp)"Software";
     text.text        = softAscii.data();
     text.compression = PNG_TEXT_COMPRESSION_zTXt;
     png_set_text(png_ptr, info_ptr, &(text), 1);
-
-    // Store Exif data.
-
-    QByteArray ba = d->metadata.getExifEncoded(true);
-
-    writeRawProfile(png_ptr, info_ptr, (png_charp)"exif", ba.data(), (png_uint_32) ba.size());
-
-    // Store Iptc data.
-    QByteArray ba2 = d->metadata.getIptc();
-    writeRawProfile(png_ptr, info_ptr, (png_charp)"iptc", ba2.data(), (png_uint_32) ba2.size());
-
-    // Store Xmp data.
-    QByteArray ba3 = d->metadata.getXmp();
-    writeRawProfile(png_ptr, info_ptr, (png_charp)("xmp"), ba3.data(), (png_uint_32) ba3.size());
 
     png_write_info(png_ptr, info_ptr);
     png_set_shift(png_ptr, &sig_bit);
@@ -506,8 +478,6 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
     png_destroy_info_struct(png_ptr, (png_infopp) & info_ptr);
     file.close();
 
-    d->metadata.save(destPath);
-
     return true;
 }
 
@@ -529,7 +499,7 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
 
     if (!tif)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Failed to open TIFF file for writing" ;
+        qDebug() << "Failed to open TIFF file for writing" ;
         return false;
     }
 
@@ -567,33 +537,9 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
     TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,       (uint16)bitsDepth);
     TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,        TIFFDefaultStripSize(tif, 0));
 
-    // Store Iptc data.
-    QByteArray ba2 = d->metadata.getIptc(true);
-#if defined(TIFFTAG_PHOTOSHOP)
-    TIFFSetField (tif, TIFFTAG_PHOTOSHOP, (uint32)ba2.size(), (uchar *)ba2.data());
-#endif
-
-    // Store Xmp data.
-    QByteArray ba3 = d->metadata.getXmp();
-#if defined(TIFFTAG_XMLPACKET)
-    TIFFSetField(tif, TIFFTAG_XMLPACKET, (uint32)ba3.size(), (uchar *)ba3.data());
-#endif
-
-    // Standard Exif ASCII tags (available with libtiff 3.6.1)
-
-    tiffSetExifAsciiTag(tif, TIFFTAG_DOCUMENTNAME,     d->metadata, "Exif.Image.DocumentName");
-    tiffSetExifAsciiTag(tif, TIFFTAG_IMAGEDESCRIPTION, d->metadata, "Exif.Image.ImageDescription");
-    tiffSetExifAsciiTag(tif, TIFFTAG_MAKE,             d->metadata, "Exif.Image.Make");
-    tiffSetExifAsciiTag(tif, TIFFTAG_MODEL,            d->metadata, "Exif.Image.Model");
-    tiffSetExifAsciiTag(tif, TIFFTAG_DATETIME,         d->metadata, "Exif.Image.DateTime");
-    tiffSetExifAsciiTag(tif, TIFFTAG_ARTIST,           d->metadata, "Exif.Image.Artist");
-    tiffSetExifAsciiTag(tif, TIFFTAG_COPYRIGHT,        d->metadata, "Exif.Image.Copyright");
-
-    QString libtiffver(QStringLiteral(TIFFLIB_VERSION_STR));
+    QString libtiffver(QLatin1String(TIFFLIB_VERSION_STR));
     libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
-    QString soft = d->kipipluginsVer;
-    soft.append(QStringLiteral(" ( %1 )").arg(libtiffver));
-    TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)soft.toLatin1().data());
+    TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)libtiffver.toLatin1().data());
 
     // Write ICC profile.
     if (!d->iccProfile.isEmpty())
@@ -617,7 +563,7 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
 
     if (!buf)
     {
-        qCDebug(KIPIPLUGINS_LOG) << "Cannot allocate memory buffer for main TIFF image." ;
+        qDebug() << "Cannot allocate memory buffer for main TIFF image." ;
         TIFFClose(tif);
         return false;
     }
@@ -699,7 +645,7 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
 
         if (!TIFFWriteScanline(tif, buf, y, 0))
         {
-            qCDebug(KIPIPLUGINS_LOG) << "Cannot write main TIFF image to target file." ;
+            qDebug() << "Cannot write main TIFF image to target file." ;
             _TIFFfree(buf);
             TIFFClose(tif);
             return false;
@@ -708,65 +654,7 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
 
     _TIFFfree(buf);
     TIFFWriteDirectory(tif);
-
-    // Write thumbnail in tiff directory IFD1
-
-    QImage thumb = d->metadata.getExifThumbnail(false);
-
-    if (!thumb.isNull())
-    {
-        TIFFSetField(tif, TIFFTAG_IMAGEWIDTH,      (uint32)thumb.width());
-        TIFFSetField(tif, TIFFTAG_IMAGELENGTH,     (uint32)thumb.height());
-        TIFFSetField(tif, TIFFTAG_PHOTOMETRIC,     PHOTOMETRIC_RGB);
-        TIFFSetField(tif, TIFFTAG_PLANARCONFIG,    PLANARCONFIG_CONTIG);
-        TIFFSetField(tif, TIFFTAG_ORIENTATION,     ORIENTATION_TOPLEFT);
-        TIFFSetField(tif, TIFFTAG_RESOLUTIONUNIT,  RESUNIT_NONE);
-        TIFFSetField(tif, TIFFTAG_COMPRESSION,     COMPRESSION_NONE);
-        TIFFSetField(tif, TIFFTAG_SAMPLESPERPIXEL, 3);
-        TIFFSetField(tif, TIFFTAG_BITSPERSAMPLE,   8);
-        TIFFSetField(tif, TIFFTAG_ROWSPERSTRIP,    TIFFDefaultStripSize(tif, 0));
-
-        uchar* pixelThumb      = 0;
-        uchar* const dataThumb = thumb.bits();
-        uint8* const bufThumb  = (uint8 *) _TIFFmalloc(TIFFScanlineSize(tif));
-
-        if (!bufThumb)
-        {
-            qCDebug(KIPIPLUGINS_LOG) << "Cannot allocate memory buffer for TIFF thumbnail.";
-            TIFFClose(tif);
-            return false;
-        }
-
-        for (y = 0 ; y < uint32(thumb.height()) ; ++y)
-        {
-            i = 0;
-
-            for (x = 0 ; x < uint32(thumb.width()) ; ++x)
-            {
-                pixelThumb = &dataThumb[((y * thumb.width()) + x) * 4];
-
-                // This might be endian dependent
-                bufThumb[i++] = (uint8)pixelThumb[2];
-                bufThumb[i++] = (uint8)pixelThumb[1];
-                bufThumb[i++] = (uint8)pixelThumb[0];
-            }
-
-            if (!TIFFWriteScanline(tif, bufThumb, y, 0))
-            {
-                qCDebug(KIPIPLUGINS_LOG) << "Cannot write TIFF thumbnail to target file." ;
-                _TIFFfree(bufThumb);
-                TIFFClose(tif);
-                return false;
-            }
-        }
-
-        _TIFFfree(bufThumb);
-    }
-
     TIFFClose(tif);
-
-    // Store metadata (Exiv2 0.18 support tiff writing mode)
-    d->metadata.save(destPath);
 
     return true;
 }
@@ -782,7 +670,7 @@ void KIPIWriteImage::writeRawProfile(png_struct* const ping, png_info* const pin
 
     const uchar hex[16] = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
-    qCDebug(KIPIPLUGINS_LOG) << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
+    qDebug() << "Writing Raw profile: type= " << profile_type << ", length= " << length ;
 
     text               = (png_textp) png_malloc(ping, (png_uint_32) sizeof(png_text));
     description_length = strlen((const char *) profile_type);
@@ -927,31 +815,6 @@ long KIPIWriteImage::formatStringList(char* const string, const size_t length, c
     return((long) n);
 }
 
-void KIPIWriteImage::tiffSetExifAsciiTag(TIFF* const tif, ttag_t tiffTag,
-                                       const KPMetadata& metadata,
-                                       const char* exifTagName)
-{
-    QByteArray tag = metadata.getExifTagData(exifTagName);
-
-    if (!tag.isEmpty())
-    {
-        QByteArray str(tag.data(), tag.size());
-        TIFFSetField(tif, tiffTag, (const char*)(str.constData()));
-    }
-}
-
-void KIPIWriteImage::tiffSetExifDataTag(TIFF* const tif, ttag_t tiffTag,
-                                      const KPMetadata &metadata,
-                                      const char* exifTagName)
-{
-    QByteArray tag = metadata.getExifTagData(exifTagName);
-
-    if (!tag.isEmpty())
-    {
-        TIFFSetField (tif, tiffTag, (uint32)tag.size(), (char *)tag.data());
-    }
-}
-
 // To manage Errors/Warnings handling provide by libtiff
 
 void KIPIWriteImage::kipi_tiff_warning(const char* module, const char* format, va_list warnings)
@@ -959,7 +822,7 @@ void KIPIWriteImage::kipi_tiff_warning(const char* module, const char* format, v
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, warnings);
-    qCDebug(KIPIPLUGINS_LOG) << module << "::" << message ;
+    qDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);
@@ -972,7 +835,7 @@ void KIPIWriteImage::kipi_tiff_error(const char* module, const char* format, va_
 #ifdef ENABLE_DEBUG_MESSAGES
     char message[4096];
     vsnprintf(message, 4096, format, errors);
-    qCDebug(KIPIPLUGINS_LOG) << module << "::" << message ;
+    qDebug() << module << "::" << message ;
 #else
     Q_UNUSED(module);
     Q_UNUSED(format);

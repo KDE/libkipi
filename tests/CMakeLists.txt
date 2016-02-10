@@ -44,9 +44,9 @@ add_subdirectory(plugins)
 #----------------------------------------------------------------------------------------------------
 
 set(kxmlkipicmd_SRCS
-#    imageio/iccjpeg.c
-#    imageio/kipiwritehelp.cpp
-#    imageio/kipiwriteimage.cpp
+    imageio/iccjpeg.c
+    imageio/kipiwritehelp.cpp
+    imageio/kipiwriteimage.cpp
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
     common/kipiimageinfoshared.cpp
@@ -84,9 +84,9 @@ install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL
 #----------------------------------------------------------------------------------------------------
 
 set(kipicmd_SRCS
-#    imageio/iccjpeg.c
-#    imageio/kipiwritehelp.cpp
-#    imageio/kipiwriteimage.cpp
+    imageio/iccjpeg.c
+    imageio/kipiwritehelp.cpp
+    imageio/kipiwriteimage.cpp
     common/kipiinterface.cpp
     common/kipiimagecollectionshared.cpp
     common/kipiimageinfoshared.cpp
