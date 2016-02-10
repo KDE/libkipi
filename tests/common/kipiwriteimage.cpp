@@ -37,7 +37,6 @@ extern "C"
 #endif
 #include <sys/types.h>
 #include <tiffvers.h>
-#include "iccjpeg.h"
 }
 
 // Qt includes
@@ -63,16 +62,16 @@ public:
         cancel         = 0;
     }
 
-    bool*                cancel;
+    bool*      cancel;
 
-    bool                 sixteenBit;
-    bool                 hasAlpha;
+    bool       sixteenBit;
+    bool       hasAlpha;
 
-    uint                 width;
-    uint                 height;
+    uint       width;
+    uint       height;
 
-    QByteArray           data;         // BGR(A) image data
-                                       // data[0] = blue, data[1] = green, data[2] = red, data[3] = alpha.
+    QByteArray data;         // BGR(A) image data
+                             // data[0] = blue, data[1] = green, data[2] = red, data[3] = alpha.
 };
 
 KIPIWriteImage::KIPIWriteImage()
