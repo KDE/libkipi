@@ -516,7 +516,6 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
     libtiffver.replace(QLatin1Char('\n'), QLatin1Char(' '));
     TIFFSetField(tif, TIFFTAG_SOFTWARE, (const char*)libtiffver.toLatin1().data());
 
-
     // Write full image data in tiff directory IFD0
 
     uchar*  pixel=0;
