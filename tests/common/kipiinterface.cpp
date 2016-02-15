@@ -285,10 +285,10 @@ public:
         if (m_decoder.decodeRAWImage(url.toLocalFile(), prm,
                                     imageData, width, height, rgbmax))
         {
-            return prm.sixteenBitsImage;
+            return prm.sixteenBitsImage ? 16 : 8;
         }
 
-        return false;
+        return 0;
     }
 
     void cancel()
