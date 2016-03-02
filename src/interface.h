@@ -177,16 +177,7 @@ public:
      */
     virtual bool loadRawPreview(const QUrl& url, QImage& image) = 0;
 
-    /** To perform demosiacing. Can be cancelled. This can be 8 or 16 bits color per pixels result, dependaing of kipi host
-     *  application Raw decoding settings. Return 0 if decoding failed, or image result color depth (8 or 16).
-     */
-    virtual uint decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax) = 0;
-
-    /** To cancel decodeRawImage() processing.
-     */
-    virtual void cancel() = 0;
-
-    /** Rteun true if url is a Raw file, else false
+    /** Return true if url is a Raw file, else false
      */
     virtual bool isRawFile(const QUrl& url) = 0;
 

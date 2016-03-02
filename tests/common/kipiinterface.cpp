@@ -276,26 +276,6 @@ public:
         return m_decoder.loadRawPreview(image, url.toLocalFile());
     }
 
-    uint decodeRawImage(const QUrl& url, QByteArray& imageData, int& width, int& height, int& rgbmax)
-    {
-        // Default settings in 16 bits color depth. TODO : add an option to customize settings in kipi test host application.
-        KDcrawIface::RawDecodingSettings prm;
-        prm.sixteenBitsImage = true;
-
-        if (m_decoder.decodeRAWImage(url.toLocalFile(), prm,
-                                    imageData, width, height, rgbmax))
-        {
-            return prm.sixteenBitsImage ? 16 : 8;
-        }
-
-        return 0;
-    }
-
-    void cancel()
-    {
-        m_decoder.cancel();
-    }
-
     bool isRawFile(const QUrl& url)
     {
         QString   rawFilesExt = QLatin1String(m_decoder.rawFiles());
