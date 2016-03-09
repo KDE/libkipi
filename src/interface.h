@@ -342,10 +342,10 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render imediatly a preview image for one item at mininimum size.
+     * Tells to host application to render imediatly a preview image for one item.
      * This method re-implemented in host application and be thread safe.
      */
-    virtual QImage preview(const QUrl& url, int minSize);
+    virtual QImage preview(const QUrl& url);
 
     /**
      * Tell to host application to save image at url in specific format (JPG, PNG, TIF, etc).
@@ -360,13 +360,13 @@ public:
                            bool* cancel=0);
 
     /**
-     * Tells to host application to render a preview image for one item at mininimum size.
+     * Tells to host application to render a preview image for one item.
      * A resizement to to a specific size will be generated if preview is largest than.
-     * Use a positive resizedTo value in this case. Aspect ratio is preserved while rendering. 
+     * Use a positive resizedTo value in this case, else -1. Aspect ratio is preserved while rendering. 
      * This asynchronous method must be re-implemented in host application.
      * Use gotPreview() signal to take preview.
      */
-    virtual void preview(const QUrl& url, int minSize, int resizedTo=-1);
+    virtual void preview(const QUrl& url, int resizedTo);
 
     /**
      * Tells to host application to render a thumbnail for one item. This asynchronous method must be

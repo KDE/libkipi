@@ -193,10 +193,9 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     }
 }
 
-QImage Interface::preview(const QUrl& url, int minSize)
+QImage Interface::preview(const QUrl& url)
 {
     Q_UNUSED(url);
-    Q_UNUSED(minSize);
     PrintWarningMessageFeature("HostSupportsPreviews");
 
     return QImage();
@@ -220,10 +219,9 @@ bool Interface::saveImage(const QUrl& url, const QString& format,
     return false;
 }
 
-void Interface::preview(const QUrl& url, int minSize, int resizedTo)
+void Interface::preview(const QUrl& url, int resizedTo)
 {
     Q_UNUSED(url);
-    Q_UNUSED(minSize);
     Q_UNUSED(resizedTo);
     PrintWarningMessageFeature("HostSupportsPreviews");
 
