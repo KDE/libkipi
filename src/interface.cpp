@@ -229,29 +229,10 @@ void Interface::preview(const QUrl& url, int resizedTo)
         emit gotPreview(url, QImage());
 }
 
-QVariant Interface::hostSetting(const QString& settingName)
+QString Interface::rawFile()
 {
     PrintWarningMessage();
-
-    if (settingName == QString::fromLatin1("FileExtensions") || settingName == QString::fromLatin1("ImagesExtensions"))
-    {
-        // Return a list of images file extensions supported by Qt in read mode.
-        QStringList KDEImagetypes = supportedImageMimeTypes();
-        QString imagesFileFilter  = KDEImagetypes.join(QString::fromLatin1(" "));
-
-        return QString( imagesFileFilter.toLower() + QString::fromLatin1(" ") + imagesFileFilter.toUpper() );
-    }
-    else if (settingName == QString::fromLatin1("RawExtensions"))
-    {
-    }
-    else if (settingName == QString::fromLatin1("VideoExtensions"))
-    {
-    }
-    else if (settingName == QString::fromLatin1("AudioExtensions"))
-    {
-    }
-
-    return QVariant();
+    return QString();
 }
 
 QAbstractItemModel* Interface::getTagTree() const

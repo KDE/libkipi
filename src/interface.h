@@ -403,42 +403,9 @@ public:
     virtual void progressThumbnailChanged(const QString& id, const QPixmap& thumb);
     virtual void progressCompleted(const QString& id);
 
-    /*!
-      \brief Tells to host application to return a setting to share with plugins.
-
-      <table><tr>
-            <th>SETTING NAME</th>
-            <th>VALUE RETURNED</th>
-            <th>COMMENTS</th>
-        </tr><tr>
-            <th>"FileExtensions"</th>
-            <td>QString</td>
-            <td>Returns all file extensions (image, sound, video) managed by host application, separated by blank spaces, (ex: "JPG PNG TIF NEF AVI MP3").</td>
-        </tr><tr>
-            <th>"ImagesExtensions"</th>
-            <td>QString</td>
-            <td>Returns images file extensions managed by host application, not incuding RAW formats, separated by blank spaces, (ex: "JPG PNG TIF").</td>
-        </tr><tr>
-            <th>"RawExtensions"</th>
-            <td>QString</td>
-            <td>Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").</td>
-        </tr><tr>
-            <th>"VideoExtensions"</th>
-            <td>QString</td>
-            <td>Returns video file extensions managed by host application, separated by blank spaces, (ex: "AVI MOV MPG").</td>
-        </tr><tr>
-            <th>"AudioExtensions"</th>
-            <td>QString</td>
-            <td>Return audio file extensions managed by host application, separated by blank spaces, (ex: "MP3 WAV OGG").</td>
-      </tr></table>
-
-      This method return the default settings. Re-implement this method in your dedicated kipi interface
-      to control kipi-plugins rules with your kipi host application settings.
-
-      NOTE: If you want to manage host settings from kipi-plugins, use wrapper class KIPIPlugins::KPHostSettings,
-      not this method directly.
+    /** Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").</td>
     */
-    virtual QVariant hostSetting(const QString& settingName);
+    virtual QString rawFile();
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
     virtual UploadWidget*            uploadWidget(QWidget* parent)=0;
