@@ -405,7 +405,7 @@ public:
 
     /** Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").</td>
     */
-    virtual QString rawFile();
+    virtual QString rawFiles();
 
     virtual ImageCollectionSelector* imageCollectionSelector(QWidget* parent)=0;
     virtual UploadWidget*            uploadWidget(QWidget* parent)=0;

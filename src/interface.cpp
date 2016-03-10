@@ -229,7 +229,7 @@ void Interface::preview(const QUrl& url, int resizedTo)
         emit gotPreview(url, QImage());
 }
 
-QString Interface::rawFile()
+QString Interface::rawFiles()
 {
     PrintWarningMessage();
     return QString();
