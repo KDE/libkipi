@@ -14,15 +14,7 @@ find_package(TIFF REQUIRED)
 
 include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
-find_package(KF5KDcraw 5.0.0)
 find_package(KF5KExiv2 5.0.0)
-
-if(KF5KDcraw_FOUND)
-    message(STATUS "libkdcraw detected : test Kipi interface will support Raw processing")
-    add_definitions(-DHAVE_KDCRAW)
-else()
-    message(STATUS "libkdcraw not detected : test Kipi interface will not support Raw processing")
-endif()
 
 if(KF5KExiv2_FOUND)
     message(STATUS "libkexiv2 detected : test Kipi interface will support Metadata processing")
@@ -72,10 +64,6 @@ target_link_libraries(kxmlkipicmd
                       KF5Kipi
 )
 
-if(KF5KDcraw_FOUND)
-    target_link_libraries(kxmlkipicmd KF5::KDcraw)
-endif()
-
 if(KF5KExiv2_FOUND)
     target_link_libraries(kxmlkipicmd KF5::KExiv2)
 endif()
@@ -101,10 +89,6 @@ target_link_libraries(kipicmd
                       Qt5::Gui
                       KF5Kipi
 )
-
-if(KF5KDcraw_FOUND)
-    target_link_libraries(kipicmd KF5::KDcraw)
-endif()
 
 if(KF5KExiv2_FOUND)
     target_link_libraries(kipicmd KF5::KExiv2)

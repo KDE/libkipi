@@ -83,7 +83,6 @@ public:
                    bool* cancel=0);
 
     FileReadWriteLock* createReadWriteLock(const QUrl&) const;
-    RawProcessor*      createRawProcessor()             const;
     MetadataProcessor* createMetadataProcessor()        const;
 
 private:

@@ -300,12 +300,6 @@ FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
     return 0;
 }
 
-RawProcessor* Interface::createRawProcessor() const
-{
-    PrintWarningMessageFeature("HostSupportsRawProcessing");
-    return 0;
-}
-
 MetadataProcessor* Interface::createMetadataProcessor() const
 {
     PrintWarningMessageFeature("HostSupportsMetadataProcessing");

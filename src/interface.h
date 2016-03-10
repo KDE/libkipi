@@ -162,33 +162,6 @@ public:
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
- *  A Kipi RawProcessor refers to application-wide to process Raw file 
- *  about preview extraction or demosicing; it is created with Interface::createRawProcessor()
- *  You can use libkdcraw to re-implement this class as it's implemented in tests/common/kipiinterface.cpp.
- */
-class LIBKIPI_EXPORT RawProcessor : public QObject
-{
-public:
-
-    RawProcessor()          {};
-    virtual ~RawProcessor() {};
-
-    /** To perform Raw preview extraction.
-     */
-    virtual bool loadRawPreview(const QUrl& url, QImage& image) = 0;
-
-    /** Return true if url is a Raw file, else false
-     */
-    virtual bool isRawFile(const QUrl& url) = 0;
-
-    /** Return the list of all RAW file type mime supported by the decoder.
-     */
-    virtual QString rawFiles() = 0;
-};
-
-// ---------------------------------------------------------------------------------------------------------------
-
-/**
  *  A Kipi MetadataProcessor refers to application-wide to process file metadata
  *  about Exif/Iptc/Xmp management; it is created with Interface::createMetadataProcessor().
  *  You can use libkexiv2 to re-implement this class as it's implemented in tests/common/kipiinterface.cpp.
@@ -452,14 +425,6 @@ public:
      *
      */
     virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const = 0;
-
-    /**
-     * Supported if HostSupportsRawProcessing.
-     * Creates an instance of RawProcessor dedicated to process Raw files.
-     * The implementation from KIPI host application must be thread-safe.
-     *
-     */
-    virtual RawProcessor* createRawProcessor() const = 0;
 
     /**
      * Supported if HostSupportsMetadataProcessing.

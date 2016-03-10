@@ -40,10 +40,6 @@
 
 // KDE includes
 
-#ifdef HAVE_KDCRAW
-#   include <kdcraw/kdcraw.h>
-#endif
-
 #ifdef HAVE_KEXIV2
 #   include <kexiv2/kexiv2.h>
 #endif
@@ -148,9 +144,6 @@ int KipiInterface::features() const
     qDebug() << "Called by plugins";
 
     return   ImagesHasTime
-#ifdef HAVE_KDCRAW
-           | HostSupportsRawProcessing
-#endif
 #ifdef HAVE_KEXIV2
            | HostSupportsMetadataProcessing
 #endif
@@ -259,55 +252,6 @@ bool KipiInterface::saveImage(const QUrl& url, const QString& format,
 
     return false;
 }
-
-// ---------------------------------------------------------------------------------------
-
-#ifdef HAVE_KDCRAW
-
-class KipiRawProcessor : public RawProcessor
-{
-public:
-
-    KipiRawProcessor()  {};
-    ~KipiRawProcessor() {};
-
-    bool loadRawPreview(const QUrl& url, QImage& image)
-    {
-        return m_decoder.loadRawPreview(image, url.toLocalFile());
-    }
-
-    bool isRawFile(const QUrl& url)
-    {
-        QString   rawFilesExt = QLatin1String(m_decoder.rawFiles());
-        QFileInfo fileInfo(url.toLocalFile());
-
-        return (rawFilesExt.toUpper().contains(fileInfo.suffix().toUpper()));
-    }
-
-    QString rawFiles()
-    {
-        return QLatin1String(m_decoder.rawFiles());
-    }
-
-private:
-
-    KDcrawIface::KDcraw m_decoder;
-};
-
-RawProcessor* KipiInterface::createRawProcessor() const
-{
-    return (new KipiRawProcessor);
-}
-
-#else // HAVE_KDCRAW
-
-RawProcessor* KipiInterface::createRawProcessor() const
-{
-    qDebug() << "This interface was not compiled with libkdcraw to support Raw processing";
-    return 0;
-}
-
-#endif // HAVE_KDCRAW
 
 // ---------------------------------------------------------------------------------------
 
