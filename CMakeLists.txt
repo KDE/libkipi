@@ -43,16 +43,17 @@ cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
 # 2.0.0 => 10.0.0 (released with KDE 4.10.0 - Including GoSC2012).
 # 2.1.0 => 11.0.0 (released with KDE 4.11.0 - Add edit hints).
 # 2.2.0 => 11.1.0 (released with KDE 4.14.0 - Apply patch #89165 from bug #340030).
-# 5.0.0 => 30.0.0 (Released with KDE 5.x)
+# 5.0.0 => 30.0.0 (Released with KDE Applications <= 15.12)
+# 5.1.0 => 31.0.0 (Released with KDE Applications 16.04)
 
 # Library API version
 set(KIPI_LIB_MAJOR_VERSION "5")
-set(KIPI_LIB_MINOR_VERSION "0")
+set(KIPI_LIB_MINOR_VERSION "1")
 set(KIPI_LIB_PATCH_VERSION "0")
 
 # Library ABI version used by linker.
 # For details : http://www.gnu.org/software/libtool/manual/libtool.html#Updating-version-info
-set(KIPI_LIB_SO_CUR_VERSION "30")
+set(KIPI_LIB_SO_CUR_VERSION "31")
 set(KIPI_LIB_SO_REV_VERSION "0")
 set(KIPI_LIB_SO_AGE_VERSION "0")
 
