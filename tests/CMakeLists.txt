@@ -68,9 +68,10 @@ if(KF5KExiv2_FOUND)
     target_link_libraries(kxmlkipicmd KF5::KExiv2)
 endif()
 
-install(TARGETS kxmlkipicmd                           DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
-install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+# Given as example. Do not install any files with from test code.
+#install(TARGETS kxmlkipicmd                           DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
+#install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+#install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
 
 #----------------------------------------------------------------------------------------------------
 
