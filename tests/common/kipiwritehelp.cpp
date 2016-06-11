@@ -170,7 +170,7 @@ boolean fill_input_buffer(j_decompress_ptr cinfo)
         src->pub.next_input_byte = fakeEOI;
         src->pub.bytes_in_buffer = 2;
     }
-    
+
     return true;
 }
 

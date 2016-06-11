@@ -45,7 +45,7 @@ class PluginCheckBox : public QTreeWidgetItem
 public:
 
     PluginCheckBox(PluginLoader::Info* const info, QTreeWidget* const parent)
-        : QTreeWidgetItem(parent), 
+        : QTreeWidgetItem(parent),
           m_info(info)
     {
         setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);

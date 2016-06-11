@@ -335,7 +335,7 @@ public:
     /**
      * Tells to host application to render a preview image for one item.
      * A resizement to to a specific size will be generated if preview is largest than.
-     * Use a positive resizedTo value in this case, else -1. Aspect ratio is preserved while rendering. 
+     * Use a positive resizedTo value in this case, else -1. Aspect ratio is preserved while rendering.
      * This asynchronous method must be re-implemented in host application.
      * Use gotPreview() signal to take preview.
      */
@@ -354,7 +354,7 @@ public:
     virtual void thumbnails(const QList<QUrl>& list, int size);
 
     /**
-      Ask to Kipi host application to prepare progress manager for a new entry. This method must return from host 
+      Ask to Kipi host application to prepare progress manager for a new entry. This method must return from host
       a string identification about progress item created. This id will be used later to change in host progress item
       value and text. Title is text used to name progress item in host application.
       Set canBeCanceled to true if you want that progress item provide a cancel button to close process from kipi host.
@@ -466,12 +466,12 @@ Q_SIGNALS:
     void selectionChanged(bool hasSelection);
 
     /**
-     * Emit when current album selection as changed from host application user interface. 
+     * Emit when current album selection as changed from host application user interface.
      * Boolean argument is true if album are select or not in collection.
      */
     void currentAlbumChanged(bool hasSelection);
 
-    /** Emit when host application has rendered item thumbnail. See asynchronous thumbnail() and thumbnails() 
+    /** Emit when host application has rendered item thumbnail. See asynchronous thumbnail() and thumbnails()
      *  methods for details.
      */
     void gotThumbnail(const QUrl&, const QPixmap&);

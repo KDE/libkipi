@@ -126,11 +126,11 @@ public:
      * This tree view widget needs to starts at some URL. This function specifies that location.
      * Here are a couble of possible return value different host applications may choose.
      *
-     * If all images are stored rooted at some tree (which is the case for KPhotoAlbum), 
+     * If all images are stored rooted at some tree (which is the case for KPhotoAlbum),
      * then this function may return this directory unconditionally.
      * The root directory returned by uploadPath() (which is the default implementation for this method)
      * will be the directory returned by uploadPath().
-     * 
+     *
      * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
      */
     QUrl       uploadRootUrl() const;

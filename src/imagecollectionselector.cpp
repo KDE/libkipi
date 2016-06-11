@@ -28,7 +28,7 @@
 #include "imagecollectionselector.h"
 #include "imagecollection.h"
 
-namespace KIPI 
+namespace KIPI
 {
 
 ImageCollectionSelector::ImageCollectionSelector(QWidget* const parent)

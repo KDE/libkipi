@@ -135,7 +135,7 @@ int main(int argc, char* argv[])
 
     KipiTestMainWindow* const mainWindow = new KipiTestMainWindow(listSelectedImages, listSelectedAlbums, listAllAlbums);
 
-    QObject::connect(mainWindow, &KipiTestMainWindow::destroyed, 
+    QObject::connect(mainWindow, &KipiTestMainWindow::destroyed,
                      &app, &QApplication::quit);
 
     app.setActiveWindow(mainWindow);

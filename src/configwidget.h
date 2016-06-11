@@ -56,15 +56,15 @@ public:
     /** Apply all changes about plugins selected to be hosted in KIPI host application.
      */
     void apply();
-    
+
     /** Return the number of plugins actived in the list.
      */
     int actived() const;
-    
+
     /** Return the total number of plugins in the list.
      */
     int count()   const;
-    
+
     /** Return the number of visible plugins in the list.
      */
     int visible() const;
@@ -76,7 +76,7 @@ public:
     /** Clear all selected plugins in the list.
      */
     void clearAll();
-    
+
     /** Set the string used to filter the plugins list. signalSearchResult() is emitted when all is done.
      */
     void setFilter(const QString& filter, Qt::CaseSensitivity cs);

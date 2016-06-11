@@ -28,9 +28,9 @@
 // C++ includes
 
 #include <cstdio>
- 
-// Qt includes 
- 
+
+// Qt includes
+
 #include <QIODevice>
 
 // C ANSI includes

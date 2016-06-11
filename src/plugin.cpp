@@ -421,9 +421,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 // be safe rather than sorry
 // create the appname folder in kxmlgui5
     QDir localUIDir(localUIdir);
-    if (!localUIDir.exists()) 
+    if (!localUIDir.exists())
         QDir().mkpath(localUIdir);
- 
+
    if (!localUIFile.exists() || !localUIFile.open(QFile::ReadOnly) || !localDomDoc.setContent(&localUIFile))
     {
         newGuiElem.appendChild(defToolBarElem.cloneNode());

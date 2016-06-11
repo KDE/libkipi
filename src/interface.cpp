@@ -305,7 +305,7 @@ MetadataProcessor* Interface::createMetadataProcessor() const
     PrintWarningMessageFeature("HostSupportsMetadataProcessing");
     return 0;
 }
-    
+
 void Interface::aboutToEdit(const QUrl&, EditHints)
 {
 }
