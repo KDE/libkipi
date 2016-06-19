@@ -37,7 +37,7 @@ KipiImageCollectionShared::KipiImageCollectionShared(const QUrl& albumPath)
       m_images()
 {
     // go through the album and add its images:
-    const QString albumPathString = m_albumPath.path();
+    const QString albumPathString = m_albumPath.toLocalFile();
 
     // add only the files, because recursion through directories should be
     // handled in KipiInterface::add[Selected]Album
