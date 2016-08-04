@@ -424,7 +424,7 @@ public:
      * The implementation from KIPI host application must be thread-safe.
      *
      */
-    virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const = 0;
+    virtual FileReadWriteLock* createReadWriteLock(const QUrl& url) const;
 
     /**
      * Supported if HostSupportsMetadataProcessing.
@@ -432,7 +432,7 @@ public:
      * The implementation from KIPI host application must be thread-safe.
      *
      */
-    virtual MetadataProcessor* createMetadataProcessor() const = 0;
+    virtual MetadataProcessor* createMetadataProcessor() const;
 
     /**
      * Supported if HostSupportsEditHints
