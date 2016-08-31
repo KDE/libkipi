@@ -128,7 +128,7 @@ KipiSetup::KipiSetup(QWidget* const parent)
     sv->setWidget(panel);
     sv->setWidgetResizable(true);
 
-    d->tabView->insertTab(KipiPluginsPage, sv, QIcon::fromTheme(QString::fromLatin1("kipi")), QLatin1String("Kipi Plugins"));
+    d->tabView->insertTab(KipiPluginsPage, sv, QIcon(QLatin1String(":/icons/kipi-icon.svg")), QLatin1String("Kipi Plugins"));
 
     d->xmlPage = new SetupXML(d->tabView);
     d->xmlPage->setToolTip(QLatin1String("Configure the UI file for the KXMLKipiCmd application"));
