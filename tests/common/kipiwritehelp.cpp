@@ -9,7 +9,7 @@
  *
  * Copyright (C) 1994-1996 by Thomas G. Lane.
  * Copyright (C) 2009-2010 by Patrick Spendrin <ps_ml@gmx.de>
- * Copyright (C) 2007-2016 by Gilles Caulier <caulier dot gilles at gmail dot com>
+ * Copyright (C) 2007-2017 by Gilles Caulier <caulier dot gilles at gmail dot com>
  *
  * This file is based on jdatadst.c from libjpeg.
  *
