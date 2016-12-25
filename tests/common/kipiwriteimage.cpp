@@ -155,8 +155,8 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
     cinfo.comp_info[2].v_samp_factor = 1;
 
     // bug #154273: use 99 compression level instead 100 to reduce output JPEG file size.
-    jpeg_set_quality(&cinfo, 99, true);
-    jpeg_start_compress(&cinfo, true);
+    jpeg_set_quality(&cinfo, 99, boolean(true));
+    jpeg_start_compress(&cinfo, boolean(true));
 
     // Write image data
     uchar* line   = new uchar[d->width*3];
