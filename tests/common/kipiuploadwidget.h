@@ -49,7 +49,7 @@ public:
     KipiUploadWidget(KipiInterface* const interface, QWidget* const parent);
     virtual ~KipiUploadWidget();
 
-    virtual ImageCollection selectedImageCollection() const;
+    ImageCollection selectedImageCollection() const Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
 

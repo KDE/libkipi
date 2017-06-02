@@ -51,20 +51,20 @@ public:
     KipiInterface(QObject* const parent, const QString& name=QString());
     ~KipiInterface();
 
-    ImageCollection        currentAlbum();
-    ImageCollection        currentSelection();
-    QList<ImageCollection> allAlbums();
-    ImageInfo              info(const QUrl&);
+    ImageCollection        currentAlbum() Q_DECL_OVERRIDE;
+    ImageCollection        currentSelection() Q_DECL_OVERRIDE;
+    QList<ImageCollection> allAlbums() Q_DECL_OVERRIDE;
+    ImageInfo              info(const QUrl&) Q_DECL_OVERRIDE;
 
-    bool addImage(const QUrl& url, QString& errmsg);
-    void delImage(const QUrl& url);
-    void refreshImages(const QList<QUrl>& urls);
+    bool addImage(const QUrl& url, QString& errmsg) Q_DECL_OVERRIDE;
+    void delImage(const QUrl& url) Q_DECL_OVERRIDE;
+    void refreshImages(const QList<QUrl>& urls) Q_DECL_OVERRIDE;
 
-    int      features() const;
+    int      features() const Q_DECL_OVERRIDE;
     QVariant hostSetting(const QString& settingName);
 
-    ImageCollectionSelector* imageCollectionSelector(QWidget* parent);
-    UploadWidget*            uploadWidget(QWidget* parent);
+    ImageCollectionSelector* imageCollectionSelector(QWidget* parent) Q_DECL_OVERRIDE;
+    UploadWidget*            uploadWidget(QWidget* parent) Q_DECL_OVERRIDE;
 
     void addSelectedImages(const QList<QUrl>& images);
     void addSelectedImage(const QUrl& image);
@@ -75,15 +75,15 @@ public:
     void addAlbums(const QList<QUrl>& albums);
     void addAlbum(const QUrl& album);
 
-    void thumbnails(const QList<QUrl>& list, int size);
+    void thumbnails(const QList<QUrl>& list, int size) Q_DECL_OVERRIDE;
 
     bool saveImage(const QUrl& url, const QString& format,
                    const QByteArray& data, uint width, uint height,
                    bool  sixteenBit, bool hasAlpha,
-                   bool* cancel=0);
+                   bool* cancel=0) Q_DECL_OVERRIDE;
 
-    FileReadWriteLock* createReadWriteLock(const QUrl&) const;
-    MetadataProcessor* createMetadataProcessor()        const;
+    FileReadWriteLock* createReadWriteLock(const QUrl&) const Q_DECL_OVERRIDE;
+    MetadataProcessor* createMetadataProcessor()        const Q_DECL_OVERRIDE;
 
 private:
 

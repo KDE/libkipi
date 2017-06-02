@@ -43,10 +43,10 @@ public:
     KipiImageInfoShared(Interface* const interface, const QUrl& url);
     ~KipiImageInfoShared();
 
-    QMap<QString, QVariant> attributes();
-    void                    addAttributes(const QMap<QString, QVariant>& attributes);
-    void                    delAttributes(const QStringList& attributes);
-    void                    clearAttributes();
+    QMap<QString, QVariant> attributes() Q_DECL_OVERRIDE;
+    void                    addAttributes(const QMap<QString, QVariant>& attributes) Q_DECL_OVERRIDE;
+    void                    delAttributes(const QStringList& attributes) Q_DECL_OVERRIDE;
+    void                    clearAttributes() Q_DECL_OVERRIDE;
 
 private:
 

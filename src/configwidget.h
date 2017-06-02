@@ -71,7 +71,7 @@ public:
 
     /** Select all plugins in the list.
      */
-    void selectAll();
+    void selectAll() Q_DECL_OVERRIDE;
 
     /** Clear all selected plugins in the list.
      */
