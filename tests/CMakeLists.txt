@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2010-2016, Gilles Caulier, <caulier dot gilles at gmail dot com>
+# Copyright (c) 2010-2017, Gilles Caulier, <caulier dot gilles at gmail dot com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
@@ -14,7 +14,7 @@ find_package(TIFF REQUIRED)
 
 include_directories(${JPEG_INCLUDE_DIR} ${PNG_INCLUDE_DIR} ${TIFF_INCLUDE_DIR})
 
-find_package(KF5KExiv2 5.0.0)
+find_package(KF5KExiv2 5.0.0 QUIET)
 
 if(KF5KExiv2_FOUND)
     message(STATUS "libkexiv2 detected : test Kipi interface will support Metadata processing")
