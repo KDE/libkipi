@@ -25,7 +25,6 @@ Optionals (for tests implementations only):
 libjpeg         >= 6b                       http://www.ijg.org
 libtiff         >= 3.8.2                    http://www.remotesensing.org/libtiff
 libpng          >= 1.2.0                    http://www.libpng.org/pub/png/libpng.html
-libkdcraw       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkdcraw
 libkexiv2       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
 
 -- INSTALL ------------------------------------------------------------
