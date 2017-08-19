@@ -1,15 +1,12 @@
 KIPI Library (KDE Image Program Interface)
 
-This library is a part of digiKam project (http://www.digikam.org)
-
 -- AUTHORS ------------------------------------------------------------
 
 See AUTHORS file for details.
 
 -- ABOUT --------------------------------------------------------------
 
-Libkipi is an interface to use kipi-plugins from a KDE image management 
-program like digiKam (http://www.digikam.org).
+Libkipi is an interface to use kipi-plugins from a KDE image management program.
 
 The library documentation is available on header files.
 
@@ -38,25 +35,12 @@ Note: To know KDE install path on your computer, use 'kf5-config --prefix' comma
 
 "cmake . -DCMAKE_BUILD_TYPE=debug -DCMAKE_INSTALL_PREFIX=`kf5-config --prefix`"
 
--- CONTACT ------------------------------------------------------------
-
-If you have questions, comments, suggestions, send an email to:
-
-digikam-devel@kde.org
-
-IRC channel from freenode.net server:
-
-#digikam
-
 -- BUGS ---------------------------------------------------------------
 
 IMPORTANT : the bugreports and the wishlist are hosted by the KDE bugs report
 system who can be contacted by the standard Kde help menu of the plugins dialog.
-A mail will be automatically sent to the digiKam devel mailing list.
-There is no need to contact directly the digiKam mailing list for a bug report
-or a devel wish.
 
-The current digiKam bugs and devel wish reported to the Kde bugs report can be seen 
+The current bugs and devel wish reported to the Kde bugs report can be seen 
 at this url:
 
-http://bugs.kde.org/buglist.cgi?product=digikam&component=libkipi&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
+http://bugs.kde.org/buglist.cgi?product=libkipi&component=general&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED
