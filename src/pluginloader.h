@@ -178,9 +178,8 @@ class ConfigWidget;
 
     \endcode
 
-    For a complete implementation used to manage Kipi-plugins in digiKam, look <a href="https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/entry/utilities/kipiiface/kipipluginloader.cpp">
-    into this class</a>, or you can look the code of the kxmlkipicmd test application
-    in the "test" folder from libkipi.
+    For a implementation sample used to manage Kipi-plugins in host application,
+    look the code of the kxmlkipicmd test application in the "test" folder from libkipi.
 
     To configure which plugins should be loaded, simply call
     PluginLoader::configWidget(), and insert the widget into your normal

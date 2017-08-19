@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     app.setApplicationName(QLatin1String("kipicmd"));
     app.setApplicationVersion(QLatin1String(KIPI_VERSION_STRING));
-    app.setOrganizationName(QLatin1String("http://www.digikam.org"));
+    app.setOrganizationName(QLatin1String("http://www.kde.org"));
     app.setWindowIcon(QIcon(QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                                    QLatin1String(":/images/kipi-icon.svg"))));
 

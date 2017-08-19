@@ -208,13 +208,13 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     addAction(QString::fromLatin1("kxmlhelloworld-actionTools"), d->actionTools, ToolsPlugin);
 
-    /** We will get current selected album in the digikam tree view
+    /** We will get current selected album in the host tree view
      */
     ImageCollection currAlbum = interface()->currentAlbum();
     bool enable               = currAlbum.isValid() && !currAlbum.images().isEmpty();
     d->actionTools->setEnabled(enable);
 
-    /** Another action dedicated to be plugged in digiKam Export menu.
+    /** Another action dedicated to be plugged in host Export menu.
      */
     d->actionExport = new QAction(this);
     d->actionExport->setText(QLatin1String("KXML Hello World Export..."));
@@ -226,7 +226,7 @@ void Plugin_KXMLHelloWorld::setupActions()
 
     addAction(QString::fromLatin1("kxmlhelloworld-actionExport"), d->actionExport, ExportPlugin);
 
-    /** Another action dedicated to be plugged in digiKam Import menu.
+    /** Another action dedicated to be plugged in host Import menu.
      */
     d->actionImport = new QAction(this);
     d->actionImport->setText(QLatin1String("KXML Hello World Import..."));

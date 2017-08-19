@@ -66,8 +66,7 @@ class UploadWidget;
 /*!
   @enum KIPI::Features
   Not all host applications support the full subset of features that KIPI
-  allows access to. As an example <a href="http://www.digikam.org">digiKam</a> support comments
-  for albums. Thus before a plugin expect a decant value for the comment,
+  allows access to. Thus before a plugin expect a decant value for the comment,
   it should check whether KIPI::CollectionsHaveComments are set. It does so
   using KIPI::Interface::hasFeature().
 */

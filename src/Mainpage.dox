@@ -125,8 +125,4 @@
    ownership of pointers to the classes in question. The
    KIPI::ImageCollectionShared pointer you give to KIPI::ImageCollection
    constructor will be the owned by the ImageCollection instance.
-
-   digiKam has a full implemented KIPI interface. Look <a href="
-   https://projects.kde.org/projects/extragear/graphics/digikam/repository/revisions/master/show/utilities/kipiiface">
-   here</a> for details.
 */
