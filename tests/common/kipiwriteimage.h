@@ -1,8 +1,8 @@
 /** ===========================================================
  * @file
  *
- * This file is a part of kipi-plugins project
- * <a href="http://www.digikam.org">http://www.digikam.org</a>
+ * This file is a part of KDE project
+ *
  *
  * Date        : 2007-19-09
  * Description : Interface to write image data to common picture format.

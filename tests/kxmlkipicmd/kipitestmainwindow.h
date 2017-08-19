@@ -1,8 +1,8 @@
 /** ===========================================================
  * @file
  *
- * This file is a part of kipi-plugins project
- * <a href="http://www.digikam.org">http://www.digikam.org</a>
+ * This file is a part of KDE project
+ *
  *
  * @date   2012-06-20
  * @brief  kipi host test application using KDE XML-GUI technology

@@ -1,7 +1,6 @@
 /* ============================================================
  *
- * This file is a part of kipi-plugins project
- * http://www.digikam.org
+ * This file is a part of KDE project
  *
  * Date        : 2012-02-16
  * Description : an Hello World plugin using KDE XML-GUI technology.
