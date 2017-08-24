@@ -3,7 +3,6 @@
  *
  * This file is a part of KDE project
  *
- *
  * Date        : 2009-13-11
  * Description : Helper functions for writing images
  *
@@ -118,7 +117,7 @@ void term_destination (j_compress_ptr cinfo)
     /* Write any data remaining in the buffer */
     if (datacount > 0)
     {
-        if (dest->outDevice->write((char*)dest->buffer, datacount) != (size_t) datacount)
+        if ((size_t)dest->outDevice->write((char*)dest->buffer, datacount) != (size_t)datacount)
             ERREXIT(cinfo, JERR_FILE_WRITE);
     }
 }
