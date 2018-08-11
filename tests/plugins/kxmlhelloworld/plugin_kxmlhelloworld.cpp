@@ -175,7 +175,7 @@ void Plugin_KXMLHelloWorld::setupActions()
       */
     setDefaultCategory(ExportPlugin);
 
-    /** An action dedicated to be plugged in digiKam Image menu.
+    /** An action dedicated to be plugged in Image menu.
      */
     d->actionImages = new QAction(this);
     d->actionImages->setText(QLatin1String("KXML Hello World Image..."));
@@ -196,7 +196,7 @@ void Plugin_KXMLHelloWorld::setupActions()
     ImageCollection selection = interface()->currentSelection();
     d->actionImages->setEnabled(selection.isValid() && !selection.images().isEmpty());
 
-    /** Another action dedicated to be plugged in digiKam Tool menu.
+    /** Another action dedicated to be plugged in Tool menu.
      */
     d->actionTools = new QAction(this);
     d->actionTools->setText(QLatin1String("KXML Hello World Tools..."));

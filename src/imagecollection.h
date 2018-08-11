@@ -79,8 +79,8 @@ public:
     QString    comment() const;
 
     /**
-     * Return the category of the image collection. For example in digiKam,
-     * a category is a sorting class like 'travels', 'friends', 'monuments', etc.
+     * Return the category of the image collection. For example,
+     * a category can be a sorting class like 'travels', 'friends', 'monuments', etc.
      */
     QString    category() const;
 
@@ -138,7 +138,7 @@ public:
     /**
      * This fonction return the name of the upload root path used by the
      * the KIPI::UploadWidget. This name can be different for each host
-     * app (like "Images" for Kphotoalbum or "My Albums" for digiKam).
+     * app (like "Images" for Kphotoalbum).
      */
     QString    uploadRootName() const;
 
