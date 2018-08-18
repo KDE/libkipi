@@ -23,7 +23,7 @@
 /** Take a care about includes order, to prevent compilation problem.
  *  1/ class header file.
  *  2/ C ansi if really necessary.
- *  3/ C++ (always prefered than C ansi.
+ *  3/ C++ (always preferred than C ansi.
  *  4/ Extra libraries such as openCV for ex.
  *  4/ Qt.
  *  5/ KDE.
@@ -78,7 +78,7 @@ namespace KIPIKXMLHelloWorldPlugin
     for that.
 */
 
-/** Using private container everywhere is clear to speed up compilation and reduce source code depencies through header files.
+/** Using private container everywhere is clear to speed up compilation and reduce source code dependencies through header files.
  *  See this url for details : http://techbase.kde.org/Policies/Binary_Compatibility_Issues_With_C%2B%2B#Using_a_d-Pointer
  */
 class Plugin_KXMLHelloWorld::Private
@@ -124,7 +124,7 @@ Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVaria
     /** This is needed to setup the plugin gui and to merge with the kipi host
      *  application gui.
      *  The name of the UI file must be: nameofpluginui.rc, where "nameofplugin"
-     *  is the name given to the plugin factory, usualy: kipiplugin_<name> .
+     *  is the name given to the plugin factory, usually: kipiplugin_<name> .
      *  UI file of the plugin must be installed in kipi data dir.
      */
     setUiBaseName("kipiplugin_kxmlhelloworldui.rc");

@@ -50,10 +50,6 @@
 #   include <kexiv2/kexiv2.h>
 #endif
 
-// Local includes
-
-#include "kipiinterface.h"
-
 using namespace KXMLKipiCmd;
 using namespace KIPI;
 

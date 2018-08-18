@@ -85,7 +85,7 @@ enum Features
     HostSupportsTags               = 1 << 9,  /** This feature specifies whether the host application supports keywords for images.                                                 */
     HostSupportsRating             = 1 << 10, /** This feature specifies whether the host application supports rating values for images.                                            */
     HostSupportsThumbnails         = 1 << 11, /** This feature specifies that host application can provide image thumbnails.                                                        */
-    HostSupportsReadWriteLock      = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurent operations.                  */
+    HostSupportsReadWriteLock      = 1 << 12, /** This feature specifies that host application has mechanism to lock/unlock items to prevent concurrent operations.                 */
     HostSupportsPickLabel          = 1 << 13, /** This feature specifies whether the host application supports pick label values for images, used for photograph workflow.          */
     HostSupportsColorLabel         = 1 << 14, /** This feature specifies whether the host application supports color label values for images, used to sort item with color flag.    */
     HostSupportsItemReservation    = 1 << 15, /** This feature specifies whether the host application supports item reservation.                                                    */
