@@ -74,7 +74,7 @@ namespace KIPIKXMLHelloWorldPlugin
 {
 
 /** Under Kipi-plugins, you can use KPToolDialog class from kipi-plugins to display plugin dialogs. It offers some facilities to
-    set data and rules about plugins, especially to wrap properlly tool with KDE bugilla. We use KPAboutData container
+    set data and rules about plugins, especially to wrap properly tool with KDE bugzilla. We use KPAboutData container
     for that.
 */
 
@@ -95,7 +95,7 @@ public:
         actionImport = 0;
     }
 
-    /** These plugin actions will pluged into menu KIPI host application.
+    /** These plugin actions will plugged into menu KIPI host application.
      */
     QAction* actionImages;
     QAction* actionTools;
@@ -110,7 +110,7 @@ public:
  */
 K_PLUGIN_FACTORY(KXMLHelloWorldFactory, registerPlugin<Plugin_KXMLHelloWorld>();)
 
-/** The plugin constructor. Note that plugin name passed as string in 3rd arguement of KIPI::Plugin parent class
+/** The plugin constructor. Note that plugin name passed as string in 3rd argument of KIPI::Plugin parent class
  *  is the same than Name value from .desktop file.
  */
 Plugin_KXMLHelloWorld::Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList&)
@@ -167,7 +167,7 @@ void Plugin_KXMLHelloWorld::setupActions()
      *  about already existing one from other tool to prevent conflict.
      *  Don't forget to define an unique string name to your action, to be able to disable it
      *  in KIPI host application if necessary. You must check of course name already used in
-     *  others tool before to prevent redondancy.
+     *  others tool before to prevent redundancy.
      */
 
     /** We need to call setDefaultCategory in case the plugin loader cannot

@@ -112,7 +112,7 @@ public:
     Interface* interface() const;
 
     /**
-     * Virtual method that must be overrided by the non abstract descendants and
+     * Virtual method that must be overridden by the non abstract descendants and
      * must be called before any actions are added.
      *
      * @param widget The widget which holds the plugin. It will be set as the default widget.

@@ -131,7 +131,7 @@ public:
         </tr><tr>
             <th>"tagspath"</th>
             <td>QStringList</td>
-            <td>Return all tags path list of item, formated as "Country/France/City/Paris" for ex.</td>
+            <td>Return all tags path list of item, formatted as "Country/France/City/Paris" for ex.</td>
         </tr><tr>
             <th>"keywords"</th>
             <td>QStringList</td>

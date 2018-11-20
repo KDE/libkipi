@@ -324,7 +324,7 @@ int main(int argc, char* argv[])
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("l"),              QLatin1String("Library name of plugin to use"),             QLatin1String("library")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("a"),              QLatin1String("Action to call"),                            QLatin1String("action")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("i"),              QLatin1String("Selected images"),                           QLatin1String("selectedimages")));
-    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("c"),              QLatin1String("Selected colections"),                       QLatin1String("selectedcollections")));
+    parser.addOption(QCommandLineOption(QStringList() << QLatin1String("c"),              QLatin1String("Selected collections"),                       QLatin1String("selectedcollections")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("allc"),           QLatin1String("All collections"),                           QLatin1String("allcollections")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[images]"),      QLatin1String("List of images")));
     parser.addOption(QCommandLineOption(QStringList() << QLatin1String("+[collections]"), QLatin1String("List of collections")));
@@ -449,7 +449,7 @@ int main(int argc, char* argv[])
     {
         qCritical() << "No argument specified: either use --list,\n"
                        "or specify an action to be called.\n"
-                       "Exemple : ./kipicmd -w -lkipiplugin_kxmlhelloworld -a\"KXML Hello World Image...\" -i ~/Images/*";
+                       "Example : ./kipicmd -w -lkipiplugin_kxmlhelloworld -a\"KXML Hello World Image...\" -i ~/Images/*";
         return 0;
     }
 

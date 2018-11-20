@@ -111,7 +111,7 @@
 
    To add KIPI support to your application you must inherit
    KIPI::Interface, and give an instance of this class to
-   KIPI::PluginLoader. See \ref KIPI::PluginLoader for details on loading plugins.
+   KIPI::PluginLoader. See \ref PluginLoader "KIPI::PluginLoader" for details on loading plugins.
 
    To be able to create an instance of your subclass of KIPI::Interface,
    you must of course implement all the pure virtual method of the super

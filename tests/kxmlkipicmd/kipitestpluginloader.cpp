@@ -306,7 +306,7 @@ QString KipiTestPluginLoader::categoryShortName(Category cat) const
             break;
 
         case CollectionsPlugin:
-            res = QLatin1String("Collenctions");
+            res = QLatin1String("Collections");
             break;
 
         default:

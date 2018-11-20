@@ -268,7 +268,7 @@ public:
 
     /**
      * Init plugin loader. Call this method to parse relevant plugins installed on your system.
-     * Before to call this method, you must setup KIPI insterface instance.
+     * Before to call this method, you must setup KIPI interface instance.
      * Optionally, setup list of plugins to ignore, the constraint list, and
      * the disabled plugin actions
      */
@@ -305,7 +305,7 @@ Q_SIGNALS:
     void plug(KIPI::PluginLoader::Info*);
     void unplug(KIPI::PluginLoader::Info*);
 
-    // NOTE: plugin can be pluged through Info item.
+    // NOTE: plugin can be plugged through Info item.
     void replug();
 
 private:

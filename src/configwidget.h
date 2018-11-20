@@ -87,8 +87,8 @@ public:
 
 Q_SIGNALS:
 
-    /** Signal emitted when filetring is done through slotSetFilter().
-     *  Number of plugins found is sent when item relevant of filetring match the query.
+    /** Signal emitted when filtering is done through slotSetFilter().
+     *  Number of plugins found is sent when item relevant of filtering match the query.
      */
     void signalSearchResult(int);
 

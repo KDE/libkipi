@@ -113,9 +113,8 @@ public:
      * The function may choose to return the directory for the image collection
      * or if images from the collection are not available in a common directory,
      * then instead a common upload directory.
-     * In contrast to \ref path, this function must return a valid url.
      *
-     * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
+     * IMPORTANT: uploadRootUrl() must be a subpath of uploadUrl()
      */
     QUrl       uploadUrl() const;
 
@@ -124,21 +123,21 @@ public:
      * which gives the user the possible to show a directory from a tree view.
      *
      * This tree view widget needs to starts at some URL. This function specifies that location.
-     * Here are a couble of possible return value different host applications may choose.
+     * Here are a couple of possible return value different host applications may choose.
      *
      * If all images are stored rooted at some tree (which is the case for KPhotoAlbum),
      * then this function may return this directory unconditionally.
-     * The root directory returned by uploadPath() (which is the default implementation for this method)
-     * will be the directory returned by uploadPath().
+     * The root directory returned by uploadUrl() (which is the default implementation for this method)
+     * will be the directory returned by uploadUrl().
      *
-     * IMPORTANT: uploadRoot() must be a subpath of uploadPath()
+     * IMPORTANT: uploadRootUrl() must be a subpath of uploadUrl()
      */
     QUrl       uploadRootUrl() const;
 
     /**
-     * This fonction return the name of the upload root path used by the
+     * This function return the name of the upload root path used by the
      * the KIPI::UploadWidget. This name can be different for each host
-     * app (like "Images" for Kphotoalbum).
+     * app (like "Images" for KPhotoAlbum).
      */
     QString    uploadRootName() const;
 

@@ -76,8 +76,8 @@ enum Features
     ImagesHasComments              = 1 << 1,  /** This feature specifies that images in the host application has descriptions associated to them.                                   */
     ImagesHasTime                  = 1 << 2,  /** This feature specifies that images has a date associated with it, which the host application can display and set.                 */
     HostSupportsDateRanges         = 1 << 3,  /** This feature specifies whether the host application supports that the user can specify a date range for images, like 1998-2000.   */
-    HostAcceptNewImages            = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadPath to find the
-                                                  location to place the image, and \ref KIPI::Interface::addImage() to tell the host application about the new image.               */
+    HostAcceptNewImages            = 1 << 4,  /** This feature specifies that the host application do accept new images. Use \ref ImageCollection::uploadUrl to find the
+                                                  location to place the image, and \ref Interface::addImage() to tell the host application about the new image.               */
     ImagesHasTitlesWritable        = 1 << 5,  /** This feature specifies whether the plugin can change the title for images.                                                        */
     CollectionsHaveCategory        = 1 << 6,  /** This feature specifies that collections are category associated to them ('travels', 'friends', 'monuments', etc.).                */
     CollectionsHaveCreationDate    = 1 << 7,  /** This feature specifies that collections are a creation date associated to them.                                                   */
@@ -314,7 +314,7 @@ public:
     virtual void refreshImages(const QList<QUrl>&);
 
     /**
-     * Tells to host application to render imediatly a preview image for one item.
+     * Tells to host application to render immediatly a preview image for one item.
      * This method re-implemented in host application and be thread safe.
      */
     virtual QImage preview(const QUrl& url);
@@ -322,7 +322,7 @@ public:
     /**
      * Tell to host application to save image at url in specific format (JPG, PNG, TIF, etc).
      * Pixels image data must be in ARGB, with image size (width,height).
-     * Pixels can be in siwteen bits per color per pixels and can have an alpha chanel.
+     * Pixels can be in sixteen bits per color per pixels and can have an alpha channel.
      * If cancel flag is passed it permit to cancel save operation.
      * This method re-implemented in host application must be thread safe.
      */
@@ -333,7 +333,7 @@ public:
 
     /**
      * Tells to host application to render a preview image for one item.
-     * A resizement to to a specific size will be generated if preview is largest than.
+     * A resizement to a specific size will be generated if preview is largest than.
      * Use a positive resizedTo value in this case, else -1. Aspect ratio is preserved while rendering.
      * This asynchronous method must be re-implemented in host application.
      * Use gotPreview() signal to take preview.
@@ -475,7 +475,7 @@ Q_SIGNALS:
      */
     void gotThumbnail(const QUrl&, const QPixmap&);
 
-    /** Emit when host application has rendered item preview image. See assynchronous preview() methods for details.
+    /** Emit when host application has rendered item preview image. See asynchronous preview() methods for details.
      */
     void gotPreview(const QUrl&, const QImage&);
 
