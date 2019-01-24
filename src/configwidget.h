@@ -30,8 +30,8 @@
 
 // Qt includes
 
-#include <QtWidgets/QTreeWidgetItem>
-#include <QtWidgets/QTreeWidget>
+#include <QTreeWidgetItem>
+#include <QTreeWidget>
 
 // Local includes
 

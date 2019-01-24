@@ -36,12 +36,12 @@
 
 // Qt includes
 
-#include <QtCore/QObject>
-#include <QtCore/QList>
-#include <QtCore/QHash>
-#include <QtXml/QDomElement>
-#include <QtXml/QDomNode>
-#include <QtXml/QDomDocument>
+#include <QObject>
+#include <QList>
+#include <QHash>
+#include <QDomElement>
+#include <QDomNode>
+#include <QDomDocument>
 
 // KDE includes
 

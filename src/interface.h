@@ -36,13 +36,13 @@
 
 // Qt includes
 
-#include <QtCore/QFlags>
-#include <QtCore/QObject>
-#include <QtCore/QVariant>
-#include <QtCore/QList>
-#include <QtCore/QUrl>
-#include <QtCore/QByteArray>
-#include <QtGui/QImage>
+#include <QFlags>
+#include <QObject>
+#include <QVariant>
+#include <QList>
+#include <QUrl>
+#include <QByteArray>
+#include <QImage>
 
 // Local includes
 

@@ -36,7 +36,7 @@
 
 // Qt includes
 
-#include <QtCore/QList>
+#include <QList>
 
 // KDE includes
 

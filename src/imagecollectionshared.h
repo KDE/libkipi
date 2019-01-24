@@ -34,9 +34,9 @@
 
 // Qt Includes.
 
-#include <QtCore/QString>
-#include <QtCore/QDateTime>
-#include <QtCore/QUrl>
+#include <QString>
+#include <QDateTime>
+#include <QUrl>
 
 // Local includes
 

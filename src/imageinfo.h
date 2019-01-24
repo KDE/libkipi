@@ -34,11 +34,11 @@
 
 // Qt includes
 
-#include <QtCore/QString>
-#include <QtCore/QDateTime>
-#include <QtCore/QMap>
-#include <QtCore/QVariant>
-#include <QtCore/QUrl>
+#include <QString>
+#include <QDateTime>
+#include <QMap>
+#include <QVariant>
+#include <QUrl>
 
 // Local includes
 

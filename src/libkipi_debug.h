@@ -20,7 +20,7 @@
 #ifndef LIBKIPI_DEBUG_H
 #define LIBKIPI_DEBUG_H
 
-#include <QtCore/QLoggingCategory>
+#include <QLoggingCategory>
 
 Q_DECLARE_LOGGING_CATEGORY(LIBKIPI_LOG)
 
