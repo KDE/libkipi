@@ -329,7 +329,7 @@ public:
     virtual bool saveImage(const QUrl& url, const QString& format,
                            const QByteArray& data, uint width, uint height,
                            bool  sixteenBit, bool hasAlpha,
-                           bool* cancel=0);
+                           bool* cancel = nullptr);
 
     /**
      * Tells to host application to render a preview image for one item.
@@ -413,7 +413,7 @@ public:
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
      * is true, the string will be set to the descriptionOfAction set with reserveForAction.
      */
-    virtual bool itemIsReserved(const QUrl& url, QString* const descriptionOfAction = 0) const;
+    virtual bool itemIsReserved(const QUrl& url, QString* const descriptionOfAction = nullptr) const;
 
     /**
      * Supported if HostSupportsReadWriteLock

@@ -238,7 +238,7 @@ QString Interface::rawFiles()
 QAbstractItemModel* Interface::getTagTree() const
 {
     PrintWarningMessage();
-    return 0;
+    return nullptr;
 }
 
 QString Interface::progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const
@@ -297,13 +297,13 @@ bool Interface::itemIsReserved(const QUrl&, QString* const) const
 FileReadWriteLock* Interface::createReadWriteLock(const QUrl&) const
 {
     PrintWarningMessageFeature("HostSupportsReadWriteLock");
-    return 0;
+    return nullptr;
 }
 
 MetadataProcessor* Interface::createMetadataProcessor() const
 {
     PrintWarningMessageFeature("HostSupportsMetadataProcessing");
-    return 0;
+    return nullptr;
 }
 
 void Interface::aboutToEdit(const QUrl&, EditHints)
@@ -414,7 +414,7 @@ class Q_DECL_HIDDEN EditHintScope::Private
 public:
 
     Private() :
-        iface(0)
+        iface(nullptr)
     {
     }
 

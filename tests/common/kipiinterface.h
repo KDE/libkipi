@@ -80,7 +80,7 @@ public:
     bool saveImage(const QUrl& url, const QString& format,
                    const QByteArray& data, uint width, uint height,
                    bool  sixteenBit, bool hasAlpha,
-                   bool* cancel=0) override;
+                   bool* cancel = nullptr) override;
 
     FileReadWriteLock* createReadWriteLock(const QUrl&) const override;
     MetadataProcessor* createMetadataProcessor()        const override;

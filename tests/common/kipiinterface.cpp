@@ -526,7 +526,7 @@ MetadataProcessor* KipiInterface::createMetadataProcessor() const
 
 FileReadWriteLock* KipiInterface::createReadWriteLock(const QUrl&) const
 {
-    return 0;  // TODO
+    return nullptr;  // TODO
 }
 
 } // namespace KXMLKipiCmd

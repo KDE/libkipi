@@ -70,8 +70,8 @@ public:
     Private()
     {
         shouldLoad = false;
-        plugin     = 0;
-        parent     = 0;
+        plugin     = nullptr;
+        parent     = nullptr;
     }
 
     bool           shouldLoad;
@@ -198,7 +198,7 @@ void PluginLoader::Info::reload()
     }
 
     delete d->plugin;
-    d->plugin = 0;
+    d->plugin = nullptr;
 }
 
 bool PluginLoader::Info::shouldLoad() const
@@ -213,7 +213,7 @@ void PluginLoader::Info::setShouldLoad(bool value)
 
 //---------------------------------------------------------------------
 
-static PluginLoader* s_instance = 0;
+static PluginLoader* s_instance = nullptr;
 static bool          s_loaded   = false;
 
 class Q_DECL_HIDDEN PluginLoader::Private
@@ -222,8 +222,8 @@ public:
 
     Private()
     {
-        interface = 0;
-        parent    = 0;
+        interface = nullptr;
+        parent    = nullptr;
     };
 
     QStringList              ignoredPlugins;
@@ -238,14 +238,14 @@ public:
 PluginLoader::PluginLoader()
     : d(new Private)
 {
-    Q_ASSERT((s_instance == 0) && (!s_loaded));
+    Q_ASSERT((s_instance == nullptr) && (!s_loaded));
     s_instance = this;
 }
 
 PluginLoader::PluginLoader(KXmlGuiWindow* const parent)
     : d(new Private)
 {
-    Q_ASSERT((s_instance == 0) && (!s_loaded));
+    Q_ASSERT((s_instance == nullptr) && (!s_loaded));
     s_instance = this;
 
     if (!parent)
@@ -279,7 +279,7 @@ QStringList PluginLoader::disabledPluginActions() const
 
 void PluginLoader::init()
 {
-    Q_ASSERT((s_instance != 0) && (!s_loaded));
+    Q_ASSERT((s_instance != nullptr) && (!s_loaded));
 
     if (!d->interface)
     {

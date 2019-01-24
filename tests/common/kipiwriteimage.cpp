@@ -57,7 +57,7 @@ public:
         hasAlpha       = false;
         width          = 0;
         height         = 0;
-        cancel         = 0;
+        cancel         = nullptr;
     }
 
     bool*      cancel;
@@ -160,7 +160,7 @@ bool KIPIWriteImage::write2JPEG(const QString& destPath)
 
     // Write image data
     uchar* line   = new uchar[d->width*3];
-    uchar* dstPtr = 0;
+    uchar* dstPtr = nullptr;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
@@ -244,7 +244,7 @@ bool KIPIWriteImage::write2PPM(const QString& destPath)
 
     // Write image data
     uchar* const line = new uchar[d->width*3];
-    uchar* dstPtr     = 0;
+    uchar* dstPtr     = nullptr;
 
     if (!d->sixteenBit)     // 8 bits image.
     {
@@ -323,11 +323,11 @@ bool KIPIWriteImage::write2PNG(const QString& destPath)
         return false;
     }
 
-    uchar*       data       = 0;
+    uchar*       data       = nullptr;
     int          bitsDepth  = d->sixteenBit ? 16 : 8;
     png_color_8  sig_bit;
     png_bytep    row_ptr;
-    png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    png_structp  png_ptr    = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     png_infop    info_ptr   = png_create_info_struct(png_ptr);
 
     png_set_write_fn(png_ptr, (void*)&file, kipi_png_write_fn, kipi_png_flush_fn);
@@ -518,7 +518,7 @@ bool KIPIWriteImage::write2TIFF(const QString& destPath)
 
     // Write full image data in tiff directory IFD0
 
-    uchar*  pixel=0;
+    uchar*  pixel = nullptr;
     double  alpha_factor;
     uint32  x, y;
     uint8   r8, g8, b8, a8=0;

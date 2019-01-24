@@ -69,7 +69,7 @@ public:
      */
     bool               reserveForAction(QObject* const reservingObject, const QString& descriptionOfAction) const;
     void               clearReservation(QObject* const reservingObject);
-    bool               itemIsReserved(QString* const descriptionOfAction = 0) const;
+    bool               itemIsReserved(QString* const descriptionOfAction = nullptr) const;
     FileReadWriteLock* createReadWriteLock() const;
 
     /** These methods must be re-implemented in your KIPI host application to manage image attributes with plugins.

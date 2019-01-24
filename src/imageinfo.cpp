@@ -50,7 +50,7 @@ ImageInfo::ImageInfo(const ImageInfo& rhs)
 
 ImageInfo::ImageInfo()
 {
-    d = 0;
+    d = nullptr;
 }
 
 ImageInfo::~ImageInfo()

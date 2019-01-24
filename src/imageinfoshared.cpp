@@ -47,7 +47,7 @@ public:
     Private()
     {
         count     = 1;
-        interface = 0;
+        interface = nullptr;
     }
 
     int        count;

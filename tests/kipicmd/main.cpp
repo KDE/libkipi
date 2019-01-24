@@ -211,7 +211,7 @@ bool ListPlugins(const QString& libraryName = QString::fromLatin1(""))
 
         Plugin* const plugin = (*it)->plugin();
 
-        if (plugin == 0)
+        if (plugin == nullptr)
         {
             qDebug() << preSpace << QString::fromLatin1( "Plugin not loaded.");
             continue;
@@ -266,7 +266,7 @@ bool CallAction(const QString& actionText, const QString& libraryName = QString:
         // scan for the desired action:
         Plugin* const plugin = (*info)->plugin();
 
-        if (plugin == 0)
+        if (plugin == nullptr)
         {
             qDebug() << QString::fromLatin1("Plugin \"%1\" failed to load.").arg((*info)->library());
             continue;
@@ -332,7 +332,7 @@ int main(int argc, char* argv[])
 
     KipiInterface* const kipiInterface = new KipiInterface(&app);
 
-    PluginLoader* const loader = new PluginLoader(0);
+    PluginLoader* const loader = new PluginLoader(nullptr);
     loader->setInterface(kipiInterface);
     loader->init();
 
@@ -342,7 +342,7 @@ int main(int argc, char* argv[])
 
     // Determine which with list we start
 
-    QList<QUrl>* startList = 0;
+    QList<QUrl>* startList = nullptr;
 
     if (parser.isSet(QString::fromLatin1("i")))
     {
@@ -393,7 +393,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            if (startList == 0)
+            if (startList == nullptr)
             {
                 qCritical() << "StartList is null.\n"
                                "Please specify how the filenames you provided should be used.";

@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 
     // Determine which with list we start
 
-    QList<QUrl>* startList = 0;
+    QList<QUrl>* startList = nullptr;
 
     if (parser.isSet(QString::fromLatin1("i")))
     {
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            if (startList == 0)
+            if (startList == nullptr)
             {
                 qCritical() << "StartList is null. "
                             << "Please specify how the filenames you provided should be used.";

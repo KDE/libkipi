@@ -47,7 +47,7 @@ namespace KXMLKipiCmd
 KipiUploadWidget::KipiUploadWidget(KipiInterface* const interface, QWidget* const parent)
     : UploadWidget(parent),
       m_interface(interface),
-      m_listWidget(0)
+      m_listWidget(nullptr)
 {
     QVBoxLayout* const layout = new QVBoxLayout(this);
     layout->addWidget(new QLabel(QString::fromLatin1("Please select a target album:")));  // no need i18n.
@@ -84,7 +84,7 @@ ImageCollection KipiUploadWidget::selectedImageCollection() const
     {
         // this should not happen!!! the calling application will probably crash now...
         qDebug() << "Nothing selected... impossible!";
-        return ImageCollection(0);
+        return ImageCollection(nullptr);
     }
 
     const int row = m_listWidget->row(selectedItems.at(0));

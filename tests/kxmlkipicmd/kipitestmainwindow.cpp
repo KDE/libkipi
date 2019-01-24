@@ -57,7 +57,7 @@
 namespace KXMLKipiCmd
 {
 
-KipiTestMainWindow* KipiTestMainWindow::m_instance = 0;
+KipiTestMainWindow* KipiTestMainWindow::m_instance = nullptr;
 
 class KipiTestMainWindow::Private
 {
@@ -65,10 +65,10 @@ class KipiTestMainWindow::Private
 public:
 
     Private() :
-        config(0),
-        quitAction(0),
-        showMenuBarAction(0),
-        kipiInterface(0),
+        config(nullptr),
+        quitAction(nullptr),
+        showMenuBarAction(nullptr),
+        kipiInterface(nullptr),
         uiFile(QString())
     {
     }
@@ -83,7 +83,7 @@ public:
 KipiTestMainWindow::KipiTestMainWindow(const QList<QUrl>& selectedImages,
                                        const QList<QUrl>& selectedAlbums,
                                        const QList<QUrl>& allAlbums)
-    : KXmlGuiWindow(0),
+    : KXmlGuiWindow(nullptr),
       d(new Private())
 {
     m_instance           = this;

@@ -53,10 +53,10 @@ public:
 
     Private()
     {
-        app                         = 0;
-        kipipluginsActionCollection = 0;
-        kipiPluginLoader            = 0;
-        kipiInterface               = 0;
+        app                         = nullptr;
+        kipipluginsActionCollection = nullptr;
+        kipiPluginLoader            = nullptr;
+        kipiInterface               = nullptr;
     }
 
     PluginLoader*               kipiPluginLoader;
@@ -69,7 +69,7 @@ public:
 
 // -- Static values -------------------------------
 
-KipiTestPluginLoader* KipiTestPluginLoader::m_instance = 0;
+KipiTestPluginLoader* KipiTestPluginLoader::m_instance = nullptr;
 
 // -----------------------------------------------
 
@@ -87,7 +87,7 @@ KipiTestPluginLoader::KipiTestPluginLoader(KXmlGuiWindow* const parent, KipiInte
 KipiTestPluginLoader::~KipiTestPluginLoader()
 {
     delete d;
-    m_instance = 0;
+    m_instance = nullptr;
 }
 
 KipiTestPluginLoader* KipiTestPluginLoader::instance()

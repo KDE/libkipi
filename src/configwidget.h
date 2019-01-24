@@ -50,7 +50,7 @@ public:
 
     /** Default constructor.
      */
-    ConfigWidget(QWidget* const parent=0);
+    ConfigWidget(QWidget* const parent = nullptr);
     ~ConfigWidget() override;
 
     /** Apply all changes about plugins selected to be hosted in KIPI host application.

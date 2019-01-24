@@ -63,7 +63,7 @@ public:
     Private() :
         uiBaseName(QString())
     {
-        defaultWidget   = 0;
+        defaultWidget   = nullptr;
         defaultCategory = InvalidCategory;
     }
 

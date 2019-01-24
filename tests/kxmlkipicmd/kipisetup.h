@@ -51,7 +51,7 @@ public:
 
 public:
 
-    static bool runSetupDialog(QWidget* const parent = 0);
+    static bool runSetupDialog(QWidget* const parent = nullptr);
 
 private Q_SLOTS:
 

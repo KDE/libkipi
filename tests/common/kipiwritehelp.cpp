@@ -132,7 +132,7 @@ void kipi_jpeg_qiodevice_dest (j_compress_ptr cinfo, QIODevice* const outDevice)
     * manager serially with the same JPEG object, because their private object
     * sizes may be different.  Caveat programmer.
     */
-    if (cinfo->dest == NULL)
+    if (cinfo->dest == nullptr)
     {
         /* first time for this JPEG object? */
         cinfo->dest = (struct jpeg_destination_mgr*)

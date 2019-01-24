@@ -47,7 +47,7 @@ namespace KXMLKipiCmd
 KipiImageCollectionSelector::KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent)
     : ImageCollectionSelector(parent),
       m_interface(interface),
-      m_listWidget(0)
+      m_listWidget(nullptr)
 {
     QVBoxLayout* const layout = new QVBoxLayout(this);
     layout->addWidget(new QLabel(QString::fromLatin1("Please select albums:")));

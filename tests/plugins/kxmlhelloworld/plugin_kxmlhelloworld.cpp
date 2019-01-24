@@ -89,10 +89,10 @@ public:
     {
         /// It's always clean to init pointers to zero. If crash appear,
         /// debugger will show a null pointer instead a non initialized one.
-        actionImages = 0;
-        actionTools  = 0;
-        actionExport = 0;
-        actionImport = 0;
+        actionImages = nullptr;
+        actionTools  = nullptr;
+        actionExport = nullptr;
+        actionImport = nullptr;
     }
 
     /** These plugin actions will plugged into menu KIPI host application.
@@ -262,7 +262,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
         foreach (const QUrl& url, images.images())
             names << url.fileName();
 
-        QMessageBox::information(0, QLatin1String("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
+        QMessageBox::information(nullptr, QLatin1String("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
     }
 }
 
@@ -271,7 +271,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
     /** When actionTools is actived, we display a dedicated widget to select albums from kipi host application
      *  for post processing purpose. When selection is done, we display it in a message box.
      */
-    QPointer<QDialog> dlg                   = new QDialog(0);
+    QPointer<QDialog> dlg                   = new QDialog(nullptr);
     ImageCollectionSelector* const selector = interface()->imageCollectionSelector(dlg);
     QDialogButtonBox* const buttons         = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, dlg);
     QVBoxLayout* const vbox                 = new QVBoxLayout(dlg);
@@ -296,7 +296,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
         foreach (const ImageCollection& col, list)
             names << col.name();
 
-        QMessageBox::information(0, QLatin1String("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));
+        QMessageBox::information(nullptr, QLatin1String("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));
     }
 
     delete dlg;
@@ -308,7 +308,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionExport()
      *  and permit to manage current items selection from kipi host application for batch post-processing purpose.
      */
 
-    QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
+    QMessageBox::information(nullptr, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionExport() activated"));
 }
 
 void Plugin_KXMLHelloWorld::slotActivateActionImport()
@@ -323,7 +323,7 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
          */
     }
 
-    QMessageBox::information(0, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
+    QMessageBox::information(nullptr, QLatin1String("Information"), QLatin1String("Plugin_KXMLHelloWorld::slotActivateActionImport() activated"));
 }
 
 }  // namespace KIPIHelloWorldPlugin

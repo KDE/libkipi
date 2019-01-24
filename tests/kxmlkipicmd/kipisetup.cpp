@@ -71,11 +71,11 @@ class KipiSetup::Private
 public:
 
     Private() :
-        pluginFilter(0),
-        buttons(0),
-        tabView(0),
-        pluginsList(0),
-        xmlPage(0)
+        pluginFilter(nullptr),
+        buttons(nullptr),
+        tabView(nullptr),
+        pluginsList(nullptr),
+        xmlPage(nullptr)
     {
     }
 
@@ -200,7 +200,7 @@ public:
 
     Private()
     {
-        xmlFilesCob = 0;
+        xmlFilesCob = nullptr;
     }
 
     QString        uiFilesPath;

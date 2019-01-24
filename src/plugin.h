@@ -104,7 +104,7 @@ public:
      * the default widget, if widget is null or not provided. The actions are in
      * the same order as added to the plugin.
      */
-    QList<QAction*> actions(QWidget* const widget = 0) const;
+    QList<QAction*> actions(QWidget* const widget = nullptr) const;
 
     /**
      * Returns the KIPI::Interface

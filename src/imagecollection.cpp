@@ -60,13 +60,13 @@ ImageCollection::ImageCollection(const ImageCollection& rhs)
     }
     else
     {
-        d = 0;
+        d = nullptr;
     }
 }
 
 ImageCollection::ImageCollection()
 {
-    d = 0;
+    d = nullptr;
 }
 
 ImageCollection::~ImageCollection()
@@ -86,7 +86,7 @@ ImageCollection& ImageCollection::operator=(const ImageCollection& rhs)
     if ( !rhs.d )
     {
         PrintWarningMessage();
-        d = 0;
+        d = nullptr;
     }
     else
     {
@@ -238,7 +238,7 @@ bool ImageCollection::isDirectory() const
 
 bool ImageCollection::isValid() const
 {
-    return (d != 0);
+    return (d != nullptr);
 }
 
 } // namespace KIPI

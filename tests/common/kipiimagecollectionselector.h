@@ -47,7 +47,7 @@ class KipiImageCollectionSelector : public ImageCollectionSelector
 
 public:
 
-    KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent=0);
+    KipiImageCollectionSelector(KipiInterface* const interface, QWidget* const parent = nullptr);
     QList<ImageCollection> selectedImageCollections() const override;
 
 public Q_SLOTS:
