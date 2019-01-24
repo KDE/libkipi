@@ -69,13 +69,13 @@ set(CMAKE_MODULE_PATH ${libkkipi_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 include(GenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
-include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(ECMInstallIcons)
+include(CMakePackageConfigHelpers)
 
 
 ############## Find Packages ###################
@@ -115,7 +115,7 @@ endif()
 message("${CMAKECONFIG_INSTALL_DIR}")
 set(CMAKECONFIG_INSTALL_DIR "${CMAKECONFIG_INSTALL_PREFIX}/KF5Kipi")
 
-ecm_configure_package_config_file(
+configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/templates/KF5KipiConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/KF5KipiConfig.cmake"
     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR}
