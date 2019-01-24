@@ -32,11 +32,11 @@
 #include <QAction>
 #include <QDebug>
 
-// KDE includes
+// KF includes
 
-#include <kactioncategory.h>
-#include <kxmlguifactory.h>
-#include <kxmlguiwindow.h>
+#include <KActionCategory>
+#include <KXMLGUIFactory>
+#include <KXmlGuiWindow>
 
 // Local includes
 

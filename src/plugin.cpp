@@ -42,9 +42,9 @@
 #include <QAction>
 #include <QStandardPaths>
 
-// KDE includes
+// KF includes
 
-#include <kactioncollection.h>
+#include <KActionCollection>
 
 // Local includes
 

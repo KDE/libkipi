@@ -52,9 +52,9 @@
 #include <QPushButton>
 #include <QMessageBox>
 
-// KDE includes
+// KF includes
 
-#include <kpluginfactory.h>
+#include <KPluginFactory>
 
 /// This is all libkipi headers included in this tool.
 

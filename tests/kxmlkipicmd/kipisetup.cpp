@@ -43,11 +43,11 @@
 #include <QStandardPaths>
 #include <QDialogButtonBox>
 
-// KDE includes
+// KF includes
 
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
-#include <kwindowconfig.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
+#include <KWindowConfig>
 
 // Libkipi includes
 

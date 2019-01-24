@@ -41,15 +41,15 @@
 #include <QAction>
 #include <QStandardPaths>
 
-// KDE includes
+// KF includes
 
-#include <kservicetypetrader.h>
-#include <ksharedconfig.h>
-#include <kdesktopfile.h>
-#include <kconfiggroup.h>
-#include <kxmlguifactory.h>
-#include <ktoolbar.h>
-#include <kactioncollection.h>
+#include <KServiceTypeTrader>
+#include <KSharedConfig>
+#include <KDesktopFile>
+#include <KConfigGroup>
+#include <KXMLGUIFactory>
+#include <KToolBar>
+#include <KActionCollection>
 
 // Local includes
 

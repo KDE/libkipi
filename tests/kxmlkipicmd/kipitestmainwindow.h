@@ -31,9 +31,9 @@
 
 #include <QUrl>
 
-// KDE includes
+// KF includes
 
-#include <kxmlguiwindow.h>
+#include <KXmlGuiWindow>
 
 namespace KXMLKipiCmd
 {

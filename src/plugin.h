@@ -43,9 +43,9 @@
 #include <QDomNode>
 #include <QDomDocument>
 
-// KDE includes
+// KF includes
 
-#include <kxmlguiclient.h>
+#include <KXMLGUIClient>
 
 // Local includes
 

@@ -38,10 +38,10 @@
 
 #include <QList>
 
-// KDE includes
+// KF includes
 
-#include <kservice.h>
-#include <kxmlguiwindow.h>
+#include <KService>
+#include <KXmlGuiWindow>
 
 // Local includes
 

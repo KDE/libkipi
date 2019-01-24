@@ -32,10 +32,10 @@
 #include <QList>
 #include <QHeaderView>
 
-// KDE includes
+// KF includes
 
-#include <ksharedconfig.h>
-#include <kconfiggroup.h>
+#include <KSharedConfig>
+#include <KConfigGroup>
 
 namespace KIPI
 {

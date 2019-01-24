@@ -32,16 +32,16 @@
 #include <QDebug>
 #include <QMenuBar>
 
-// KDE includes
+// KF includes
 
-#include <kconfiggroup.h>
-#include <ksharedconfig.h>
-#include <ktoggleaction.h>
-#include <kstandardaction.h>
-#include <kactioncollection.h>
-#include <kshortcutsdialog.h>
-#include <kedittoolbar.h>
-#include <kwindowconfig.h>
+#include <KConfigGroup>
+#include <KSharedConfig>
+#include <KToggleAction>
+#include <KStandardAction>
+#include <KActionCollection>
+#include <KShortcutsDialog>
+#include <KEditToolBar>
+#include <KWindowConfig>
 
 // LibKIPI includes
 

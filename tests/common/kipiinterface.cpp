@@ -38,7 +38,7 @@
 #include "libkipi_version.h"
 #include "imagecollection.h"
 
-// KDE includes
+// KF includes
 
 #ifdef HAVE_KEXIV2
 #   include <kexiv2/kexiv2.h>
