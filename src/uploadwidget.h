@@ -48,7 +48,7 @@ class LIBKIPI_EXPORT UploadWidget : public QWidget
 public:
 
     UploadWidget(QWidget* const parent);
-    virtual ~UploadWidget();
+    ~UploadWidget() override;
 
     virtual ImageCollection selectedImageCollection() const;
 

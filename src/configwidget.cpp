@@ -70,7 +70,7 @@ public:
         setText(3, m_info->author().section(QString::fromLatin1(","), 0, 0));
     };
 
-    ~PluginCheckBox()
+    ~PluginCheckBox() override
     {
     };
 

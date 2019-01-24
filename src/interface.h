@@ -187,7 +187,7 @@ public:
 public:
 
     MetadataProcessor()          {};
-    virtual ~MetadataProcessor() {};
+    ~MetadataProcessor() override {};
 
     virtual bool load(const QUrl& url) = 0;
     virtual bool applyChanges() = 0;
@@ -264,7 +264,7 @@ class LIBKIPI_EXPORT Interface : public QObject
 public:
 
     explicit Interface(QObject* const parent, const QString& name=QString());
-    virtual ~Interface();
+    ~Interface() override;
 
     /**
      * Tells whether the host application under which the plugin currently executes a given feature.

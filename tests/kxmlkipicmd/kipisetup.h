@@ -61,7 +61,7 @@ private Q_SLOTS:
 private:
 
     KipiSetup(QWidget* const parent);
-    ~KipiSetup();
+    ~KipiSetup() override;
 
 private:
 
@@ -80,7 +80,7 @@ class SetupXML : public QScrollArea
 public:
 
     SetupXML(QWidget* const parent);
-    ~SetupXML();
+    ~SetupXML() override;
 
     static const QString CONFIG_GROUP_NAME;
 

@@ -47,9 +47,9 @@ class KipiUploadWidget : public UploadWidget
 public:
 
     KipiUploadWidget(KipiInterface* const interface, QWidget* const parent);
-    virtual ~KipiUploadWidget();
+    ~KipiUploadWidget() override;
 
-    ImageCollection selectedImageCollection() const Q_DECL_OVERRIDE;
+    ImageCollection selectedImageCollection() const override;
 
 public Q_SLOTS:
 

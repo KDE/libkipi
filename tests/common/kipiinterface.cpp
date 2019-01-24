@@ -262,14 +262,14 @@ class KipiMetadataProcessor : public KIPI::MetadataProcessor
 public:
 
     KipiMetadataProcessor()  {};
-    ~KipiMetadataProcessor() {};
+    ~KipiMetadataProcessor() override {};
 
-    bool load(const QUrl& url) Q_DECL_OVERRIDE
+    bool load(const QUrl& url) override
     {
         return m_meta.load(url.toLocalFile());
     }
 
-    bool save(const QUrl& url, bool writeToFileOnly) Q_DECL_OVERRIDE
+    bool save(const QUrl& url, bool writeToFileOnly) override
     {
         if (writeToFileOnly)
             m_meta.setMetadataWritingMode((int) KExiv2Iface::KExiv2::WRITETOIMAGEONLY);
@@ -277,127 +277,127 @@ public:
         return m_meta.save(url.toLocalFile());
     }
 
-    bool applyChanges() Q_DECL_OVERRIDE
+    bool applyChanges() override
     {
         return m_meta.applyChanges();
     }
 
-    QSize getPixelSize() Q_DECL_OVERRIDE
+    QSize getPixelSize() override
     {
         return m_meta.getPixelSize();
     }
 
-    bool setImageProgramId(const QString& program, const QString& version) Q_DECL_OVERRIDE
+    bool setImageProgramId(const QString& program, const QString& version) override
     {
         return m_meta.setImageProgramId(program, version);
     }
 
-    QSize getImageDimensions() Q_DECL_OVERRIDE
+    QSize getImageDimensions() override
     {
         return m_meta.getImageDimensions();
     }
 
-    bool setImageDimensions(const QSize& size) Q_DECL_OVERRIDE
+    bool setImageDimensions(const QSize& size) override
     {
         return m_meta.setImageDimensions(size);
     }
 
-    int getImageOrientation() Q_DECL_OVERRIDE
+    int getImageOrientation() override
     {
         return m_meta.getImageOrientation();
     }
 
-    bool setImageOrientation(int orientation) Q_DECL_OVERRIDE
+    bool setImageOrientation(int orientation) override
     {
         return m_meta.setImageOrientation((KExiv2Iface::KExiv2::ImageOrientation)orientation);
     }
 
-    bool rotateExifQImage(QImage& img, int orientation) Q_DECL_OVERRIDE
+    bool rotateExifQImage(QImage& img, int orientation) override
     {
         return m_meta.rotateExifQImage(img, (KExiv2Iface::KExiv2::ImageOrientation)orientation);
     }
 
-    QDateTime getImageDateTime() Q_DECL_OVERRIDE
+    QDateTime getImageDateTime() override
     {
         return m_meta.getImageDateTime();
     }
 
-    bool setImageDateTime(const QDateTime& dt) Q_DECL_OVERRIDE
+    bool setImageDateTime(const QDateTime& dt) override
     {
         return m_meta.setImageDateTime(dt);
     }
 
-    bool getImagePreview(QImage& img) Q_DECL_OVERRIDE
+    bool getImagePreview(QImage& img) override
     {
         return m_meta.getImagePreview(img);
     }
 
-    bool setImagePreview(const QImage& img) Q_DECL_OVERRIDE
+    bool setImagePreview(const QImage& img) override
     {
         return m_meta.setImagePreview(img);
     }
 
-    bool hasExif() Q_DECL_OVERRIDE
+    bool hasExif() override
     {
         return m_meta.hasExif();
     }
 
-    bool hasIptc() Q_DECL_OVERRIDE
+    bool hasIptc() override
     {
         return m_meta.hasIptc();
     }
 
-    bool hasXmp() Q_DECL_OVERRIDE
+    bool hasXmp() override
     {
         return m_meta.hasXmp();
     }
 
-    QByteArray getExif() Q_DECL_OVERRIDE
+    QByteArray getExif() override
     {
         return m_meta.getExifEncoded();
     }
 
-    QByteArray getIptc() Q_DECL_OVERRIDE
+    QByteArray getIptc() override
     {
         return m_meta.getIptc();
     }
 
-    QByteArray getXmp() Q_DECL_OVERRIDE
+    QByteArray getXmp() override
     {
         return m_meta.getXmp();
     }
 
-    bool setExif(const QByteArray& data) Q_DECL_OVERRIDE
+    bool setExif(const QByteArray& data) override
     {
         return m_meta.setExif(data);
     }
 
-    bool setIptc(const QByteArray& data) Q_DECL_OVERRIDE
+    bool setIptc(const QByteArray& data) override
     {
         return m_meta.setIptc(data);
     }
 
-    bool setXmp(const QByteArray& data) Q_DECL_OVERRIDE
+    bool setXmp(const QByteArray& data) override
     {
         return m_meta.setXmp(data);
     }
 
-    bool registerXmpNameSpace(const QString& uri, const QString& prefix) Q_DECL_OVERRIDE
+    bool registerXmpNameSpace(const QString& uri, const QString& prefix) override
     {
         return m_meta.registerXmpNameSpace(uri, prefix);
     }
 
-    bool supportXmp() Q_DECL_OVERRIDE
+    bool supportXmp() override
     {
         return m_meta.supportXmp();
     }
 
-    bool canWriteXmp(const QUrl& url) Q_DECL_OVERRIDE
+    bool canWriteXmp(const QUrl& url) override
     {
         return m_meta.canWriteXmp(url.toLocalFile());
     }
 
-    bool removeExifTags(const QStringList& tagFilters) Q_DECL_OVERRIDE
+    bool removeExifTags(const QStringList& tagFilters) override
     {
         KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getExifTagsDataList(tagFilters);
 
@@ -412,7 +412,7 @@ public:
         return true;
     }
 
-    bool removeIptcTags(const QStringList& tagFilters) Q_DECL_OVERRIDE
+    bool removeIptcTags(const QStringList& tagFilters) override
     {
         KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getIptcTagsDataList(tagFilters);
 
@@ -427,7 +427,7 @@ public:
         return true;
     }
 
-    bool removeXmpTags(const QStringList& tagFilters) Q_DECL_OVERRIDE
+    bool removeXmpTags(const QStringList& tagFilters) override
     {
         KExiv2Iface::KExiv2::MetaDataMap m = m_meta.getXmpTagsDataList(tagFilters);
 
@@ -442,62 +442,62 @@ public:
         return true;
     }
 
-    bool getGPSInfo(double& alt, double& lat, double& lon) Q_DECL_OVERRIDE
+    bool getGPSInfo(double& alt, double& lat, double& lon) override
     {
         return m_meta.getGPSInfo(alt, lat, lon);
     }
 
-    bool setGPSInfo(const double alt, const double lat, const double lon) Q_DECL_OVERRIDE
+    bool setGPSInfo(const double alt, const double lat, const double lon) override
     {
         return m_meta.setGPSInfo(alt, lat, lon);
     }
 
-    bool removeGPSInfo() Q_DECL_OVERRIDE
+    bool removeGPSInfo() override
     {
         return m_meta.removeGPSInfo();
     }
 
-    QString getExifTagString(const QString& tag) Q_DECL_OVERRIDE
+    QString getExifTagString(const QString& tag) override
     {
         return m_meta.getExifTagString(tag.toLatin1().constData());
     }
 
-    bool setExifTagString(const QString& tag, const QString& val) Q_DECL_OVERRIDE
+    bool setExifTagString(const QString& tag, const QString& val) override
     {
         return m_meta.setExifTagString(tag.toLatin1().constData(), val);
     }
 
-    bool getExifTagRational(const QString& tag, long int& num, long int& den) Q_DECL_OVERRIDE
+    bool getExifTagRational(const QString& tag, long int& num, long int& den) override
     {
         return m_meta.getExifTagRational(tag.toLatin1().constData(), num, den);
     }
 
-    bool setExifTagRational(const QString& tag, long int num, long int den) Q_DECL_OVERRIDE
+    bool setExifTagRational(const QString& tag, long int num, long int den) override
     {
         return m_meta.setExifTagRational(tag.toLatin1().constData(), num, den);
     }
 
-    QString getXmpTagString(const QString& tag) Q_DECL_OVERRIDE
+    QString getXmpTagString(const QString& tag) override
     {
         return m_meta.getXmpTagString(tag.toLatin1().constData());
     }
 
-    bool setXmpTagString(const QString& tag, const QString& val) Q_DECL_OVERRIDE
+    bool setXmpTagString(const QString& tag, const QString& val) override
     {
         return m_meta.setXmpTagString(tag.toLatin1().constData(), val);
     }
 
-    QStringList getXmpKeywords() Q_DECL_OVERRIDE
+    QStringList getXmpKeywords() override
     {
         return m_meta.getXmpKeywords();
     }
 
-    bool  setXmpKeywords(const QStringList& keywords) Q_DECL_OVERRIDE
+    bool  setXmpKeywords(const QStringList& keywords) override
     {
         return m_meta.setXmpKeywords(keywords);
     }
 
-    QVariant getXmpTagVariant(const QString& tag) Q_DECL_OVERRIDE
+    QVariant getXmpTagVariant(const QString& tag) override
     {
         return m_meta.getXmpTagVariant(tag.toLatin1().constData());
     }

@@ -47,7 +47,7 @@ public:
     KipiTestMainWindow(const QList<QUrl>& selectedImages,
                        const QList<QUrl>& selectedAlbums,
                        const QList<QUrl>& allAlbums);
-    ~KipiTestMainWindow();
+    ~KipiTestMainWindow() override;
 
     static KipiTestMainWindow* instance();
 

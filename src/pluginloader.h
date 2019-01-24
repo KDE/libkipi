@@ -239,7 +239,7 @@ public:
     /**
      * Standard destructor
      */
-    virtual ~PluginLoader();
+    ~PluginLoader() override;
 
     /**
      * Set KIPI interface instance from host application.

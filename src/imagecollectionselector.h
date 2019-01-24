@@ -50,7 +50,7 @@ Q_OBJECT
 public:
 
     ImageCollectionSelector(QWidget* const parent=0);
-    virtual ~ImageCollectionSelector();
+    ~ImageCollectionSelector() override;
 
     virtual QList<ImageCollection> selectedImageCollections() const;
     virtual void enableVirtualCollections(bool flag = true);

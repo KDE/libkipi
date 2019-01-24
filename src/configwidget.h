@@ -51,7 +51,7 @@ public:
     /** Default constructor.
      */
     ConfigWidget(QWidget* const parent=0);
-    ~ConfigWidget();
+    ~ConfigWidget() override;
 
     /** Apply all changes about plugins selected to be hosted in KIPI host application.
      */
@@ -71,7 +71,7 @@ public:
 
     /** Select all plugins in the list.
      */
-    void selectAll() Q_DECL_OVERRIDE;
+    void selectAll() override;
 
     /** Clear all selected plugins in the list.
      */

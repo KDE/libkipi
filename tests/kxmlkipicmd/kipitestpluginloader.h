@@ -73,7 +73,7 @@ private Q_SLOTS:
 
 private:
 
-    ~KipiTestPluginLoader();
+    ~KipiTestPluginLoader() override;
 
     void loadPlugins();
     void checkEmptyCategory(Category cat);

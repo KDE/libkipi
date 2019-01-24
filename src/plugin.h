@@ -97,7 +97,7 @@ public:
      * All the actions in the actionCollection are deleted before the plugin is
      * deleted
      */
-    virtual ~Plugin();
+    ~Plugin() override;
 
     /**
      * Returns the plugin actions associated with the widget passed as argument, or with

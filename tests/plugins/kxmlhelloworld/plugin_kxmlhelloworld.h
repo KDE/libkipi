@@ -54,11 +54,11 @@ public:
         and const QStringList& args (the arguments passed).
     */
     Plugin_KXMLHelloWorld(QObject* const parent, const QVariantList& args);
-    ~Plugin_KXMLHelloWorld();
+    ~Plugin_KXMLHelloWorld() override;
 
     /** This method setup the plugin actions and connect internal signals and slots to handle plugin actions.
      */
-    void setup(QWidget* const widget) Q_DECL_OVERRIDE;
+    void setup(QWidget* const widget) override;
 
 private Q_SLOTS:
 

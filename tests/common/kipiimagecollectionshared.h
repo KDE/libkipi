@@ -41,14 +41,14 @@ public:
     // re-implemented inherited functions:
     KipiImageCollectionShared(const QUrl& albumPath);
     KipiImageCollectionShared(const QList<QUrl>& images);
-    virtual ~KipiImageCollectionShared();
+    ~KipiImageCollectionShared() override;
 
-    QString     name() Q_DECL_OVERRIDE;
-    QList<QUrl> images() Q_DECL_OVERRIDE;
+    QString     name() override;
+    QList<QUrl> images() override;
     virtual QUrl        path();
     virtual QUrl        uploadPath();
     virtual QUrl        uploadRoot();
-    bool        isDirectory() Q_DECL_OVERRIDE;
+    bool        isDirectory() override;
 
     // functions used internally:
     void addImages(const QList<QUrl>& images);
