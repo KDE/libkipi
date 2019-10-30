@@ -73,7 +73,7 @@ public:
     QString    name() const;
 
     /**
-     * Returns the comment for the collection of images or QString::null if that doesn't make any sense.
+     * Returns the comment for the collection of images or QString() if that doesn't make any sense.
      * A comment makes sense for an album, but not for a KIPI::Interface::currentSelection().
      */
     QString    comment() const;

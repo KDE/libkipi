@@ -115,7 +115,7 @@ QString ImageCollection::comment() const
     else
     {
         PrintWarningMessage();
-        return QString::null;
+        return QString();
     }
 }
 
@@ -141,7 +141,7 @@ QString ImageCollection::category() const
     else
     {
         PrintWarningMessage();
-        return QString::null;
+        return QString();
     }
 }
 
