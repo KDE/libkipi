@@ -13,7 +13,7 @@ The library documentation is available on header files.
 -- DEPENDENCIES -------------------------------------------------------
 
 CMake           >= 2.8.12                   http://www.cmake.org
-ECM             >= 1.7.0                    https://projects.kde.org/projects/kdesupport/extra-cmake-modules
+ECM             >= 1.7.0                    https://commits.kde.org/extra-cmake-modules
 libqt           >= 5.4.0                    http://qt-project.org
 libkde          >= 5.5.0                    http://www.kde.org
 
@@ -22,7 +22,7 @@ Optionals (for tests implementations only):
 libjpeg         >= 6b                       http://www.ijg.org
 libtiff         >= 3.8.2                    http://www.remotesensing.org/libtiff
 libpng          >= 1.2.0                    http://www.libpng.org/pub/png/libpng.html
-libkexiv2       >= 5.0.0                    https://projects.kde.org/projects/kde/kdegraphics/libs/libkexiv2
+libkexiv2       >= 5.0.0                    https://commits.kde.org/libkexiv2
 
 -- INSTALL ------------------------------------------------------------
 

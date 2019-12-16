@@ -19,9 +19,9 @@
    <h2>Developing a new KIPI plugin</h2>
 
    The easiest way to start a new plugin, is to copy the
-   <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests/kxmlhelloworld?rev=development%2F2.0.0">
+   <a href="https://commits.kde.org/libkipi?path=tests/plugins/kxmlhelloworld">
    KXMLHelloWorld</a> plugin, which you may find in <a
-   href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi">
+   href="https://commits.kde.org/libkipi">
    libkipi</a> project from KDE git repository. Please also read <a
    href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html">
    this tutorial</a> which tells in general about developing a plugin
@@ -45,7 +45,7 @@
    <tt>K_PLUGIN_FACTORY</tt> and <tt>K_EXPORT_PLUGIN</tt>.
    <li> You also need to create a desktop file, as described <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#makefile_am_client">here</a>
    <li> You must write a rc file describing the gui of your plugin. For an
-   example look at the <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/entry/tests/kxmlhelloworld/plugin/kipiplugin_kxmlhelloworldui.rc?rev=development%2F2.0.0">rc
+   example look at the <a href="https://commits.kde.org/libkipi?path=tests/plugins/kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc">rc
    file</a> of the KXMLHelloWorld plugin.
    </ul>
 
@@ -73,7 +73,7 @@
    KIPI::Interface::info(), which returns a KIPI::ImageInfo, with the
    information. Note that Kipi-plugins provide a dedicated wrapper around KIPI::ImageInfo
    to simplify item attribute management with host application. See
-   <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/entry/common/libkipiplugins/tools/kpimageinfo.h">
+   <a href="https://commits.kde.org/kipi-plugins?path=common/libkipiplugins/tools/kpimageinfo.h">
    here</a> for details.
 
    When developing plugins, you should pay special attention to the fact the different
@@ -94,12 +94,12 @@
    write images into.
    <li> KIPI::Interface::thumbnail() helps you load thumbnails of images from KIPI host thumbnail manager.
    <li> KIPI::Interface::progress*() helps you dispatch progress information to KIPI host progress manager.
-   <li> <a href="https://projects.kde.org/projects/extragear/graphics/kipi-plugins/repository/revisions/master/show/tests">
+   <li> <a href="https://commits.kde.org/libkipi?path=tests/kipicmd">
    kipicmd command line program</a> helps you to test your plugin without to have a KIPI host application available.
    It emulates a simplified KIPI interface and can run plugin as stand-alone application.
    Look kipicmd command line documentation for details.
    <li> Beginning with libkipi 2.0.0 you have a simple gui program,
-   <a href="https://projects.kde.org/projects/kde/kdegraphics/libs/libkipi/repository/show/tests?rev=development%2F2.0.0">kxmlkipicmd</a>,
+   <a href="https://commits.kde.org/libkipi?path=tests/kxmlkipicmd">kxmlkipicmd</a>,
    which emulates a simplified KIPI interface with a menubar and a toolbar. This
    way you can test the gui of your plugin.
    </ul>
