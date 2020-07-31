@@ -224,7 +224,7 @@ public:
     {
         interface = nullptr;
         parent    = nullptr;
-    };
+    }
 
     QStringList              ignoredPlugins;
     QStringList              disabledActions;
