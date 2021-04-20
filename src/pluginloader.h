@@ -59,6 +59,9 @@ class ConfigWidget;
     \par Maintainer: Victor Dodon
     \class PluginLoader
     This is the class that will help host applications to load plugins.
+    
+    This is a singleton and host applications should create the PluginLoader
+    just once, and then use the instance() static method to access it.
 
     The host application must create an instance of the plugin loader, and
     call the method loadPlugins() to get the plugins loaded. To ensure that
@@ -139,6 +142,7 @@ class ConfigWidget;
                 this, SLOT(slotKipiPluginPlug()));
 
         m_loader->loadPlugins();
+        // Do not delete m_loader as long as any of the plugins are in use
     }
 
     void MyKipiApplication::slotKipiPluginPlug()
@@ -226,18 +230,28 @@ public:
 public:
 
     /**
-     * Use this constructor if your application does not use KDE XML GUI technology
+     * Use this constructor if your application does not use KDE XML GUI technology.
+     * 
+     * Note that the PluginLoader is intended to be a singleton, so you
+     * should create only one and then use instance().
      */
     PluginLoader();
 
     /**
      * Standard constructor. You must pass the instance of KDE XML GUI application as argument.
+     * 
+     * Note that the PluginLoader is intended to be a singleton, so you
+     * should create only one and then use instance().
+     * 
      * @param parent the pointer to the KXmlGuiWindow of your application
      */
     PluginLoader(KXmlGuiWindow* const parent);
 
     /**
      * Standard destructor
+     * 
+     * Since PluginLoader is a singleton, you should not call this
+     * in client code.
      */
     ~PluginLoader() override;
 
