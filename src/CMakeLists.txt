@@ -68,7 +68,7 @@ target_link_libraries(KF5Kipi
 )
 
 set_target_properties(KF5Kipi     PROPERTIES
-                      VERSION     ${KIPI_VERSION_STRING}
+                      VERSION     ${KIPI_VERSION}
                       SOVERSION   ${KIPI_SOVERSION}
                       EXPORT_NAME Kipi
 )
