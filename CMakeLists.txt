@@ -4,17 +4,15 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
+cmake_minimum_required(VERSION 3.16.0)
+
 project(libkipi)
 
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
-set(CMAKE_MIN_VERSION   "3.0.0")
-set(ECM_MIN_VERSION     "1.1.0")
-set(KF5_MIN_VERSION     "5.1.0")
-set(QT_MIN_VERSION      "5.2.0")
-
-cmake_minimum_required(VERSION ${CMAKE_MIN_VERSION})
+set(KF_MIN_VERSION      "5.85.0")
+set(QT_MIN_VERSION      "5.15.0")
 
 # =======================================================
 # Information to update before to release this library.
@@ -63,17 +61,18 @@ SET(LIBKIPI_SO_VERSION  "${KIPI_LIB_SO_CUR_VERSION}.${KIPI_LIB_SO_REV_VERSION}.$
 
 ############## ECM setup ######################
 
-find_package(ECM ${ECM_MIN_VERSION} CONFIG REQUIRED)
+find_package(ECM ${KF_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${libkkipi_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
+
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDECompilerSettings NO_POLICY_SCOPE)
 
 include(GenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
 include(ECMSetupVersion)
 include(FeatureSummary)
-include(KDEInstallDirs)
-include(KDECMakeSettings)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(ECMInstallIcons)
 include(CMakePackageConfigHelpers)
 
@@ -86,7 +85,7 @@ find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS
              Gui
 )
 
-find_package(KF5 ${KF5_MIN_VERSION}
+find_package(KF5 ${KF_MIN_VERSION}
              REQUIRED COMPONENTS
              Config
              XmlGui
@@ -100,9 +99,6 @@ ecm_setup_version(${LIBKIPI_LIB_VERSION}
                   SOVERSION            ${LIBKIPI_SO_VERSION})
 
 ############## Targets #########################
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
