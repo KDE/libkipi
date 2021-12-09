@@ -10,11 +10,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/kxmlhelloworld
                     ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-set(kipiplugin_kxmlhelloworld_PART_SRCS
-    kxmlhelloworld/plugin_kxmlhelloworld.cpp
-)
-
-add_library(kipiplugin_kxmlhelloworld MODULE ${kipiplugin_kxmlhelloworld_PART_SRCS})
+add_library(kipiplugin_kxmlhelloworld MODULE kxmlhelloworld/plugin_kxmlhelloworld.cpp)
 
 target_link_libraries(kipiplugin_kxmlhelloworld
                       KF5Kipi

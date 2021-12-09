@@ -40,15 +40,13 @@ add_subdirectory(plugins)
 
 #----------------------------------------------------------------------------------------------------
 
-set(kxmlkipicmd_SRCS
+add_executable(kxmlkipicmd
     ${kipicommon_SRCS}
     kxmlkipicmd/kipitestmainwindow.cpp
     kxmlkipicmd/kipitestpluginloader.cpp
     kxmlkipicmd/kipisetup.cpp
     kxmlkipicmd/main.cpp
 )
-
-add_executable(kxmlkipicmd ${kxmlkipicmd_SRCS})
 
 target_link_libraries(kxmlkipicmd
                       ${JPEG_LIBRARIES}
@@ -70,12 +68,10 @@ endif()
 
 #----------------------------------------------------------------------------------------------------
 
-set(kipicmd_SRCS
+add_executable(kipicmd
     ${kipicommon_SRCS}
     kipicmd/main.cpp
 )
-
-add_executable(kipicmd ${kipicmd_SRCS})
 
 target_link_libraries(kipicmd
                       ${JPEG_LIBRARIES}

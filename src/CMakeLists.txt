@@ -9,21 +9,28 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CUR
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
-qt5_add_resources(libkipiresources_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/../pics/libkipi.qrc)
+add_library(KF5Kipi)
+add_library(KF5::Kipi ALIAS KF5Kipi)
+set_target_properties(KF5Kipi PROPERTIES
+    VERSION     ${KIPI_VERSION}
+    SOVERSION   ${KIPI_SOVERSION}
+    EXPORT_NAME Kipi
+)
 
-set(kipi_LIB_SRCS interface.cpp
-                  imagecollection.cpp
-                  imagecollectionshared.cpp
-                  imageinfoshared.cpp
-                  plugin.cpp
-                  imageinfo.cpp
-                  uploadwidget.cpp
-                  imagecollectionselector.cpp
-                  configwidget.cpp
-                  pluginloader.cpp
-                  libkipi_debug.cpp
+target_sources(KF5Kipi PRIVATE
+    interface.cpp
+    imagecollection.cpp
+    imagecollectionshared.cpp
+    imageinfoshared.cpp
+    plugin.cpp
+    imageinfo.cpp
+    uploadwidget.cpp
+    imagecollectionselector.cpp
+    configwidget.cpp
+    pluginloader.cpp
+    libkipi_debug.cpp
 
-                  ${libkipiresources_SRCS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/../pics/libkipi.qrc
 )
 
 ecm_generate_headers(kipi_CamelCase_HEADERS
@@ -44,9 +51,6 @@ ecm_generate_headers(kipi_CamelCase_HEADERS
                      REQUIRED_HEADERS kipi_HEADERS
 )
 
-add_library(KF5Kipi SHARED ${kipi_LIB_SRCS})
-add_library(KF5::Kipi ALIAS KF5Kipi)
-
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
 
 # disable adding of current source directory to interface, as it causes naming clashes
@@ -65,12 +69,6 @@ target_link_libraries(KF5Kipi
                       KF5::XmlGui
                       KF5::Service
                       KF5::ConfigCore
-)
-
-set_target_properties(KF5Kipi     PROPERTIES
-                      VERSION     ${KIPI_VERSION}
-                      SOVERSION   ${KIPI_SOVERSION}
-                      EXPORT_NAME Kipi
 )
 
 install(TARGETS KF5Kipi
