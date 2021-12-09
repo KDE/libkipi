@@ -156,7 +156,7 @@ void Plugin::Private::XMLParser::removeDisabledActions(QDomElement& elem)
         }
     }
 
-    foreach(QDomElement element, disabledElements)
+    for (QDomElement element : std::as_const(disabledElements))
     {
         //qCDebug(LIBKIPI_LOG) << "Plugin action '" << element.attribute("name") << "' is disabled.";
         QDomElement parent = element.parentNode().toElement();
@@ -461,9 +461,9 @@ void Plugin::mergeXMLFile(KXMLGUIClient *const host)
 
 void Plugin::clearActions()
 {
-    QList<QAction*> actions = actionCollection()->actions();
+    const QList<QAction*> actions = actionCollection()->actions();
 
-    foreach (QAction* const action, actions)
+    for (QAction* const action : actions)
     {
         actionCollection()->removeAction(action);
     }

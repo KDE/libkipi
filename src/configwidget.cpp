@@ -125,7 +125,8 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
 
     if (loader)
     {
-        foreach(PluginLoader::Info* const info, loader->pluginList())
+        const auto infos = loader->pluginList();
+        for (PluginLoader::Info* const info : infos)
         {
             if (info)
             {
@@ -150,7 +151,7 @@ void ConfigWidget::apply()
         KSharedConfigPtr config = KSharedConfig::openConfig();
         KConfigGroup group      = config->group(QString::fromLatin1("KIPI/EnabledPlugin"));
 
-        foreach (PluginCheckBox* const item, d->boxes)
+        for (PluginCheckBox* const item : std::as_const(d->boxes))
         {
             bool orig = item->m_info->shouldLoad();
             bool load = (item->checkState(0) == Qt::Checked);
@@ -174,7 +175,7 @@ void ConfigWidget::apply()
 
 void ConfigWidget::selectAll()
 {
-    foreach (PluginCheckBox* const item, d->boxes)
+    for (PluginCheckBox* const item : std::as_const(d->boxes))
     {
         item->setCheckState(0, Qt::Checked);
     }
@@ -182,7 +183,7 @@ void ConfigWidget::selectAll()
 
 void ConfigWidget::clearAll()
 {
-    foreach (PluginCheckBox* const item, d->boxes)
+    for (PluginCheckBox* const item : std::as_const(d->boxes))
     {
         item->setCheckState(0, Qt::Unchecked);
     }
@@ -197,7 +198,7 @@ int ConfigWidget::actived() const
 {
     int actived = 0;
 
-    foreach (PluginCheckBox* const item, d->boxes)
+    for (PluginCheckBox* const item : std::as_const(d->boxes))
     {
         if (item->checkState(0) == Qt::Checked)
             actived++;
@@ -210,7 +211,7 @@ int ConfigWidget::visible() const
 {
     int visible = 0;
 
-    foreach (PluginCheckBox* const item, d->boxes)
+    for (PluginCheckBox* const item : std::as_const(d->boxes))
     {
         if (!item->isHidden())
             visible++;
@@ -224,7 +225,7 @@ void ConfigWidget::setFilter(const QString& filter, Qt::CaseSensitivity cs)
     d->filter  = filter;
     bool query = false;
 
-    foreach (PluginCheckBox* const item, d->boxes)
+    for (PluginCheckBox* const item : std::as_const(d->boxes))
     {
         if (item->contains(filter, cs))
         {

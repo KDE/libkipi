@@ -94,7 +94,8 @@ PluginLoader::Info::~Info()
     {
         d->parent->guiFactory()->removeClient(d->plugin);
 
-        foreach(KToolBar* const toolbar, d->parent->toolBars())
+        const auto toolBars = d->parent->toolBars();
+        for (KToolBar* const toolbar : toolBars)
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }
@@ -191,7 +192,8 @@ void PluginLoader::Info::reload()
     {
         d->parent->guiFactory()->removeClient(d->plugin);
 
-        foreach(KToolBar* const toolbar, d->parent->toolBars())
+        const auto toolBars = d->parent->toolBars();
+        for (KToolBar* const toolbar : toolBars)
         {
             toolbar->removeXMLGUIClient(d->plugin);
         }

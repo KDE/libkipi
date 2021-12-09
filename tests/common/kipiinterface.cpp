@@ -213,7 +213,7 @@ QVariant KipiInterface::hostSetting(const QString& settingName)
 
 void KipiInterface::thumbnails(const QList<QUrl>& list, int)
 {
-    foreach(const QUrl& url, list)
+    for (const QUrl& url : list)
     {
         QIcon icon(url.url());
         Q_EMIT gotThumbnail(url, icon.pixmap(256));

@@ -317,10 +317,10 @@ void Interface::editingFinished(const QUrl&, EditHints)
 QStringList Interface::supportedImageMimeTypes(bool readWrite)
 {
     QStringList       mimeTypes;
-    QList<QByteArray> supported = readWrite ? QImageWriter::supportedMimeTypes()
-                                            : QImageReader::supportedMimeTypes();
+    const QList<QByteArray> supported = readWrite ? QImageWriter::supportedMimeTypes()
+                                                  : QImageReader::supportedMimeTypes();
 
-    Q_FOREACH(QByteArray mimeType, supported)
+    for (const QByteArray &mimeType : supported)
         mimeTypes.append(QString::fromLatin1(mimeType));
 
     return mimeTypes;

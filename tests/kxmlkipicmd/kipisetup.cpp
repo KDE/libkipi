@@ -225,7 +225,7 @@ SetupXML::SetupXML(QWidget* const parent)
     d->xmlFilesCob = new QComboBox(panel);
     d->xmlFilesCob->setEditable(false);
 
-    foreach(QString uiFile, d->uiFilesList)
+    for (const QString &uiFile : std::as_const(d->uiFilesList))
     {
         d->xmlFilesCob->addItem(uiFile, uiFile);
     }

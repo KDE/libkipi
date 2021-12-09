@@ -259,7 +259,8 @@ void Plugin_KXMLHelloWorld::slotActivateActionImages()
     {
         QStringList names;
 
-        foreach (const QUrl& url, images.images())
+        const auto imageUrls = images.images();
+        for (const QUrl& url : imageUrls)
             names << url.fileName();
 
         QMessageBox::information(nullptr, QLatin1String("This is the list of selected items"), names.join(QString::fromLatin1("\n")));
@@ -287,13 +288,13 @@ void Plugin_KXMLHelloWorld::slotActivateActionTools()
 
     dlg->exec();
 
-    QList<ImageCollection> list = selector->selectedImageCollections();
+    const QList<ImageCollection> list = selector->selectedImageCollections();
 
     if (!list.isEmpty())
     {
         QStringList names;
 
-        foreach (const ImageCollection& col, list)
+        for (const ImageCollection& col : list)
             names << col.name();
 
         QMessageBox::information(nullptr, QLatin1String("This is the list of selected albums"), names.join(QString::fromLatin1("\n")));

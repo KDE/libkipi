@@ -101,6 +101,9 @@ ecm_setup_version(${LIBKIPI_LIB_VERSION}
 
 ############## Targets #########################
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
 
 add_subdirectory(pics)
