@@ -165,7 +165,7 @@ Plugin* PluginLoader::Info::plugin() const
         {
             qCDebug(LIBKIPI_LOG) << "Loaded plugin " << d->plugin->objectName();
 
-            emit (PluginLoader::instance()->plug(const_cast<Info*>(this)));
+            Q_EMIT (PluginLoader::instance()->plug(const_cast<Info*>(this)));
         }
         else
         {
@@ -355,7 +355,7 @@ PluginLoader::~PluginLoader()
 
 void PluginLoader::loadPlugins()
 {
-    emit replug(); // added for convenience, now they can be loaded on demand
+    Q_EMIT replug(); // added for convenience, now they can be loaded on demand
 }
 
 const PluginLoader::PluginList& PluginLoader::pluginList()

@@ -94,7 +94,7 @@ ImageCollection KipiUploadWidget::selectedImageCollection() const
 
 void KipiUploadWidget::slotItemSelectionChanged()
 {
-    emit(selectionChanged());
+    Q_EMIT selectionChanged();
 }
 
 } // namespace KXMLKipiCmd

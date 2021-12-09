@@ -96,7 +96,7 @@ QList<ImageCollection> KipiImageCollectionSelector::selectedImageCollections() c
 
 void KipiImageCollectionSelector::slotItemSelectionChanged()
 {
-    emit(selectionChanged());
+    Q_EMIT selectionChanged();
 }
 
 } // namespace KXMLKipiCmd

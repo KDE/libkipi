@@ -189,7 +189,7 @@ void Interface::thumbnails(const QList<QUrl>& list, int size)
     for (QList<QUrl>::ConstIterator it = list.begin() ; it != list.end() ; ++it)
     {
         if ((*it).isValid())
-            emit gotThumbnail((*it), QPixmap());
+            Q_EMIT gotThumbnail((*it), QPixmap());
     }
 }
 
@@ -226,7 +226,7 @@ void Interface::preview(const QUrl& url, int resizedTo)
     PrintWarningMessageFeature("HostSupportsPreviews");
 
     if (url.isValid())
-        emit gotPreview(url, QImage());
+        Q_EMIT gotPreview(url, QImage());
 }
 
 QString Interface::rawFiles()

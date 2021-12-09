@@ -168,7 +168,7 @@ void ConfigWidget::apply()
 
         config->sync();
 
-        emit PluginLoader::instance()->replug();
+        Q_EMIT PluginLoader::instance()->replug();
     }
 }
 
@@ -237,7 +237,7 @@ void ConfigWidget::setFilter(const QString& filter, Qt::CaseSensitivity cs)
         }
     }
 
-    emit signalSearchResult(query);
+    Q_EMIT signalSearchResult(query);
 }
 
 QString ConfigWidget::filter() const
