@@ -97,6 +97,9 @@ enum Features
 
 // NOTE: When a new item is add to Features, please don't forget to patch Interface::hasFeature().
 
+/**
+ * The EditHint enum.
+ */
 enum EditHint
 {
     UndefinedEditHint       = 0,
@@ -256,6 +259,9 @@ public:
 
 // ---------------------------------------------------------------------------------------------------------------
 
+/**
+ * The Interface class.
+ */
 class LIBKIPI_EXPORT Interface : public QObject
 {
     Q_OBJECT
@@ -537,6 +543,9 @@ private:
 
 // ---------------------------------------------------------------------------------------------------------------
 
+/**
+ * The FileWriteLocker class.
+ */
 class LIBKIPI_EXPORT FileWriteLocker
 {
 public:

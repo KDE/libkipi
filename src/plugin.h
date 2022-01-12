@@ -58,6 +58,9 @@ namespace KIPI
 
 class Interface;
 
+/**
+ * The Category enum.
+ */
 enum Category
 {
     InvalidCategory = -1,

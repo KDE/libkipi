@@ -42,6 +42,9 @@
 namespace KIPI
 {
 
+/**
+ * The ConfigWidget class.
+ */
 class LIBKIPI_EXPORT ConfigWidget : public QTreeWidget
 {
     Q_OBJECT
