@@ -39,8 +39,11 @@ namespace KIPI
 
 class ImageCollection;
 
-/** Re-implement this widget in your KIPI host application to use your dedicated model/view */
-
+/**
+ * @class UploadWidget uploadwidget.h <KIPI/UploadWidget>
+ *
+ * Re-implement this widget in your KIPI host application to use your dedicated model/view
+ */
 class LIBKIPI_EXPORT UploadWidget : public QWidget
 {
     Q_OBJECT

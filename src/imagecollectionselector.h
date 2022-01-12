@@ -40,7 +40,10 @@ namespace KIPI
 
 class ImageCollection;
 
-/** Re-implement this widget in your KIPI host application to use your dedicated model/view
+/**
+ * @class ImageCollectionSelector imagecollectionselector.h <KIPI/ImageCollectionSelector>
+ *
+ * Re-implement this widget in your KIPI host application to use your dedicated model/view
  */
 class LIBKIPI_EXPORT ImageCollectionSelector : public QWidget
 {

@@ -128,6 +128,8 @@ Q_DECLARE_FLAGS(EditHints, EditHint)
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
+ *  @class FileReadWriteLock interface.h <KIPI/Interface>
+ *
  *  A Kipi FileReadWriteLock refers to application-wide reading/writing
  *  to a file on disk; it is created with createReadWriteLock for an Url.
  *  All semantics are identical to a recursive QReadWriteLock.
@@ -163,6 +165,8 @@ public:
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
+ *  @class MetadataProcessor interface.h <KIPI/Interface>
+ *
  *  A Kipi MetadataProcessor refers to application-wide to process file metadata
  *  about Exif/Iptc/Xmp management; it is created with Interface::createMetadataProcessor().
  *  You can use libkexiv2 to re-implement this class as it's implemented in tests/common/kipiinterface.cpp.
@@ -260,6 +264,8 @@ public:
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
+ * @class Interface interface.h <KIPI/Interface>
+ *
  * The Interface class.
  */
 class LIBKIPI_EXPORT Interface : public QObject
@@ -516,6 +522,8 @@ private:
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
+ * @class FileReadLocker interface.h <KIPI/Interface>
+ *
  * Convenience classes creating a FileReadWriteLock and locking it for you.
  * It is strongly recommended to use FileReadWriteLock only through these
  * classes, created on the stack, as unlocking will be done automatically for you.
@@ -544,6 +552,8 @@ private:
 // ---------------------------------------------------------------------------------------------------------------
 
 /**
+ * @class FileWriteLocker interface.h <KIPI/Interface>
+ *
  * The FileWriteLocker class.
  */
 class LIBKIPI_EXPORT FileWriteLocker
@@ -565,6 +575,11 @@ private:
 
 // ---------------------------------------------------------------------------------------------------------------
 
+/**
+ * @class EditHintScope interface.h <KIPI/Interface>
+ *
+ * The EditHintScope class.
+ */
 class LIBKIPI_EXPORT EditHintScope
 {
 public:

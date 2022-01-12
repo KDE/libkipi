@@ -45,7 +45,10 @@
 namespace KIPI
 {
 
-/** See ImageCollection documentation for details.
+/**
+ * @class ImageCollectionShared imagecollectionshared.h <KIPI/ImageCollectionShared>
+ *
+ * See ImageCollection documentation for details.
  */
 class LIBKIPI_EXPORT ImageCollectionShared
 {

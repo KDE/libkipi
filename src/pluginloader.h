@@ -57,7 +57,7 @@ class ConfigWidget;
 /**
     \author Gilles Caulier
     \par Maintainer: Victor Dodon
-    \class PluginLoader
+    \class PluginLoader pluginloader.h <KIPI/PluginLoader>
     This is the class that will help host applications to load plugins.
     
     This is a singleton and host applications should create the PluginLoader

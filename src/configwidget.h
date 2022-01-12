@@ -43,6 +43,8 @@ namespace KIPI
 {
 
 /**
+ * @class ConfigWidget configwidget.h <KIPI/ConfigWidget>
+ *
  * The ConfigWidget class.
  */
 class LIBKIPI_EXPORT ConfigWidget : public QTreeWidget

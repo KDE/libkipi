@@ -49,7 +49,7 @@ namespace KIPI
 
 class ImageInfoShared;
 
-/** @class ImageInfo
+/** @class ImageInfo imageinfo.h <KIPI/ImageInfo>
     Holds info about an image from KIPI host application.
     NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
     not this class directly. See kipi-plugins/common/libkipi-plugins API for details.

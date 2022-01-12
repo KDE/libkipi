@@ -53,7 +53,10 @@ namespace KIPI
 class Interface;
 class FileReadWriteLock;
 
-/** See ImageInfo documentation for details.
+/**
+ * @class ImageInfoShared imageinfoshared.h <KIPI/ImageInfoShared>
+ *
+ * See ImageInfo documentation for details.
  */
 class LIBKIPI_EXPORT ImageInfoShared
 {

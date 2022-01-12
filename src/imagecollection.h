@@ -48,7 +48,8 @@ namespace KIPI
 
 class ImageCollectionShared;
 
-/** @class ImageCollection
+/** @class ImageCollection imagecollection.h <KIPI/ImageCollection>
+ *
     Holds info about the collection from KIPI host application.
     NOTE: Plugins should never create an instance of ImageCollection, only the host application should do that.
  */

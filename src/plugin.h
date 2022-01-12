@@ -73,6 +73,8 @@ enum Category
 };
 
 /**
+ * @class Plugin plugin.h <KIPI/Plugin>
+ *
  * @short Base class for the KIPI plugins
  *
  */
