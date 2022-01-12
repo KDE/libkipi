@@ -1,8 +1,6 @@
+# SPDX-FileCopyrightText: 2010-2018 Gilles Caulier <caulier dot gilles at gmail dot com>
 #
-# Copyright (c) 2010-2018, Gilles Caulier, <caulier dot gilles at gmail dot com>
-#
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
+# SPDX-License-Identifier: BSD-3-Clause
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h)
 

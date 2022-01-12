@@ -1,35 +1,12 @@
-/** ===========================================================
- * @file
- *
- * This file is a part of KDE project
- *
- *
- * @date   2004-02-01
- * @brief  plugin loader
- *
- * @author Copyright (C) 2004-2018 by Gilles Caulier
- *         <a href="mailto:caulier dot gilles at gmail dot com">caulier dot gilles at gmail dot com</a>
- * @author Copyright (C) 2004-2005 by Renchi Raju
- *         <a href="mailto:renchi dot raju at gmail dot com">renchi dot raju at gmail dot com</a>
- * @author Copyright (C) 2009      by Andi Clemens
- *         <a href="mailto:andi dot clemens at googlemail dot com">andi dot clemens at googlemail dot com</a>
- * @author Copyright (C) 2009      by Aleix Pol Gonzalez
- *         <a href="mailto:aleixpol at kde dot org">aleixpol at kde dot org</a>
- * @author Copyright (C) 2012-2013 by Victor Dodon
- *         <a href="mailto:dodonvictor at gmail dot com">dodonvictor at gmail dot com</a>
- *
- * This program is free software; you can redistribute it
- * and/or modify it under the terms of the GNU General
- * Public License as published by the Free Software Foundation;
- * either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * ============================================================ */
+/*
+    SPDX-FileCopyrightText: 2004-2018 Gilles Caulier <caulier dot gilles at gmail dot com>
+    SPDX-FileCopyrightText: 2004-2005 Renchi Raju <renchi dot raju at gmail dot com>
+    SPDX-FileCopyrightText: 2009 Andi Clemens <andi dot clemens at googlemail dot com>
+    SPDX-FileCopyrightText: 2009 Aleix Pol Gonzalez <aleixpol at kde dot org>
+    SPDX-FileCopyrightText: 2012-2013 Victor Dodon <dodonvictor at gmail dot com>
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
 #include "pluginloader.h"
 
