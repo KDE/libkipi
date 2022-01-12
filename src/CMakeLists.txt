@@ -28,7 +28,6 @@ target_sources(KF5Kipi PRIVATE
     imagecollectionselector.cpp
     configwidget.cpp
     pluginloader.cpp
-    libkipi_debug.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/../pics/libkipi.qrc
 )
@@ -52,6 +51,14 @@ ecm_generate_headers(kipi_CamelCase_HEADERS
 )
 
 generate_export_header(KF5Kipi BASE_NAME libkipi EXPORT_MACRO_NAME LIBKIPI_EXPORT)
+
+ecm_qt_declare_logging_category(KF5Kipi
+    HEADER libkipi_debug.h
+    IDENTIFIER LIBKIPI_LOG
+    CATEGORY_NAME kipi.library
+    DESCRIPTION "KIPI Library"
+    EXPORT KIPI
+)
 
 # disable adding of current source directory to interface, as it causes naming clashes
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
@@ -99,4 +106,11 @@ install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
 install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
         DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
         COMPONENT   Devel
+)
+
+
+ecm_qt_install_logging_categories(
+    EXPORT KIPI
+    FILE kipi.categories
+    DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
 )
