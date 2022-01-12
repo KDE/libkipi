@@ -100,13 +100,13 @@ public:
      * Standard destructor
      *
      * All the actions in the actionCollection are deleted before the plugin is
-     * deleted
+     * deleted.
      */
     ~Plugin() override;
 
     /**
-     * Returns the plugin actions associated with the widget passed as argument, or with
-     * the default widget, if widget is null or not provided. The actions are in
+     * Returns the plugin actions associated with passed @p widget, or with
+     * the default widget, if @p widget is a nullptr. The actions are in
      * the same order as added to the plugin.
      */
     QList<QAction*> actions(QWidget* const widget = nullptr) const;
@@ -131,7 +131,7 @@ public:
     Category category(QAction* const action) const;
 
     /**
-     * Force the plugin to reread and to reload its xml file
+     * Force the plugin to reread and to reload its XML file
      */
     void rebuild();
 
@@ -146,8 +146,9 @@ protected:
      * @param name the name by which the action will be added to the action collection
      * @param action the action to add
      *
-     * @note It just calls addAction with the default category, so the default
-     * category must be set using setDefaultCategory before you use this method
+     * @note It just calls addAction(const QString&, QAction* const, Category)
+     * with the default category, so the default
+     * category must be set using setDefaultCategory() before you use this method
      */
     void addAction(const QString& name, QAction* const action);
 
@@ -178,28 +179,28 @@ protected:
     Category defaultCategory() const;
 
     /**
-     * Sets the name of the xml file associated with this KXMLGUIClient. You must
+     * Sets the name of the XML file associated with this KXMLGUIClient. You must
      * provide only the filename without slashes.
      *
-     * The default xml file must be installed in the ${DATA_INSTALL_DIR}/kipi,
-     * modifications are stored in the local config dir of the KGlobal::mainComponent
+     * The default XML file must be installed in the dir ${KDE_INSTALL_KXMLGUI5DIR}/kipi,
+     * modifications will be stored in the local config dir.
      *
      * \sa uiBaseName()
      */
     void setUiBaseName(const char* name);
 
     /**
-     * Return the base name of the xml file associated with this KXMLGUIClient
+     * Return the base name of the XML file associated with this KXMLGUIClient
      *
      * \sa setUiBaseName()
      */
     QString uiBaseName() const;
 
     /**
-     * Adapt the xml file of the plugin with the one of the KXmlGuiWindow main window.
+     * Adapt the XML file of the plugin with the one of the KXmlGuiWindow main window.
      * It's recommended to call it on every creation of the plugin.
      *
-     * @note the xml file of the plugin must be set using setUiBaseName()
+     * @note the XML file of the plugin must be set using setUiBaseName()
      */
     void setupXML();
 

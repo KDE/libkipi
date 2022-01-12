@@ -295,7 +295,7 @@ public:
 
     /**
      * Call this method to load relevant plugins installed on your system to your KIPI host application
-     * NOTE: plugins can be loaded through Info item.
+     * @note Plugins can be loaded through Info item.
      */
     void loadPlugins();
 
@@ -324,7 +324,7 @@ Q_SIGNALS:
     void plug(KIPI::PluginLoader::Info*);
     void unplug(KIPI::PluginLoader::Info*);
 
-    // NOTE: plugin can be plugged through Info item.
+    /// @note Plugin can be plugged through Info item.
     void replug();
 
 private:

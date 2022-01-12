@@ -92,7 +92,7 @@ public:
 
 Q_SIGNALS:
 
-    /** Signal emitted when filtering is done through slotSetFilter().
+    /** Signal emitted when filtering is done through setFilter().
      *  Number of plugins found is sent when item relevant of filtering match the query.
      */
     void signalSearchResult(int);

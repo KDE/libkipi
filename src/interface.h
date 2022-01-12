@@ -138,18 +138,18 @@ Q_DECLARE_FLAGS(EditHints, EditHint)
  *  @class FileReadWriteLock interface.h <KIPI/Interface>
  *
  *  A Kipi FileReadWriteLock refers to application-wide reading/writing
- *  to a file on disk; it is created with createReadWriteLock for an Url.
+ *  to a file on disk; it is created with Interface::createReadWriteLock() for a URL.
  *  All semantics are identical to a recursive QReadWriteLock.
  *  You must unlock as often as you locked.
  *
- *  Note: locking will incur a mutex wait if the file is not free.
+ *  @note Locking will incur a mutex wait if the file is not free.
  *  Therefore, calling the lock methods, especially lockForWrite,
  *  from the UI thread shall be done with care, or rather avoided.
  *
  *  Note that you must not keep a lock for a longer time, but only for the imminent
  *  low-level reading or writing on disk.
  *
- *  See reserveForAction() API for longer lasting reservation which
+ *  See Interface::reserveForAction() API for longer lasting reservation which
  *  do not incur waits.
  *
  *  It is strongly recommended to use the FileReadLocker or FileWriteLocker
@@ -205,7 +205,7 @@ public:
     virtual bool load(const QUrl& url) = 0;
     virtual bool applyChanges() = 0;
 
-    /** NOTE: writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
+    /** @note @p writeToFileOnly force to write metadata only in file without to manage XMP sidecar file
      */
     virtual bool save(const QUrl& url, bool writeToFileOnly=false) = 0;
 
@@ -216,7 +216,7 @@ public:
     virtual QSize getImageDimensions() = 0;
     virtual bool  setImageDimensions(const QSize& size) = 0;
 
-    /** NOTE: orientation is standard value from Exif orientation tag. See ExifOrientation values.
+    /** @note orientation is standard value from Exif orientation tag. See ExifOrientation values.
      */
     virtual int  getImageOrientation() = 0;
     virtual bool setImageOrientation(int orientation) = 0;
@@ -293,14 +293,14 @@ public:
     /**
      * Returns list of all images in current album.
      * If there are no current album, the returned
-     * KIPI::ImageCollection::isValid() will return false.
+     * KIPI::ImageCollection::isValid() will return @c false.
      */
     virtual ImageCollection currentAlbum() = 0;
 
     /**
      * Current selection in a thumbnail view for example.
      * If there are no current selection, the returned
-     * KIPI::ImageCollection::isValid() will return false.
+     * KIPI::ImageCollection::isValid() will return @c false.
      */
     virtual ImageCollection currentSelection() = 0;
 
@@ -310,13 +310,13 @@ public:
     virtual QList<ImageCollection> allAlbums() = 0;
 
     /**
-     * Returns the image info container for item pointed by url.
+     * Returns the image info container for item pointed by @p url.
      */
-    virtual ImageInfo info(const QUrl&) = 0;
+    virtual ImageInfo info(const QUrl& url) = 0;
 
     /**
      * Tells to host application that a new image has been made available to it.
-     * Returns true if the host application did accept the new image, otherwise err will be filled with
+     * Returns @c true if the host application did accept the new image, otherwise @p err will be filled with
      * an error description.
      */
     virtual bool addImage(const QUrl&, QString& err);
@@ -338,10 +338,10 @@ public:
     virtual QImage preview(const QUrl& url);
 
     /**
-     * Tell to host application to save image at url in specific format (JPG, PNG, TIF, etc).
+     * Tell to host application to save image at a URL in specific format (JPG, PNG, TIF, etc).
      * Pixels image data must be in ARGB, with image size (width,height).
      * Pixels can be in sixteen bits per color per pixels and can have an alpha channel.
-     * If cancel flag is passed it permit to cancel save operation.
+     * If @p cancel flag is passed it permit to cancel save operation.
      * This method re-implemented in host application must be thread safe.
      */
     virtual bool saveImage(const QUrl& url, const QString& format,
@@ -352,7 +352,7 @@ public:
     /**
      * Tells to host application to render a preview image for one item.
      * A resizement to a specific size will be generated if preview is largest than.
-     * Use a positive resizedTo value in this case, else -1. Aspect ratio is preserved while rendering.
+     * Use a positive @p resizedTo value in this case, else -1. Aspect ratio is preserved while rendering.
      * This asynchronous method must be re-implemented in host application.
      * Use gotPreview() signal to take preview.
      */
@@ -373,10 +373,10 @@ public:
     /**
       Ask to Kipi host application to prepare progress manager for a new entry. This method must return from host
       a string identification about progress item created. This id will be used later to change in host progress item
-      value and text. Title is text used to name progress item in host application.
-      Set canBeCanceled to true if you want that progress item provide a cancel button to close process from kipi host.
+      value and text. @p title is text used to name progress item in host application.
+      Set @p canBeCanceled to @c true if you want that progress item provide a cancel button to close process from kipi host.
       Use progressCanceled() signal to manage feedback from kipi host when cancel button is pressed.
-      Set hasThumb to true if you want that progress item support small thumbnail near progress bar.
+      Set @p hasThumb to @c true if you want that progress item support small thumbnail near progress bar.
       Use progresssThumbnailChanged() to change thumbnail in kipi host and progressValueChanged() to advance progress
       bar in percent. Use progressStatusChanged() to change description string of progress item.
       To close progress item in kipi host, for example when all is done in plugin, use progressCompleted() method.
@@ -385,15 +385,16 @@ public:
     */
     virtual QString progressScheduled(const QString& title, bool canBeCanceled, bool hasThumb) const;
 
-    /** To manage progress state from plugin to host application. id is identification string of process item
-     *  returned from host by progressScheduled() method.
+    /**
+     * To manage progress state from plugin to host application.
+     * @param id identification string of process item returned from host by progressScheduled() method.
      */
     virtual void progressValueChanged(const QString& id, float percent);
     virtual void progressStatusChanged(const QString& id, const QString& status);
     virtual void progressThumbnailChanged(const QString& id, const QPixmap& thumb);
     virtual void progressCompleted(const QString& id);
 
-    /** Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").</td>
+    /** Returns RAW file extensions managed by host application, separated by blank spaces, (ex: "NEF CR2 ARW PEF").
     */
     virtual QString rawFiles();
 
@@ -410,17 +411,18 @@ public:
      *
      * Give the URL of the item and a QObject which acts as the holder of the reservation.
      * The object must not be null, and the reservation will be cancelled when the object is deleted.
-     * descriptionOfAction is a user-presentable string describing the action for which
-     * the reservation was made.
      *
-     * Returns true if a reservation was made, or false if a reservation could not be made.
+     * @param descriptionOfAction a user-presentable string describing the action for which
+     * the reservation was made
+     *
+     * @returns @c true if a reservation was made, or false if a reservation could not be made.
      */
     virtual bool reserveForAction(const QUrl& url, QObject* const reservingObject,
                                   const QString& descriptionOfAction) const;
     /**
      * Supported if HostSupportsItemReservation
      *
-     * Clears a reservation made previously with reserveForAction for the given reservingObject.
+     * Clears a reservation made previously with reserveForAction() for the given @p reservingObject.
      * You must clear any reservation you made, or, alternatively, delete the reserving object.
      */
     virtual void clearReservation(const QUrl& url, QObject* const reservingObject);
@@ -429,14 +431,14 @@ public:
      * Supported if HostSupportsItemReservation
      *
      * Returns if the item is reserved. You can pass a pointer to a QString; if the return value
-     * is true, the string will be set to the descriptionOfAction set with reserveForAction.
+     * is @c true, the string will be set to the @p descriptionOfAction set with reserveForAction().
      */
     virtual bool itemIsReserved(const QUrl& url, QString* const descriptionOfAction = nullptr) const;
 
     /**
      * Supported if HostSupportsReadWriteLock
-     * Creates a ReadWriteLock for the given Url.
-     * You must unlock the ReadWriteLock as often as you locked.
+     * Creates a ReadWriteLock for the given URL.
+     * You must unlock the FileReadWriteLock as often as you locked.
      * Deleting the object does not unlock it.
      * The implementation from KIPI host application must be thread-safe.
      *
@@ -457,7 +459,7 @@ public:
      * Before an edit operation starts when it has finished, specify a hint for it.
      * Change hints are optional and may allow optimizations.
      *
-     * When aboutToEdit has been called, editingFinished must be called afterwards.
+     * When aboutToEdit() has been called, editingFinished() must be called afterwards.
      * It is strongly recommended to use the EditHintScope instead of these methods.
      */
     virtual void aboutToEdit(const QUrl& url, EditHints hints);
@@ -469,8 +471,8 @@ public:
     static QString version();
 
     /**
-     * Return a list of supported image type mimes by Qt image reader.
-     * 'readWrite' query Qt to list type mimes in read mode (false), or in write mode (true).
+     * Return a list of supported image MIME types by Qt image reader.
+     * @param readWrite query Qt to list MIME types in read mode (@c false), or in write mode (@c true).
      */
     static QStringList supportedImageMimeTypes(bool readWrite=false);
 
@@ -478,13 +480,13 @@ Q_SIGNALS:
 
     /**
      * Emit when item selection has changed from host application user interface.
-     * Boolean argument is true if items are select or not in collection.
+     * @param hasSelection set @c true if items are select or not in collection.
      */
     void selectionChanged(bool hasSelection);
 
     /**
      * Emit when current album selection as changed from host application user interface.
-     * Boolean argument is true if album are select or not in collection.
+     * @param hasSelection @c true if album are select or not in collection.
      */
     void currentAlbumChanged(bool hasSelection);
 
@@ -505,7 +507,7 @@ Q_SIGNALS:
     /**
      * Supported if HostSupportsItemReservation
      *
-     * Emitted from reservedForAction and clearReservation, respectively.
+     * Emitted from reservedForAction() and clearReservation(), respectively.
      * */
     void reservedForAction(const QUrl& url, const QString& descriptionOfAction);
     void reservationCleared(const QUrl& url);
@@ -537,7 +539,7 @@ private:
  *
  * The API is modelled according to the QReadLocker/QWriteLocker classes.
  *
- * Note that operations are no-ops and fileReadWriteLock() is 0 if not HostSupportsReadWriteLock.
+ * @note Operations are no-ops and fileReadWriteLock() is a nullptr if not HostSupportsReadWriteLock.
  */
 class LIBKIPI_EXPORT FileReadLocker
 {

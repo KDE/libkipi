@@ -51,9 +51,11 @@ class ImageInfoShared;
 
 /** @class ImageInfo imageinfo.h <KIPI/ImageInfo>
     Holds info about an image from KIPI host application.
-    NOTE: If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
+
+    @note If you want to manage item properties from kipi-plugins, use wrapper class KIPIPlugins::KPImageInfo,
     not this class directly. See kipi-plugins/common/libkipi-plugins API for details.
-    IMPORTANT: this class must re-implemented in KIPI host application through KIPI::ImageInfoShared. This implementation
+
+    @note This class must be re-implemented in KIPI host application through KIPI::ImageInfoShared. This implementation
     must be thread-safe, due to possible use into kipi plugins separated thread implementation in the future.
  */
 class LIBKIPI_EXPORT ImageInfo
@@ -226,7 +228,7 @@ public:
     */
     void cloneData(const ImageInfo& other);
 
-    /** Return item url.
+    /** Return item URL.
     */
     QUrl url() const;
 

@@ -51,7 +51,7 @@ class ImageCollectionShared;
 /** @class ImageCollection imagecollection.h <KIPI/ImageCollection>
  *
     Holds info about the collection from KIPI host application.
-    NOTE: Plugins should never create an instance of ImageCollection, only the host application should do that.
+    @note Plugins should never create an instance of ImageCollection, only the host application should do that.
  */
 class LIBKIPI_EXPORT ImageCollection
 {
@@ -66,7 +66,7 @@ public:
     ImageCollection& operator=(const ImageCollection&);
     bool operator==(const ImageCollection&) const;
 
-    /// Collection properties ---------------------------------------------------------------------------
+    // Collection properties ---------------------------------------------------------------------------
 
     /**
      * Returns the name of collection.
@@ -74,7 +74,7 @@ public:
     QString    name() const;
 
     /**
-     * Returns the comment for the collection of images or QString() if that doesn't make any sense.
+     * Returns the comment for the collection of images or QString() if that does not make any sense.
      * A comment makes sense for an album, but not for a KIPI::Interface::currentSelection().
      */
     QString    comment() const;
@@ -92,7 +92,7 @@ public:
     QDate      date() const;
 
     /**
-     * Returns a list of image urls hosted by collection.
+     * Returns a list of image URLs hosted by collection.
      */
     QList<QUrl> images() const;
 
@@ -115,7 +115,7 @@ public:
      * or if images from the collection are not available in a common directory,
      * then instead a common upload directory.
      *
-     * IMPORTANT: uploadRootUrl() must be a subpath of uploadUrl()
+     * @note uploadRootUrl() must be a subpath of uploadUrl()
      */
     QUrl       uploadUrl() const;
 
@@ -131,7 +131,7 @@ public:
      * The root directory returned by uploadUrl() (which is the default implementation for this method)
      * will be the directory returned by uploadUrl().
      *
-     * IMPORTANT: uploadRootUrl() must be a subpath of uploadUrl()
+     * @note uploadRootUrl() must be a subpath of uploadUrl()
      */
     QUrl       uploadRootUrl() const;
 
