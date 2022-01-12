@@ -62,9 +62,9 @@ if(KF5KExiv2_FOUND)
 endif()
 
 # Given as example. Do not install any files with from test code.
-#install(TARGETS kxmlkipicmd                           DESTINATION ${INSTALL_TARGETS_DEFAULT_ARGS})
-#install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
-#install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${DATA_INSTALL_DIR}/kxmlkipicmd)
+#install(TARGETS kxmlkipicmd                           DESTINATION ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+#install(FILES   kxmlkipicmd/kxmlkipicmd_defaultui.rc  DESTINATION ${KDE_INSTALL_DATADIR}/kxmlkipicmd)
+#install(FILES   kxmlkipicmd/kxmlkipicmd_gwenviewui.rc DESTINATION ${KDE_INSTALL_DATADIR}/kxmlkipicmd)
 
 #----------------------------------------------------------------------------------------------------
 

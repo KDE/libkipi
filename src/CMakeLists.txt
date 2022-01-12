@@ -9,6 +9,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.cmake.in ${CMAKE_CUR
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
+set(KIPI_INSTALL_INCLUDEDIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KIPI)
+
 add_library(KF5Kipi)
 add_library(KF5::Kipi ALIAS KF5Kipi)
 set_target_properties(KF5Kipi PROPERTIES
@@ -64,7 +66,7 @@ ecm_qt_declare_logging_category(KF5Kipi
 set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE OFF)
 
 target_include_directories(KF5Kipi INTERFACE
-                           "$<INSTALL_INTERFACE:${KF5_INCLUDE_INSTALL_DIR}/KIPI;${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi>"
+                           "$<INSTALL_INTERFACE:${KIPI_INSTALL_INCLUDEDIR};${KIPI_INSTALL_INCLUDEDIR}/kipi>"
                            "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>"
 )
 
@@ -84,27 +86,23 @@ install(TARGETS KF5Kipi
 
 
 # desktop file which define plugin service model, used by tools from kipi-plugins.
-install(FILES kipiplugin.desktop DESTINATION ${SERVICETYPES_INSTALL_DIR})
+install(FILES kipiplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
 
-install(FILES       ${kipi_CamelCase_HEADERS}
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/KIPI
-        COMPONENT   Devel
+install(FILES   ${kipi_CamelCase_HEADERS}
+    DESTINATION ${KIPI_INSTALL_INCLUDEDIR}/KIPI # C++ namespace
+    COMPONENT   Devel
 )
 
-install(FILES       ${kipi_HEADERS}
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
-        COMPONENT   Devel
-)
-
-
-install(FILES       ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
-                    ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
-        DESTINATION ${KF5_INCLUDE_INSTALL_DIR}/KIPI/kipi
-        COMPONENT   Devel
+install(FILES
+        ${kipi_HEADERS}
+        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_export.h
+        ${CMAKE_CURRENT_BINARY_DIR}/libkipi_config.h
+    DESTINATION ${KIPI_INSTALL_INCLUDEDIR}/kipi # C++ namespace
+    COMPONENT   Devel
 )
 
 install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
-        DESTINATION "${KF5_INCLUDE_INSTALL_DIR}"
+        DESTINATION "${KDE_INSTALL_INCLUDEDIR_KF5}"
         COMPONENT   Devel
 )
 

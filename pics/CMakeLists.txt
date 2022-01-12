@@ -11,5 +11,5 @@ ecm_install_icons(
         22-apps-kipi.png
         32-apps-kipi.png
         48-apps-kipi.png
-    DESTINATION ${ICON_INSTALL_DIR}
+    DESTINATION ${KDE_INSTALL_ICONDIR}
 )
