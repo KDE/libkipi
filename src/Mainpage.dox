@@ -39,7 +39,7 @@
    Here is a list of things to do.
    <ul>
    <li> Create a class that inherits KIPI::Plugin. In the constructor you
-   must create instances of KAction for your application. The topmost
+   must create instances of QAction for your application. The topmost
    actions should be given to the Plugin super class using KIPI::Plugin::addAction().
    <li> As described in the tutorial <a href="http://www.ukuug.org/events/linux2004/programme/paper-JPedersen-2/index.html#understanding_loading">here</a>, you must call KDE macros
    <tt>K_PLUGIN_FACTORY</tt> and <tt>K_EXPORT_PLUGIN</tt>.
