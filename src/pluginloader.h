@@ -195,6 +195,11 @@ class LIBKIPI_EXPORT PluginLoader : public QObject
 
 public:
 
+    /**
+     * \class Info pluginloader.h <KIPI/PluginLoader>
+     *
+     * Info about a plugin.
+     */
     class LIBKIPI_EXPORT Info
     {
 

@@ -52,7 +52,11 @@ class QPixmap;
 class QWidget;
 class QAbstractItemModel;
 
-/** @namespace KIPI */
+/**
+ * @namespace KIPI
+ *
+ * The namespace for all KIPI classes.
+ */
 
 namespace KIPI
 {
@@ -123,6 +127,9 @@ enum EditHint
      */
     HintMetadataOnlyChange  = HintMetadataChanged | HintChangeReflectedByAttributes
 };
+/**
+ * Stores a combination of #EditHint values.
+ */
 Q_DECLARE_FLAGS(EditHints, EditHint)
 
 // ---------------------------------------------------------------------------------------------------------------
