@@ -124,29 +124,28 @@ Q_DECLARE_FLAGS(EditHints, EditHint)
 
 // ---------------------------------------------------------------------------------------------------------------
 
+/**
+ *  A Kipi FileReadWriteLock refers to application-wide reading/writing
+ *  to a file on disk; it is created with createReadWriteLock for an Url.
+ *  All semantics are identical to a recursive QReadWriteLock.
+ *  You must unlock as often as you locked.
+ *
+ *  Note: locking will incur a mutex wait if the file is not free.
+ *  Therefore, calling the lock methods, especially lockForWrite,
+ *  from the UI thread shall be done with care, or rather avoided.
+ *
+ *  Note that you must not keep a lock for a longer time, but only for the imminent
+ *  low-level reading or writing on disk.
+ *
+ *  See reserveForAction() API for longer lasting reservation which
+ *  do not incur waits.
+ *
+ *  It is strongly recommended to use the FileReadLocker or FileWriteLocker
+ *  convenience locks instead of creating and locking a FileReadWriteLock directly.
+ */
 class LIBKIPI_EXPORT FileReadWriteLock
 {
 public:
-
-    /**
-     *  A Kipi FileReadWriteLock refers to application-wide reading/writing
-     *  to a file on disk; it is created with createReadWriteLock for an Url.
-     *  All semantics are identical to a recursive QReadWriteLock.
-     *  You must unlock as often as you locked.
-     *
-     *  Note: locking will incur a mutex wait if the file is not free.
-     *  Therefore, calling the lock methods, especially lockForWrite,
-     *  from the UI thread shall be done with care, or rather avoided.
-     *
-     *  Note that you must not keep a lock for a longer time, but only for the imminent
-     *  low-level reading or writing on disk.
-     *
-     *  See reserveForAction() API for longer lasting reservation which
-     *  do not incur waits.
-     *
-     *  It is strongly recommended to use the FileReadLocker or FileWriteLocker
-     *  convenience locks instead of creating and locking a FileReadWriteLock directly.
-     */
 
     virtual ~FileReadWriteLock() {}
     virtual void lockForRead()                = 0;
