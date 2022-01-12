@@ -13,7 +13,7 @@
    Starting with 2.0.0 version of libkipi shared library, Plugin class
    inherits KXMLGUIClient class. This means that if your application uses
    KDE-XML GUI, you can add plugin actions to the toolbar(if you add plugins to
-   the guiFactory of you KXMLGuiWindow). For more documentation about KDE-XML
+   the guiFactory of you KXmlGuiWindow). For more documentation about KDE-XML
    GUI you can look <a href="http://techbase.kde.org/Development/Architecture/KDE4/XMLGUI_Technology">here</a>.
 
    <h2>Developing a new KIPI plugin</h2>
