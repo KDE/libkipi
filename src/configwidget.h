@@ -28,6 +28,10 @@
 #ifndef KIPI_CONFIGWIDGET_H
 #define KIPI_CONFIGWIDGET_H
 
+// Std includes
+
+#include <memory>
+
 // Qt includes
 
 #include <QTreeWidgetItem>
@@ -100,7 +104,7 @@ Q_SIGNALS:
 private:
 
     class Private;
-    Private* const d;
+    std::unique_ptr<Private> const d;
 };
 
 } // namespace KIPI

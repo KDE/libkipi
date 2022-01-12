@@ -206,7 +206,6 @@ Plugin::Plugin(QObject* const parent, const char* name)
 Plugin::~Plugin()
 {
     clearActions();
-    delete d;
 }
 
 QList<QAction *> Plugin::actions(QWidget* const widget) const

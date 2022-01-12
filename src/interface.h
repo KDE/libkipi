@@ -34,6 +34,10 @@
 #ifndef KIPI_INTERFACE_H
 #define KIPI_INTERFACE_H
 
+// Std includes
+
+#include <memory>
+
 // Qt includes
 
 #include <QFlags>
@@ -601,7 +605,7 @@ public:
 private:
 
     class Private;
-    Private* const d;
+    std::unique_ptr<Private> const d;
 };
 
 } // namespace KIPI

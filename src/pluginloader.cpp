@@ -102,7 +102,6 @@ PluginLoader::Info::~Info()
     }
 
     delete d->plugin;
-    delete d;
 }
 
 KService::Ptr PluginLoader::Info::service() const
@@ -350,10 +349,7 @@ void PluginLoader::init()
     }
 }
 
-PluginLoader::~PluginLoader()
-{
-    delete d;
-}
+PluginLoader::~PluginLoader() = default;
 
 void PluginLoader::loadPlugins()
 {

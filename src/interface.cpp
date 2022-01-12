@@ -444,8 +444,6 @@ EditHintScope::~EditHintScope()
     {
         d->iface->editingFinished(d->url, d->hints);
     }
-
-    delete d;
 }
 
 void EditHintScope::changeAborted()

@@ -34,6 +34,10 @@
 #ifndef KIPI_IMAGEINFOSHARED_H
 #define KIPI_IMAGEINFOSHARED_H
 
+// Std includes
+
+#include <memory>
+
 // Qt includes
 
 #include <QString>
@@ -99,7 +103,7 @@ private:
 private:
 
     class Private;
-    Private* const d;
+    std::unique_ptr<Private> const d;
 
     friend class ImageInfo;
 };

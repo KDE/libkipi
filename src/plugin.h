@@ -34,6 +34,10 @@
 #ifndef KIPI_PLUGIN_H
 #define KIPI_PLUGIN_H
 
+// Std includes
+
+#include <memory>
+
 // Qt includes
 
 #include <QObject>
@@ -217,7 +221,7 @@ private:
 private:
 
     class Private;
-    Private* const d;
+    std::unique_ptr<Private> const d;
 };
 
 } // namespace KIPI

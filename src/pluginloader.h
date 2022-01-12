@@ -34,6 +34,10 @@
 #ifndef KIPI_PLUGINLOADER_H
 #define KIPI_PLUGINLOADER_H
 
+// Std includes
+
+#include <memory>
+
 // Qt includes
 
 #include <QList>
@@ -225,7 +229,7 @@ public:
     private:
 
         class Private;
-        Private* const d;
+        std::unique_ptr<Private> const d;
     };
 
 public:
@@ -330,7 +334,7 @@ Q_SIGNALS:
 private:
 
     class Private;
-    Private* const d;
+    std::unique_ptr<Private> const d;
 
 private:
 

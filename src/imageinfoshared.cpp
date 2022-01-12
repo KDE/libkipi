@@ -66,10 +66,7 @@ ImageInfoShared::ImageInfoShared(Interface* const interface, const QUrl &url)
     _url         = url;
 }
 
-ImageInfoShared::~ImageInfoShared()
-{
-    delete d;
-}
+ImageInfoShared::~ImageInfoShared() = default;
 
 void ImageInfoShared::addRef()
 {

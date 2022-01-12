@@ -139,10 +139,7 @@ ConfigWidget::ConfigWidget(QWidget* const parent)
     sortItems(0, Qt::AscendingOrder);
 }
 
-ConfigWidget::~ConfigWidget()
-{
-    delete d;
-}
+ConfigWidget::~ConfigWidget() = default;
 
 void ConfigWidget::apply()
 {
