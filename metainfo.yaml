@@ -1,0 +1,12 @@
+fancyname: KIPI
+description: KDE Image Program Interface
+type: functional
+public_lib: true
+platforms:
+    - name: Linux
+    - name: FreeBSD
+    - name: Windows
+release: true
+libraries:
+    - cmake: "KF5::Kipi"
+cmakename: KF5Kipi
