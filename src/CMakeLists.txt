@@ -79,7 +79,7 @@ target_link_libraries(KF5Kipi
 )
 
 install(TARGETS KF5Kipi
-        EXPORT  KF5KipiTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
+        EXPORT  KF5KipiTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
 
 
