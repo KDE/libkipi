@@ -100,7 +100,7 @@ install(FILES
 )
 
 install(FILES       "${CMAKE_CURRENT_BINARY_DIR}/libkipi_version.h"
-        DESTINATION "${KDE_INSTALL_INCLUDEDIR_KF5}"
+        DESTINATION "${KIPI_INSTALL_INCLUDEDIR}"
         COMPONENT   Devel
 )
 
