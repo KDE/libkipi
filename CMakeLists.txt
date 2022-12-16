@@ -9,8 +9,8 @@ project(libkipi)
 message(STATUS "----------------------------------------------------------------------------------")
 message(STATUS "Starting CMake configuration for: ${PROJECT_NAME}")
 
-set(KF_MIN_VERSION      "5.85.0")
-set(QT_MIN_VERSION      "5.15.0")
+set(KF_MIN_VERSION      "5.91.0")
+set(QT_MIN_VERSION      "5.15.2")
 
 # =======================================================
 # Information to update before to release this library.

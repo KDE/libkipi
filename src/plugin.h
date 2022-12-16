@@ -163,7 +163,7 @@ protected:
      * Sets the name of the XML file associated with this KXMLGUIClient. You must
      * provide only the filename without slashes.
      *
-     * The default XML file must be installed in the dir ${KDE_INSTALL_KXMLGUI5DIR}/kipi,
+     * The default XML file must be installed in the dir ${KDE_INSTALL_KXMLGUIDIR}/kipi,
      * modifications will be stored in the local config dir.
      *
      * \sa uiBaseName()

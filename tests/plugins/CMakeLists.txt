@@ -16,6 +16,6 @@ target_link_libraries(kipiplugin_kxmlhelloworld
 
 configure_file(kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop)
 
-install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(FILES   ${CMAKE_CURRENT_BINARY_DIR}/kxmlhelloworld/kipiplugin_kxmlhelloworld.desktop DESTINATION ${KDE_INSTALL_KSERVICESDIR})
 install(TARGETS kipiplugin_kxmlhelloworld                                                    DESTINATION ${KDE_INSTALL_PLUGINDIR})
-install(FILES   kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc                                DESTINATION ${KDE_INSTALL_KXMLGUI5DIR}/kipi)
+install(FILES   kxmlhelloworld/kipiplugin_kxmlhelloworldui.rc                                DESTINATION ${KDE_INSTALL_KXMLGUIDIR}/kipi)

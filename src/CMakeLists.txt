@@ -84,7 +84,7 @@ install(TARGETS KF5Kipi
 
 
 # desktop file which define plugin service model, used by tools from kipi-plugins.
-install(FILES kipiplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPES5DIR})
+install(FILES kipiplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICETYPESDIR})
 
 install(FILES   ${kipi_CamelCase_HEADERS}
     DESTINATION ${KIPI_INSTALL_INCLUDEDIR}/KIPI # C++ namespace
