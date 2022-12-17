@@ -77,8 +77,6 @@ KipiSetup::KipiSetup(QWidget* const parent)
     setModal(true);
     setMinimumSize(600, 400);
 
-    const int spacing = QApplication::style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing);
-
     d->buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     d->tabView = new QTabWidget(this);
 
@@ -103,8 +101,6 @@ KipiSetup::KipiSetup(QWidget* const parent)
     grid->addWidget(d->pluginFilter, 0, 0, 1, 1);
     grid->addWidget(d->pluginsList,  1, 0, 1, 1);
     grid->setRowStretch(1, 10);
-    grid->setContentsMargins(spacing, spacing, spacing, spacing);
-    grid->setSpacing(spacing);
 
     sv->setWidget(panel);
     sv->setWidgetResizable(true);
