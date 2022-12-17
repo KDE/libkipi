@@ -70,6 +70,7 @@ include(GenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMQtDeclareLoggingCategory)
 include(ECMSetupVersion)
+include(ECMDeprecationSettings)
 include(FeatureSummary)
 include(ECMInstallIcons)
 include(CMakePackageConfigHelpers)
@@ -99,6 +100,13 @@ ecm_setup_version(${LIBKIPI_LIB_VERSION}
 ############## Targets #########################
 
 add_definitions(-DTRANSLATION_DOMAIN=\"libkipi\")
+
+ecm_set_disabled_deprecation_versions(
+    QT 5.15.2
+    KF 5.91
+    KCOREADDONS 5.85 # indirectly KService::createInstance
+    KSERVICE 5.85 # KService::createInstance
+)
 
 add_subdirectory(pics)
 add_subdirectory(src)
