@@ -109,7 +109,6 @@ endif()
 
 ############## CMake Config Files ##############
 
-message("${CMAKECONFIG_INSTALL_DIR}")
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5Kipi")
 
 configure_package_config_file(
