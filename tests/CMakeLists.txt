@@ -44,6 +44,8 @@ add_executable(kxmlkipicmd
     kxmlkipicmd/kipitestpluginloader.cpp
     kxmlkipicmd/kipisetup.cpp
     kxmlkipicmd/main.cpp
+
+    kxmlkipicmd/kxmlkipicmd.qrc
 )
 
 target_link_libraries(kxmlkipicmd

@@ -184,7 +184,6 @@ public:
         xmlFilesCob = nullptr;
     }
 
-    QString        uiFilesPath;
     QList<QString> uiFilesList;
     QComboBox*     xmlFilesCob;
 };
@@ -197,9 +196,7 @@ SetupXML::SetupXML(QWidget* const parent)
     setWidget(panel);
     setWidgetResizable(true);
 
-    d->uiFilesPath = QStandardPaths::locateAll(QStandardPaths::GenericDataLocation, QApplication::applicationName(), QStandardPaths::LocateDirectory).last();
-    qDebug() << d->uiFilesPath;
-    QDir dir(d->uiFilesPath);
+    QDir dir(QStringLiteral(":/kxmlgui5/kxmlkipicmd"));
     QString filter = QString::fromLatin1("*ui.rc");
     d->uiFilesList = dir.entryList(QStringList(filter), QDir::Files | QDir::NoSymLinks);
 

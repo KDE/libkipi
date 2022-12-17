@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/kxmlgui5/kxmlkipicmd">
+        <file>kxmlkipicmd_defaultui.rc</file>
+        <file>kxmlkipicmd_gwenviewui.rc</file>
+    </qresource>
+</RCC>
