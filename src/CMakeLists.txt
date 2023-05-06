@@ -7,7 +7,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libkipi_config.h.in ${CMAKE_CURRENT_B
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
-set(KIPI_INSTALL_INCLUDEDIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KIPI)
+set(KIPI_INSTALL_INCLUDEDIR ${KDE_INSTALL_INCLUDEDIR_KF}/KIPI)
 
 add_library(KF5Kipi)
 add_library(KF5::Kipi ALIAS KF5Kipi)
