@@ -238,3 +238,5 @@ void SetupXML::apply()
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipisetup.cpp"

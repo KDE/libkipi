@@ -300,3 +300,5 @@ QString KipiTestPluginLoader::categoryShortName(Category cat) const
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipitestpluginloader.cpp"

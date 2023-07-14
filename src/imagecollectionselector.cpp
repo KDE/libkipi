@@ -31,3 +31,5 @@ void ImageCollectionSelector::enableVirtualCollections(bool /*flag*/)
 }
 
 } // namespace KIPI
+
+#include "moc_imagecollectionselector.cpp"

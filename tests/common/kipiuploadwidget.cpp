@@ -79,3 +79,5 @@ void KipiUploadWidget::slotItemSelectionChanged()
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipiuploadwidget.cpp"

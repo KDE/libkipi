@@ -317,3 +317,5 @@ void Plugin_KXMLHelloWorld::slotActivateActionImport()
 // Moc file must be included at end because it's a plugin (it's a specific and special case where we need to do it).
 
 #include "plugin_kxmlhelloworld.moc"
+
+#include "moc_plugin_kxmlhelloworld.cpp"

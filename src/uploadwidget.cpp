@@ -31,3 +31,5 @@ ImageCollection UploadWidget::selectedImageCollection() const
 }
 
 } // namespace KIPI
+
+#include "moc_uploadwidget.cpp"

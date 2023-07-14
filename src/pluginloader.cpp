@@ -378,3 +378,5 @@ QString PluginLoader::kipiPluginsVersion() const
 }
 
 } // namespace KIPI
+
+#include "moc_pluginloader.cpp"

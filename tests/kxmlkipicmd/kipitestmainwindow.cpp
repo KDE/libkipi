@@ -171,3 +171,5 @@ void KipiTestMainWindow::slotSetup()
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipitestmainwindow.cpp"

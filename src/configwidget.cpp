@@ -224,3 +224,5 @@ QString ConfigWidget::filter() const
 }
 
 } // namespace KIPI
+
+#include "moc_configwidget.cpp"

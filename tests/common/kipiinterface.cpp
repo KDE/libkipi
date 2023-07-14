@@ -511,3 +511,5 @@ FileReadWriteLock* KipiInterface::createReadWriteLock(const QUrl&) const
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipiinterface.cpp"

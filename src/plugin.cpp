@@ -472,3 +472,5 @@ Category Plugin::defaultCategory() const
 }
 
 } // namespace KIPI
+
+#include "moc_plugin.cpp"

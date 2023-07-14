@@ -81,3 +81,5 @@ void KipiImageCollectionSelector::slotItemSelectionChanged()
 }
 
 } // namespace KXMLKipiCmd
+
+#include "moc_kipiimagecollectionselector.cpp"

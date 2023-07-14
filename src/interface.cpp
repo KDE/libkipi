@@ -429,3 +429,5 @@ void EditHintScope::changeAborted()
 }
 
 } // namespace KIPI
+
+#include "moc_interface.cpp"
