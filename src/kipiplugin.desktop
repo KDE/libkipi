@@ -62,6 +62,7 @@ Name[tr]=KIPI Eklentisi
 Name[ug]=KIPIPlugin
 Name[uk]=KIPIPlugin
 Name[vi]=KIPIPlugin
+Name[x-test]=xxKIPIPluginxx
 Name[zh_CN]=KIPIPlugin
 Name[zh_TW]=KIPI 外掛程式
 Comment=A KIPI Plugin
@@ -124,6 +125,7 @@ Comment[tr]=Bir KIPI Eklentisi
 Comment[ug]=KIPI قىستۇرمىسى
 Comment[uk]=Додаток KIPI
 Comment[vi]=Một phần cài cắm KIPI
+Comment[x-test]=xxA KIPI Pluginxx
 Comment[zh_CN]=一个 KIPI 插件
 Comment[zh_TW]=KIPI 外掛程式
 
